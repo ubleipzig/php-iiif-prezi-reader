@@ -2,6 +2,7 @@
 namespace iiif\model\resources;
 
 use iiif\model\properties\NavDateTrait;
+use iiif\model\vocabulary\Names;
 
 class Collection extends AbstractIiifResource
 {
@@ -12,18 +13,22 @@ class Collection extends AbstractIiifResource
     protected $navDate;
     
     // deprecated
-    protected $collections;
+    protected $collections = array();
     // deprecated
-    protected $manifests; 
-    protected $members;
+    protected $manifests = array(); 
+    protected $members =array();
     /**
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    protected static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray)
     {
-        // TODO Auto-generated method stub
-        
+        $collection=new Collection();
+        $collection->loadPropertiesFromArray($jsonAsArray);
+        $collection->loadResources($jsonAsArray, Names::COLLECTIONS, Collection::class, $collection->collections);
+        $collection->loadResources($jsonAsArray, Names::MANIFESTS, Manifest::class, $collection->manifests);
+        // TODO: Members. Could be Collection or Manifest.
+        return $collection;
     }
 
 }

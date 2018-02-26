@@ -1,7 +1,8 @@
 <?php
 namespace iiif\model\properties;
 
-trait FormatTrait {
+trait FormatTrait
+{
     protected $format;
 }
 

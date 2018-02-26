@@ -3,6 +3,7 @@ namespace iiif\model\resources;
 
 use iiif\model\properties\NavDateTrait;
 use iiif\model\properties\ViewingDirectionTrait;
+use iiif\model\vocabulary\Names;
 
 class Manifest extends AbstractIiifResource
 {
@@ -17,21 +18,15 @@ class Manifest extends AbstractIiifResource
     protected $viewingDirection;
     protected $navDate;
     
-    protected $structures;
+    protected $structures = array();
     
-    protected static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray)
     {
         $manifest = new Manifest();
         $manifest->loadPropertiesFromArray($jsonAsArray);
-        if (array_key_exists("sequences", $jsonAsArray))
-        {
-            $sequencesAsArray = $jsonAsArray["sequences"];
-            foreach ($sequencesAsArray as $sequenceAsArray)
-            {
-                $sequence = Sequence::fromArray($sequenceAsArray);
-                $this->sequences[] = $sequence;
-            }
-        }
+        $manifest->loadResources($jsonAsArray, Names::SEQUENCES, Sequence::class, $manifest->sequences);
+        $manifest->loadResources($jsonAsArray, Names::STRUCTURES, Range::class, $manifest->structures);
+        return $manifest;
     }
     /**
      * @return multitype:
@@ -48,8 +43,6 @@ class Manifest extends AbstractIiifResource
     {
         $this->sequences = $sequences;
     }
-
-    
-    
 }
+
 

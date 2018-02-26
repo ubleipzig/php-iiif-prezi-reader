@@ -1,7 +1,11 @@
 <?php
 namespace iiif\model\resources;
 
+include_once 'AbstractIiifResource.php';
+
+
 use iiif\model\properties\ViewingDirectionTrait;
+use iiif\model\vocabulary\Names;
 
 class Sequence extends AbstractIiifResource
 {
@@ -21,14 +25,7 @@ class Sequence extends AbstractIiifResource
     {
         $sequence = new Sequence();
         $sequence->loadPropertiesFromArray($jsonAsArray);
-        if (array_key_exists("canvases", $jsonAsArray)) {
-            $canvasesAsArray = $jsonAsArray["canvases"];
-            foreach ($canvasesAsArray as $canvasAsArray)
-            {
-                $canvas = Canvas::fromArray($canvasAsArray);
-                $this->canvases[] = $canvas;
-            }
-        }
+        $sequence->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $sequence->canvases);
     }
 }
 

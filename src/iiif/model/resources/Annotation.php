@@ -1,8 +1,7 @@
 <?php
 namespace iiif\model\resources;
 
-use iiif\model\properties\FormatTrait;
-use iiif\model\properties\WidthAndHeightTrait;
+use iiif\model\vocabulary\Names;
 
 class Annotation extends AbstractIiifResource
 {
@@ -19,9 +18,10 @@ class Annotation extends AbstractIiifResource
     {
         $annotation = new Annotation();
         $annotation->loadPropertiesFromArray($jsonAsArray);
-        $annotation->motivation = $jsonAsArray["motivation"];
-        
+        $annotation->motivation = array_key_exists(Names::MOTIVATION, $jsonAsArray) ? $jsonAsArray[Names::MOTIVATION] : null;
+        $annotation->on = array_key_exists(Names::ON, $jsonAsArray) ? $jsonAsArray[Names::ON] : null;
+        $annotation->loadSingleResouce($jsonAsArray, Names::RESOURCE, ContentResource::class, $annotation->resource);
+        return $annotation;
     }
-
 }
 

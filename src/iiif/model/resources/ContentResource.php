@@ -9,8 +9,10 @@ class ContentResource extends AbstractIiifResource
      */
     public static function fromArray($jsonAsArray)
     {
-        // TODO Auto-generated method stub
+        $contentResource = new ContentResource();
+        $contentResource->loadPropertiesFromArray($jsonAsArray);
         
+        return $contentResource;
     }
 
     

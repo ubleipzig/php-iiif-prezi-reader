@@ -1,0 +1,8 @@
+{
+	"name" : "iiif-manifest-reader/iiif-manifest-reader",
+	"autoload" : {
+		"psr-4" : {
+			"iiif\\" : "src/iiif"
+		}
+	}
+}

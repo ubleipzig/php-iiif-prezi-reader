@@ -1,21 +1,23 @@
 <?php
 namespace iiif\model\resources;
 
+use iiif\model\vocabulary\Names;
+
 class AnnotationList extends AbstractIiifResource
 {
     const TYPE="sc:AnnotationList";
     
-    protected $resources;
+    protected $resources = array();
     /**
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    protected static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray)
     {
-        // TODO Auto-generated method stub
-        
+        $annotationList = new AnnotationList();
+        $annotationList->loadPropertiesFromArray($jsonAsArray);
+        $annotationList->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $annotationList->resources);
+        return $annotationList;
     }
-
-
 }
 
