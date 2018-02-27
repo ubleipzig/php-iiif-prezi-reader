@@ -1,5 +1,5 @@
 <?php
-namespace model\constants;
+namespace iiif\model\constants;
 
 class ViewingDirectionValues
 {

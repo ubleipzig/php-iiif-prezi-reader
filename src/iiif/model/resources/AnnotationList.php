@@ -7,6 +7,10 @@ class AnnotationList extends AbstractIiifResource
 {
     const TYPE="sc:AnnotationList";
     
+    /**
+     * 
+     * @var AnnotationList[]
+     */
     protected $resources = array();
     /**
      * {@inheritDoc}

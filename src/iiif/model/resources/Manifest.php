@@ -13,11 +13,19 @@ class Manifest extends AbstractIiifResource
     const CONTEXT="http://iiif.io/api/presentation/2/context.json";
     const TYPE="sc:Manifest";
     
+    /**
+     * 
+     * @var Sequence[]
+     */
     protected $sequences = array();
     
     protected $viewingDirection;
     protected $navDate;
     
+    /**
+     * 
+     * @var Range[]
+     */
     protected $structures = array();
     
     public static function fromArray($jsonAsArray)
@@ -29,19 +37,18 @@ class Manifest extends AbstractIiifResource
         return $manifest;
     }
     /**
-     * @return multitype:
+     * @return Sequence[]:
      */
     public function getSequences()
     {
         return $this->sequences;
     }
-
     /**
-     * @param multitype: $sequences
+     * @return multitype:\iiif\model\resources\Range 
      */
-    public function setSequences($sequences)
+    public function getStructures()
     {
-        $this->sequences = $sequences;
+        return $this->structures;
     }
 }
 

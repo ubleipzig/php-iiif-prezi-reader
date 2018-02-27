@@ -14,6 +14,10 @@ use iiif\model\vocabulary\MiscNames;
 abstract class AbstractIiifResource
 {
     // http://iiif.io/api/presentation/2.1/#technical-properties
+    /**
+     * 
+     * @var string
+     */
     protected $id;
     protected $type;
     protected $viewingHint;
@@ -76,11 +80,19 @@ abstract class AbstractIiifResource
         return $this->getTranslatedField($field, $this->preferredLanguage);
     }
     
+    public function getDefaultLabel()
+    {
+        return $this->getPreferredTranslation($label);
+    }
+    
     protected function loadPropertiesFromArray($jsonAsArray)
     {
         $this->originalJsonArray = $jsonAsArray;
         $this->id = array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null;
         $this->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
+        
+        $this->service = null;
+        
         // TODO alle the other properties
     }
     
@@ -150,6 +162,14 @@ abstract class AbstractIiifResource
             }
         }
     }
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     
 }
 

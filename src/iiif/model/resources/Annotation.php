@@ -8,6 +8,10 @@ class Annotation extends AbstractIiifResource
     const TYPE="oa:Annotation";
     
     protected $motivation;
+    /**
+     * 
+     * @var ContentResource
+     */
     protected $resource;
     protected $on;
     /**

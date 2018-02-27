@@ -10,9 +10,15 @@ class Canvas extends AbstractIiifResource
     
     CONST TYPE="sc:Canvas";
     
-    protected $height;
-    protected $width;
+    /**
+     * 
+     * @var Annotation[]
+     */
     protected $images = array();
+    /**
+     * 
+     * @var AnnotationList
+     */
     protected $otherContent = array();
     /**
      * {@inheritDoc}
@@ -26,5 +32,21 @@ class Canvas extends AbstractIiifResource
         $canvas->loadResources($jsonAsArray, Names::OTHER_CONTENT, AnnotationList::class, $canvas->otherContent);
         return $canvas;
     }
+    /**
+     * @return ContentResource[]:
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * @return ContentResource[]:
+     */
+    public function getOtherContent()
+    {
+        return $this->otherContent;
+    }
+
 }
 

@@ -13,6 +13,10 @@ class Sequence extends AbstractIiifResource
     
     const TYPE="sc:Sequence";
     
+    /**
+     * 
+     * @var Canvas[]
+     */
     protected $canvases = array();
     
     protected $startCanvas;
@@ -26,6 +30,14 @@ class Sequence extends AbstractIiifResource
         $sequence = new Sequence();
         $sequence->loadPropertiesFromArray($jsonAsArray);
         $sequence->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $sequence->canvases);
+        return $sequence;
+    }
+    /**
+     * @return multitype:\iiif\model\resources\Canvas 
+     */
+    public function getCanvases()
+    {
+        return $this->canvases;
     }
 }
 

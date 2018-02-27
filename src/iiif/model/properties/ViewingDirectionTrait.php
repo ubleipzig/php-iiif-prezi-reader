@@ -2,7 +2,7 @@
 namespace iiif\model\properties;
 
 use Exception;
-use model\constants\ViewingDirectionValues;
+use iiif\model\constants\ViewingDirectionValues;
 
 trait ViewingDirectionTrait
 {

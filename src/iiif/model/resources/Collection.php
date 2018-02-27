@@ -12,9 +12,17 @@ class Collection extends AbstractIiifResource
     
     protected $navDate;
     
-    // deprecated
+    /**
+     * 
+     * @var Collection[]
+     * @deprecated IIIF Presentation API doc: "The collections and manifests properties are likely to be removed in version 3.0 in favor of the single members property."
+     */
     protected $collections = array();
-    // deprecated
+    /**
+     * 
+     * @var Manifest[]
+     * @deprecated IIIF Presentation API doc: "The collections and manifests properties are likely to be removed in version 3.0 in favor of the single members property."
+     */
     protected $manifests = array(); 
     protected $members =array();
     /**

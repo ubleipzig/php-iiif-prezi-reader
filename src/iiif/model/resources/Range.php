@@ -12,7 +12,15 @@ class Range extends AbstractIiifResource
     
     const TYPE="sc:Range";
     
+    /**
+     * 
+     * @var Range[]
+     */
     protected $ranges = array();
+    /**
+     * 
+     * @var Canvas[]
+     */
     protected $canvases = array();
     protected $members = array();
     
