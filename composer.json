@@ -1,8 +1,12 @@
 {
-	"name" : "iiif-manifest-reader/iiif-manifest-reader",
+	"name" : "php-iiif-manifest-reader/php-iiif-manifest-reader",
 	"autoload" : {
 		"psr-4" : {
-			"iiif\\" : "src/iiif"
+			"iiif\\" : "src/iiif",
+			"" : "src"
 		}
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "5.7.27"
 	}
 }
