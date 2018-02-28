@@ -1,0 +1,40 @@
+{
+  "@id": "http://example.org/iiif/book1/canvas/p1",
+  "@type": "sc:Canvas",
+  "label": "The label of the canvas",
+  "height": 1000,
+  "width": 750,
+  "thumbnail" : {
+    "@id" : "http://example.org/iiif/book1/canvas/p1/thumb.jpg",
+    "@type": "dctypes:Image",
+    "height": 200,
+    "width": 150
+  },
+  "images": [
+    {
+      "@context": "http://iiif.io/api/presentation/2/context.json",
+      "@id": "http://example.org/iiif/book1/annotation/p0001-image",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@id": "http://example.org/iiif/book1/res/page1.jpg",
+        "@type": "dctypes:Image",
+        "format": "image/jpeg",
+        "service": {
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "http://example.org/images/book1-page1",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        },
+        "height":2000,
+        "width":1500
+      },
+      "on": "http://example.org/iiif/book1/canvas/p1"
+    }
+  ],
+  "otherContent": [
+    {
+      "@id": "http://example.org/iiif/book1/list/p1",
+      "@type": "sc:AnnotationList"
+    }
+  ]
+}
