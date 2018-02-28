@@ -27,5 +27,12 @@ class Annotation extends AbstractIiifResource
         $annotation->loadSingleResouce($jsonAsArray, Names::RESOURCE, ContentResource::class, $annotation->resource);
         return $annotation;
     }
+    /**
+     * @return \iiif\model\resources\ContentResource
+     */
+    public function getResource()
+    {
+        return $this->resource;
+    }
 }
 

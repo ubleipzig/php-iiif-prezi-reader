@@ -36,6 +36,11 @@ abstract class AbstractIiifResource
     // http://iiif.io/api/presentation/2.1/#linking-properties
     protected $related;
     protected $rendering;
+    
+    /**
+     * 
+     * @var Service
+     */
     protected $service;
     protected $seeAlso;
     protected $within;
@@ -82,7 +87,7 @@ abstract class AbstractIiifResource
     
     public function getDefaultLabel()
     {
-        return $this->getPreferredTranslation($label);
+        return $this->getPreferredTranslation($this->label);
     }
     
     protected function loadPropertiesFromArray($jsonAsArray)
@@ -91,7 +96,7 @@ abstract class AbstractIiifResource
         $this->id = array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null;
         $this->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
         
-        $this->service = null;
+        $this->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
         
         // TODO alle the other properties
     }
@@ -169,7 +174,12 @@ abstract class AbstractIiifResource
     {
         return $this->id;
     }
-
-    
+    /**
+     * @return \iiif\model\resources\Service
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
 }
 

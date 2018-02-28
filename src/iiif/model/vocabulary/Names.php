@@ -48,7 +48,7 @@ class Names
     CONST MOTIVATION="motivation";
     CONST RESOURCE="resource";
     CONST ON="on";
-    
+    CONST PROFILE="profile";
     
 }
 
