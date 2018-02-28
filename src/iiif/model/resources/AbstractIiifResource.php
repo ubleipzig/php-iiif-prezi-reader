@@ -26,6 +26,10 @@ abstract class AbstractIiifResource
     protected $label;
     protected $metadata;
     protected $description;
+    /**
+     * 
+     * @var Thumbnail
+     */
     protected $thumbnail;
     
     // http://iiif.io/api/presentation/2.1/#rights-and-licensing-properties
@@ -97,12 +101,14 @@ abstract class AbstractIiifResource
         $this->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
         
         $this->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
+        // TODO According to the specs, some of the resources may provide more than one thumbnail per resource. Value for "thumbnail" can be json array and json object 
+        $this->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
         
         // TODO alle the other properties
     }
     
     // TODO check if one unified method for resource loading is possible
-    // FIXME make this static
+    // FIXME make this static and return value
     protected function loadResources($jsonAsArray, $resourceFieldName, $resourceClass, &$targetArray)
     {
         if (!is_array($jsonAsArray))
@@ -127,7 +133,7 @@ abstract class AbstractIiifResource
         }
     }
 
-    // FIXME make this static
+    // FIXME make this static and return value
     protected function loadSingleResouce($jsonAsArray, $resourceFieldName, $resourceClass, &$targetField)
     {
         if (!is_array($jsonAsArray))
@@ -142,7 +148,7 @@ abstract class AbstractIiifResource
         }
     }
     
-    // FIXME make this static
+    // FIXME make this static and return value
     protected function loadMixedResources($jsonAsArray, $resourceFieldName, $configArray, &$targetArray)
     {
         if (!is_array($jsonAsArray))
@@ -180,6 +186,13 @@ abstract class AbstractIiifResource
     public function getService()
     {
         return $this->service;
+    }
+    /**
+     * @return \iiif\model\resources\Thumbnail
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
     }
 }
 
