@@ -49,6 +49,9 @@ class Names
     CONST RESOURCE="resource";
     CONST ON="on";
     CONST PROFILE="profile";
+
     
+    // IIIF Image Profile
+    const SUPPORTS = "supports";
 }
 

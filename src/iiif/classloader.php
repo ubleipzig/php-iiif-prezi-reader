@@ -2,6 +2,7 @@
 
 // Use this file if you don't want to or can't rely on composer or other autoloaders
 
+require_once(__DIR__."/model/constants/Profile.php");
 require_once(__DIR__."/model/constants/ViewingDirectionValues.php");
 require_once(__DIR__."/model/helper/IiifReader.php");
 require_once(__DIR__."/model/properties/FormatTrait.php");
@@ -19,6 +20,7 @@ require_once(__DIR__."/model/resources/Manifest.php");
 require_once(__DIR__."/model/resources/Range.php");
 require_once(__DIR__."/model/resources/Sequence.php");
 require_once(__DIR__."/model/resources/Service.php");
+require_once(__DIR__."/model/resources/Thumbnail.php");
 require_once(__DIR__."/model/vocabulary/MiscNames.php");
 require_once(__DIR__."/model/vocabulary/Names.php");
 require_once(__DIR__."/model/vocabulary/Types.php");

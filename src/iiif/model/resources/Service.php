@@ -5,16 +5,24 @@ use iiif\model\vocabulary\Names;
 
 class Service
 {
+    /**
+     * 
+     * @var string
+     */
     protected $id;
+    /**
+     * 
+     * @var string
+     */
     protected $context;
+    /**
+     * 
+     * @var string
+     */
     protected $profile;
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
-    }
     
     public static function fromArray($array)
     {
@@ -34,6 +42,28 @@ class Service
         }
         return null;
     }
-    
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 }
 
