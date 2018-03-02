@@ -16,11 +16,10 @@ class AnnotationList extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $annotationList = new AnnotationList();
-        $annotationList->loadPropertiesFromArray($jsonAsArray);
-        $annotationList->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $annotationList->resources);
+        $annotationList = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $annotationList->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $annotationList->resources, $allResources);
         return $annotationList;
     }
 }

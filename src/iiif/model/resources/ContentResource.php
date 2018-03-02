@@ -12,10 +12,9 @@ class ContentResource extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $contentResource = new ContentResource();
-        $contentResource->loadPropertiesFromArray($jsonAsArray);
+        $contentResource = self::loadPropertiesFromArray($jsonAsArray, $allResources);
         
         $contentResource->format = array_key_exists(Names::FORMAT, $jsonAsArray) ? $jsonAsArray[Names::FORMAT] : null;
         

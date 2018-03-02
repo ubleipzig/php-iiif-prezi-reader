@@ -18,13 +18,12 @@ class Annotation extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $annotation = new Annotation();
-        $annotation->loadPropertiesFromArray($jsonAsArray);
+        $annotation = self::loadPropertiesFromArray($jsonAsArray, $allResources);
         $annotation->motivation = array_key_exists(Names::MOTIVATION, $jsonAsArray) ? $jsonAsArray[Names::MOTIVATION] : null;
         $annotation->on = array_key_exists(Names::ON, $jsonAsArray) ? $jsonAsArray[Names::ON] : null;
-        $annotation->loadSingleResouce($jsonAsArray, Names::RESOURCE, ContentResource::class, $annotation->resource);
+        $annotation->loadSingleResouce($jsonAsArray, Names::RESOURCE, ContentResource::class, $annotation->resource, $allResources);
         return $annotation;
     }
     /**

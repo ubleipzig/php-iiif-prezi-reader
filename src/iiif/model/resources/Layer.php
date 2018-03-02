@@ -11,7 +11,7 @@ class Layer extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
         // TODO Auto-generated method stub
         

@@ -28,12 +28,19 @@ class Manifest extends AbstractIiifResource
      */
     protected $structures = array();
     
-    public static function fromArray($jsonAsArray)
+    /**
+     * 
+     * @var AbstractIiifResource[]
+     */
+    protected $containedResources = array();
+    
+    public static function fromArray($jsonAsArray, &$allResources = array())
     {
-        $manifest = new Manifest();
-        $manifest->loadPropertiesFromArray($jsonAsArray);
-        $manifest->loadResources($jsonAsArray, Names::SEQUENCES, Sequence::class, $manifest->sequences);
-        $manifest->loadResources($jsonAsArray, Names::STRUCTURES, Range::class, $manifest->structures);
+        $manifest = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        /* @var $manifest Manifest */
+        $manifest->containedResources=&$allResources;
+        $manifest->loadResources($jsonAsArray, Names::SEQUENCES, Sequence::class, $manifest->sequences, $manifest->containedResources);
+        $manifest->loadResources($jsonAsArray, Names::STRUCTURES, Range::class, $manifest->structures, $manifest->containedResources);
         return $manifest;
     }
     /**
@@ -49,6 +56,11 @@ class Manifest extends AbstractIiifResource
     public function getStructures()
     {
         return $this->structures;
+    }
+    
+    public function getContainedResourceById($id)
+    {
+        if (array_key_exists($id, $this->containedResources)) return $this->containedResources[$id];
     }
 }
 

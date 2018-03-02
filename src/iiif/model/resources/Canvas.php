@@ -24,12 +24,11 @@ class Canvas extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $canvas = new Canvas();
-        $canvas->loadPropertiesFromArray($jsonAsArray);
-        $canvas->loadResources($jsonAsArray, Names::IMAGES, Annotation::class, $canvas->images);
-        $canvas->loadResources($jsonAsArray, Names::OTHER_CONTENT, AnnotationList::class, $canvas->otherContent);
+        $canvas = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $canvas->loadResources($jsonAsArray, Names::IMAGES, Annotation::class, $canvas->images, $allResources);
+        $canvas->loadResources($jsonAsArray, Names::OTHER_CONTENT, AnnotationList::class, $canvas->otherContent, $allResources);
         return $canvas;
     }
     /**

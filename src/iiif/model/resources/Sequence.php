@@ -25,11 +25,10 @@ class Sequence extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $sequence = new Sequence();
-        $sequence->loadPropertiesFromArray($jsonAsArray);
-        $sequence->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $sequence->canvases);
+        $sequence = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $sequence->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $sequence->canvases, $allResources);
         return $sequence;
     }
     /**

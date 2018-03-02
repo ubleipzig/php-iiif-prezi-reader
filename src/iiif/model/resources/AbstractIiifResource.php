@@ -54,6 +54,10 @@ abstract class AbstractIiifResource
     // keep it for faster and easier searches
     protected $originalJsonArray;
     
+    /**
+     * 
+     * @var boolean
+     */
     protected $reference;
     
     public static function fromJson($jsonAsString)
@@ -62,7 +66,7 @@ abstract class AbstractIiifResource
         return static::fromArray($jsonAsArray);
     }
 
-    abstract public static function fromArray($jsonAsArray);
+    abstract public static function fromArray($jsonAsArray, &$allResources = array());
     
     // could be static
     protected function getTranslatedField($field, $language)
@@ -94,22 +98,38 @@ abstract class AbstractIiifResource
         return $this->getPreferredTranslation($this->label);
     }
     
-    protected function loadPropertiesFromArray($jsonAsArray)
+    protected static function loadPropertiesFromArray($jsonAsArray, &$allResources)
     {
-        $this->originalJsonArray = $jsonAsArray;
-        $this->id = array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null;
-        $this->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
+        // everything but sequences and annotations MUST have an id, annotations still should have an id
+        $resourceId=array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null;
         
-        $this->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
+        $instance = null;
+        if ($resourceId != null && array_key_exists($resourceId, $allResources) && $allResources[$resourceId] != null) {
+            // TODO Is there any way that there is more than a reference in the $allResources array?
+            $instance = &$allResources[$resourceId];
+        } else {
+            $clazz = get_called_class();
+            $instance = new $clazz();
+            $allResources[$resourceId] = &$instance;
+        }
+        
+        /* @var $instance AbstractIiifResource */
+        $instance->originalJsonArray = $jsonAsArray;
+        $instance->id = $resourceId;
+        $instance->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
+        
+        $instance->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
         // TODO According to the specs, some of the resources may provide more than one thumbnail per resource. Value for "thumbnail" can be json array and json object 
-        $this->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
+        $instance->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
         
         // TODO alle the other properties
+        
+        return $instance;
     }
     
     // TODO check if one unified method for resource loading is possible
     // FIXME make this static and return value
-    protected function loadResources($jsonAsArray, $resourceFieldName, $resourceClass, &$targetArray)
+    protected function loadResources($jsonAsArray, $resourceFieldName, $resourceClass, &$targetArray, &$allResources)
     {
         if (!is_array($jsonAsArray))
         {
@@ -120,13 +140,20 @@ abstract class AbstractIiifResource
             $resourcesAsArray = $jsonAsArray[$resourceFieldName];
             foreach ($resourcesAsArray as $resourceAsArray)
             {
+                $resource = null;
                 if (is_array($resourceAsArray)) {
-                    $resource = $resourceClass::fromArray($resourceAsArray);
+                    $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
                 }
                 elseif (is_string($resourceAsArray)) {
-                    $resource = new $resourceClass();
-                    $resource->reference = true;
-                    $resource->id = $resourceAsArray;
+                    if (array_key_exists($resourceAsArray, $allResources)) {
+                        $resource = &$allResources[$resourceAsArray];
+                    }
+                    else {
+                        $resource = new $resourceClass();
+                        $resource->reference = true;
+                        $resource->id = $resourceAsArray;
+                        $allResources[$resourceAsArray] = $resource;
+                    }
                 }
                 $targetArray[] = $resource;
             }
@@ -134,7 +161,7 @@ abstract class AbstractIiifResource
     }
 
     // FIXME make this static and return value
-    protected function loadSingleResouce($jsonAsArray, $resourceFieldName, $resourceClass, &$targetField)
+    protected function loadSingleResouce($jsonAsArray, $resourceFieldName, $resourceClass, &$targetField, &$allResources)
     {
         if (!is_array($jsonAsArray))
         {
@@ -143,13 +170,13 @@ abstract class AbstractIiifResource
         if (array_key_exists($resourceFieldName, $jsonAsArray))
         {
             $resourceAsArray = $jsonAsArray[$resourceFieldName];
-            $resource = $resourceClass::fromArray($resourceAsArray);
+            $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
             $targetField = $resource;
         }
     }
     
     // FIXME make this static and return value
-    protected function loadMixedResources($jsonAsArray, $resourceFieldName, $configArray, &$targetArray)
+    protected function loadMixedResources($jsonAsArray, $resourceFieldName, $configArray, &$targetArray, &$allResources)
     {
         if (!is_array($jsonAsArray))
         {
@@ -165,13 +192,25 @@ abstract class AbstractIiifResource
                     if ($resourceAsArray[Names::TYPE]==$config[Names::TYPE])
                     {
                         $resourceClass = $config[MiscNames::CLAZZ];
-                        $resource = $resourceClass::fromArray($resourceAsArray);
+                        $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
                         $targetArray[] = $resource;
                         break;
                     }
                 }
             }
         }
+    }
+    protected function getContainedResources()
+    {
+        
+    }
+    
+    /**
+     * @return boolean
+     */
+    public function isReference()
+    {
+        return $this->reference;
     }
     /**
      * @return string

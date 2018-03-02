@@ -30,16 +30,15 @@ class Range extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $range = new Range();
-        $range->loadPropertiesFromArray($jsonAsArray);
-        $range->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $range->canvases);
-        $range->loadResources($jsonAsArray, Names::RANGES, Range::class, $range->ranges);
+        $range = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $range->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $range->canvases, $allResources);
+        $range->loadResources($jsonAsArray, Names::RANGES, Range::class, $range->ranges, $allResources);
         
         $memberRanges=array(Names::TYPE=>Types::SC_RANGE, MiscNames::CLAZZ=>Range::class);
         $memberCanvases=array(Names::TYPE=>Types::SC_CANVAS, MiscNames::CLAZZ=>Canvas::class);
-        $range->loadMixedResources($jsonAsArray, Names::MEMBERS, array($memberRanges, $memberCanvases), $range->members);
+        $range->loadMixedResources($jsonAsArray, Names::MEMBERS, array($memberRanges, $memberCanvases), $range->members, $allResources);
         
         // TODO load startcanvas
         // TODO set viewingDirection

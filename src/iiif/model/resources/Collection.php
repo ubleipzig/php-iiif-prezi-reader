@@ -29,12 +29,11 @@ class Collection extends AbstractIiifResource
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray)
+    public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $collection=new Collection();
-        $collection->loadPropertiesFromArray($jsonAsArray);
-        $collection->loadResources($jsonAsArray, Names::COLLECTIONS, Collection::class, $collection->collections);
-        $collection->loadResources($jsonAsArray, Names::MANIFESTS, Manifest::class, $collection->manifests);
+        $collection = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $collection->loadResources($jsonAsArray, Names::COLLECTIONS, Collection::class, $collection->collections, $allResources);
+        $collection->loadResources($jsonAsArray, Names::MANIFESTS, Manifest::class, $collection->manifests, $allResources);
         // TODO: Members. Could be Collection or Manifest.
         return $collection;
     }
