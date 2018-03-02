@@ -22,6 +22,7 @@ class Range extends AbstractIiifResource
      * @var Canvas[]
      */
     protected $canvases = array();
+    
     protected $members = array();
     
     protected $startCanvas;
@@ -45,6 +46,31 @@ class Range extends AbstractIiifResource
         
         return $range;
     }
+    /**
+     * @return multitype:\iiif\model\resources\Range 
+     */
+    public function getRanges()
+    {
+        return $this->ranges;
+    }
+
+    /**
+     * @return multitype:\iiif\model\resources\Canvas 
+     */
+    public function getCanvases()
+    {
+        return $this->canvases;
+    }
+
+    /**
+     * @return multitype:
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+
 
 }
 
