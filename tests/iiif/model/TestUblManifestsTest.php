@@ -1,11 +1,11 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use iiif\model\resources\Manifest;
+use iiif\model\AbstractIiifTest;
 use iiif\model\helper\IiifReader;
+use iiif\model\resources\Manifest;
 use iiif\model\resources\Sequence;
 
-class TestUblManifestsTest extends TestCase
+class TestUblManifestsTest extends AbstractIiifTest
 {
     const MANIFEST_EXAMPLES = array('manifest-0000006761.json', 'manifest-0000000720.json');
     
@@ -13,16 +13,16 @@ class TestUblManifestsTest extends TestCase
     {
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
-            $manifestAsJson=file_get_contents(__DIR__.'/../../resources/'.$manifestFile);
+            $manifestAsJson=self::getJson($manifestFile);
             Manifest::fromJson($manifestAsJson, $manifestFile." did not load");
         }
     }
     
-    public function testUBLResourceType()
+    public function testUBLManifestGetResourceClassForString()
     {
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
-            $documentAsJson=file_get_contents(__DIR__.'/../../resources/'.$manifestFile);
+            $documentAsJson=self::getJson($manifestFile);
             $classForDocument = IiifReader::getResourceClassForString($documentAsJson);
             self::assertEquals(Manifest::class, $classForDocument, 'Wrong resource class for '.$manifestFile);
             $classForDocument::fromJson($documentAsJson, 'Loading '.$manifestFile.'by class did not work');
@@ -33,7 +33,7 @@ class TestUblManifestsTest extends TestCase
     {
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
-            $documentAsJson=file_get_contents(__DIR__.'/../../resources/'.$manifestFile);
+            $documentAsJson=self::getJson($manifestFile);
             $resource=IiifReader::getIiifResourceFromJsonString($documentAsJson);
             self::assertInstanceOf(Manifest::class, $resource, 'Not a manifest: '.$manifestFile);
             self::assertNotNull($resource->getSequences(), 'No sequences found: '.$manifestFile);
