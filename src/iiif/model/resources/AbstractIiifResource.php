@@ -68,6 +68,17 @@ abstract class AbstractIiifResource
 
     abstract public static function fromArray($jsonAsArray, &$allResources = array());
     
+    private static function getResourceIdWithoutFragment($original, $resourceClass=null)
+    {
+        $resourceClass = $resourceClass==null ? get_called_class() : $resourceClass;
+        if ($original!=null && $resourceClass == Canvas::class && strpos($original, '#')!==false)
+        {
+            // FIXME xywh URL fragments are currently lost
+            return explode('#', $original)[0];
+        }
+        return $original;
+    }
+    
     // could be static
     protected function getTranslatedField($field, $language)
     {
@@ -101,7 +112,7 @@ abstract class AbstractIiifResource
     protected static function loadPropertiesFromArray($jsonAsArray, &$allResources)
     {
         // everything but sequences and annotations MUST have an id, annotations still should have an id
-        $resourceId=array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null;
+        $resourceId=self::getResourceIdWithoutFragment(array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null);
         
         $instance = null;
         if ($resourceId != null && array_key_exists($resourceId, $allResources) && $allResources[$resourceId] != null) {
@@ -151,7 +162,8 @@ abstract class AbstractIiifResource
                     else {
                         $resource = new $resourceClass();
                         $resource->reference = true;
-                        $resource->id = $resourceAsArray;
+                        $resource->id = self::getResourceIdWithoutFragment($resourceAsArray, $resourceClass);
+                        
                         $allResources[$resourceAsArray] = $resource;
                     }
                 }
