@@ -5,10 +5,7 @@ use iiif\model\resources\Manifest;
 use iiif\model\helper\IiifReader;
 use iiif\model\resources\Sequence;
 
-/**
- * TestUblManifests test case.
- */
-class UblManifestsTest extends TestCase
+class TestUblManifestsTest extends TestCase
 {
     const MANIFEST_EXAMPLES = array('manifest-0000006761.json', 'manifest-0000000720.json');
     

@@ -1,10 +1,19 @@
 <?php
 namespace iiif\model\properties;
 
+use iiif\model\vocabulary\Names;
+
 trait WidthAndHeightTrait
 {
     protected $width;
     protected $height;
+    
+    public function setWidthAndHeightFromJsonArray($jsonAsArray)
+    {
+        $this->width = array_key_exists(Names::WIDTH, $jsonAsArray) ? $jsonAsArray[Names::WIDTH] : null;
+        $this->height = array_key_exists(Names::HEIGHT, $jsonAsArray) ? $jsonAsArray[Names::HEIGHT] : null;
+    }
+    
     /**
      * @return int
      */
@@ -36,8 +45,6 @@ trait WidthAndHeightTrait
     {
         $this->height = $height;
     }
-
-    
     
 }
 

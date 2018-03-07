@@ -17,7 +17,7 @@ class Canvas extends AbstractIiifResource
     protected $images = array();
     /**
      * 
-     * @var AnnotationList
+     * @var AnnotationList[]
      */
     protected $otherContent = array();
     /**
@@ -29,6 +29,7 @@ class Canvas extends AbstractIiifResource
         $canvas = self::loadPropertiesFromArray($jsonAsArray, $allResources);
         $canvas->loadResources($jsonAsArray, Names::IMAGES, Annotation::class, $canvas->images, $allResources);
         $canvas->loadResources($jsonAsArray, Names::OTHER_CONTENT, AnnotationList::class, $canvas->otherContent, $allResources);
+        $canvas->setWidthAndHeightFromJsonArray($jsonAsArray);
         return $canvas;
     }
     /**

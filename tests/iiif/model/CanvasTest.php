@@ -1,12 +1,12 @@
 <?php
 use iiif\model\resources\Canvas;
-
-require_once 'iiif/model/resources/Canvas.php';
+use iiif\model\AbstractIiifTest;
+use iiif\model\resources\AnnotationList;
 
 /**
  * Canvas test case.
  */
-class CanvasTest extends PHPUnit_Framework_TestCase
+class CanvasTest extends AbstractIiifTest
 {
 
     /**
@@ -14,50 +14,25 @@ class CanvasTest extends PHPUnit_Framework_TestCase
      * @var Canvas
      */
     private $canvas;
+    private $json;
 
-    /**
-     * Prepares the environment before running a test.
-     */
     protected function setUp()
     {
-        parent::setUp();
-        
-        // TODO Auto-generated CanvasTest::setUp()
-        
-        $this->canvas = new Canvas(/* parameters */);
+        $this->json = parent::getJson('canvas-example.json');
+        $array = json_decode($this->json, true);
+        $this->canvas = Canvas::fromArray($array);
     }
-
-    /**
-     * Cleans up the environment after running a test.
-     */
-    protected function tearDown()
-    {
-        // TODO Auto-generated CanvasTest::tearDown()
-        $this->canvas = null;
-        
-        parent::tearDown();
-    }
-
-    /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
+    
+    
     /**
      * Tests Canvas::fromArray()
      */
     public function testFromArray()
     {
-        $json = file_get_contents(__DIR__.'/../../resources/canvas-example.json');
-        $array = json_decode($json, true);
-        $canvas = Canvas::fromArray($array);
-        
-        self::assertNotNull($canvas);
-        self::assertEquals("http://example.org/iiif/book1/canvas/p1", $canvas->getId());
-        self::assertEquals("The label of the canvas", $canvas->getDefaultLabel());
+        self::assertNotNull($this->canvas);
+        self::assertInstanceOf(Canvas::class, $this->canvas);
+        self::assertEquals("http://example.org/iiif/book1/canvas/p1", $this->canvas->getId());
+        self::assertEquals("The label of the canvas", $this->canvas->getDefaultLabel());
     }
 
     /**
@@ -65,10 +40,8 @@ class CanvasTest extends PHPUnit_Framework_TestCase
      */
     public function testGetImages()
     {
-        // TODO Auto-generated CanvasTest->testGetImages()
-        $this->markTestIncomplete("getImages test not implemented");
-        
-        $this->canvas->getImages(/* parameters */);
+        self::assertNotNull($this->canvas->getImages(),'No images.');
+        self::assertNotEmpty($this->canvas->getImages(),'No images.');
     }
 
     /**
@@ -76,10 +49,27 @@ class CanvasTest extends PHPUnit_Framework_TestCase
      */
     public function testGetOtherContent()
     {
-        // TODO Auto-generated CanvasTest->testGetOtherContent()
-        $this->markTestIncomplete("getOtherContent test not implemented");
-        
-        $this->canvas->getOtherContent(/* parameters */);
+        self::assertNotNull($this->canvas->getOtherContent(), 'otherContent is null.');
+        self::assertNotEmpty($this->canvas->getOtherContent(), 'otherContent is empty.');
+        self::assertInstanceOf(AnnotationList::class, $this->canvas->getOtherContent()[0], 'otherContent is not an AnnotationList array.');
+    }
+    
+    public function testGetHeight()
+    {
+        self::assertEquals(1000, $this->canvas->getHeight());
+    }
+
+    public function testGetWidth()
+    {
+        self::assertEquals(750, $this->canvas->getWidth());
+    }
+    public function testGetThumbnail()
+    {
+        self::assertNotNull($this->canvas->getThumbnail(), 'No thumbnail.');
+        self::assertNotNull($this->canvas->getThumbnail()->getImageUrl(), 'No thumbnail image URL.');
+        self::assertEquals('http://example.org/iiif/book1/canvas/p1/thumb.jpg', $this->canvas->getThumbnail()->getImageUrl(), 'Wrong thumbnail image URL.');
+        self::assertEquals(200, $this->canvas->getThumbnail()->getHeight(), 'Wrong thumbnail height.');
+        self::assertEquals(150, $this->canvas->getThumbnail()->getWidth(), 'Wrong thumbnail width.');
     }
 }
 
