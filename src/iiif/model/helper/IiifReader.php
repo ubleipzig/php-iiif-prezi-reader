@@ -31,6 +31,10 @@ class IiifReader
     public static function getIiifResourceFromJsonString($jsonAsString)
     {
         $classForJson = self::getResourceClassForString($jsonAsString);
+        if ($classForJson == null)
+        {
+            throw new \Exception('No class found for '.$jsonAsString.' in '.self::class);
+        }
         return $classForJson::fromJson($jsonAsString);
     }
     
