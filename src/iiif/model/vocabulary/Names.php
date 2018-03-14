@@ -53,5 +53,12 @@ class Names
     
     // IIIF Image Profile
     const SUPPORTS = "supports";
+
+    // Value for label/value metadata
+    const VALUE = "value";
+    
+    // Language Properties
+    const AT_LANGUAGE = "@language";
+    const AT_VALUE = "@value";
 }
 

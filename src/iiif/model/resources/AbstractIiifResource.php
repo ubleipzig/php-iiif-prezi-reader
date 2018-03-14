@@ -133,7 +133,7 @@ abstract class AbstractIiifResource
         // TODO According to the specs, some of the resources may provide more than one thumbnail per resource. Value for "thumbnail" can be json array and json object 
         $instance->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
         
-        // TODO alle the other properties
+        // TODO all the other properties
         
         return $instance;
     }
@@ -245,5 +245,54 @@ abstract class AbstractIiifResource
     {
         return $this->thumbnail;
     }
+    
+    /**
+     * 
+     * @param string $label
+     * @param string $language
+     * @return string value for given metadata label; preferably in the same language as the label if 
+     * no language is given; first language language is provided by neither the $language paramater 
+     * nor the label. 
+     */
+    public function getMetadataForLabel($label, $language = null)
+    {
+        /*
+         * ALL teh possibilities!
+         *  [{"label": {"@value": "Example label", "@language": "en"}, "value": {"@value": "Example value", "@language": "en"}}]
+         *  [{"label": "Example label", "value": "Example value"}]
+         *  ... and combinations with language/translation info either in the label or in the value.
+         *  
+         *  TODO Presentation API 3 will change the structure and even allow multiple values: http://prezi3.iiif.io/api/presentation/3.0/#language-of-property-values
+         */
+        if ($this->metadata == null || $label == null) return null;
+        $requestedMetadatum = null;
+        foreach ($this->metadata as $metadatum)
+        {
+            if (is_string($metadatum[Names::LABEL])) {
+                if ($label == $metadatum[Names::LABEL])
+                {
+                    $requestedMetadatum = $metadatum;
+                    break;
+                }
+            }
+            elseif (is_array($metadatum[Names::LABEL])) {
+                foreach ($metadatum[Names::LABEL] as $translatedLabel)
+                {
+                    if ($label == $translatedLabel[Names::AT_VALUE])
+                    {
+                        $requestedMetadatum = $metadatum;
+                        if ($language !=null && $metadatum[Names::AT_LANGUAGE] == $language) {
+                            break 2;
+                        }
+                    }
+                }
+            }
+        }
+        if ($requestedMetadatum == null) return null;
+        if (is_array($requestedMetadatum[Names::VALUE]))
+        {
+            
+        }
+        return $requestedMetadatum[Names::VALUE];
+    }
 }
-
