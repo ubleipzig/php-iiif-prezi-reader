@@ -8,5 +8,12 @@
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "5.7.27"
-	}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"iiif\\" : "tests/iiif",
+			"" : "src"
+		}
+	},
+	"minimum-stability" : "dev"
 }
