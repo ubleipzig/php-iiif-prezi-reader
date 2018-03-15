@@ -79,22 +79,25 @@ abstract class AbstractIiifResource
         return $original;
     }
     
-    // could be static
     protected function getTranslatedField($field, $language)
     {
         if (is_null($field)) return null;
         if (is_string($field)) return $field;
         if (is_array($field)) {
-            $selectedValue = $field[0];
-            if (!(is_null($language))) {
-                foreach ($field as $valueAndLanguage) {
-                    if ($valueAndLanguage["@language"] == $language)
-                    {
-                        $selectedValue = $valueAndLanguage;
+            if (is_array($field[0]))
+            {
+                $selectedValue = $field[0];
+                if (!(is_null($language))) {
+                    foreach ($field as $valueAndLanguage) {
+                        if ($valueAndLanguage[Names::AT_LANGUAGE] == $language)
+                        {
+                            $selectedValue = $valueAndLanguage;
+                        }
                     }
                 }
+                return is_null($selectedValue ? null : $selectedValue["@value"]);
             }
-            return is_null($selectedValue ? null : $selectedValue["@value"]);
+            return $field;
         }
         return null;
     }
@@ -245,7 +248,45 @@ abstract class AbstractIiifResource
     {
         return $this->thumbnail;
     }
+
     
+    
+    /**
+     * @return mixed
+     */
+    public function getViewingHint()
+    {
+        return $this->viewingHint;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function getTranslatedLabel($language = null)
+    {
+        return self::getTranslatedField($this->label, $language);
+    }
     /**
      * 
      * @param string $label
@@ -262,7 +303,7 @@ abstract class AbstractIiifResource
          *  [{"label": "Example label", "value": "Example value"}]
          *  ... and combinations with language/translation info either in the label or in the value.
          *  
-         *  TODO Presentation API 3 will change the structure and even allow multiple values: http://prezi3.iiif.io/api/presentation/3.0/#language-of-property-values
+         *  TODO Presentation API 3 will change the structure: http://prezi3.iiif.io/api/presentation/3.0/#language-of-property-values
          */
         if ($this->metadata == null || $label == null) return null;
         $requestedValue = null;

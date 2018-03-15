@@ -109,6 +109,26 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         
         $this->abstractIiifResource->getThumbnail(/* parameters */);
     }
+    
+    /**
+     * Tests AbstractIiifResource->getTranslatedLabel()
+     */
+    public function testGetTranslatedLabel()
+    {
+        $this->abstractIiifResource->setLabel(null);
+        $label = $this->abstractIiifResource->getTranslatedLabel();
+        self::assertNull($label);
+        $label = $this->abstractIiifResource->getTranslatedLabel("en");
+        self::assertNull($label);
+        
+        $this->prepareLabel("My label");
+        $label = $this->abstractIiifResource->getTranslatedLabel();
+        self::assertEquals("My label", $label);
+        $label = $this->abstractIiifResource->getTranslatedLabel("en");
+        self::assertEquals("My label", $label);
+        
+        $this->markTestIncomplete("getTranslatedLabel test not implemented");
+    }
 
     /**
      * Tests AbstractIiifResource->getMetadateForLabel()
@@ -242,13 +262,18 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         self::assertContains("My other value", $metadataValue);
         self::assertContains("My second other value", $metadataValue);
         self::assertContains("My third other value", $metadataValue);
-        
-        
     }
     
     private function prepareMetadata($metadataString)
     {
         $metadata = json_decode($metadataString, true);
         $this->abstractIiifResource->setMetadata($metadata);
+    }
+    private function prepareLabel($labelString)
+    {
+        $label = json_decode($labelString, true);
+        $label = $label==null?$labelString:$label;
+        $this->abstractIiifResource->setLabel($label);
+        
     }
 }

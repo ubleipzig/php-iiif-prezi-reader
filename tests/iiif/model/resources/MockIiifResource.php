@@ -12,5 +12,9 @@ class MockIiifResource extends AbstractIiifResource
     {
         $this->metadata = $metadata;
     }
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
 }
 
