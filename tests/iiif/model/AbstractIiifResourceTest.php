@@ -226,6 +226,24 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         self::assertEquals("Mein Datum", $metadataValue);
         $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Datum", "en");
         self::assertEquals("My datum", $metadataValue);
+
+        // Test metadata with arrays of values
+        $this->prepareMetadata('[{"label": "My label", "value": ["My value", "My second value", "My third value"]}, '.
+            '{"label": "My other label", "value": ["My other value", "My second other value", "My third other value"]}]');
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label");
+        self::assertTrue(is_array($metadataValue));
+        self::assertContains("My value", $metadataValue);
+        self::assertContains("My second value", $metadataValue);
+        self::assertContains("My third value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My other label");
+        self::assertTrue(is_array($metadataValue));
+        self::assertContains("My other value", $metadataValue);
+        self::assertContains("My second other value", $metadataValue);
+        self::assertContains("My third other value", $metadataValue);
+        
+        
     }
     
     private function prepareMetadata($metadataString)

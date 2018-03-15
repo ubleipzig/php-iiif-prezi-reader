@@ -300,17 +300,20 @@ abstract class AbstractIiifResource
             return $requestedValue;
         }
         if (is_array($requestedValue)) {
-            $firstValue = null;
-            foreach ($requestedValue as $translatedValue)
-            {
-                if ($translatedValue[Names::AT_LANGUAGE] == $targetLanguage) {
-                    return $translatedValue[Names::AT_VALUE];
+            if (is_array($requestedValue[0])) {
+                $firstValue = null;
+                foreach ($requestedValue as $translatedValue)
+                {
+                    if ($translatedValue[Names::AT_LANGUAGE] == $targetLanguage) {
+                        return $translatedValue[Names::AT_VALUE];
+                    }
+                    if ($firstValue == null) {
+                        $firstValue = $translatedValue[Names::AT_VALUE];
+                    }
                 }
-                if ($firstValue == null) {
-                    $firstValue = $translatedValue[Names::AT_VALUE];
-                }
+                return $firstValue;
             }
-            return $firstValue;
+            return $requestedValue;
         }
         // this shouldn't happen
         return null;
