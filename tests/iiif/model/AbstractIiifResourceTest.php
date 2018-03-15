@@ -115,31 +115,122 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetMetadataForLabel()
     {
+        // Test null value
         $this->abstractIiifResource->setMetadata(null);
         $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopfully no error if metadata is set to null");
         self::assertNull($metadataValue);
         
-        $metadataString = '[]';
-        $metadata = json_decode($metadataString, true);
-        $this->abstractIiifResource->setMetadata($metadata);
+        // Test empty metadata
+        $this->prepareMetadata('[]');
         $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopfully no error for empty metadata");
         self::assertNull($metadataValue);
         
-        $metadataString = '[{"label": "My label", "value": "My value"}]';
-        $metadata = json_decode($metadataString, true);
-        $this->abstractIiifResource->setMetadata($metadata);
+        // Test untranslated metadata
+        $this->prepareMetadata('[{"label": "My label", "value": "My value"}]');
         $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label");
         self::assertNull($metadataValue);
         $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label");
         self::assertEquals("My value", $metadataValue);
 
-        $metadataString = '[{"label": [{"@value": "My label", "@language": "en"}, {"@value": "Meine Beschriftung", "@language": "de"}], "value": [{"@value": "My value", "@language": "en"}, {"@value": "Mein Wert", "@language": "de"}]}]';
+        // Test translated metadata
+        $this->prepareMetadata('[{"label": [{"@value": "My label", "@language": "en"}, {"@value": "Meine Beschriftung", "@language": "de"}],'.
+            ' "value": [{"@value": "My value", "@language": "en"}, {"@value": "Mein Wert", "@language": "de"}]}]');
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label", "de");
+        self::assertEquals("Mein Wert", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine Beschriftung");
+        self::assertEquals("Mein Wert", $metadataValue);
+        
+        // Test translated metadata with multiple entries
+        $this->prepareMetadata('[{"label": [{"@value": "My label", "@language": "en"}, {"@value": "Meine Beschriftung", "@language": "de"}],'.
+            ' "value": [{"@value": "My value", "@language": "en"}, {"@value": "Mein Wert", "@language": "de"}]},'.
+            ' {"label": [{"@value": "My other label", "@language": "en"}, {"@value": "Meine andere Beschriftung", "@language": "de"}],'.
+            ' "value": [{"@value": "My other value", "@language": "en"}, {"@value": "Mein anderer Wert", "@language": "de"}]}]');
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label", "de");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label", "en");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My other label");
+        self::assertEquals("My other value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine Beschriftung");
+        self::assertEquals("Mein Wert", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine andere Beschriftung");
+        self::assertEquals("Mein anderer Wert", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My other label", "de");
+        self::assertEquals("Mein anderer Wert", $metadataValue);
+        
+        // Test metadata with untranslated label and translated values
+        $this->prepareMetadata('[{"label": "My label",'.
+            ' "value": [{"@value": "My value", "@language": "en"}, {"@value": "Mein Wert", "@language": "de"}]},'.
+            ' {"label": "Meine andere Beschriftung",'.
+            ' "value": [{"@value": "My other value", "@language": "en"}, {"@value": "Mein anderer Wert", "@language": "de"}]}]');
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label", "en");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label", "de");
+        self::assertEquals("Mein Wert", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine andere Beschriftung");
+        self::assertEquals("My other value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine andere Beschriftung", "en");
+        self::assertEquals("My other value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine andere Beschriftung", "de");
+        self::assertEquals("Mein anderer Wert", $metadataValue);
         
         
-        // TODO Auto-generated AbstractIiifResourceTest->testGetMetadateForLabel()
-        $this->markTestIncomplete("getMetadateForLabel test not implemented");
+        // Test metadata with translated label and untranslated values
+        $this->prepareMetadata('[{"label": [{"@value": "My label", "@language": "en"}, {"@value": "Meine Beschriftung", "@language": "de"}],'.
+            ' "value": "My value"},'.
+            ' {"label": [{"@value": "My other label", "@language": "en"}, {"@value": "Meine andere Beschriftung", "@language": "de"}],'.
+            ' "value": "Mein anderer Wert"}]');
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label", "en");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My label", "de");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine Beschriftung");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine Beschriftung", "de");
+        self::assertEquals("My value", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("My other label");
+        self::assertEquals("Mein anderer Wert", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine andere Beschriftung");
+        self::assertEquals("Mein anderer Wert", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Meine andere Beschriftung", "en");
+        self::assertEquals("Mein anderer Wert", $metadataValue);
         
-        $this->abstractIiifResource->getMetadataForLabel(/* parameters */);
+        // Test metadata with conflicting translations
+        $this->prepareMetadata('[{"label": [{"@value": "Date", "@language": "en"}, {"@value": "Datum", "@language": "de"}],'.
+            ' "value": [{"@value": "My date", "@language": "en"}, {"@value": "Mein Datum", "@language": "de"}]},'.
+            ' {"label": [{"@value": "Datum", "@language": "en"}, {"@value": "Messwert", "@language": "de"}],'.
+            ' "value": [{"@value": "My datum", "@language": "en"}, {"@value": "Mein Messwert", "@language": "de"}]}]');
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Not my label");
+        self::assertNull($metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Date");
+        self::assertEquals("My date", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Datum");
+        self::assertEquals("Mein Datum", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Datum", "de");
+        self::assertEquals("Mein Datum", $metadataValue);
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Datum", "en");
+        self::assertEquals("My datum", $metadataValue);
+    }
+    
+    private function prepareMetadata($metadataString)
+    {
+        $metadata = json_decode($metadataString, true);
+        $this->abstractIiifResource->setMetadata($metadata);
     }
 }
-

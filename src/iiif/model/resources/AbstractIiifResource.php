@@ -265,13 +265,14 @@ abstract class AbstractIiifResource
          *  TODO Presentation API 3 will change the structure and even allow multiple values: http://prezi3.iiif.io/api/presentation/3.0/#language-of-property-values
          */
         if ($this->metadata == null || $label == null) return null;
-        $requestedMetadatum = null;
+        $requestedValue = null;
+        $targetLanguage = $language==null ? null : $language;
         foreach ($this->metadata as $metadatum)
         {
             if (is_string($metadatum[Names::LABEL])) {
                 if ($label == $metadatum[Names::LABEL])
                 {
-                    $requestedMetadatum = $metadatum;
+                    $requestedValue = $metadatum[Names::VALUE];
                     break;
                 }
             }
@@ -280,19 +281,38 @@ abstract class AbstractIiifResource
                 {
                     if ($label == $translatedLabel[Names::AT_VALUE])
                     {
-                        $requestedMetadatum = $metadatum;
-                        if ($language !=null && $metadatum[Names::AT_LANGUAGE] == $language) {
+                        $requestedValue = $requestedValue==null?$metadatum[Names::VALUE]:$requestedValue;
+                        if ($targetLanguage == null) {
+                            $targetLanguage = $translatedLabel[Names::AT_LANGUAGE];
+                        }
+                        if ($language !=null && $translatedLabel[Names::AT_LANGUAGE] == $language) {
+                            $requestedValue = $metadatum[Names::VALUE];
                             break 2;
                         }
                     }
                 }
             }
         }
-        if ($requestedMetadatum == null) return null;
-        if (is_array($requestedMetadatum[Names::VALUE]))
-        {
-            
+        if ($requestedValue == null) {
+            return null;
         }
-        return $requestedMetadatum[Names::VALUE];
+        if (is_string($requestedValue)) {
+            return $requestedValue;
+        }
+        if (is_array($requestedValue)) {
+            $firstValue = null;
+            foreach ($requestedValue as $translatedValue)
+            {
+                if ($translatedValue[Names::AT_LANGUAGE] == $targetLanguage) {
+                    return $translatedValue[Names::AT_VALUE];
+                }
+                if ($firstValue == null) {
+                    $firstValue = $translatedValue[Names::AT_VALUE];
+                }
+            }
+            return $firstValue;
+        }
+        // this shouldn't happen
+        return null;
     }
 }
