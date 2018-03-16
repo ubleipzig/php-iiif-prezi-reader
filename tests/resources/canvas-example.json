@@ -1,4 +1,5 @@
 {
+  "__LICENSE": "This file has been taken from the IIIF Presentation API 2.1.1 documentation. Published by the IIIF Consortium under the CC-BY license. See http://iiif.io/api/presentation/2.1/",
   "@id": "http://example.org/iiif/book1/canvas/p1",
   "@type": "sc:Canvas",
   "label": "The label of the canvas",

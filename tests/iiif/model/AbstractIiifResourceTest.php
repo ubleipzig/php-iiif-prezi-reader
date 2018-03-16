@@ -115,19 +115,46 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetTranslatedLabel()
     {
+        // no label
         $this->abstractIiifResource->setLabel(null);
         $label = $this->abstractIiifResource->getTranslatedLabel();
         self::assertNull($label);
         $label = $this->abstractIiifResource->getTranslatedLabel("en");
         self::assertNull($label);
         
-        $this->prepareLabel("My label");
+        // string as label
+        $this->prepareLabel('My label');
         $label = $this->abstractIiifResource->getTranslatedLabel();
-        self::assertEquals("My label", $label);
-        $label = $this->abstractIiifResource->getTranslatedLabel("en");
-        self::assertEquals("My label", $label);
+        self::assertEquals('My label', $label);
+        $label = $this->abstractIiifResource->getTranslatedLabel('en');
+        self::assertEquals('My label', $label);
+
+        // multiple strings as label
+        $this->prepareLabel('["My label", "My second label", "My third label"]');
+        $label = $this->abstractIiifResource->getTranslatedLabel();
+        self::assertTrue(is_array($label));
+        self::assertContains('My label', $label);
+        self::assertContains('My second label', $label);
+        self::assertContains('My third label', $label);
         
-        $this->markTestIncomplete("getTranslatedLabel test not implemented");
+        $label = $this->abstractIiifResource->getTranslatedLabel('en');
+        self::assertTrue(is_array($label));
+        self::assertContains('My label', $label);
+        self::assertContains('My second label', $label);
+        self::assertContains('My third label', $label);
+        
+        // translated label
+        $this->prepareLabel('[{"@value": "Title", "@language": "en"}, {"@value": "Titel", "@language": "de"}, {"@value": "Intitulé", "@language": "fr"}]');
+        $label = $this->abstractIiifResource->getTranslatedLabel();
+        self::assertEquals('Title', $label);
+        $label = $this->abstractIiifResource->getTranslatedLabel('en');
+        self::assertEquals('Title', $label);
+        $label = $this->abstractIiifResource->getTranslatedLabel('de');
+        self::assertEquals('Titel', $label);
+        $label = $this->abstractIiifResource->getTranslatedLabel('fr');
+        self::assertEquals('Intitulé', $label);
+        $label = $this->abstractIiifResource->getTranslatedLabel('ru');
+        self::assertEquals('Title', $label);
     }
 
     /**

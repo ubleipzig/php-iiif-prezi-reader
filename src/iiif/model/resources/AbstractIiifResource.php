@@ -95,7 +95,7 @@ abstract class AbstractIiifResource
                         }
                     }
                 }
-                return is_null($selectedValue ? null : $selectedValue["@value"]);
+                return is_null($selectedValue) ? null : $selectedValue["@value"];
             }
             return $field;
         }

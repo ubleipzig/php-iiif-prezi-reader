@@ -41,6 +41,7 @@ class Manifest extends AbstractIiifResource
         $manifest->containedResources=&$allResources;
         $manifest->loadResources($jsonAsArray, Names::SEQUENCES, Sequence::class, $manifest->sequences, $manifest->containedResources);
         $manifest->loadResources($jsonAsArray, Names::STRUCTURES, Range::class, $manifest->structures, $manifest->containedResources);
+        $manifest->navDate = array_key_exists(Names::NAV_DATE, $jsonAsArray) ? $jsonAsArray[Names::NAV_DATE] : null;
         return $manifest;
     }
     /**
