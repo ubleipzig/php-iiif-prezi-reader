@@ -7,6 +7,7 @@ use iiif\model\constants\Profile;
 use iiif\model\resources\Manifest;
 use iiif\model\resources\Sequence;
 use iiif\model\resources\Canvas;
+use iiif\model\resources\AbstractIiifResource;
 
 class IiifReader
 {
@@ -38,7 +39,15 @@ class IiifReader
         return $classForJson::fromJson($jsonAsString);
     }
     
-    public static function getThumbnailUrlForIiifResource($resource, &$thumbnailServiceProfiles=array(), $httpClient=null)
+    /**
+     * 
+     * @param AbstractIiifResource $resource 
+     * @param array $thumbnailServiceProfiles Assaociative array for caching purporses. If the thumbnail provides a service with a profile url,
+     *        this url might get requested. Using this array reduces the number of nescessary requests.
+     * @param mixed $classWithStaticGetUrlMethod Written for TYPO3's GeneralUtility
+     * @return NULL|string 
+     */
+    public static function getThumbnailUrlForIiifResource($resource, &$thumbnailServiceProfiles=array(), $classWithStaticGetUrlMethod=null)
     {
         if ($resource->getThumbnail() != null){
             return $resource->getThumbnail()->getImageUrl();
@@ -102,8 +111,8 @@ class IiifReader
                 try
                 {
                     // Try to load profile
-                    if ($httpClient!=null) {
-                        $profileContent = $httpClient::getUrl($profile);
+                    if ($classWithStaticGetUrlMethod!=null) {
+                        $profileContent = $classWithStaticGetUrlMethod::getUrl($profile);
                     }
                     else {
                         $profileContent = file_get_contents($profile);
