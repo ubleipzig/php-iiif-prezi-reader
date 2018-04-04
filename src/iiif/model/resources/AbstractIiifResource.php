@@ -282,6 +282,14 @@ abstract class AbstractIiifResource
     {
         return $this->description;
     }
+    
+    /**
+     * @return mixed
+     */
+    public function getOriginalJsonArray()
+    {
+        return $this->originalJsonArray;
+    }
 
     public function getTranslatedLabel($language = null)
     {
