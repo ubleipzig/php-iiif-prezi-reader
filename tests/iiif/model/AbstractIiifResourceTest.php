@@ -1,5 +1,6 @@
 <?php
 use iiif\model\resources\MockIiifResource;
+use iiif\model\vocabulary\Names;
 
 /**
  * AbstractIiifResource test case.
@@ -289,6 +290,25 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         self::assertContains("My other value", $metadataValue);
         self::assertContains("My second other value", $metadataValue);
         self::assertContains("My third other value", $metadataValue);
+    }
+    
+    public function testFromArray()
+    {
+        $mockArray[Names::ID] = 'http://www.example.com/mockresource/id';
+        $mockArray[Names::METADATA] = json_decode('[{"label": "My label", "value": "My value"}, {"label": "My other label", "value": "My other value"}]', true);
+        $mockResource = MockIiifResource::fromArray($mockArray);
+        
+        $metadata = $mockResource->getMetadata();
+        self::assertNotNull($metadata);
+        self::assertTrue(is_array($metadata));
+
+        $valueForLabel1 = $mockResource->getMetadataForLabel('My label');
+        self::assertNotNull($valueForLabel1);
+        self::assertEquals('My value', $valueForLabel1);
+        
+        $valueForLabel2 = $mockResource->getMetadataForLabel('My other label');
+        self::assertNotNull($valueForLabel2);
+        self::assertEquals('My other value', $valueForLabel2);
     }
     
     private function prepareMetadata($metadataString)

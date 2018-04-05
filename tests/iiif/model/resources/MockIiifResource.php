@@ -3,10 +3,15 @@ namespace iiif\model\resources;
 
 class MockIiifResource extends AbstractIiifResource
 {
+    /**
+     * 
+     * @param array $jsonAsArray
+     * @param array $allResources
+     * @return \iiif\model\resources\MockIiifResource
+     */
     public static function fromArray($jsonAsArray, &$allResources = array())
     {
-        $resource = new MockIiifResource();
-        $resource->loadPropertiesFromArray($jsonAsArray, $allResources);
+        return self::loadPropertiesFromArray($jsonAsArray, $allResources);
     }
     public function setMetadata($metadata)
     {
