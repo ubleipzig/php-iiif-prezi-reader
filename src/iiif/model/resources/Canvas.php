@@ -33,7 +33,7 @@ class Canvas extends AbstractIiifResource
         return $canvas;
     }
     /**
-     * @return ContentResource[]:
+     * @return Annotation[]:
      */
     public function getImages()
     {
@@ -41,7 +41,7 @@ class Canvas extends AbstractIiifResource
     }
 
     /**
-     * @return ContentResource[]:
+     * @return AnnotationList[]:
      */
     public function getOtherContent()
     {
