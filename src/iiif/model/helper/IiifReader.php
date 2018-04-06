@@ -59,7 +59,7 @@ class IiifReader
             if ($resource->getSequences() != null && $resource->getSequences()[0] != null)
             {
                 $sequence = $resource->getSequences()[0];
-                /* @var $sequence iiif\model\resources\Sequence */
+                /* @var $sequence \iiif\model\resources\Sequence */
                 
                 if ($sequence->getThumbnail()!=null) {
                     return $sequence->getThumbnail()->getImageUrl();
