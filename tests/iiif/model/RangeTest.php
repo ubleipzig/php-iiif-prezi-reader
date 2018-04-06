@@ -84,5 +84,15 @@ class RangeTest extends AbstractIiifTest
         self::assertTrue($range3->getCanvases()[0]->isReference());
     }
     
+    public function testGetStartCanvas()
+    {
+        $this->markTestIncomplete("getStartCanvas test not implemented");
+    }
+
+    public function testGetStartCanvasOrFirstCanvas()
+    {
+        $this->markTestIncomplete("getStartCanvasOrFirstCanvas test not implemented");
+    }
+    
 }
 

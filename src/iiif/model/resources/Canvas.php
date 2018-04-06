@@ -47,6 +47,16 @@ class Canvas extends AbstractIiifResource
     {
         return $this->otherContent;
     }
+    
+    public function __construct($id = null, $reference = false)
+    {
+        if ($id !== null) {
+            $this->id = $id;
+        }
+        if ($reference !== null) {
+            $this->reference = $reference;
+        }
+    }
 
 }
 

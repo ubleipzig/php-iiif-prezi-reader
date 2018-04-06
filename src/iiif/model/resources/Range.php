@@ -5,10 +5,12 @@ use iiif\model\properties\ViewingDirectionTrait;
 use iiif\model\vocabulary\Names;
 use iiif\model\vocabulary\Types;
 use iiif\model\vocabulary\MiscNames;
+use iiif\model\properties\StartCanvasTrait;
 
 class Range extends AbstractIiifResource
 {
     use ViewingDirectionTrait;
+    use StartCanvasTrait;
     
     const TYPE="sc:Range";
     
@@ -25,7 +27,6 @@ class Range extends AbstractIiifResource
     
     protected $members = array();
     
-    protected $startCanvas;
     /**
      * {@inheritDoc}
      * @see \iiif\model\resources\AbstractIiifResource::fromArray()
@@ -33,13 +34,14 @@ class Range extends AbstractIiifResource
     public static function fromArray($jsonAsArray, &$allResources=array())
     {
         $range = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        /* @var $range Range */
         $range->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $range->canvases, $allResources);
         $range->loadResources($jsonAsArray, Names::RANGES, Range::class, $range->ranges, $allResources);
         
         $memberRanges=array(Names::TYPE=>Types::SC_RANGE, MiscNames::CLAZZ=>Range::class);
         $memberCanvases=array(Names::TYPE=>Types::SC_CANVAS, MiscNames::CLAZZ=>Canvas::class);
         $range->loadMixedResources($jsonAsArray, Names::MEMBERS, array($memberRanges, $memberCanvases), $range->members, $allResources);
-        
+        $range->loadStartCanvasFromJson($jsonAsArray, $allResources);
         // TODO load startcanvas
         // TODO set viewingDirection
         
@@ -69,7 +71,48 @@ class Range extends AbstractIiifResource
         return $this->members;
     }
 
-
-
+    public function getStartCanvasOrFirstCanvas()
+    {
+        if (isset($this->startCanvas)) {
+            return $this->startCanvas;
+        } elseif (isset($this->canvases) && sizeof($this->canvases)>0) {
+            return $this->canvases[0];
+        } elseif (isset($this->ranges) && sizeof($this->ranges)>0) {
+            return $this->ranges[0]->getStartCanvasOrFirstCanvas();
+        } elseif (isset($this->members) && sizeof($this->members)>0) {
+            foreach ($this->members as $member) {
+                if ($member instanceof Canvas) {
+                    return $member;
+                } elseif ($member instanceof Range) {
+                    return $member->getStartCanvasOrFirstCanvas();
+                }
+            }
+        }
+        return null;
+    }
+    
+    public function getAllCanvases()
+    {
+        $allCanvases = [];
+        if (isset($this->canvases) && sizeof($this->canvases)>0) {
+            $allCanvases = $this->canvases;
+        }
+        if (isset($this->ranges) && sizeof($this->ranges)>0) {
+            foreach ($this->ranges as $range)
+            $allCanvases = array_merge($allCanvases, $range->getAllCanvases());
+        }
+        if (isset($this->members) && sizeof($this->members)>0) {
+            foreach ($this->members as $member) {
+                if ($member instanceof Canvas) {
+                    $allCanvases[] = $member;
+                }
+                if ($member instanceof Range) {
+                    $allCanvases = array_merge($allCanvases, $member->getAllCanvases());
+                }
+            }
+        }
+        return $allCanvases;
+    }
+    
 }
 

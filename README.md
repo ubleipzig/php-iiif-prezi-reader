@@ -11,6 +11,7 @@ Requires at least PHP 5.6 at the moment.
 * handle resources that are only referenced and not contained (e.g. manifests in a collection)
 * easy Thumbnail-Access
 * define minimal PHP version
+* Testing
 
 ## Notes
-* The weird psr4 autoload configuration in composer.json (`"": "src"`) is due to a (probable) bug in Eclipse PDT's "New Class / Trait / Interface" wizard - namespace suggestions are flawed for composer projects.
+* The weird psr4 autoload configuration in composer.json (`"": "src"`) is due to a [bug in Eclipse PDT](https://bugs.eclipse.org/bugs/show_bug.cgi?id=514120)'s "New Class / Trait / Interface" wizard - namespace suggestions are flawed for composer projects.
