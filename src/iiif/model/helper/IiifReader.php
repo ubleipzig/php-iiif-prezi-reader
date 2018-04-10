@@ -66,7 +66,7 @@ class IiifReader
                 }
                 if ($sequence->getCanvases()!=null && is_array($sequence->getCanvases()))
                 {
-                    $canvas = $resource->getSequences()[0]->getCanvases();
+                    $canvas = $resource->getSequences()[0]->getCanvases()[0];
                 }
             }
         }
