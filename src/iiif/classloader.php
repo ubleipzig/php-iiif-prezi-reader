@@ -7,6 +7,7 @@ require_once(__DIR__."/model/constants/ViewingDirectionValues.php");
 require_once(__DIR__."/model/helper/IiifReader.php");
 require_once(__DIR__."/model/properties/FormatTrait.php");
 require_once(__DIR__."/model/properties/NavDateTrait.php");
+require_once(__DIR__."/model/properties/StartCanvasTrait.php");
 require_once(__DIR__."/model/properties/ViewingDirectionTrait.php");
 require_once(__DIR__."/model/properties/WidthAndHeightTrait.php");
 require_once(__DIR__."/model/resources/AbstractIiifResource.php");
