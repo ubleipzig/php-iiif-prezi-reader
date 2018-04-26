@@ -1,0 +1,31 @@
+{
+  "__LICENSE": "This file has been taken from the IIIF Presentation API 2.1.1 documentation. Published by the IIIF Consortium under the CC-BY license. See http://iiif.io/api/presentation/2.1/",
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/book1/manifest",
+
+  "label": "Book 1",
+  "metadata": null,
+  "description": null,
+  "navDate": null,
+
+  "license": null,
+  "attribution": null,
+  "service": null,
+  "thumbnail": null,
+  "seeAlso":
+    {
+      "@id": "http://example.org/library/catalog/book1.marc",
+      "format": "application/marc",
+      "profile": "http://example.org/profiles/marc21"
+    },
+  "rendering": {
+    "@id": "http://example.org/iiif/book1.pdf",
+    "label": "Download as PDF",
+    "format": "application/pdf"
+  },
+  "within": "http://example.org/collections/books/",
+
+  "sequences": [],
+  "structures": []
+}

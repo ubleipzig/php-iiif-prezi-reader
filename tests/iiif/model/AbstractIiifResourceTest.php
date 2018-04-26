@@ -309,6 +309,16 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         $valueForLabel2 = $mockResource->getMetadataForLabel('My other label');
         self::assertNotNull($valueForLabel2);
         self::assertEquals('My other value', $valueForLabel2);
+
+        $mockArray[Names::METADATA] = json_decode('[{"label": null, "value": null}]', true);
+        $mockResource = MockIiifResource::fromArray($mockArray);
+        
+        $metadata = $mockResource->getMetadata();
+        self::assertNotNull($metadata);
+        self::assertTrue(is_array($metadata));
+        self::assertEquals(1, sizeof($metadata));
+        self::assertTrue(array_key_exists('label', $metadata[0]));
+        self::assertNull($metadata[0]['label']);
     }
     
     private function prepareMetadata($metadataString)

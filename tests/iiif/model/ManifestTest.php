@@ -97,5 +97,12 @@ class ManifestTest extends AbstractIiifTest
         self::assertEquals('1', $navDate->format('m'));
         self::assertEquals('1', $navDate->format('d'));
     }
+    
+    public function testEmptyManifest()
+    {
+        $json = parent::getJson('empty-manifest.json');
+        $manifest = Manifest::fromJson($json);
+        
+    }
 }
 
