@@ -9,7 +9,7 @@ class AnnotationList extends AbstractIiifResource
     
     /**
      * 
-     * @var AnnotationList[]
+     * @var Annotation[]
      */
     protected $resources = array();
     /**
