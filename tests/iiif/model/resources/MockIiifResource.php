@@ -4,6 +4,7 @@ namespace iiif\model\resources;
 class MockIiifResource extends AbstractIiifResource
 {
     /**
+     * Only for testing AbstractIiifResource methods
      * 
      * @param array $jsonAsArray
      * @param array $allResources
