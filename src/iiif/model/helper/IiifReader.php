@@ -93,18 +93,18 @@ class IiifReader
         elseif ($image->getService() != null && $image->getService()->getProfile() != null) {
             // thumbnail is not already provided by canvas or image - try to generated thumbnail URL for iiif image server
             $profile = $image->getService()->getProfile();
-            $resizingByWidthSupported = false;
-            $resizingByWidthHeightSupported = false;
+            $sizeByW = false;
+            $sizeByConfinedWh = false;
             if (array_key_exists($profile, $thumbnailServiceProfiles)) {
                 // profile has been seen before
-                $resizingByWidthSupported = in_array(Profile::SIZE_BY_W, $thumbnailServiceProfiles[$profile]);
-                $resizingByWidthHeightSupported = in_array(Profile::SIZE_BY_WH, $thumbnailServiceProfiles[$profile]);
+                $sizeByW = in_array(Profile::SIZE_BY_W, $thumbnailServiceProfiles[$profile]);
+                $sizeByConfinedWh = in_array(Profile::SIZE_BY_CONFINED_WH, $thumbnailServiceProfiles[$profile]);
                 
             }
             elseif (array_key_exists($profile, Profile::SUPPORTED_BY_LEVEL)) {
                 // IIIF profile?
-                $resizingByWidthSupported = in_array(Profile::SIZE_BY_W, Profile::SUPPORTED_BY_LEVEL[$profile]);
-                $resizingByWidthHeightSupported = in_array(Profile::SIZE_BY_WH, Profile::SUPPORTED_BY_LEVEL[$profile]);
+                $sizeByW = in_array(Profile::SIZE_BY_W, Profile::SUPPORTED_BY_LEVEL[$profile]);
+                $sizeByConfinedWh = in_array(Profile::SIZE_BY_CONFINED_WH, Profile::SUPPORTED_BY_LEVEL[$profile]);
                 $thumbnailServiceProfiles[$profile] = Profile::SUPPORTED_BY_LEVEL[$profile];
             }
             else {
@@ -121,8 +121,8 @@ class IiifReader
                         $profileArray = json_decode($profileContent, true);
                         if (array_key_exists(Names::SUPPORTS, $profileArray)) {
                             // Check "supports" field for resizing
-                            $resizingByWidthSupported = in_array(Profile::SIZE_BY_W, $profileArray[Names::SUPPORTS]);
-                            $resizingByWidthHeightSupported = in_array(Profile::SIZE_BY_WH, $profileArray[Names::SUPPORTS]);
+                            $sizeByW = in_array(Profile::SIZE_BY_W, $profileArray[Names::SUPPORTS]);
+                            $sizeByConfinedWh = in_array(Profile::SIZE_BY_CONFINED_WH, $profileArray[Names::SUPPORTS]);
                             $thumbnailServiceProfiles[$profile] = $profileArray[Names::SUPPORTS];
                         }
                     }
@@ -143,8 +143,8 @@ class IiifReader
                         $assumedProfile = Profile::IIIF2_LEVEL2;
                     }
                     if ($assumedProfile != null) {
-                        $resizingByWidthSupported = in_array(Profile::SIZE_BY_W, Profile::SUPPORTED_BY_LEVEL[$assumedProfile]);
-                        $resizingByWidthHeightSupported = in_array(Profile::SIZE_BY_WH, Profile::SUPPORTED_BY_LEVEL[$assumedProfile]);
+                        $sizeByW = in_array(Profile::SIZE_BY_W, Profile::SUPPORTED_BY_LEVEL[$assumedProfile]);
+                        $sizeByConfinedWh = in_array(Profile::SIZE_BY_CONFINED_WH, Profile::SUPPORTED_BY_LEVEL[$assumedProfile]);
                         $thumbnailServiceProfiles[$profile] = Profile::SUPPORTED_BY_LEVEL[$assumedProfile];
                     }
                 }
@@ -156,9 +156,10 @@ class IiifReader
                 $thumbnailServiceProfiles[$profile] = array();
             }
             
-            if ($resizingByWidthHeightSupported) {
+            // region: full, rotation:0 and quality:default and format:jpg are supported by level 0; for the size we need to check the supported features.  
+            if ($sizeByConfinedWh) {
                 $thumbnailUrl=$image->getService()->getId().'/full/!100,150/0/default.jpg';
-            } elseif ($resizingByWidthSupported) {
+            } elseif ($sizeByW) {
                 $thumbnailUrl=$image->getService()->getId().'/full/100,/0/default.jpg';
             }
         }
