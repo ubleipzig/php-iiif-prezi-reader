@@ -49,6 +49,7 @@ class Names
     CONST RESOURCE="resource";
     CONST ON="on";
     CONST PROFILE="profile";
+    CONST CHARS="chars";
 
     
     // IIIF Image Profile

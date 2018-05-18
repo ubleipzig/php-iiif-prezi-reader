@@ -31,7 +31,8 @@ class Collection extends AbstractIiifResource
      */
     public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $collection = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $collection = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $collection->loadPropertiesFromArray($jsonAsArray, $allResources);
         $collection->loadResources($jsonAsArray, Names::COLLECTIONS, Collection::class, $collection->collections, $allResources);
         $collection->loadResources($jsonAsArray, Names::MANIFESTS, Manifest::class, $collection->manifests, $allResources);
         // TODO: Members. Could be Collection or Manifest.

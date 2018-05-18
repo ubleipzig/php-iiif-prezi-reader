@@ -112,11 +112,16 @@ abstract class AbstractIiifResource
         return $this->getPreferredTranslation($this->label);
     }
     
-    protected static function loadPropertiesFromArray($jsonAsArray, &$allResources)
+    /**
+     * 
+     * @param array $jsonAsArray
+     * @param array $allResources
+     * @return AbstractIiifResource
+     */
+    protected static function createInstanceFromArray($jsonAsArray, &$allResources)
     {
         // everything but sequences and annotations MUST have an id, annotations still should have an id
         $resourceId=self::getResourceIdWithoutFragment(array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null);
-        
         $instance = null;
         if ($resourceId != null && array_key_exists($resourceId, $allResources) && $allResources[$resourceId] != null) {
             // TODO Is there any way that there is more than a reference in the $allResources array?
@@ -126,20 +131,21 @@ abstract class AbstractIiifResource
             $instance = new $clazz();
             $allResources[$resourceId] = &$instance;
         }
-        
-        /* @var $instance AbstractIiifResource */
-        $instance->originalJsonArray = $jsonAsArray;
         $instance->id = $resourceId;
-        $instance->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
-        $instance->metadata = array_key_exists(Names::METADATA, $jsonAsArray) ? $jsonAsArray[Names::METADATA] : null;
+        return $instance;
+    }
+    
+    protected function loadPropertiesFromArray($jsonAsArray, &$allResources)
+    {
+        $this->originalJsonArray = $jsonAsArray;
+        $this->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
+        $this->metadata = array_key_exists(Names::METADATA, $jsonAsArray) ? $jsonAsArray[Names::METADATA] : null;
         
-        $instance->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
+        $this->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
         // TODO According to the specs, some of the resources may provide more than one thumbnail per resource. Value for "thumbnail" can be json array and json object 
-        $instance->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) && isset($jsonAsArray[Names::THUMBNAIL]) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
+        $this->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) && isset($jsonAsArray[Names::THUMBNAIL]) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
         
         // TODO all the other properties
-        
-        return $instance;
     }
     
     // TODO check if one unified method for resource loading is possible

@@ -12,7 +12,9 @@ class MockIiifResource extends AbstractIiifResource
      */
     public static function fromArray($jsonAsArray, &$allResources = array())
     {
-        return self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $instance = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $instance->loadPropertiesFromArray($jsonAsArray, $allResources);
+        return $instance;
     }
     public function setMetadata($metadata)
     {

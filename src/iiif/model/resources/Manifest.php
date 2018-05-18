@@ -36,7 +36,8 @@ class Manifest extends AbstractIiifResource
     
     public static function fromArray($jsonAsArray, &$allResources = array())
     {
-        $manifest = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $manifest = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $manifest->loadPropertiesFromArray($jsonAsArray, $allResources);
         /* @var $manifest Manifest */
         $manifest->containedResources=&$allResources;
         $manifest->loadResources($jsonAsArray, Names::SEQUENCES, Sequence::class, $manifest->sequences, $manifest->containedResources);

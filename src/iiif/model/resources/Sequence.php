@@ -28,7 +28,8 @@ class Sequence extends AbstractIiifResource
      */
     public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $sequence = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $sequence = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $sequence->loadPropertiesFromArray($jsonAsArray, $allResources);
         /* @var $sequence Sequence */
         $sequence->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $sequence->canvases, $allResources);
         $sequence->loadStartCanvasFromJson($jsonAsArray, $allResources);

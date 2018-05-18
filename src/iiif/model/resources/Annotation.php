@@ -2,6 +2,7 @@
 namespace iiif\model\resources;
 
 use iiif\model\vocabulary\Names;
+use iiif\model\properties\XYWHFragment;
 
 class Annotation extends AbstractIiifResource
 {
@@ -20,9 +21,10 @@ class Annotation extends AbstractIiifResource
      */
     public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $annotation = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $annotation = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $annotation->loadPropertiesFromArray($jsonAsArray, $allResources);
         $annotation->motivation = array_key_exists(Names::MOTIVATION, $jsonAsArray) ? $jsonAsArray[Names::MOTIVATION] : null;
-        $annotation->on = array_key_exists(Names::ON, $jsonAsArray) ? $jsonAsArray[Names::ON] : null;
+        $annotation->on = array_key_exists(Names::ON, $jsonAsArray) ? XYWHFragment::getFromURI($jsonAsArray[Names::ON], $allResources, Canvas::class) : null;
         $annotation->loadSingleResouce($jsonAsArray, Names::RESOURCE, ContentResource::class, $annotation->resource, $allResources);
         return $annotation;
     }
@@ -33,5 +35,14 @@ class Annotation extends AbstractIiifResource
     {
         return $this->resource;
     }
+    /**
+     * @return mixed
+     */
+    public function getOn()
+    {
+        return $this->on;
+    }
+
+    
 }
 

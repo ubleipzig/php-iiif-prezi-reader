@@ -33,7 +33,8 @@ class Range extends AbstractIiifResource
      */
     public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $range = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $range = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $range->loadPropertiesFromArray($jsonAsArray, $allResources);
         /* @var $range Range */
         $range->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $range->canvases, $allResources);
         $range->loadResources($jsonAsArray, Names::RANGES, Range::class, $range->ranges, $allResources);

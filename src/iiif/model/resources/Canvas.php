@@ -26,7 +26,8 @@ class Canvas extends AbstractIiifResource
      */
     public static function fromArray($jsonAsArray, &$allResources=array())
     {
-        $canvas = self::loadPropertiesFromArray($jsonAsArray, $allResources);
+        $canvas = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $canvas->loadPropertiesFromArray($jsonAsArray, $allResources);
         $canvas->loadResources($jsonAsArray, Names::IMAGES, Annotation::class, $canvas->images, $allResources);
         $canvas->loadResources($jsonAsArray, Names::OTHER_CONTENT, AnnotationList::class, $canvas->otherContent, $allResources);
         $canvas->setWidthAndHeightFromJsonArray($jsonAsArray);
