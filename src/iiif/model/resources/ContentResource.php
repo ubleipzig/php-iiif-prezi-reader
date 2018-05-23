@@ -28,5 +28,14 @@ class ContentResource extends AbstractIiifResource
     {
         return $this->format;
     }
+    /**
+     * @return string
+     */
+    public function getChars()
+    {
+        return $this->chars;
+    }
+
+    
 }
 

@@ -42,7 +42,13 @@ class Annotation extends AbstractIiifResource
     {
         return $this->on;
     }
-
+    /**
+     * @return string
+     */
+    public function getMotivation()
+    {
+        return $this->motivation;
+    }
     
 }
 
