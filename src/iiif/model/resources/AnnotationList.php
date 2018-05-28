@@ -35,12 +35,13 @@ class AnnotationList extends AbstractIiifResource
         if ($resources == null && !$this->resourcesLoaded) {
             
             $content = file_get_contents($this->id);
-            $json = json_decode($content, true);
+            $jsonAsArray = json_decode($content, true);
             
-            $annotationList->loadPropertiesFromArray($jsonAsArray, array());
-            $annotationList->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $annotationList->resources, array());
+            $dummy = array();
+            $this->loadPropertiesFromArray($jsonAsArray, $dummy);
+            $this->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $this->resources, $dummy);
             
-            // TODO register resources in manifest
+            // TODO register resources in manifest (i.e. replace $dummy with actual resources array somehow)
             
             $this->resourcesLoaded = true;
         }

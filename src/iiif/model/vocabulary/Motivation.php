@@ -17,6 +17,6 @@ class Motivation
     CONST REPLYING = "replying";
     CONST TAGGING = "tagging";
     
-    CONST PAINTING = "painting";
+    CONST PAINTING = "sc:painting";
 }
 
