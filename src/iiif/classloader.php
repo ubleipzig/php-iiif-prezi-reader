@@ -24,6 +24,7 @@ require_once(__DIR__."/model/resources/Sequence.php");
 require_once(__DIR__."/model/resources/Service.php");
 require_once(__DIR__."/model/resources/Thumbnail.php");
 require_once(__DIR__."/model/vocabulary/MiscNames.php");
+require_once(__DIR__."/model/vocabulary/Motivation.php");
 require_once(__DIR__."/model/vocabulary/Names.php");
 require_once(__DIR__."/model/vocabulary/Types.php");
 
