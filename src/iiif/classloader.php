@@ -10,6 +10,7 @@ require_once(__DIR__."/model/properties/NavDateTrait.php");
 require_once(__DIR__."/model/properties/StartCanvasTrait.php");
 require_once(__DIR__."/model/properties/ViewingDirectionTrait.php");
 require_once(__DIR__."/model/properties/WidthAndHeightTrait.php");
+require_once(__DIR__."/model/properties/XYWHFragment.php");
 require_once(__DIR__."/model/resources/AbstractIiifResource.php");
 require_once(__DIR__."/model/resources/Annotation.php");
 require_once(__DIR__."/model/resources/AnnotationList.php");
