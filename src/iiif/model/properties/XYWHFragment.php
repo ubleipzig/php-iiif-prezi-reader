@@ -14,7 +14,7 @@ class XYWHFragment
     protected function __contruct() {
     }
 
-    public static function getFromURI(string $uri, &$allResources = array(), $targetClass = null) {
+    public static function getFromURI($uri, &$allResources = array(), $targetClass = null) {
         // TODO check if commas or equals sign are contained but url encoded
         if ($uri == null) return null;
         $xywhFragment = new XYWHFragment();
