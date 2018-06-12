@@ -38,6 +38,7 @@ class AnnotationList extends AbstractIiifResource
             $jsonAsArray = json_decode($content, true);
             
             $dummy = array();
+            $this->originalJson = $content;
             $this->loadPropertiesFromArray($jsonAsArray, $dummy);
             $this->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $this->resources, $dummy);
             

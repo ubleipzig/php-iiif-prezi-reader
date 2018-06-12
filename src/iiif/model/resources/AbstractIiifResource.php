@@ -53,6 +53,7 @@ abstract class AbstractIiifResource
     
     // keep it for faster and easier searches
     protected $originalJsonArray;
+    protected $originalJson;
     
     /**
      * 
@@ -63,7 +64,9 @@ abstract class AbstractIiifResource
     public static function fromJson($jsonAsString)
     {
         $jsonAsArray = json_decode($jsonAsString, true);
-        return static::fromArray($jsonAsArray);
+        $resource = static::fromArray($jsonAsArray);
+        $resource->originalJson = $jsonAsString;
+        return $resource;
     }
 
     abstract public static function fromArray($jsonAsArray, &$allResources = array());
