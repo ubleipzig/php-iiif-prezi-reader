@@ -19,6 +19,8 @@ class Types
     const SC_RANGE = "sc:Range";
     const SC_LAYER = "sc:Layer";
     const SC_COLLECTION = "sc:Collection";
+    
+    const CNT_CONTENTASTEXT = "cnt:ContentAsText";
 
     
     const OA_ANNOTATION = "oa:Annotation";

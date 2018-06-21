@@ -8,6 +8,10 @@ class XYWHFragment
     protected $y;
     protected $width;
     protected $height;
+    /**
+     * URI / id of the target resource, e.g. Canvas, without the XYWH fragment
+     * @var string
+     */
     protected $targetUri;
     protected $targetObject;
     
@@ -44,6 +48,13 @@ class XYWHFragment
             }
         }
         return $xywhFragment;
+    }
+    /**
+     * @return string
+     */
+    public function getTargetUri()
+    {
+        return $this->targetUri;
     }
 }
 

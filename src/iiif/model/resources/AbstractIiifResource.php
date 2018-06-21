@@ -141,6 +141,7 @@ abstract class AbstractIiifResource
     protected function loadPropertiesFromArray($jsonAsArray, &$allResources)
     {
         $this->originalJsonArray = $jsonAsArray;
+        $this->type =  array_key_exists(Names::TYPE, $jsonAsArray) ? $jsonAsArray[Names::TYPE] : null;
         $this->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
         $this->metadata = array_key_exists(Names::METADATA, $jsonAsArray) ? $jsonAsArray[Names::METADATA] : null;
         
@@ -249,6 +250,13 @@ abstract class AbstractIiifResource
     public function getId()
     {
         return $this->id;
+    }
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
     /**
      * @return \iiif\model\resources\Service
