@@ -1,6 +1,7 @@
 <?php
 use iiif\model\resources\MockIiifResource;
 use iiif\model\vocabulary\Names;
+use iiif\model\resources\Manifest;
 
 /**
  * AbstractIiifResource test case.
@@ -320,6 +321,25 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         self::assertTrue(array_key_exists('label', $metadata[0]));
         self::assertNull($metadata[0]['label']);
     }
+
+    public function testJsonPath()
+    {
+        $manifest = Manifest::fromJson(file_get_contents('../../resources/manifest-0000006761.json'));
+        
+        /* @var $manifest Manifest */
+        
+        self::assertNotNull($manifest);
+        
+        $resultId = $manifest->jsonPath("$.['@id']");
+        self::assertEquals("https://iiif.ub.uni-leipzig.de/0000006761/manifest.json", $resultId);
+
+        $resultKitodo = $manifest->jsonPath("$.metadata.[?(@.label=='Kitodo')].value");
+        self::assertEquals("8642", $resultKitodo);
+        
+        $resultPPN = $manifest->jsonPath("$.metadata.[?(@.label=='Source PPN (SWB)')].value");
+        self::assertEquals("046198466", $resultPPN);
+        
+    }
     
     private function prepareMetadata($metadataString)
     {
@@ -331,6 +351,5 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         $label = json_decode($labelString, true);
         $label = $label==null?$labelString:$label;
         $this->abstractIiifResource->setLabel($label);
-        
     }
 }

@@ -3,6 +3,7 @@ namespace iiif\model\resources;
 
 use iiif\model\vocabulary\Names;
 use iiif\model\vocabulary\MiscNames;
+use Flow\JSONPath\JSONPath;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have 
@@ -390,5 +391,16 @@ abstract class AbstractIiifResource
         }
         // this shouldn't happen
         return null;
+    }
+    
+    public function jsonPath(string $expression)
+    {
+        $jsonPath = new JSONPath($this->originalJsonArray);
+        $results = $jsonPath->find($expression);
+        if (is_array($results->data()) && count($results->data()) == 1)
+        {
+            return $results[0];
+        }
+        return $results;
     }
 }
