@@ -324,7 +324,7 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
 
     public function testJsonPath()
     {
-        $manifest = Manifest::fromJson(file_get_contents('../../resources/manifest-0000006761.json'));
+        $manifest = Manifest::fromJson(file_get_contents(__DIR__.'/../../resources/manifest-0000006761.json'));
         
         /* @var $manifest Manifest */
         
