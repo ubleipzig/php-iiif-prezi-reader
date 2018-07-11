@@ -149,7 +149,7 @@ abstract class AbstractIiifResource
         $this->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
         // TODO According to the specs, some of the resources may provide more than one thumbnail per resource. Value for "thumbnail" can be json array and json object 
         $this->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) && isset($jsonAsArray[Names::THUMBNAIL]) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
-        
+        $this->viewingHint = array_key_exists(Names::VIEWING_HINT, $jsonAsArray) && isset($jsonAsArray[Names::VIEWING_HINT]) ? $jsonAsArray[Names::VIEWING_HINT] : null;
         // TODO all the other properties
     }
     
@@ -173,8 +173,8 @@ abstract class AbstractIiifResource
                         $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
                     }
                     elseif (is_string($resourceAsArray)) {
-                        if (array_key_exists($resourceAsArray, $allResources)) {
-                            $resource = &$allResources[$resourceAsArray];
+                        if (array_key_exists($resourceAsArray, $allResources) && $allResources[$resourceAsArray] != null) {
+                            $resource = $allResources[$resourceAsArray];
                         }
                         else {
                             $resource = new $resourceClass();
@@ -184,10 +184,9 @@ abstract class AbstractIiifResource
                             $allResources[$resourceAsArray] = $resource;
                         }
                     }
-                    $targetArray[] = $resource;
+                    if ($resource != null) $targetArray[] = $resource;
                 }
             }
-            
         }
     }
 

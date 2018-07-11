@@ -4,6 +4,8 @@ namespace iiif\model\resources;
 use iiif\model\properties\NavDateTrait;
 use iiif\model\properties\ViewingDirectionTrait;
 use iiif\model\vocabulary\Names;
+use iiif\model\constants\ViewingDirectionValues;
+use iiif\model\constants\ViewingHintValues;
 
 class Manifest extends AbstractIiifResource
 {
@@ -27,6 +29,8 @@ class Manifest extends AbstractIiifResource
      * @var Range[]
      */
     protected $structures = array();
+    
+    protected $topRange;
     
     /**
      * 
@@ -58,6 +62,36 @@ class Manifest extends AbstractIiifResource
     public function getStructures()
     {
         return $this->structures;
+    }
+    
+    /**
+     * Top structure in hierarchy; either the Range marked with viewingHint=top or the one that is not part of another range
+     * @return Range
+     */
+    public function getTopRange()
+    {
+        if ($this->topRange == null) {
+            $ranges = array();
+            foreach ($this->structures as $range) {
+                $ranges[] = $range->getId();
+            }
+            foreach ($this->structures as $range) {
+                if ($range->getViewingHint() == ViewingHintValues::TOP) {
+                    $this->topRange = $range;
+                    break;
+                }
+                foreach ($this->structures as $r) {
+                    if (in_array($range, $r->getRanges())) {
+                        $key = array_search($range->getId(), $ranges);
+                        unset($ranges[$key]);
+                    }
+                }
+            }
+            if (sizeof($ranges) == 1) {
+                $this->topRange = &$this->getContainedResourceById($ranges[0]);
+            }
+        }
+        return $this->topRange;
     }
     
     public function getContainedResourceById($id)
