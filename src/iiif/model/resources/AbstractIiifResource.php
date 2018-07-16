@@ -173,15 +173,16 @@ abstract class AbstractIiifResource
                         $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
                     }
                     elseif (is_string($resourceAsArray)) {
-                        if (array_key_exists($resourceAsArray, $allResources) && $allResources[$resourceAsArray] != null) {
-                            $resource = $allResources[$resourceAsArray];
+                        $resourceId = self::getResourceIdWithoutFragment($resourceAsArray, $resourceClass);
+                        if (array_key_exists($resourceId, $allResources) && $allResources[$resourceId] != null) {
+                            $resource = $allResources[$resourceId];
                         }
                         else {
                             $resource = new $resourceClass();
                             $resource->reference = true;
-                            $resource->id = self::getResourceIdWithoutFragment($resourceAsArray, $resourceClass);
+                            $resource->id = $resourceId;
                             
-                            $allResources[$resourceAsArray] = $resource;
+                            $allResources[$resourceId] = $resource;
                         }
                     }
                     if ($resource != null) $targetArray[] = $resource;
