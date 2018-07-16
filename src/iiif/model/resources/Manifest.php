@@ -30,7 +30,7 @@ class Manifest extends AbstractIiifResource
      */
     protected $structures = array();
     
-    protected $topRange;
+    protected $topRanges;
     
     /**
      * 
@@ -68,16 +68,17 @@ class Manifest extends AbstractIiifResource
      * Top structure in hierarchy; either the Range marked with viewingHint=top or the one that is not part of another range
      * @return Range
      */
-    public function getTopRange()
+    public function getTopRanges()
     {
-        if ($this->topRange == null) {
-            $ranges = array();
+        if ($this->topRanges == null) {
+            $this->topRanges = array();
             foreach ($this->structures as $range) {
                 $ranges[] = $range->getId();
             }
             foreach ($this->structures as $range) {
                 if ($range->getViewingHint() == ViewingHintValues::TOP) {
-                    $this->topRange = $range;
+                    // if there is a top structure, use it!
+                    $this->topRanges[] = $range;
                     break;
                 }
                 foreach ($this->structures as $r) {
@@ -87,11 +88,14 @@ class Manifest extends AbstractIiifResource
                     }
                 }
             }
-            if (sizeof($ranges) == 1) {
-                $this->topRange = &$this->getContainedResourceById($ranges[0]);
+            if (sizeof($ranges) > 0) {
+                foreach ($ranges as $rangeId)
+                {
+                    $this->topRanges[] = $this->getContainedResourceById($rangeId);
+                }
             }
         }
-        return $this->topRange;
+        return $this->topRanges;
     }
     
     public function getContainedResourceById($id)
