@@ -1,12 +1,15 @@
 <?php
 use iiif\model\resources\Sequence;
+use iiif\model\resources\Manifest;
+use iiif\model\resources\Canvas;
+use iiif\model\AbstractIiifTest;
 
 require_once 'iiif/model/resources/Sequence.php';
 
 /**
  * Sequence test case.
  */
-class SequenceTest extends PHPUnit_Framework_TestCase
+class SequenceTest extends AbstractIiifTest
 {
 
     /**
@@ -22,9 +25,8 @@ class SequenceTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
         
-        // TODO Auto-generated SequenceTest::setUp()
-        
-        $this->sequence = new Sequence(/* parameters */);
+        $this->json = parent::getJson('manifest-example.json');
+        $this->sequence = Manifest::fromJson($this->json)->getSequences()[0];
     }
 
     /**
@@ -32,7 +34,6 @@ class SequenceTest extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        // TODO Auto-generated SequenceTest::tearDown()
         $this->sequence = null;
         
         parent::tearDown();
@@ -51,10 +52,12 @@ class SequenceTest extends PHPUnit_Framework_TestCase
      */
     public function testFromArray()
     {
-        // TODO Auto-generated SequenceTest::testFromArray()
-        $this->markTestIncomplete("fromArray test not implemented");
-        
-        Sequence::fromArray(/* parameters */);
+        $json = parent::getJson('sequence-example.json');
+        $jsonAsArray = json_decode($json, true);
+        $sequence = Sequence::fromArray($jsonAsArray);
+        self::assertNotNull($sequence);
+        self::assertInstanceOf(Sequence::class, $sequence);
+        self::assertequals("http://example.org/iiif/book1/sequence/normal", $sequence->getId());
     }
 
     /**
@@ -62,21 +65,42 @@ class SequenceTest extends PHPUnit_Framework_TestCase
      */
     public function testGetCanvases()
     {
-        // TODO Auto-generated SequenceTest->testGetCanvases()
-        $this->markTestIncomplete("getCanvases test not implemented");
-        
-        $this->sequence->getCanvases(/* parameters */);
+        $canvases = $this->sequence->getCanvases();
+        self::assertTrue(is_array($canvases));
+        self::assertEquals(3, sizeof($canvases));
+        foreach ($canvases as $canvas) {
+            self::assertNotNull($canvas);
+            self::assertInstanceOf(Canvas::class, $canvas);
+        }
     }
+    
+    /**
+     * Tests StartCanvasTrait->getStartCanvas()
+     */
+    public function testGetStartCanvas()
+    {
+        $startCanvas = $this->sequence->getStartCanvas();
+        self::assertNull($startCanvas);
 
+        $sequence = Sequence::fromJson(parent::getJson('sequence-example.json'));
+        $startCanvas = $sequence->getStartCanvas();
+        self::assertNotNull($startCanvas);
+        self::assertEquals("http://example.org/iiif/book1/canvas/p2", $startCanvas->getId());
+    }
+    
     /**
      * Tests Sequence->getStartCanvasOrFirstCanvas()
      */
     public function testGetStartCanvasOrFirstCanvas()
     {
-        // TODO Auto-generated SequenceTest->testGetStartCanvasOrFirstCanvas()
-        $this->markTestIncomplete("getStartCanvasOrFirstCanvas test not implemented");
+        $startCanvasOrFirstCanvas = $this->sequence->getStartCanvasOrFirstCanvas();
+        self::assertNotNull($startCanvasOrFirstCanvas);
+        self::assertEquals("http://example.org/iiif/book1/canvas/p1", $startCanvasOrFirstCanvas->getId());
         
-        $this->sequence->getStartCanvasOrFirstCanvas(/* parameters */);
+        $sequence = Sequence::fromJson(parent::getJson('sequence-example.json'));
+        $startCanvasOrFirstCanvas = $sequence->getStartCanvasOrFirstCanvas();
+        self::assertNotNull($startCanvasOrFirstCanvas);
+        self::assertEquals("http://example.org/iiif/book1/canvas/p2", $startCanvasOrFirstCanvas->getId());
     }
 }
 

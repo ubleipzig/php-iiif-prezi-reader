@@ -3,6 +3,8 @@ use iiif\model\AbstractIiifTest;
 use iiif\model\resources\Manifest;
 use iiif\model\resources\Sequence;
 use iiif\model\constants\ViewingDirectionValues;
+use iiif\model\resources\Range;
+use iiif\model\resources\Canvas;
 
 /**
  * Manifest test case.
@@ -31,7 +33,6 @@ class ManifestTest extends AbstractIiifTest
      */
     protected function tearDown()
     {
-        // TODO Auto-generated ManifestTest::tearDown()
         $this->manifest = null;
         
         parent::tearDown();
@@ -42,7 +43,6 @@ class ManifestTest extends AbstractIiifTest
      */
     public function __construct()
     {
-        // TODO Auto-generated constructor
     }
 
     /**
@@ -50,10 +50,10 @@ class ManifestTest extends AbstractIiifTest
      */
     public function testFromArray()
     {
-        // TODO Auto-generated ManifestTest::testFromArray()
-        $this->markTestIncomplete("fromArray test not implemented");
-        
-        Manifest::fromArray(/* parameters */);
+        $jsonAsArray = json_decode($this->json, true);
+        $manifest = Manifest::fromArray($jsonAsArray);
+        self::assertNotNull($manifest);
+        self::assertEquals("http://example.org/iiif/book1/manifest", $manifest->getId());
     }
 
     /**
@@ -61,10 +61,13 @@ class ManifestTest extends AbstractIiifTest
      */
     public function testGetSequences()
     {
-        // TODO Auto-generated ManifestTest->testGetSequences()
-        $this->markTestIncomplete("getSequences test not implemented");
-        
-        $this->manifest->getSequences(/* parameters */);
+        $sequences = $this->manifest->getSequences();
+        self::assertNotNull($sequences);
+        self::assertTrue(is_array($sequences));
+        self::assertEquals(1, sizeOf($sequences));
+        self::assertNotNull($sequences[0]);
+        self::assertInstanceOf(Sequence::class, $sequences[0]);
+        self::assertEquals("http://example.org/iiif/book1/sequence/normal", $sequences[0]->getId());
     }
 
     /**
@@ -72,10 +75,12 @@ class ManifestTest extends AbstractIiifTest
      */
     public function testGetStructures()
     {
-        // TODO Auto-generated ManifestTest->testGetStructures()
-        $this->markTestIncomplete("getStructures test not implemented");
-        
-        $this->manifest->getStructures(/* parameters */);
+        $structures = $this->manifest->getStructures();
+        self::assertNotNull($structures);
+        self::assertTrue(is_array($structures));
+        self::assertEquals(1, sizeOf($structures));
+        self::assertNotNull($structures[0]);
+        self::assertInstanceOf(Range::class, $structures[0]);
     }
 
     /**
