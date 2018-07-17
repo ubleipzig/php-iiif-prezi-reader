@@ -21,8 +21,8 @@ trait ViewingDirectionTrait
      */
     public function setViewingDirection($viewingDirection)
     {
-        if (!is_null($viewingDirection) || !is_string($viewingDirection)) throw new Exception("Wrong type for viewingDirection");
-        if ($viewingDirection!='' && !in_array($viewingDirection, ViewingDirectionValues::ALLOWED_VALUES)) throw new Exception("Unknown viewingDirection " . $viewingDirection);
+        if (!is_null($viewingDirection) && !is_string($viewingDirection)) throw new Exception("Wrong type for viewingDirection");
+        if ($viewingDirection!=null && $viewingDirection!='' && !in_array($viewingDirection, ViewingDirectionValues::ALLOWED_VALUES)) throw new Exception("Unknown viewingDirection " . $viewingDirection);
         $this->viewingDirection = $viewingDirection == '' ? null : $viewingDirection;
     }
 }

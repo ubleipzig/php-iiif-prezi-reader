@@ -57,7 +57,7 @@ class RangeTest extends AbstractIiifTest
         {
             self::assertInstanceOf(Canvas::class, $canvas);
             /* @var $canvas Canvas */
-            self::assertTrue($canvas->isReference());
+            self::assertTrue($canvas->isReference() || $canvas->getId() == 'http://example.org/iiif/book1/canvas/p3');
         }
         self::assertEquals('http://example.org/iiif/book1/canvas/p1', $range2->getCanvases()[0]->getId(), 'Wrong id for canvas 0: '.$range2->getCanvases()[0]->getId());
         self::assertEquals('http://example.org/iiif/book1/canvas/p3', $range2->getCanvases()[2]->getId(), 'Wrong id for canvas 2: '.$range2->getCanvases()[2]->getId());
@@ -86,12 +86,47 @@ class RangeTest extends AbstractIiifTest
     
     public function testGetStartCanvas()
     {
-        $this->markTestIncomplete("getStartCanvas test not implemented");
+        $range0 = $this->manifest->getContainedResourceById('http://example.org/iiif/book1/range/r0');
+        self::assertNotNull($range0);
+        /* @var $range0 Range  */
+        self::assertNull($range0->getStartCanvas());
+        
+        
+        $range1 = $this->manifest->getContainedResourceById('http://example.org/iiif/book1/range/r1');
+        self::assertNotNull($range1);
+        /* @var $range1 Range  */
+        $canvasRange1 = $range1->getStartCanvas();
+        self::assertNotNull($canvasRange1);
+        self::assertEquals('http://example.org/iiif/book1/canvas/p2', $canvasRange1->getId());
+        
+        $range1_1 = $this->manifest->getContainedResourceById('http://example.org/iiif/book1/range/r1-1');
+        self::assertNotNull($range1_1);
+        /* @var $range11 Range  */
+        self::assertNull($range1_1->getStartCanvas());
     }
 
     public function testGetStartCanvasOrFirstCanvas()
     {
-        $this->markTestIncomplete("getStartCanvasOrFirstCanvas test not implemented");
+        $range0 = $this->manifest->getContainedResourceById('http://example.org/iiif/book1/range/r0');
+        self::assertNotNull($range0);
+        /* @var $range0 Range  */
+        $canvasRange0 = $range0->getStartCanvasOrFirstCanvas();
+        self::assertNotNull($canvasRange0);
+        self::assertEquals('http://example.org/iiif/book1/canvas/cover', $canvasRange0->getId());
+        
+        $range1 = $this->manifest->getContainedResourceById('http://example.org/iiif/book1/range/r1');
+        self::assertNotNull($range1);
+        /* @var $range1 Range  */
+        $canvasRange1 = $range1->getStartCanvasOrFirstCanvas();
+        self::assertNotNull($canvasRange1);
+        self::assertEquals('http://example.org/iiif/book1/canvas/p2', $canvasRange1->getId());
+        
+        $range1_1 = $this->manifest->getContainedResourceById('http://example.org/iiif/book1/range/r1-1');
+        self::assertNotNull($range1_1);
+        /* @var $range1_1 Range  */
+        $canvasRange1_1 = $range1_1->getStartCanvasOrFirstCanvas();
+        self::assertNotNull($canvasRange1_1);
+        self::assertEquals('http://example.org/iiif/book1/canvas/p2', $canvasRange1_1->getId());
     }
     
 }

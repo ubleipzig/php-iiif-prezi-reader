@@ -4,6 +4,17 @@
   "@type": "sc:Manifest",
 
   "sequences": [
+    {
+      "@id": "http://example.org/iiif/book1/sequence/s0",
+      "@type": "sc:Sequence",
+      "canvases": [
+        {
+          "@id": "http://example.org/iiif/book1/canvas/p3",
+          "@type": "sc:Canvas",
+          "label": "1"
+        }
+      ]
+    }
   ],
 
   "structures": [
@@ -36,6 +47,7 @@
       "@type": "sc:Range",
       "label": "Introduction",
       "ranges": ["http://example.org/iiif/book1/range/r1-1"],
+      "startCanvas": "http://example.org/iiif/book1/canvas/p2",
       "canvases": [
         "http://example.org/iiif/book1/canvas/p1",
         "http://example.org/iiif/book1/canvas/p2",

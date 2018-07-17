@@ -33,6 +33,7 @@ class Sequence extends AbstractIiifResource
         /* @var $sequence Sequence */
         $sequence->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $sequence->canvases, $allResources);
         $sequence->loadStartCanvasFromJson($jsonAsArray, $allResources);
+        $sequence->setViewingDirection(array_key_exists(Names::VIEWING_DIRECTION, $jsonAsArray) ? $jsonAsArray[Names::VIEWING_DIRECTION] : null);
         return $sequence;
     }
     /**

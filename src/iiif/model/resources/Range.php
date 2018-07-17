@@ -43,7 +43,7 @@ class Range extends AbstractIiifResource
         $memberCanvases=array(Names::TYPE=>Types::SC_CANVAS, MiscNames::CLAZZ=>Canvas::class);
         $range->loadMixedResources($jsonAsArray, Names::MEMBERS, array($memberRanges, $memberCanvases), $range->members, $allResources);
         $range->loadStartCanvasFromJson($jsonAsArray, $allResources);
-        // TODO set viewingDirection
+        $range->setViewingDirection(array_key_exists(Names::VIEWING_DIRECTION, $jsonAsArray) ? $jsonAsArray[Names::VIEWING_DIRECTION] : null);
         
         return $range;
     }
