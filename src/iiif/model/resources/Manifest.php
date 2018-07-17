@@ -30,6 +30,10 @@ class Manifest extends AbstractIiifResource
      */
     protected $structures = array();
     
+    /**
+     * The top structures in the hierarchy. Either a single range with the viewingHint property set to "top" or every range that is not contained in another range
+     * @var Range[]
+     */
     protected $topRanges;
     
     /**
