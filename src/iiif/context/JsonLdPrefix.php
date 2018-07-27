@@ -6,7 +6,7 @@ class JsonLdPrefix
     protected $prefix;
     protected $baseUrl;
     
-    public function __contruct($prefix = null, $baseUrl = null) {
+    public function __construct($prefix = null, $baseUrl = null) {
         $this->prefix = $prefix;
         $this->baseUrl = $baseUrl;
     }
