@@ -2,31 +2,15 @@
 namespace iiif\presentation\v3\model\resources;
 
 use iiif\context\IRI;
-use iiif\context\JsonLdContext;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
 
-abstract class AbstractIiifResource3
+abstract class AbstractIiifResource3 extends AbstractIiifEntity
 {
-    CONST CLASSES = [
-        "http://iiif.io/api/presentation/3#Collection" => Collection3::class,
-        "http://iiif.io/api/presentation/3#Manifest" => Manifest3::class,
-        "http://iiif.io/api/presentation/3#Canvas" => Canvas3::class,
-        "http://iiif.io/api/presentation/3#Range" => Range3::class,
-        "http://www.w3.org/ns/oa#Annotation" => Annotation3::class,
-        "http://www.w3.org/ns/activitystreams#OrderedCollectionPage" => AnnotationPage3::class,
-        "http://www.w3.org/ns/activitystreams#OrderedCollection" => AnnotationCollection3::class,
-        "http://purl.org/dc/dcmitype/StillImage" => ContentResource3::class,
-        "http://iiif.io/api/image/3/ImageService" => ImageService3::class,
-        "http://rdfs.org/sioc/services#Service" => null,
-        "http://purl.org/dc/dcmitype/Dataset" => ContentResource3::class,
-        "http://purl.org/dc/dcmitype/Text" => ContentResource3::class,
-        "http://www.w3.org/ns/oa#SpecificResource" => null
-    ];
-    
+   
     protected $id;
     protected $type;
-    protected $behaviour;
+    protected $behavior;
     
     protected $label;
     protected $metadata;
@@ -40,10 +24,16 @@ abstract class AbstractIiifResource3
     protected $logo;
     protected $homepage;
     protected $rendering;
+    /**
+     * @var Collection3[]
+     */
     protected $partOf;
     
-    protected $originalJsonArray;
-    
+    /**
+     * 
+     * @param string|array $resource URI of the IIIF manifest, json string representation of the manifest or decoded json array
+     * @return \iiif\presentation\v3\model\resources\AbstractIiifResource3 | NULL
+     */
     public static function loadIiifResource($resource)
     {
         if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
@@ -54,66 +44,178 @@ abstract class AbstractIiifResource3
         }
         if (JsonLdProcessor::isDictionary($resource)) {
             $r = self::parseDictionary($resource);
+            echo "debug";
             return $r;
         }
         return null;
     }
-
-    protected static function parseDictionary($dictionary, JsonLdContext $context = null) {
-        if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
-            $processor = new JsonLdProcessor();
-            $context = $processor->processContext($dictionary[Keywords::CONTEXT], new JsonLdContext());
-        }
-        if (array_key_exists("type", $dictionary)) {
-            $type = $dictionary["type"];
-            $typeTerm = $context->getTermDefinition($type);
-            $typeIri = $typeTerm->getIriMapping();
-            $typeClass = self::CLASSES[$typeIri];
-            if ($typeClass == null) return null;
-            $resource = new $typeClass();
-            foreach ($dictionary as $key=>$value) {
-                if ($key == "type") continue;
-                if ($key == Keywords::CONTEXT) continue;
-                if ($context->getTermDefinition($key) == null) continue;
-                $resource->$key = self::loadProperty($key, $value, $context);
-            }
-            return $resource;
-        } else {
-            
-        }
-    }
     
-    protected static function loadProperty($term, $value, JsonLdContext $context) {
-        $definition = $context->getTermDefinition($term);
-        $result = null;
-        if (JsonLdProcessor::isSequentialArray($value)) {
-            if (!$definition->hasListContainer() && !$definition->hasSetContainer()){
-                throw new \Exception("array given for non collection property");
-            }
-            if ($definition->hasSetContainer() || $definition->hasListContainer()) {
-                $result = array();
-                foreach ($value as $member) {
-                    if ($member == null || is_string($member)) {
-                        $result[] = $member;
-                    } elseif (JsonLdProcessor::isDictionary($member)) {
-                        $result[] = self::parseDictionary($member, $context);
-                    }
-                }
-                return $result;
-            } elseif ($definition->hasListContainer()) {
-                $result = array();
-            }
-        } elseif (JsonLdProcessor::isDictionary($value)) {
-            // ??
-        } elseif (is_string($value)) {
-            return $value;
+    protected function getTranslationFor($dictionary, string $language = null) {
+        if ($dictionary == null || !JsonLdProcessor::isDictionary($dictionary)) {
+            return null;
+        }
+        if ($language!=null && array_key_exists($language, $dictionary)) {
+            return $dictionary[$language];
+        } elseif (array_key_exists(Keywords::NONE, $dictionary)) {
+            return $dictionary[Keywords::NONE];
+        } elseif ($language == null) {
+            return reset($dictionary);
         }
         return null;
     }
     
-    public function __set($var, $value) {
-        $this->$var = $value;
+    public function getLabelTranslated(string $language = null) {
+        return $this->getTranslationFor($this->label, $language);
     }
+    
+    public function getMetadataForLabel($label, string $language = null) {
+        if ($this->metadata != null) {
+            $selectedMetaDatum = null;
+            foreach ($this->metadata as $metadatum) {
+                foreach ($metadatum["label"] as $lang=>$labels) {
+                    if (array_search($label, $labels)!==false) {
+                        $selectedMetaDatum = $metadatum;
+                        break 2;
+                    }
+                }
+            }
+            if ($selectedMetaDatum != null) {
+                $v = $this->getTranslationFor($metadatum["value"], $language);
+                return $this->getTranslationFor($metadatum["value"], $language);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBehavior()
+    {
+        return $this->behavior;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequiredStatement()
+    {
+        return $this->requiredStatement;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRights()
+    {
+        return $this->rights;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeeAlso()
+    {
+        return $this->seeAlso;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRendering()
+    {
+        return $this->rendering;
+    }
+
+    /**
+     * @return Collection3[]
+     */
+    public function getPartOf()
+    {
+        return $this->partOf;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOriginalJsonArray()
+    {
+        return $this->originalJsonArray;
+    }
+
+    
 }
 
 
