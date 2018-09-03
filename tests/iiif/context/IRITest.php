@@ -60,13 +60,13 @@ class IRITest extends \PHPUnit_Framework_TestCase
     }
     
     public function testIsCompressedUri() {
-        self::assertFalse(IRI::isCompressedUri(null));
-        self::assertFalse(IRI::isCompressedUri(""));
-        self::assertFalse(IRI::isCompressedUri("path"));
-        self::assertTrue(IRI::isCompressedUri("ns:path"));
-        self::assertFalse(IRI::isCompressedUri("ssh://root@127.0.0.1/"));
-        self::assertFalse(IRI::isCompressedUri("schema://host"));
-        self::assertFalse(IRI::isCompressedUri("http://iiif.io/api/presentation/3/context.json"));
+        self::assertFalse(IRI::isCompactUri(null));
+        self::assertFalse(IRI::isCompactUri(""));
+        self::assertFalse(IRI::isCompactUri("path"));
+        self::assertTrue(IRI::isCompactUri("ns:path"));
+        self::assertFalse(IRI::isCompactUri("ssh://root@127.0.0.1/"));
+        self::assertFalse(IRI::isCompactUri("schema://host"));
+        self::assertFalse(IRI::isCompactUri("http://iiif.io/api/presentation/3/context.json"));
     }
     
     public function testIsUri() {
