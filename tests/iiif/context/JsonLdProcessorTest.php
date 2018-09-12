@@ -19,6 +19,8 @@ class JsonLdProcessorTest extends PHPUnit_Framework_TestCase
         $context = new JsonLdContext();
         $context->setBaseIri("http://iiif.io/api/presentation/3/context.json");
         $processedContext = $helper->processContext(["http://iiif.io/api/presentation/3/context.json"], $context);
+        $widthTerm = $processedContext->getTermDefinition("width");
+        self::assertEquals("http://www.w3.org/2001/XMLSchema#integer", $widthTerm->getTypeMapping());
         
         $this->markTestIncomplete("loadJsonLdContext test not implemented");
     }

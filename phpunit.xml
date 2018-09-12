@@ -2,8 +2,9 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="IIIF Reader Test Suite">
-            <directory>./tests/iiif/presentation/v3/model</directory>
             <directory>./tests/iiif/presentation/v2/model</directory>
+            <directory>./tests/iiif/context</directory>
+            <directory>./tests/iiif/presentation/v3/model</directory>
         </testsuite>
     </testsuites>
 </phpunit>

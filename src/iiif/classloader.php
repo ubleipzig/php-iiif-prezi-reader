@@ -2,6 +2,8 @@
 
 // Use this file if you don't want to or can't rely on composer or other autoloaders
 
+require_once(__DIR__."/presentation/IiifHelper.php");
+
 require_once(__DIR__."/presentation/v2/model/constants/Profile.php");
 require_once(__DIR__."/presentation/v2/model/constants/ViewingDirectionValues.php");
 require_once(__DIR__."/presentation/v2/model/helper/IiifReader.php");
@@ -27,4 +29,19 @@ require_once(__DIR__."/presentation/v2/model/vocabulary/MiscNames.php");
 require_once(__DIR__."/presentation/v2/model/vocabulary/Motivation.php");
 require_once(__DIR__."/presentation/v2/model/vocabulary/Names.php");
 require_once(__DIR__."/presentation/v2/model/vocabulary/Types.php");
+
+require_once(__DIR__."/presentation/v3/model/constants/BehaviorValues.php");
+
+require_once(__DIR__."/presentation/v3/model/resources/AbstractIiifEntity.php");
+require_once(__DIR__."/presentation/v3/model/resources/AbstractIiifResource3.php");
+require_once(__DIR__."/presentation/v3/model/resources/Annotation3.php");
+require_once(__DIR__."/presentation/v3/model/resources/AnnotationCollection3.php");
+require_once(__DIR__."/presentation/v3/model/resources/AnnotationPage3.php");
+require_once(__DIR__."/presentation/v3/model/resources/Canvas3.php");
+require_once(__DIR__."/presentation/v3/model/resources/Collection3.php");
+require_once(__DIR__."/presentation/v3/model/resources/ContentResource3.php");
+require_once(__DIR__."/presentation/v3/model/resources/ImageService3.php");
+require_once(__DIR__."/presentation/v3/model/resources/Manifest3.php");
+require_once(__DIR__."/presentation/v3/model/resources/Range3.php");
+
 

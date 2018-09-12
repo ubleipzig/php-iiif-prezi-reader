@@ -7,23 +7,90 @@ use iiif\context\Keywords;
 
 abstract class AbstractIiifResource3 extends AbstractIiifEntity
 {
-   
+   /**
+    * 
+    * @var string
+    */
     protected $id;
+    
+    /**
+     * 
+     * @var string
+     */
     protected $type;
+    
+    /**
+     * 
+     * @var string
+     */
     protected $behavior;
     
+    /**
+     * 
+     * @var array
+     */
     protected $label;
+    
+    /**
+     * 
+     * @var array
+     */
     protected $metadata;
+    
+    /**
+     * 
+     * @var array
+     */
     protected $summary;
+    
+    /**
+     * 
+     * @var ContentResource3[]
+     */
     protected $thumbnail;
+    
+    /**
+     * 
+     * @var array
+     */
     protected $requiredStatement;
+    
+    /**
+     * 
+     * @var string
+     */
     protected $rights;
     
+    /**
+     * 
+     * @var ContentResource3[]
+     */
     protected $seeAlso;
+    
+    /**
+     *
+     * @var Service3
+     */
     protected $service;
+    
+    /**
+     * 
+     * @var ContentResource3[]
+     */
     protected $logo;
+    
+    /**
+     * 
+     * @var ContentResource3
+     */
     protected $homepage;
+    
+    /**
+     * 
+     * @var ContentResource3[]
+     */
     protected $rendering;
+    
     /**
      * @var Collection3[]
      */
@@ -86,7 +153,6 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
         }
         return null;
     }
-    
     /**
      * @return string
      */
@@ -136,7 +202,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return mixed
+     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3 
      */
     public function getThumbnail()
     {
@@ -144,7 +210,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getRequiredStatement()
     {
@@ -160,7 +226,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return mixed
+     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3 
      */
     public function getSeeAlso()
     {
@@ -168,7 +234,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return mixed
+     * @return \iiif\presentation\v3\model\resources\Service3
      */
     public function getService()
     {
@@ -176,7 +242,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return mixed
+     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3 
      */
     public function getLogo()
     {
@@ -184,7 +250,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return mixed
+     * @return \iiif\presentation\v3\model\resources\ContentResource3
      */
     public function getHomepage()
     {
@@ -192,7 +258,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return mixed
+     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3 
      */
     public function getRendering()
     {
@@ -200,19 +266,11 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return Collection3[]
+     * @return multitype:\iiif\presentation\v3\model\resources\Collection3 
      */
     public function getPartOf()
     {
         return $this->partOf;
-    }
-
-    /**
-     * @return array
-     */
-    public function getOriginalJsonArray()
-    {
-        return $this->originalJsonArray;
     }
 
     

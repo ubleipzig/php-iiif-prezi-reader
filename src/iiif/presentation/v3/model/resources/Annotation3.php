@@ -1,31 +1,75 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
+
+use iiif\presentation\v2\model\resources\ContentResource;
+
 class Annotation3 extends AbstractIiifResource3
 {
+    /**
+     * 
+     * @var string
+     */
     protected $timeMode;
+    
+    /**
+     * 
+     * @var string
+     */
     protected $motivation;
+    
+    /**
+     * 
+     * @var (Canvas3|SpecificResource3)
+     */
     protected $target;
+    
+    /**
+     * 
+     * @var ContentResource
+     */
+    protected $body;
+
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifEntity::loadProperty()
+     * @see \iiif\presentation\v3\model\resources\AbstractIiifEntity::getStringResources()
      */
-    protected function loadProperty($term, $value, \iiif\context\JsonLdContext $context, array &$allResources = array())
+    protected function getStringResources()
     {
-        if ($term == "target" && is_string($value)) {
-            if (array_key_exists($value, $allResources)) {
-                $this->target = $allResources[$value];
-            } else {
-                $resource = new Canvas3();
-                $resource->id = $value;
-                $allResources[$value] = $resource;
-                $this->target = $resource;
-            }
-        }
-        else {
-            parent::loadProperty($term, $value, $context);
-        }
+        return ["target"=>Canvas3::class];
     }
-    
+    /**
+     * @return string
+     */
+    public function getTimeMode()
+    {
+        return $this->timeMode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMotivation()
+    {
+        return $this->motivation;
+    }
+
+    /**
+     * @return (\iiif\presentation\v3\model\resources\Canvas3|\iiif\presentation\v3\model\resources\SpecificResource3)
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
+     * @return \iiif\presentation\v2\model\resources\ContentResource
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+
 }
 

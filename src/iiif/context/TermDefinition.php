@@ -3,30 +3,38 @@ namespace iiif\context;
 
 class TermDefinition
 {
+
     protected $term;
-    
+
     protected $prefix;
+
     protected $iriMapping;
+
     protected $typeMapping;
+
     protected $languageMapping;
+
     protected $nestValue;
+
     protected $containerMapping;
-    
+
     /**
-     * 
+     *
      * @var boolean
      */
     protected $reverse;
 
     /**
      * Optional context
+     *
      * @var JsonLdContext
      */
     protected $context;
-    
+
     protected $localContext;
-    
+
     /**
+     *
      * @return mixed
      */
     public function getTerm()
@@ -35,6 +43,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return mixed
      */
     public function getId()
@@ -43,6 +52,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return mixed
      */
     public function getExpandedId()
@@ -51,6 +61,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return mixed
      */
     public function getType()
@@ -59,6 +70,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return mixed
      */
     public function getLanuage()
@@ -67,6 +79,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return mixed
      */
     public function getCollectionContainer()
@@ -75,13 +88,16 @@ class TermDefinition
     }
 
     /**
+     *
      * @return JsonLdContext
      */
     public function getContext()
     {
         return $this->context;
     }
+
     /**
+     *
      * @return mixed
      */
     public function getIriMapping()
@@ -90,13 +106,16 @@ class TermDefinition
     }
 
     /**
+     *
      * @param mixed $iriMapping
      */
     public function setIriMapping($iriMapping)
     {
         $this->iriMapping = $iriMapping;
     }
+
     /**
+     *
      * @return mixed
      */
     public function getTypeMapping()
@@ -105,13 +124,16 @@ class TermDefinition
     }
 
     /**
+     *
      * @param mixed $typeMapping
      */
     public function setTypeMapping($typeMapping)
     {
         $this->typeMapping = $typeMapping;
     }
+
     /**
+     *
      * @return mixed
      */
     public function getLanguageMapping()
@@ -120,6 +142,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return mixed
      */
     public function getNestValue()
@@ -128,6 +151,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return mixed
      */
     public function getContainerMapping()
@@ -136,6 +160,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @return boolean
      */
     public function isReverse()
@@ -144,6 +169,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @param mixed $languageMapping
      */
     public function setLanguageMapping($languageMapping)
@@ -152,6 +178,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @param mixed $nestValue
      */
     public function setNestValue($nestValue)
@@ -160,6 +187,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @param mixed $containerMapping
      */
     public function setContainerMapping($containerMapping)
@@ -168,6 +196,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @param boolean $reverse
      */
     public function setReverse($reverse)
@@ -176,13 +205,16 @@ class TermDefinition
     }
 
     /**
+     *
      * @param \iiif\context\JsonLdContext $context
      */
     public function setContext($context)
     {
         $this->context = $context;
     }
+
     /**
+     *
      * @return mixed
      */
     public function getPrefix()
@@ -191,6 +223,7 @@ class TermDefinition
     }
 
     /**
+     *
      * @param mixed $prefix
      */
     public function setPrefix($prefix)
@@ -198,22 +231,24 @@ class TermDefinition
         $this->prefix = $prefix;
     }
 
-
-    public function hasSetContainer() {
+    public function hasSetContainer()
+    {
         return $this->hasContainer(Keywords::SET);
     }
-    
-    public function hasLanguageContainer() {
+
+    public function hasLanguageContainer()
+    {
         return $this->hasContainer(Keywords::LANGUAGE);
     }
 
-    public function hasListContainer() {
+    public function hasListContainer()
+    {
         return $this->hasContainer(Keywords::LIST);
     }
-    
-    private function hasContainer($keyword) {
-        return $this->containerMapping != null && ((is_string($this->containerMapping) && $keyword ==  $this->containerMapping) || (is_array($this->containerMapping) &&  array_search($keyword, $this->containerMapping)!==false));
+
+    private function hasContainer($keyword)
+    {
+        return $this->containerMapping != null && ((is_string($this->containerMapping) && $keyword == $this->containerMapping) || (is_array($this->containerMapping) && array_search($keyword, $this->containerMapping) !== false));
     }
-    
 }
 

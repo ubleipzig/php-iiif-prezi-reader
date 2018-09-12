@@ -3,11 +3,36 @@ namespace iiif\presentation\v3\model\resources;
 
 class Manifest3 extends AbstractIiifResource3
 {
+    /**
+     * @var Canvas3[]
+     */
     protected $items;
+    
+    /**
+     * @var Range3[]
+     */
     protected $structures;
+    
+    /**
+     * @var Annotation3[];
+     */
     protected $annotations;
+    
+    /**
+     * @var Canvas3
+     */
     protected $posterCanvas;
+    
+    /**
+     * 
+     * @var string
+     */
     protected $navDate;
+    
+    /**
+     * 
+     * @var string
+     */
     protected $viewingDirection;
     
     /**
@@ -15,9 +40,8 @@ class Manifest3 extends AbstractIiifResource3
      * @var Canvas3
      */
     protected $start;
-
     /**
-     * @return mixed
+     * @return multitype:\iiif\presentation\v3\model\resources\Canvas3 
      */
     public function getItems()
     {
@@ -25,7 +49,7 @@ class Manifest3 extends AbstractIiifResource3
     }
 
     /**
-     * @return mixed
+     * @return multitype:\iiif\presentation\v3\model\resources\Range3 
      */
     public function getStructures()
     {
@@ -33,7 +57,7 @@ class Manifest3 extends AbstractIiifResource3
     }
 
     /**
-     * @return mixed
+     * @return \iiif\presentation\v3\model\resources\Annotation3[];
      */
     public function getAnnotations()
     {
@@ -41,7 +65,7 @@ class Manifest3 extends AbstractIiifResource3
     }
 
     /**
-     * @return mixed
+     * @return \iiif\presentation\v3\model\resources\Canvas3
      */
     public function getPosterCanvas()
     {
@@ -49,7 +73,7 @@ class Manifest3 extends AbstractIiifResource3
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getNavDate()
     {
@@ -57,7 +81,7 @@ class Manifest3 extends AbstractIiifResource3
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getViewingDirection()
     {
@@ -65,7 +89,7 @@ class Manifest3 extends AbstractIiifResource3
     }
 
     /**
-     * @return Canvas3
+     * @return \iiif\presentation\v3\model\resources\Canvas3
      */
     public function getStart()
     {

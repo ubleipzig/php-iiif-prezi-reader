@@ -1,6 +1,7 @@
 <?php
 namespace iiif\context;
 
+
 class JsonLdProcessor
 {
     CONST GEN_DELIM = [":", "/", "?", "#", "[", "]", "@"];
@@ -10,9 +11,26 @@ class JsonLdProcessor
     
     protected $processingMode;
     protected $dereferencedContexts;
+    protected $knownIiifContexts;
     
-    public function __construct() {
+    public function __construct($requestKnownIiifContexts = false) {
         $this->dereferencedContexts = array();
+        $this->knownIiifContexts = array();
+        if (!$requestKnownIiifContexts) {
+            // TODO load contexts from filesystem into $this->knownIiifContexts 
+            // http://iiif.io/api/presentation/3/context.json
+            // http://www.w3.org/ns/anno.jsonld
+            // http://iiif.io/api/presentation/3/combined-context.json
+            // http://iiif.io/api/image/1/context.json
+            // http://iiif.io/api/image/2/context.json
+            // http://iiif.io/api/search/1/context.json
+            // http://iiif.io/api/auth/1/context.json
+        }
+    }
+    
+    private function loadUnknownContext($context) {
+        echo "CONTEXT ".$context."\n";
+        return file_get_contents($context);
     }
     
     public static function isSequentialArray($array) {
@@ -57,7 +75,7 @@ class JsonLdProcessor
                     $remoteContexts[] = $context;
                 }
                 if (array_key_exists($context, $this->dereferencedContexts)) {
-                    $context = $dereferencedContexts[$context];
+                    $context = $this->dereferencedContexts[$context];
                 } else {
                     $remoteDocument = file_get_contents($context);
                     if ($remoteDocument===false) {

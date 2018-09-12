@@ -20,10 +20,16 @@ abstract class AbstractIiifEntity
         "http://rdfs.org/sioc/services#Service" => null,
         "http://purl.org/dc/dcmitype/Dataset" => ContentResource3::class,
         "http://purl.org/dc/dcmitype/Text" => ContentResource3::class,
-        "http://www.w3.org/ns/oa#SpecificResource" => null,
-        "http://www.w3.org/ns/oa#TextualBody" => null
+        "http://www.w3.org/ns/oa#SpecificResource" => SpecificResource3::class,
+        "http://www.w3.org/ns/oa#TextualBody" => null,
+        "http://www.w3.org/ns/oa#FragmentSelector" => null,
+        "http://www.w3.org/ns/oa#PointSelector" => null,
     ];
     
+    /**
+     * 
+     * @var array
+     */
     protected $originalJsonArray;
     /**
      * @var boolean
@@ -36,6 +42,22 @@ abstract class AbstractIiifEntity
     public function isInitialized() {
         return $this->initialized;
     }
+
+    /**
+     * @return array
+     */
+    public function getOriginalJsonArray()
+    {
+        return $this->originalJsonArray;
+    }
+
+    /**
+     * Properties that link to IIIF resources via URI string rather than id:URI/type:type dictionary.
+     * @return array
+     */
+    protected function getStringResources() {
+        return [];
+    }
     
     /**
      * 
@@ -43,7 +65,7 @@ abstract class AbstractIiifEntity
      * @param JsonLdContext $context
      * @return AbstractIiifEntity
      */
-    protected static function parseDictionary(array $dictionary, JsonLdContext $context = null, array &$allResources = array()) {
+    protected static function parseDictionary(array $dictionary, JsonLdContext $context = null, array &$allResources = array(), $parent = null) {
         if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
             $processor = new JsonLdProcessor();
             $context = $processor->processContext($dictionary[Keywords::CONTEXT], new JsonLdContext());
@@ -76,7 +98,11 @@ abstract class AbstractIiifEntity
                 }
             }
             $resource->originalJsonArray = $dictionary;
-            $allResources[$resource->id] = ["resource"=>$resource];
+//             if (property_exists(get_class($resource), "id")) {
+//                 $parentId = $parent == null ? null : $parent->id;
+//                 self::registerResource($resource, $parentId, null);
+//                 //$allResources[$resource->id] = ["resource"=>$resource];
+//             }
             return $resource;
         } else {
             // TODO ggf. Sonderbehandlung
@@ -85,6 +111,19 @@ abstract class AbstractIiifEntity
     }
     
     protected function loadProperty($term, $value, JsonLdContext $context, array &$allResources = array()) {
+        if (array_key_exists($term, $this->getStringResources())) {
+            if (array_key_exists($value, $allResources)) {
+                $this->$term = $allResources[$value]["resource"];
+            } else {
+                $class = $this->getStringResources()[$term];
+                $resource = new $class();
+                $resource->id = $value;
+                self::registerResource($resource, $this->id, $term, $allResources);
+                //$allResources[$value] = $resource;
+                $this->$term = $resource;
+            }
+            return;
+        }
         $definition = $context->getTermDefinition($term);
         $result = null;
         if (JsonLdProcessor::isSequentialArray($value)) {
@@ -97,8 +136,10 @@ abstract class AbstractIiifEntity
                     if ($member == null || is_string($member)) {
                         $result[] = $member;
                     } elseif (JsonLdProcessor::isDictionary($member)) {
-                        $resource = self::parseDictionary($member, $context, $allResources);
-                        self::registerResource($resource, $this->id, $term, $allResources);
+                        $resource = self::parseDictionary($member, $context, $allResources, $this);
+                        if (is_object($resource) && property_exists(get_class($resource), "id")) {
+                            self::registerResource($resource, $this->id, $term, $allResources);
+                        }
                         $result[] = $resource;
                     }
                 }
@@ -111,8 +152,12 @@ abstract class AbstractIiifEntity
 //             if ($definition->hasLanguageContainer() || $term == "requiredStatement") {
 //                 $this->$term = $value;
 //             } else {
-                $this->$term = $this->parseDictionary($value, $context, $allResources);
 //             }
+            $termValue = $this->parseDictionary($value, $context, $allResources, $this);
+            if (is_object($termValue)) {
+                self::registerResource($termValue, $this->id, $term, $allResources);
+            }
+            $this->$term = $termValue;
         } elseif (is_string($value)) {
             $this->$term = $value;
             return;
@@ -122,13 +167,12 @@ abstract class AbstractIiifEntity
     private static function registerResource(&$resource, $parentId, $property, array &$allResources = array()) {
         if ($resource instanceof AbstractIiifEntity) {
             if (!array_key_exists($resource->id, $allResources) || !$allResources[$resource->id]["resource"]->initialized) {
-                // TODO bestehende Referenzen aktualisieren
-                if (array_key_exists("references", $allResources[$resource->id])) {
+                if (array_key_exists($resource->id, $allResources) && array_key_exists("references", $allResources[$resource->id])) {
                     $references = $allResources[$resource->id]["references"];
                     foreach ($references as $reference) {
                         $refResource = $reference["resource"];
                         $refProperty = $reference["property"];
-                        $refResource->$refProperty = &$resource;
+                        $allResources[$refResource]["resource"]->$refProperty = &$resource;
                     }
                 }
                 $allResources[$resource->id]["resource"] = $resource;
