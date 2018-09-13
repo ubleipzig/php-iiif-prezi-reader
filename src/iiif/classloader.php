@@ -43,5 +43,7 @@ require_once(__DIR__."/presentation/v3/model/resources/ContentResource3.php");
 require_once(__DIR__."/presentation/v3/model/resources/ImageService3.php");
 require_once(__DIR__."/presentation/v3/model/resources/Manifest3.php");
 require_once(__DIR__."/presentation/v3/model/resources/Range3.php");
+require_once(__DIR__."/presentation/v3/model/resources/Service3.php");
+require_once(__DIR__."/presentation/v3/model/resources/SpecificResource3.php");
 
 
