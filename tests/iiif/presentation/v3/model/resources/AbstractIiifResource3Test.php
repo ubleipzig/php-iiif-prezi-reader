@@ -193,6 +193,12 @@ class AbstractIiifResource3Test extends PHPUnit_Framework_TestCase
         self::assertNotNull($iiifResource->getAnnotations());
         // TODO 
         
+        
+        $resourceUBL = "file://".__DIR__."/../../../../../resources/v3/manifest-00000004119.json";
+        $iiifResourceUBL = AbstractIiifResource3::loadIiifResource($resourceUBL);
+        
+        self::assertInstanceOf(Manifest3::class, $iiifResourceUBL);
+        
         $this->markTestIncomplete("getLoadIiifResource test not implemented");
     }
 }
