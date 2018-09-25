@@ -15,7 +15,10 @@ abstract class AbstractIiifEntity
         "http://www.w3.org/ns/oa#Annotation" => Annotation3::class,
         "http://www.w3.org/ns/activitystreams#OrderedCollectionPage" => AnnotationPage3::class,
         "http://www.w3.org/ns/activitystreams#OrderedCollection" => AnnotationCollection3::class,
+        "http://www.w3.org/ns/activitystreams#Application" => null,
         "http://purl.org/dc/dcmitype/StillImage" => ContentResource3::class,
+        "http://iiif.io/api/image/1/ImageService" => null,
+        "http://iiif.io/api/image/2/ImageService" => null,
         "http://iiif.io/api/image/3/ImageService" => ImageService3::class,
         "http://rdfs.org/sioc/services#Service" => null,
         "http://purl.org/dc/dcmitype/Dataset" => ContentResource3::class,
@@ -35,6 +38,8 @@ abstract class AbstractIiifEntity
      * @var boolean
      */
     protected $initialized = false;
+    
+    protected $containedResources;
     
     /**
      * @return boolean
@@ -65,7 +70,8 @@ abstract class AbstractIiifEntity
      * @param JsonLdContext $context
      * @return AbstractIiifEntity
      */
-    protected static function parseDictionary(array $dictionary, JsonLdContext $context = null, array &$allResources = array(), $parent = null) {
+    protected static function parseDictionary(array $dictionary, JsonLdContext $context = null, array &$allResources = array()) {
+        $noParent = $context === null;
         if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
             $processor = new JsonLdProcessor();
             $context = $processor->processContext($dictionary[Keywords::CONTEXT], new JsonLdContext());
@@ -103,6 +109,14 @@ abstract class AbstractIiifEntity
 //                 self::registerResource($resource, $parentId, null);
 //                 //$allResources[$resource->id] = ["resource"=>$resource];
 //             }
+
+            if ($resource instanceof AbstractIiifResource3 && $noParent) {
+                $containedResources = [];
+                foreach ($allResources as $id => $resourceArray) {
+                    $containedResources[$id] = $resourceArray["resource"];
+                }
+                $resource->containedResources = $containedResources;
+            }
             return $resource;
         } else {
             // TODO ggf. Sonderbehandlung
@@ -136,7 +150,7 @@ abstract class AbstractIiifEntity
                     if ($member == null || is_string($member)) {
                         $result[] = $member;
                     } elseif (JsonLdProcessor::isDictionary($member)) {
-                        $resource = self::parseDictionary($member, $context, $allResources, $this);
+                        $resource = self::parseDictionary($member, $context, $allResources);
                         if (is_object($resource) && property_exists(get_class($resource), "id")) {
                             self::registerResource($resource, $this->id, $term, $allResources);
                         }
@@ -153,7 +167,7 @@ abstract class AbstractIiifEntity
 //                 $this->$term = $value;
 //             } else {
 //             }
-            $termValue = $this->parseDictionary($value, $context, $allResources, $this);
+            $termValue = $this->parseDictionary($value, $context, $allResources);
             if (is_object($termValue)) {
                 self::registerResource($termValue, $this->id, $term, $allResources);
             }

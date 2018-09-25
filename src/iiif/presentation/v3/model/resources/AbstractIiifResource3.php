@@ -153,6 +153,27 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
         }
         return null;
     }
+    
+    public function getContainedResourceById($resourceId) {
+        if ($this->containedResources != null && array_key_exists($resourceId, $this->containedResources)) {
+            return $this->containedResources[$resourceId];
+        }
+        return null;
+    }
+    
+    public function getLogoUrl($width = 100, $height = null) {
+        if ($this->logo != null) {
+            if ($this->logo->getService()!=null && $this->logo->getService() == "http://iiif.io/api/image/3/ImageService") {
+                // use image service
+                return $this->logo->getService()->getId()."/full/".($width==null?"":$width).",".($height==null?"":$width)."/0/default.jpg";
+            } elseif (strpos($this->logo->getFormat(), "/image/")===0) {
+                // try to use logo id as image url
+                return $this->logo->getId();
+            }
+        }
+        return null;
+    }
+    
     /**
      * @return string
      */
