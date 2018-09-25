@@ -88,7 +88,11 @@ class IRITest extends \PHPUnit_Framework_TestCase
         self::assertTrue(IRI::isExpandedUri("schema://host"));
         self::assertTrue(IRI::isExpandedUri("http://iiif.io/api/presentation/3/context.json"));
     }
-    
+
+    public function testIsAbsoluteUri() {
+        self::assertTrue(IRI::isAbsoluteIri("http://iiif.io/api/presentation/3/context.json"));
+        self::assertFalse(IRI::isAbsoluteIri('{"jsonkey":"jsonvalue"}'));
+    }
 
 }
 

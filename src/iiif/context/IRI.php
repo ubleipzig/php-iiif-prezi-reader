@@ -56,7 +56,8 @@ class IRI
     }
     
     public static function isAbsoluteIri($uri) {
-        return self::isUri($uri) && !empty((new IRI($uri))->scheme);
+        $iri = new IRI($uri);
+        return self::isUri($uri) && !empty($iri->scheme) && !empty($iri->authority) && !(strpos($uri, "{")===0 && strrpos($uri, "}")===0);
     }
     
     public static function isRelativeIri($uri) {
