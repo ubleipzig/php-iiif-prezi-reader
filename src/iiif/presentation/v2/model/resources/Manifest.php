@@ -1,11 +1,10 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
+use iiif\presentation\v2\model\constants\ViewingHintValues;
 use iiif\presentation\v2\model\properties\NavDateTrait;
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 use iiif\presentation\v2\model\vocabulary\Names;
-use iiif\presentation\v2\model\constants\ViewingDirectionValues;
-use iiif\presentation\v2\model\constants\ViewingHintValues;
 
 class Manifest extends AbstractIiifResource
 {
