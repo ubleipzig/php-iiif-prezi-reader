@@ -13,10 +13,10 @@ class IiifHelper
     
     public static function loadIiifResource($resource) {
         if (is_string($resource)) {
-            if (IRI::isAbsoluteIri($resource)) {
+            if (IRI::isAbsoluteIri($resource) && parse_url($resource)) {
                 $resource = file_get_contents($resource);
             }
-            $resource = json_decode($resource);
+            $resource = json_decode($resource, true);
         }
         if (is_array($resource)) {
             if (array_key_exists(Keywords::CONTEXT, $resource)) {
