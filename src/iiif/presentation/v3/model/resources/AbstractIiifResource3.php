@@ -4,6 +4,7 @@ namespace iiif\presentation\v3\model\resources;
 use iiif\context\IRI;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
+use iiif\presentation\common\model\AbstractIiifEntity;
 
 abstract class AbstractIiifResource3 extends AbstractIiifEntity
 {

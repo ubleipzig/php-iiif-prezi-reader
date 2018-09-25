@@ -32,7 +32,7 @@ class Annotation3 extends AbstractIiifResource3
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifEntity::getStringResources()
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getStringResources()
      */
     protected function getStringResources()
     {

@@ -1,6 +1,8 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
+use iiif\presentation\common\model\AbstractIiifEntity;
+
 class SpecificResource3 extends AbstractIiifEntity
 {
     /**
@@ -17,7 +19,7 @@ class SpecificResource3 extends AbstractIiifEntity
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifEntity::getStringResources()
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getStringResources()
      */
     protected function getStringResources()
     {

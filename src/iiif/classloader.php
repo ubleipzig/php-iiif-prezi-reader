@@ -4,6 +4,8 @@
 
 require_once(__DIR__."/presentation/IiifHelper.php");
 
+require_once(__DIR__."/presentation/common/model/AbstractIiifEntity.php");
+
 require_once(__DIR__."/presentation/v2/model/constants/Profile.php");
 require_once(__DIR__."/presentation/v2/model/constants/ViewingDirectionValues.php");
 require_once(__DIR__."/presentation/v2/model/helper/IiifReader.php");
@@ -32,7 +34,6 @@ require_once(__DIR__."/presentation/v2/model/vocabulary/Types.php");
 
 require_once(__DIR__."/presentation/v3/model/constants/BehaviorValues.php");
 
-require_once(__DIR__."/presentation/v3/model/resources/AbstractIiifEntity.php");
 require_once(__DIR__."/presentation/v3/model/resources/AbstractIiifResource3.php");
 require_once(__DIR__."/presentation/v3/model/resources/Annotation3.php");
 require_once(__DIR__."/presentation/v3/model/resources/AnnotationCollection3.php");

@@ -1,9 +1,20 @@
 <?php
-namespace iiif\presentation\v3\model\resources;
+namespace iiif\presentation\common\model;
 
 use iiif\context\JsonLdContext;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
+use iiif\presentation\v3\model\resources\Collection3;
+use iiif\presentation\v3\model\resources\Manifest3;
+use iiif\presentation\v3\model\resources\Canvas3;
+use iiif\presentation\v3\model\resources\Range3;
+use iiif\presentation\v3\model\resources\Annotation3;
+use iiif\presentation\v3\model\resources\AnnotationPage3;
+use iiif\presentation\v3\model\resources\AnnotationCollection3;
+use iiif\presentation\v3\model\resources\ContentResource3;
+use iiif\presentation\v3\model\resources\ImageService3;
+use iiif\presentation\v3\model\resources\SpecificResource3;
+use iiif\presentation\v3\model\resources\AbstractIiifResource3;
 
 abstract class AbstractIiifEntity
 {
