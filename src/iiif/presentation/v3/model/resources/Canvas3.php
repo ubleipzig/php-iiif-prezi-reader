@@ -1,6 +1,8 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
+use iiif\presentation\v2\model\vocabulary\Motivation;
+
 class Canvas3 extends AbstractIiifResource3
 {
     /**
@@ -44,6 +46,23 @@ class Canvas3 extends AbstractIiifResource3
      * @var float
      */
     protected $duration;
+    
+    /**
+     * 
+     * @return \iiif\presentation\v3\model\resources\Annotation3[]
+     */
+    public function getImageAnnotationsForDisplay() {
+        $imageAnnotations = [];
+        foreach ($this->getItems() as $annotationPage) {
+            foreach ($annotationPage->getItems() as $annotation) {
+                /* @var $annotation Annotation3 */
+                if ($annotation->getMotivation()==Motivation::PAINTING && $annotation->getBody()->getType()=="http://purl.org/dc/dcmitype/StillImage") {
+                    $imageAnnotations[] = $annotation;
+                }
+            }
+        }
+        return $imageAnnotations;
+    }
 
     /**
      * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3 
