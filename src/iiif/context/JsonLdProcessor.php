@@ -24,7 +24,6 @@ class JsonLdProcessor
             $this->knownIiifContexts["http://iiif.io/api/image/2/context.json"] = __DIR__."/../../../resources/v3/image-context-2.json";
             $this->knownIiifContexts["http://iiif.io/api/search/1/context.json"] = __DIR__."/../../../resources/v3/search-context-1.json";
             $this->knownIiifContexts["http://iiif.io/api/auth/1/context.json"] = __DIR__."/../../../resources/v3/auth-context-1.json";
-            // TODO load contexts from filesystem into $this->knownIiifContexts 
         }
     }
     
@@ -152,7 +151,7 @@ class JsonLdProcessor
             }
             $defined = array();
             foreach ($context as $key => $v) {
-                // FIXME https://json-ld.org/spec/latest/json-ld-api/#algorithm "For each key-value pair in context where key is not @base, @vocab, or @language" should actually be "[...] @base, @vocab, @language or @version"
+                // FIXME https://github.com/w3c/json-ld-api/issues/37
                 if (array_search($key, [Keywords::BASE, Keywords::VOCAB, Keywords::LANGUAGE, Keywords::VERSION])===false){
                     $this->createTermDefinition($result, $context, $key, $defined);
                 }
@@ -203,7 +202,6 @@ class JsonLdProcessor
             $definition->setTypeMapping($type);
         }
         if (array_key_exists(Keywords::REVERSE, $value)) {
-            // TODO 11)
             if (array_key_exists(Keywords::ID, $value) || array_key_exists(Keywords::NEST, $value)) {
                 throw new \Exception("invalid reverse property");
             }
@@ -328,7 +326,6 @@ class JsonLdProcessor
             if (!is_string($value[Keywords::NEST]) || ($value[Keywords::NEST]!=Keywords::NEST && Keywords::isKeyword($value[Keywords::NEST]))) {
                 throw new \Exception("invalid @nest value");
             }
-            // FIXME https://json-ld.org/spec/FCGS/json-ld-api/20180607/#create-term-definition step 19.2: nest value can't be set to defined, should be definition. See https://github.com/json-ld/json-ld.org/issues/672
             $definition->setNestValue($nestValue);
         }
         if (array_key_exists(Keywords::PREFIX, $value)) {
@@ -341,7 +338,6 @@ class JsonLdProcessor
             }
             $definition->setPrefix($prefix);
         }
-        // FIXME https://json-ld.org/spec/FCGS/json-ld-api/20180607/#create-term-definition step 21) is missing @language. See https://github.com/json-ld/json-ld.org/issues/672
         $allowedKeysInValue = [Keywords::ID, Keywords::REVERSE, Keywords::CONTAINER, Keywords::CONTEXT, Keywords::NEST, Keywords::PREFIX, Keywords::TYPE, Keywords::LANGUAGE];
         foreach ($value as $key=>$v) {
             if (array_search($key, $allowedKeysInValue)===false) {
