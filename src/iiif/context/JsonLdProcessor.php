@@ -17,19 +17,22 @@ class JsonLdProcessor
         $this->dereferencedContexts = array();
         $this->knownIiifContexts = array();
         if (!$requestKnownIiifContexts) {
+            $this->knownIiifContexts["http://iiif.io/api/presentation/3/context.json"] = __DIR__."/../../../resources/v3/presentation-context-3.json";
+            $this->knownIiifContexts["http://www.w3.org/ns/anno.jsonld"] = __DIR__."/../../../resources/v3/annotation-context.json";
+            $this->knownIiifContexts["http://iiif.io/api/presentation/3/combined-context.json"] = __DIR__."/../../../resources/v3/presentation-combined-context-3.json";
+            $this->knownIiifContexts["http://iiif.io/api/image/1/context.json"] = __DIR__."/../../../resources/v3/image-context-1.json";
+            $this->knownIiifContexts["http://iiif.io/api/image/2/context.json"] = __DIR__."/../../../resources/v3/image-context-2.json";
+            $this->knownIiifContexts["http://iiif.io/api/search/1/context.json"] = __DIR__."/../../../resources/v3/search-context-1.json";
+            $this->knownIiifContexts["http://iiif.io/api/auth/1/context.json"] = __DIR__."/../../../resources/v3/auth-context-1.json";
             // TODO load contexts from filesystem into $this->knownIiifContexts 
-            // http://iiif.io/api/presentation/3/context.json
-            // http://www.w3.org/ns/anno.jsonld
-            // http://iiif.io/api/presentation/3/combined-context.json
-            // http://iiif.io/api/image/1/context.json
-            // http://iiif.io/api/image/2/context.json
-            // http://iiif.io/api/search/1/context.json
-            // http://iiif.io/api/auth/1/context.json
         }
     }
     
     private function loadUnknownContext($context) {
         echo "CONTEXT ".$context."\n";
+        if (array_key_exists($context, $this->knownIiifContexts)) {
+            return file_get_contents($this->knownIiifContexts[$context]);
+        }
         return file_get_contents($context);
     }
     
@@ -77,7 +80,7 @@ class JsonLdProcessor
                 if (array_key_exists($context, $this->dereferencedContexts)) {
                     $context = $this->dereferencedContexts[$context];
                 } else {
-                    $remoteDocument = file_get_contents($context);
+                    $remoteDocument = $this->loadUnknownContext($context);
                     if ($remoteDocument===false) {
                         throw new \Exception('Loading remote context failed');
                     }
