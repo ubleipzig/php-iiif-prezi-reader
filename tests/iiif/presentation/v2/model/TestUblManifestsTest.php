@@ -4,6 +4,7 @@ use iiif\presentation\v2\model\AbstractIiifTest;
 use iiif\presentation\v2\model\helper\IiifReader;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Sequence;
+use iiif\presentation\IiifHelper;
 
 class TestUblManifestsTest extends AbstractIiifTest
 {
@@ -14,7 +15,7 @@ class TestUblManifestsTest extends AbstractIiifTest
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
             $manifestAsJson=self::getJson($manifestFile);
-            Manifest::fromJson($manifestAsJson, $manifestFile." did not load");
+            Manifest::loadIiifResource($manifestAsJson, $manifestFile." did not load");
         }
     }
     
@@ -25,7 +26,7 @@ class TestUblManifestsTest extends AbstractIiifTest
             $documentAsJson=self::getJson($manifestFile);
             $classForDocument = IiifReader::getResourceClassForString($documentAsJson);
             self::assertEquals(Manifest::class, $classForDocument, 'Wrong resource class for '.$manifestFile);
-            $classForDocument::fromJson($documentAsJson, 'Loading '.$manifestFile.'by class did not work');
+            $classForDocument::loadIiifResource($documentAsJson, 'Loading '.$manifestFile.'by class did not work');
         }
     }
     
@@ -34,7 +35,7 @@ class TestUblManifestsTest extends AbstractIiifTest
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
             $documentAsJson=self::getJson($manifestFile);
-            $resource=IiifReader::getIiifResourceFromJsonString($documentAsJson);
+            $resource=IiifHelper::loadIiifResource($documentAsJson);
             self::assertInstanceOf(Manifest::class, $resource, 'Not a manifest: '.$manifestFile);
             self::assertNotNull($resource->getSequences(), 'No sequences found: '.$manifestFile);
             self::assertNotEmpty($resource->getSequences(), 'Sequences empty: '.$manifestFile);

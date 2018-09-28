@@ -39,7 +39,7 @@ class IiifHelper
     private static function getResourceForContext($context, $resource) {
         if ($context == self::PRESENTATION_API_2_CONTEXT) {
             $iiifClass = IiifReader::getResourceClassForArray($resource);
-            return $iiifClass::fromArray($resource);
+            return $iiifClass::loadIiifResource($resource);
         }
         if ($context == self::PRESENTATION_API_3_CONTEXT) {
             return AbstractIiifResource3::loadIiifResource($resource);

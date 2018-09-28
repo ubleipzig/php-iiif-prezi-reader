@@ -1,9 +1,9 @@
 <?php
-namespace iiif\presentation\v3\model\resources;
+namespace iiif\services;
 
 use iiif\presentation\common\model\AbstractIiifEntity;
 
-class Service3 extends AbstractIiifEntity
+class Service extends AbstractIiifEntity
 {
     /**
      * 

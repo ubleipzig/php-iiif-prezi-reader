@@ -20,7 +20,7 @@ class CanvasTest extends AbstractIiifTest
     {
         $this->json = parent::getJson('canvas-example.json');
         $array = json_decode($this->json, true);
-        $this->canvas = Canvas::fromArray($array);
+        $this->canvas = Canvas::loadIiifResource($array);
     }
     
     

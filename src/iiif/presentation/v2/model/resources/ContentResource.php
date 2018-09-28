@@ -3,6 +3,7 @@ namespace iiif\presentation\v2\model\resources;
 
 
 use iiif\presentation\v2\model\vocabulary\Names;
+use iiif\services\AbstractImageService;
 
 class ContentResource extends AbstractIiifResource
 {
@@ -36,6 +37,12 @@ class ContentResource extends AbstractIiifResource
         return $this->chars;
     }
 
+    public function getImageUrl() {
+        $service = $this->service;
+        if ($service instanceof AbstractImageService) {
+            return $service->getImageUrl();
+        }
+    }
     
 }
 

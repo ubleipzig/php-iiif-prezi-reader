@@ -24,7 +24,7 @@ class SequenceTest extends AbstractIiifTest
         parent::setUp();
         
         $this->json = parent::getJson('manifest-example.json');
-        $this->sequence = Manifest::fromJson($this->json)->getSequences()[0];
+        $this->sequence = Manifest::loadIiifResource($this->json)->getSequences()[0];
     }
 
     /**
@@ -52,7 +52,7 @@ class SequenceTest extends AbstractIiifTest
     {
         $json = parent::getJson('sequence-example.json');
         $jsonAsArray = json_decode($json, true);
-        $sequence = Sequence::fromArray($jsonAsArray);
+        $sequence = Sequence::loadIiifResource($jsonAsArray);
         self::assertNotNull($sequence);
         self::assertInstanceOf(Sequence::class, $sequence);
         self::assertequals("http://example.org/iiif/book1/sequence/normal", $sequence->getId());
@@ -80,7 +80,7 @@ class SequenceTest extends AbstractIiifTest
         $startCanvas = $this->sequence->getStartCanvas();
         self::assertNull($startCanvas);
 
-        $sequence = Sequence::fromJson(parent::getJson('sequence-example.json'));
+        $sequence = Sequence::loadIiifResource(parent::getJson('sequence-example.json'));
         $startCanvas = $sequence->getStartCanvas();
         self::assertNotNull($startCanvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p2", $startCanvas->getId());
@@ -95,7 +95,7 @@ class SequenceTest extends AbstractIiifTest
         self::assertNotNull($startCanvasOrFirstCanvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p1", $startCanvasOrFirstCanvas->getId());
         
-        $sequence = Sequence::fromJson(parent::getJson('sequence-example.json'));
+        $sequence = Sequence::loadIiifResource(parent::getJson('sequence-example.json'));
         $startCanvasOrFirstCanvas = $sequence->getStartCanvasOrFirstCanvas();
         self::assertNotNull($startCanvasOrFirstCanvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p2", $startCanvasOrFirstCanvas->getId());

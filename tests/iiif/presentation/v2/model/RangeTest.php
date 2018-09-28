@@ -12,7 +12,7 @@ class RangeTest extends AbstractIiifTest
     protected function setup()
     {
         $jsonAsString = parent::getJson('structures-example.json');
-        $this->manifest = Manifest::fromJson($jsonAsString);
+        $this->manifest = Manifest::loadIiifResource($jsonAsString);
     }
     
     public function testStructures()
@@ -57,14 +57,15 @@ class RangeTest extends AbstractIiifTest
         {
             self::assertInstanceOf(Canvas::class, $canvas);
             /* @var $canvas Canvas */
-            self::assertTrue($canvas->isReference() || $canvas->getId() == 'http://example.org/iiif/book1/canvas/p3');
+            self::assertTrue(!$canvas->isInitialized() || $canvas->getId() == 'http://example.org/iiif/book1/canvas/p3');
         }
         self::assertEquals('http://example.org/iiif/book1/canvas/p1', $range2->getCanvases()[0]->getId(), 'Wrong id for canvas 0: '.$range2->getCanvases()[0]->getId());
         self::assertEquals('http://example.org/iiif/book1/canvas/p3', $range2->getCanvases()[2]->getId(), 'Wrong id for canvas 2: '.$range2->getCanvases()[2]->getId());
 
         self::assertEquals(1, count($range2->getRanges()));
         self::assertInstanceOf(Range::class, $range2->getRanges()[0]);
-        self::assertTrue($range2->getRanges()[0]->isReference());
+        self::assertTrue($range2->getRanges()[0]->isInitialized());
+        self::assertEquals("Objectives and Scope", $range2->getRanges()[0]->getLabel());
     }
     public function testCanvases()
     {
@@ -81,7 +82,7 @@ class RangeTest extends AbstractIiifTest
         self::assertEquals(1, count($range3->getCanvases()));
         self::assertInstanceOf(Canvas::class, $range3->getCanvases()[0]);
         self::assertEquals('http://example.org/iiif/book1/canvas/p2', $range3->getCanvases()[0]->getId(), 'Wrong canvas id.');
-        self::assertTrue($range3->getCanvases()[0]->isReference());
+        self::assertTrue(!$range3->getCanvases()[0]->isInitialized());
     }
     
     public function testGetStartCanvas()

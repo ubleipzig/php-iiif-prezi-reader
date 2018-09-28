@@ -22,6 +22,17 @@ class Sequence extends AbstractIiifResource
     protected $canvases = array();
     
     protected $viewingDirection;
+    
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getStringResources()
+     */
+    protected function getStringResources()
+    {
+        return ["startCanvas"=>Canvas::class];
+    }
+
     /**
      * {@inheritDoc}
      * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()

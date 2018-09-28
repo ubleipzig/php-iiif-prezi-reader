@@ -18,6 +18,7 @@ class KeywordsTest extends PHPUnit_Framework_TestCase
         self::assertTrue(Keywords::isKeyword("@id"));
         self::assertFalse(Keywords::isKeyword("@notakeyword"));
         self::assertFalse(Keywords::isKeyword(null));
+        self::assertFalse(Keywords::isKeyword("foo"));
     }
 }
 

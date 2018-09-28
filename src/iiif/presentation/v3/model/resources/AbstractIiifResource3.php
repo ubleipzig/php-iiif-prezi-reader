@@ -5,6 +5,7 @@ use iiif\context\IRI;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
 use iiif\presentation\common\model\AbstractIiifEntity;
+use iiif\services\Service;
 
 abstract class AbstractIiifResource3 extends AbstractIiifEntity
 {
@@ -70,7 +71,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     
     /**
      *
-     * @var Service3
+     * @var Service
      */
     protected $service;
     
@@ -111,9 +112,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
             $resource = json_decode($resource, true);
         }
         if (JsonLdProcessor::isDictionary($resource)) {
-            $r = self::parseDictionary($resource);
-            echo "debug";
-            return $r;
+            return self::parseDictionary($resource);
         }
         return null;
     }
@@ -256,7 +255,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
     }
 
     /**
-     * @return \iiif\presentation\v3\model\resources\Service3
+     * @return \iiif\services\Service
      */
     public function getService()
     {

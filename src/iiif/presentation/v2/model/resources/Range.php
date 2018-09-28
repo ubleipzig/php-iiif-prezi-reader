@@ -27,6 +27,10 @@ class Range extends AbstractIiifResource
     
     protected $members = array();
     
+    protected function getStringResources() {
+        return ["ranges"=>Range::class, "canvases"=>Canvas::class, "startCanvas"=>Canvas::class];
+    }
+    
     /**
      * {@inheritDoc}
      * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()

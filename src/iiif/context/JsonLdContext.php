@@ -7,6 +7,12 @@ class JsonLdContext
     protected $termDefinitions = array();
     protected $vocabularyMapping;
     protected $defaultLanguage;
+    
+    /**
+     * Containes any terms that expand to json-ld keywords
+     * @var array
+     */
+    protected $keywordAliases = array();
 
     public function expandIRI($toExpand) {
         if (!IRI::isCompressedUri($toExpand)) return $toExpand;
@@ -82,7 +88,15 @@ class JsonLdContext
         $this->defaultLanguage = $defaultLanguage;
     }
 
-
-
+    public function addKeywordAlias(string $keyword, string $alias) {
+        $this->keywordAliases[$keyword] = $alias;
+    }
+    
+    public function getKeywordOrAlias(string $keyword) {
+        if (array_key_exists($keyword, $this->keywordAliases)) {
+            return $this->keywordAliases[$keyword];
+        }
+        return $keyword;
+    }
 }
 

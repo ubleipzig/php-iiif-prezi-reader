@@ -295,9 +295,12 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
     
     public function testFromArray()
     {
+        // TODO mock context
         $mockArray[Names::ID] = 'http://www.example.com/mockresource/id';
         $mockArray[Names::METADATA] = json_decode('[{"label": "My label", "value": "My value"}, {"label": "My other label", "value": "My other value"}]', true);
-        $mockResource = MockIiifResource::fromArray($mockArray);
+        $mockArray[Names::TYPE] = 'http://www.example.com/types/mockresource';
+        $mockArray[Names::CONTEXT] = 'https://iiif.io/api/presentation/2/context.json';
+        $mockResource = MockIiifResource::loadIiifResource($mockArray);
         
         $metadata = $mockResource->getMetadata();
         self::assertNotNull($metadata);
@@ -312,7 +315,7 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         self::assertEquals('My other value', $valueForLabel2);
 
         $mockArray[Names::METADATA] = json_decode('[{"label": null, "value": null}]', true);
-        $mockResource = MockIiifResource::fromArray($mockArray);
+        $mockResource = MockIiifResource::loadIiifResource($mockArray);
         
         $metadata = $mockResource->getMetadata();
         self::assertNotNull($metadata);
@@ -324,7 +327,7 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
 
     public function testJsonPath()
     {
-        $manifest = Manifest::fromJson(file_get_contents(__DIR__.'/../../../../resources/manifest-0000006761.json'));
+        $manifest = Manifest::loadIiifResource(file_get_contents(__DIR__.'/../../../../resources/manifest-0000006761.json'));
         
         /* @var $manifest Manifest */
         

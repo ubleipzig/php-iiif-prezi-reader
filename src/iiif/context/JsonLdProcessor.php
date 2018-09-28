@@ -1,13 +1,26 @@
 <?php
 namespace iiif\context;
 
-
 class JsonLdProcessor
 {
+    /**
+     * Delimiters of the generic URI components. See https://tools.ietf.org/html/rfc3986#section-2.2
+     * @var array
+     */
     CONST GEN_DELIM = [":", "/", "?", "#", "[", "]", "@"];
+    
     CONST PROCESSING_MODE_JSON_LD_1_0 = "json-ld-1.0";
+    
     CONST PROCESSING_MODE_JSON_LD_1_1 = "json-ld-1.1";
-    CONST VERSION_1_1 = 1.1; 
+    
+    CONST VERSION_1_1 = 1.1;
+    
+    /**
+     * IIIF image api version 1.1 context URI is http://library.stanford.edu/iiif/image-api/1.1/context.json which is no longer available via HTTP and results in a 404 error.
+     * https://iiif.io/api/image/1/context.json provides the content of the context. See https://github.com/IIIF/api/issues/1300 . 
+     * @var array Array with the original URI as key and a replacement URL as value
+     */
+    CONST REDIRECTIONS = ["http://library.stanford.edu/iiif/image-api/1.1/context.json"=>"https://iiif.io/api/image/1/context.json"];
     
     protected $processingMode;
     protected $dereferencedContexts;
@@ -28,9 +41,15 @@ class JsonLdProcessor
     }
     
     private function loadUnknownContext($context) {
-        echo "CONTEXT ".$context."\n";
+        if (array_key_exists($context, self::REDIRECTIONS)) {
+            $context = self::REDIRECTIONS[$context];
+        }
         if (array_key_exists($context, $this->knownIiifContexts)) {
             return file_get_contents($this->knownIiifContexts[$context]);
+        }
+        if (strpos($context, "http://example.org") === 0) {
+            // only for testing purposes
+            return '{"@context":{}}';
         }
         return file_get_contents($context);
     }
@@ -158,7 +177,6 @@ class JsonLdProcessor
             }
         }
         return $result;
-        //$localContextArray = self::normalizeContext($localContext);
     }
     
     protected function createTermDefinition(JsonLdContext $activeContext, $localContext, $term, &$defined) {
@@ -232,6 +250,10 @@ class JsonLdProcessor
                 throw new \Exception("invalid IRI mapping");
             }
             $expanededIri = $this->expandIRI($activeContext, $value[Keywords::ID], false, true, $localContext, $defined);
+            if (Keywords::isKeyword($expanededIri)) {
+                // Keeping track of keyword aliases - not part of the JSON-LD context processing algorithm
+                $activeContext->addKeywordAlias($expanededIri, $term);
+            }
             if (!Keywords::isKeyword($expanededIri) && !IRI::isAbsoluteIri($expanededIri) && !self::isBlankNodeIdentifier($expanededIri)) {
                 throw new \Exception("invalid IRI mapping");
             }

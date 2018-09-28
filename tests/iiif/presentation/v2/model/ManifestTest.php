@@ -24,7 +24,7 @@ class ManifestTest extends AbstractIiifTest
     protected function setUp()
     {
         $this->json = parent::getJson('manifest-example.json');
-        $this->manifest = Manifest::fromJson($this->json);
+        $this->manifest = Manifest::loadIiifResource($this->json);
     }
 
     /**
@@ -50,7 +50,7 @@ class ManifestTest extends AbstractIiifTest
     public function testFromArray()
     {
         $jsonAsArray = json_decode($this->json, true);
-        $manifest = Manifest::fromArray($jsonAsArray);
+        $manifest = Manifest::loadIiifResource($jsonAsArray);
         self::assertNotNull($manifest);
         self::assertEquals("http://example.org/iiif/book1/manifest", $manifest->getId());
     }
@@ -140,7 +140,7 @@ class ManifestTest extends AbstractIiifTest
     public function testEmptyManifest()
     {
         $json = parent::getJson('empty-manifest.json');
-        $manifest = Manifest::fromJson($json);
+        $manifest = Manifest::loadIiifResource($json);
         
     }
 }

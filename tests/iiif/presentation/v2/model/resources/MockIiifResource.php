@@ -24,5 +24,17 @@ class MockIiifResource extends AbstractIiifResource
     {
         $this->label = $label;
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::loadIiifResource()
+     */
+    public static function loadIiifResource($resource)
+    {
+        parent::$CLASSES["http://www.example.com/types/mockresource"] = MockIiifResource::class;
+        return parent::loadIiifResource($resource);
+    }
+
+    
+    
 }
 
