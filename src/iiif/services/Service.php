@@ -16,5 +16,23 @@ class Service extends AbstractIiifEntity
      * @var string
      */
     protected $profile;
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    
+    
 }
 

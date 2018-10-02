@@ -291,6 +291,10 @@ abstract class AbstractIiifResource extends AbstractIiifEntity
     {
         return $this->thumbnail;
     }
+    
+    public function getThumbnailImageUrl($width = null, $height = null) {
+        // TODO
+    }
 
     
     

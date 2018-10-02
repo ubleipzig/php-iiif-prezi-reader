@@ -31,6 +31,7 @@ class MockIiifResource extends AbstractIiifResource
     public static function loadIiifResource($resource)
     {
         parent::$CLASSES["http://www.example.com/types/mockresource"] = MockIiifResource::class;
+        parent::$CLASSES["http://example.org/ns/jsonld/context.json"] = null;
         return parent::loadIiifResource($resource);
     }
 

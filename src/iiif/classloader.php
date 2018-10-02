@@ -41,10 +41,14 @@ require_once(__DIR__."/presentation/v3/model/resources/AnnotationPage3.php");
 require_once(__DIR__."/presentation/v3/model/resources/Canvas3.php");
 require_once(__DIR__."/presentation/v3/model/resources/Collection3.php");
 require_once(__DIR__."/presentation/v3/model/resources/ContentResource3.php");
-require_once(__DIR__."/presentation/v3/model/resources/ImageService3.php");
 require_once(__DIR__."/presentation/v3/model/resources/Manifest3.php");
 require_once(__DIR__."/presentation/v3/model/resources/Range3.php");
-require_once(__DIR__."/presentation/v3/model/resources/Service3.php");
 require_once(__DIR__."/presentation/v3/model/resources/SpecificResource3.php");
 
+require_once(__DIR__."/services/AbstractImageService.php");
+require_once(__DIR__."/services/ImageInformation1.php");
+require_once(__DIR__."/services/ImageInformation2.php");
+require_once(__DIR__."/services/ImageInformation3.php");
+require_once(__DIR__."/services/PhysicalDimensions.php");
+require_once(__DIR__."/services/Service.php");
 

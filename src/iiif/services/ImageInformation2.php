@@ -5,11 +5,47 @@ class ImageInformation2 extends AbstractImageService
 {
     /**
      * {@inheritDoc}
-     * @see \iiif\services\AbstractImageService::getImageUrl()
+     * @see \iiif\services\AbstractImageService::getDefaultFormat()
      */
-    public function getImageUrl($region = "full", $size = "full", $rotation = 0, $quality = "default", $format = "jpg")
+    protected function getDefaultFormat()
     {
-        return $this->getImageUrlInternal($region, $size, $rotation, $quality, $format);
+        return "jpg";
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\services\AbstractImageService::getDefaultQuality()
+     */
+    protected function getDefaultQuality()
+    {
+        return "default";
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\services\AbstractImageService::getFullRegion()
+     */
+    protected function getFullRegion()
+    {
+        return "full";
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\services\AbstractImageService::getMaxSize()
+     */
+    protected function getMaxSize()
+    {
+        return "full";
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\services\AbstractImageService::getNoRotation()
+     */
+    protected function getNoRotation()
+    {
+        return "0";
     }
 
     

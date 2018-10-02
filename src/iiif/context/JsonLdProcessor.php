@@ -93,6 +93,7 @@ class JsonLdProcessor
                 if (is_array($remoteContexts) && array_search($context, $remoteContexts)!==false) {
                     throw new \Exception('Recursive context inclusion for '+$context);
                 } else {
+                    $result->setContextIri($context);
                     $remoteContexts[] = $context;
                 }
                 if (array_key_exists($context, $this->dereferencedContexts)) {

@@ -25,6 +25,7 @@ use iiif\presentation\v3\model\resources\SpecificResource3;
 use iiif\services\ImageInformation3;
 use iiif\services\ImageInformation2;
 use iiif\services\ImageInformation1;
+use iiif\presentation\v2\model\resources\Annotation;
 
 abstract class AbstractIiifEntity
 {
@@ -39,7 +40,12 @@ abstract class AbstractIiifEntity
         "http://iiif.io/api/presentation/3#Manifest" => Manifest3::class,
         "http://iiif.io/api/presentation/3#Canvas" => Canvas3::class,
         "http://iiif.io/api/presentation/3#Range" => Range3::class,
-        "http://www.w3.org/ns/oa#Annotation" => Annotation3::class,
+        "http://www.w3.org/ns/oa#Annotation" => [
+            "http://iiif.io/api/presentation/3/combined-context.json" => Annotation3::class,
+            "http://iiif.io/api/presentation/3/context.json" => Annotation3::class,
+            "http://www.w3.org/ns/anno.jsonld" => Annotation3::class,
+            "http://iiif.io/api/presentation/2/context.json" => Annotation::class,
+        ],
         "http://www.w3.org/ns/activitystreams#OrderedCollectionPage" => AnnotationPage3::class,
         "http://www.w3.org/ns/activitystreams#OrderedCollection" => AnnotationCollection3::class,
         "http://www.w3.org/ns/activitystreams#Application" => null,
@@ -48,13 +54,15 @@ abstract class AbstractIiifEntity
         "http://iiif.io/api/image/1/ImageService" => ImageInformation1::class,
         "http://iiif.io/api/image/2/ImageService" => ImageInformation2::class,
         "http://iiif.io/api/image/3/ImageService" => ImageInformation3::class,
+        "http://library.stanford.edu/iiif/image-api/1.1/context.json" => ImageInformation1::class,
+        "http://iiif.io/api/image/2/context.json" => ImageInformation2::class,
         "http://rdfs.org/sioc/services#Service" => null,
         "http://purl.org/dc/dcmitype/Dataset" => ContentResource3::class,
         "http://purl.org/dc/dcmitype/Text" => ContentResource3::class,
         "http://www.w3.org/ns/oa#SpecificResource" => SpecificResource3::class,
         "http://www.w3.org/ns/oa#TextualBody" => null,
         "http://www.w3.org/ns/oa#FragmentSelector" => null,
-        "http://www.w3.org/ns/oa#PointSelector" => null,
+        "http://www.w3.org/ns/oa#PointSelector" => null
     ];
     
     /**
@@ -106,14 +114,15 @@ abstract class AbstractIiifEntity
         }
         $typeOrAlias = $context->getKeywordOrAlias(Keywords::TYPE);
         $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
-        if (array_key_exists($typeOrAlias, $dictionary)) {
-            $type = $dictionary[$typeOrAlias];
+        $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
+        if (array_key_exists($typeOrAlias, $dictionary) || array_key_exists($contextOrAlias, $dictionary)) {
+            $type = array_key_exists($typeOrAlias, $dictionary) ? $dictionary[$typeOrAlias] : $dictionary[$contextOrAlias];
             $id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
             if ($id != null && array_key_exists($id, $allResources)) {
                 $resource = $allResources[$id]["resource"];
             } else {
                 $typeIri = IRI::isAbsoluteIri($type) ? $type : IRI::isCompactUri($type) ? $processor->expandIRI($context, $type): $context->getTermDefinition($type)->getIriMapping();
-                $typeClass = self::$CLASSES[$typeIri];
+                $typeClass = is_array(self::$CLASSES[$typeIri]) ? self::$CLASSES[$typeIri][$context->getContextIri()] : self::$CLASSES[$typeIri];
                 if ($typeClass == null) {
                     return $dictionary;
                 }

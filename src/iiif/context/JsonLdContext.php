@@ -3,6 +3,7 @@ namespace iiif\context;
 
 class JsonLdContext
 {
+    protected $contextIri = "";
     protected $baseIri = "";
     protected $termDefinitions = array();
     protected $vocabularyMapping;
@@ -37,6 +38,7 @@ class JsonLdContext
         }
         $clone->setVocabularyMapping($this->getVocabularyMapping());
         $clone->setBaseIri($this->getBaseIri());
+        $clone->setContextIri($this->getContextIri());
         return $clone;
     }
 
@@ -98,5 +100,21 @@ class JsonLdContext
         }
         return $keyword;
     }
+    /**
+     * @return string
+     */
+    public function getContextIri()
+    {
+        return $this->contextIri;
+    }
+    /**
+     * @param string $contextIri
+     */
+    public function setContextIri($contextIri)
+    {
+        $this->contextIri = $contextIri;
+    }
+
+
 }
 
