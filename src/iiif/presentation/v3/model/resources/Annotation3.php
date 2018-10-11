@@ -2,7 +2,6 @@
 namespace iiif\presentation\v3\model\resources;
 
 
-use iiif\presentation\v2\model\resources\ContentResource;
 
 class Annotation3 extends AbstractIiifResource3
 {
@@ -26,7 +25,7 @@ class Annotation3 extends AbstractIiifResource3
     
     /**
      * 
-     * @var ContentResource
+     * @var ContentResource3
      */
     protected $body;
 
@@ -63,7 +62,7 @@ class Annotation3 extends AbstractIiifResource3
     }
 
     /**
-     * @return \iiif\presentation\v2\model\resources\ContentResource
+     * @return \iiif\presentation\v3\model\resources\ContentResource3
      */
     public function getBody()
     {
