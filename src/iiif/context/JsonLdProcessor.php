@@ -1,6 +1,13 @@
 <?php
 namespace iiif\context;
 
+/**
+ * Implementation of the context processing algorithm of the JSON-LD API version 1.1. Expansion, Compaction and Flattening algorithms are not implemented.
+ * 
+ * 
+ * @author lutzhelm
+ *
+ */
 class JsonLdProcessor
 {
     /**
