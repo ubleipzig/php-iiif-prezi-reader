@@ -100,6 +100,21 @@ class Range3 extends AbstractIiifResource3
         return $this->supplementary;
     }
 
+    public function getAllCanvases() {
+        $allCanvases = [];
+        if (isset($this->items) && sizeof($this->items)>0) {
+            foreach ($this->items as $item) {
+                if ($item instanceof Canvas3) {
+                    $allCanvases[] = $item;
+                }
+                if ($item instanceof Range3) {
+                    $allCanvases = array_merge($allCanvases, $item->getAllCanvases());
+                }
+            }
+        }
+        return $allCanvases;
+        
+    }
 
 
 }

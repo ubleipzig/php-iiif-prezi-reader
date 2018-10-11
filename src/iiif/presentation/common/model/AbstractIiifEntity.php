@@ -26,6 +26,7 @@ use iiif\services\ImageInformation3;
 use iiif\services\ImageInformation2;
 use iiif\services\ImageInformation1;
 use iiif\presentation\v2\model\resources\Annotation;
+use Flow\JSONPath\JSONPath;
 
 abstract class AbstractIiifEntity
 {
@@ -76,6 +77,10 @@ abstract class AbstractIiifEntity
     protected $initialized = false;
     
     protected $containedResources;
+    
+    protected $parent;
+    
+    protected $type;
     
     /**
      * @return boolean
@@ -128,12 +133,15 @@ abstract class AbstractIiifEntity
                 }
                 $resource = new $typeClass();
             }
-            /* @var $resource AbstractIiifEntity; */
+            /* @var $resource \AbstractIiifEntity; */
             if (!$resource->initialized 
                 || 
                 sizeof(array_diff(array_keys($dictionary), [$typeOrAlias, $idOrAlias])) > 0) {
                 foreach ($dictionary as $key=>$value) {
-                    if ($key == $typeOrAlias) continue;
+                    if ($key == $typeOrAlias) {
+                        $resource->type = $value;
+                        continue;
+                    }
                     if ($key == Keywords::CONTEXT) continue;
                     if (!Keywords::isKeyword($key) && $context->getTermDefinition($key) == null) continue;
                     $resource->loadProperty($key, $value, $context, $allResources, $processor);
@@ -270,6 +278,17 @@ abstract class AbstractIiifEntity
                 }
             }
         }
+    }
+
+    public function jsonPath(string $expression)
+    {
+        $jsonPath = new JSONPath($this->originalJsonArray);
+        $results = $jsonPath->find($expression);
+        if (is_array($results->data()) && count($results->data()) == 1)
+        {
+            return $results[0];
+        }
+        return $results;
     }
 }
 

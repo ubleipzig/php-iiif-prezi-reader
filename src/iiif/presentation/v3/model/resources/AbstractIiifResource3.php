@@ -19,12 +19,6 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
      * 
      * @var string
      */
-    protected $type;
-    
-    /**
-     * 
-     * @var string
-     */
     protected $behavior;
     
     /**
@@ -117,25 +111,26 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
         return null;
     }
     
-    protected function getTranslationFor($dictionary, string $language = null) {
+    protected function getTranslationFor($dictionary, string $language = null, $joinValueDelimiter = null) {
         if ($dictionary == null || !JsonLdProcessor::isDictionary($dictionary)) {
             return null;
         }
         if ($language!=null && array_key_exists($language, $dictionary)) {
-            return $dictionary[$language];
+            return $joinValueDelimiter===null ? $dictionary[$language] : implode($joinValueDelimiter, $dictionary[$language]);
         } elseif (array_key_exists(Keywords::NONE, $dictionary)) {
-            return $dictionary[Keywords::NONE];
-        } elseif ($language == null) {
-            return reset($dictionary);
+            return $joinValueDelimiter===null ? $dictionary[Keywords::NONE] : implode($joinValueDelimiter, $dictionary[Keywords::NONE]);
+        } elseif (empty($language) && !empty($dictionary)) {
+            $value = reset($dictionary);
+            return $joinValueDelimiter===null ? $value : implode($joinValueDelimiter, $value);
         }
         return null;
     }
     
-    public function getLabelTranslated(string $language = null) {
-        return $this->getTranslationFor($this->label, $language);
+    public function getLabelTranslated(string $language = null, $joinValueDelimiter = null) {
+        return $this->getTranslationFor($this->label, $language, $joinValueDelimiter);
     }
     
-    public function getMetadataForLabel($label, string $language = null) {
+    public function getMetadataForLabel($label, string $language = null, $joinValueDelimiter = null) {
         if ($this->metadata != null) {
             $selectedMetaDatum = null;
             foreach ($this->metadata as $metadatum) {
@@ -148,7 +143,12 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity
             }
             if ($selectedMetaDatum != null) {
                 $v = $this->getTranslationFor($metadatum["value"], $language);
-                return $this->getTranslationFor($metadatum["value"], $language);
+                if ($joinValueDelimiter===null) {
+                    return $this->getTranslationFor($metadatum["value"], $language);
+                } else {
+                    return implode($joinValueDelimiter, $this->getTranslationFor($metadatum["value"], $language));
+                }
+                
             }
         }
         return null;

@@ -23,7 +23,6 @@ abstract class AbstractIiifResource extends AbstractIiifEntity
      * @var string
      */
     protected $id;
-    protected $type;
     protected $viewingHint;
     
     // http://iiif.io/api/presentation/2.1/#descriptive-properties
@@ -415,14 +414,4 @@ abstract class AbstractIiifResource extends AbstractIiifEntity
         return null;
     }
     
-    public function jsonPath(string $expression)
-    {
-        $jsonPath = new JSONPath($this->originalJsonArray);
-        $results = $jsonPath->find($expression);
-        if (is_array($results->data()) && count($results->data()) == 1)
-        {
-            return $results[0];
-        }
-        return $results;
-    }
 }

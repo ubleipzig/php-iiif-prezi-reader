@@ -1,6 +1,8 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
+use iiif\services\AbstractImageService;
+
 class ContentResource3 extends AbstractIiifResource3
 {
     /**
@@ -99,6 +101,32 @@ class ContentResource3 extends AbstractIiifResource3
     public function getDuration()
     {
         return $this->duration;
+    }
+    
+    public function getImageUrl($width = null, $height = null) {
+        if (($services=$this->service)!=null) {
+            if (is_array($services)) {
+                foreach ($services as $service) {
+                    if ($service instanceof AbstractImageService) {
+                        break;
+                    }
+                }
+            }
+            else {
+                $service = $services;
+            }
+            if ($service instanceof AbstractImageService) {
+                $size = "full";
+                if ($width != null && $heigth != null) {
+                    $size = $width.",".$height;
+                } elseif ($width!=null) {
+                    $size = $width.",";
+                } elseif ($height!=null) {
+                    $size = ",".$height;
+                }
+                return $service->getImageUrl(null, $size);
+            }
+        }
     }
 }
 
