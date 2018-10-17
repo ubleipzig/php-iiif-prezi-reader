@@ -1,12 +1,14 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
-use iiif\presentation\v2\model\vocabulary\Names;
-use iiif\presentation\v2\model\vocabulary\MiscNames;
-use Flow\JSONPath\JSONPath;
-use iiif\context\JsonLdProcessor;
 use iiif\context\IRI;
+use iiif\context\JsonLdContext;
+use iiif\context\JsonLdProcessor;
+use iiif\context\Keywords;
+use iiif\presentation\common\TypeMap;
 use iiif\presentation\common\model\AbstractIiifEntity;
+use iiif\presentation\v2\model\vocabulary\Names;
+use iiif\services\Service;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have 
@@ -100,6 +102,32 @@ abstract class AbstractIiifResource extends AbstractIiifEntity
         return $original;
     }
     
+    protected function getTypelessProperties()
+    {
+        return ["service"];
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getValueForSpecialProperty()
+     */
+    protected function getValueForSpecialProperty($property, $dictionary, JsonLdContext $context) {
+        if ($property = "service") {
+            if ($this instanceof ContentResource && $this->getType()=="http://dublincore.org/documents/dcmi-type-vocabulary/#dcmitype-Image") {
+                $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
+                $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
+                if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeMap::SERVICE_TYPES)) {
+                    $clazz = TypeMap::SERVICE_TYPES[$dictionary[$contextOrAlias]];
+                }
+            }
+            $service = $clazz == null ? new Service() : new $clazz();
+            $service->id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
+            // TODO use a profile entity
+            $service->profile = array_key_exists("profile", $dictionary) ? $dictionary["profile"] : null;
+            return $service;
+        }
+    }
+
     protected function getTranslatedField($field, $language)
     {
         if (is_null($field)) return null;

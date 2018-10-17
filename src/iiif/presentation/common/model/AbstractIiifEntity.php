@@ -1,70 +1,17 @@
 <?php
 namespace iiif\presentation\common\model;
 
+use Flow\JSONPath\JSONPath;
 use iiif\context\IRI;
 use iiif\context\JsonLdContext;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
+use iiif\presentation\common\TypeMap;
 use iiif\presentation\v2\model\resources\AbstractIiifResource;
-use iiif\presentation\v2\model\resources\AnnotationList;
-use iiif\presentation\v2\model\resources\Canvas;
-use iiif\presentation\v2\model\resources\ContentResource;
-use iiif\presentation\v2\model\resources\Manifest;
-use iiif\presentation\v2\model\resources\Range;
-use iiif\presentation\v2\model\resources\Sequence;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
-use iiif\presentation\v3\model\resources\Annotation3;
-use iiif\presentation\v3\model\resources\AnnotationCollection3;
-use iiif\presentation\v3\model\resources\AnnotationPage3;
-use iiif\presentation\v3\model\resources\Canvas3;
-use iiif\presentation\v3\model\resources\Collection3;
-use iiif\presentation\v3\model\resources\ContentResource3;
-use iiif\presentation\v3\model\resources\Manifest3;
-use iiif\presentation\v3\model\resources\Range3;
-use iiif\presentation\v3\model\resources\SpecificResource3;
-use iiif\services\ImageInformation3;
-use iiif\services\ImageInformation2;
-use iiif\services\ImageInformation1;
-use iiif\presentation\v2\model\resources\Annotation;
-use Flow\JSONPath\JSONPath;
 
 abstract class AbstractIiifEntity
 {
-    protected static $CLASSES = [
-        "http://iiif.io/api/presentation/2#Manifest" => Manifest::class,
-        "http://iiif.io/api/presentation/2#Sequence" => Sequence::class,
-        "http://iiif.io/api/presentation/2#Canvas" => Canvas::class,
-        "http://iiif.io/api/presentation/2#AnnotationList" => AnnotationList::class,
-        "http://iiif.io/api/presentation/2#Range" => Range::class,
-        "http://iiif.io/api/presentation/2#Layer" => null,
-        "http://iiif.io/api/presentation/3#Collection" => Collection3::class,
-        "http://iiif.io/api/presentation/3#Manifest" => Manifest3::class,
-        "http://iiif.io/api/presentation/3#Canvas" => Canvas3::class,
-        "http://iiif.io/api/presentation/3#Range" => Range3::class,
-        "http://www.w3.org/ns/oa#Annotation" => [
-            "http://iiif.io/api/presentation/3/combined-context.json" => Annotation3::class,
-            "http://iiif.io/api/presentation/3/context.json" => Annotation3::class,
-            "http://www.w3.org/ns/anno.jsonld" => Annotation3::class,
-            "http://iiif.io/api/presentation/2/context.json" => Annotation::class,
-        ],
-        "http://www.w3.org/ns/activitystreams#OrderedCollectionPage" => AnnotationPage3::class,
-        "http://www.w3.org/ns/activitystreams#OrderedCollection" => AnnotationCollection3::class,
-        "http://www.w3.org/ns/activitystreams#Application" => null,
-        "http://purl.org/dc/dcmitype/StillImage" => ContentResource3::class,
-        "http://purl.org/dc/dcmitype/Image" => ContentResource::class,
-        "http://iiif.io/api/image/1/ImageService" => ImageInformation1::class,
-        "http://iiif.io/api/image/2/ImageService" => ImageInformation2::class,
-        "http://iiif.io/api/image/3/ImageService" => ImageInformation3::class,
-        "http://library.stanford.edu/iiif/image-api/1.1/context.json" => ImageInformation1::class,
-        "http://iiif.io/api/image/2/context.json" => ImageInformation2::class,
-        "http://rdfs.org/sioc/services#Service" => null,
-        "http://purl.org/dc/dcmitype/Dataset" => ContentResource3::class,
-        "http://purl.org/dc/dcmitype/Text" => ContentResource3::class,
-        "http://www.w3.org/ns/oa#SpecificResource" => SpecificResource3::class,
-        "http://www.w3.org/ns/oa#TextualBody" => null,
-        "http://www.w3.org/ns/oa#FragmentSelector" => null,
-        "http://www.w3.org/ns/oa#PointSelector" => null
-    ];
     
     /**
      * 
@@ -77,8 +24,6 @@ abstract class AbstractIiifEntity
     protected $initialized = false;
     
     protected $containedResources;
-    
-    protected $parent;
     
     protected $type;
     
@@ -105,6 +50,13 @@ abstract class AbstractIiifEntity
         return [];
     }
     
+    protected function getTypelessProperties() {
+        return [];
+    }
+    
+    protected function getValueForSpecialProperty($property, $dictionary, JsonLdContext $context) {
+    }
+    
     /**
      * 
      * @param array $dictionary
@@ -127,7 +79,7 @@ abstract class AbstractIiifEntity
                 $resource = $allResources[$id]["resource"];
             } else {
                 $typeIri = IRI::isAbsoluteIri($type) ? $type : IRI::isCompactUri($type) ? $processor->expandIRI($context, $type): $context->getTermDefinition($type)->getIriMapping();
-                $typeClass = is_array(self::$CLASSES[$typeIri]) ? self::$CLASSES[$typeIri][$context->getContextIri()] : self::$CLASSES[$typeIri];
+                $typeClass = TypeMap::getClassForType($typeIri, $context);
                 if ($typeClass == null) {
                     return $dictionary;
                 }
@@ -218,7 +170,11 @@ abstract class AbstractIiifEntity
                     if ($member == null || is_string($member)) {
                         $result[] = $member;
                     } elseif (JsonLdProcessor::isDictionary($member)) {
-                        $resource = self::parseDictionary($member, $context, $allResources, $processor);
+                        if (array_key_exists($term, $this->getTypelessProperties())) {
+                            $resource=$this->getValueForSpecialProperty($term, $member, $context);
+                        } else {
+                            $resource = self::parseDictionary($member, $context, $allResources, $processor);
+                        }
                         if (is_object($resource) && property_exists(get_class($resource), "id")) {
                             self::registerResource($resource, $this->id, $term, $allResources);
                         }
@@ -231,7 +187,11 @@ abstract class AbstractIiifEntity
                 $result = array();
             }
         } elseif (JsonLdProcessor::isDictionary($value)) {
-            $termValue = $this->parseDictionary($value, $context, $allResources, $processor);
+            if (array_key_exists($term, $this->getTypelessProperties())) {
+                $termValue = $this->getValueForSpecialProperty($term, $value, $context);
+            } else {
+                $termValue = $this->parseDictionary($value, $context, $allResources, $processor);
+            }
             if (is_object($termValue)) {
                 self::registerResource($termValue, $this->id, $term, $allResources);
             }
@@ -289,6 +249,10 @@ abstract class AbstractIiifEntity
             return $results[0];
         }
         return $results;
+    }
+    
+    public function getType() {
+        return $this->type;
     }
 }
 
