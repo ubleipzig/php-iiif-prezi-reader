@@ -2,6 +2,7 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\v2\model\vocabulary\Names;
+use iiif\presentation\IiifHelper;
 
 class AnnotationList extends AbstractIiifResource
 {
@@ -37,10 +38,9 @@ class AnnotationList extends AbstractIiifResource
             $content = file_get_contents($this->id);
             $jsonAsArray = json_decode($content, true);
             
-            $dummy = array();
-            $this->originalJson = $content;
-            $this->loadPropertiesFromArray($jsonAsArray, $dummy);
-            $this->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $this->resources, $dummy);
+            $remoteAnnotationList = IiifHelper::loadIiifResource($content);
+            
+            $this->resources = $remoteAnnotationList->resources;
             
             // TODO register resources in manifest (i.e. replace $dummy with actual resources array somehow)
             
