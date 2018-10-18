@@ -28,6 +28,19 @@ abstract class AbstractIiifEntity {
 
     protected $type;
 
+    public static function loadIiifResource($resource) {
+        if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
+            $resource = file_get_contents($resource);
+        }
+        if (is_string($resource)) {
+            $resource = json_decode($resource, true);
+        }
+        if (JsonLdProcessor::isDictionary($resource)) {
+            return self::parseDictionary($resource);
+        }
+        return null;
+    }
+
     /**
      *
      * @return boolean
@@ -54,8 +67,10 @@ abstract class AbstractIiifEntity {
     }
 
     /**
-     * Names of properties that resolve to AbstractIiifEntity but have not @type given. Applies to "service" property.
+     * Names of properties that resolve to AbstractIiifEntity but have not @type given.
+     * Applies to "service" property.
      * Method has to be overridden by affected classes.
+     *
      * @return array
      */
     protected function getTypelessProperties() {

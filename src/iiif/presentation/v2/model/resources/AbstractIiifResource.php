@@ -76,28 +76,6 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
      */
     protected $reference;
 
-    public static function loadIiifResource($resource) {
-        if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
-            $resource = file_get_contents($resource);
-        }
-        if (is_string($resource)) {
-            $resource = json_decode($resource, true);
-        }
-        if (JsonLdProcessor::isDictionary($resource)) {
-            return self::parseDictionary($resource);
-        }
-        return null;
-    }
-
-    // public static function fromJson($jsonAsString)
-    // {
-    // $jsonAsArray = json_decode($jsonAsString, true);
-    // $resource = static::fromArray($jsonAsArray);
-    // $resource->originalJson = $jsonAsString;
-    // return $resource;
-    // }
-    abstract public static function fromArray($jsonAsArray, &$allResources = array());
-
     private static function getResourceIdWithoutFragment($original, $resourceClass = null) {
         $resourceClass = $resourceClass == null ? get_called_class() : $resourceClass;
         if ($original != null && $resourceClass == Canvas::class && strpos($original, '#') !== false) {
@@ -118,7 +96,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
      * {@inheritdoc}
      * @see \iiif\presentation\common\model\AbstractIiifEntity::getValueForSpecialProperty()
      */
-    protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {
+    protected function getValueForTypelessProperty(string $property, array $dictionary, JsonLdContext $context) {
         if ($property = "service") {
             if ($this instanceof ContentResource && $this->getType() == "http://dublincore.org/documents/dcmi-type-vocabulary/#dcmitype-Image") {
                 $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
@@ -165,123 +143,6 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
         return $this->getPreferredTranslation($this->label);
     }
 
-    // /**
-    // *
-    // * @param array $jsonAsArray
-    // * @param array $allResources
-    // * @return AbstractIiifResource
-    // */
-    // protected static function createInstanceFromArray($jsonAsArray, &$allResources)
-    // {
-    // // everything but sequences and annotations MUST have an id, annotations still should have an id
-    // $resourceId=self::getResourceIdWithoutFragment(array_key_exists(Names::ID, $jsonAsArray) ? $jsonAsArray[Names::ID] : null);
-    // $instance = null;
-    // if ($resourceId != null && array_key_exists($resourceId, $allResources) && $allResources[$resourceId] != null) {
-    // // TODO Is there any way that there is more than a reference in the $allResources array?
-    // $instance = &$allResources[$resourceId];
-    // } else {
-    // $clazz = get_called_class();
-    // $instance = new $clazz();
-    // $allResources[$resourceId] = &$instance;
-    // }
-    // $instance->id = $resourceId;
-    // return $instance;
-    // }
-    
-    // protected function loadPropertiesFromArray($jsonAsArray, &$allResources)
-    // {
-    // $this->originalJsonArray = $jsonAsArray;
-    // $this->type = array_key_exists(Names::TYPE, $jsonAsArray) ? $jsonAsArray[Names::TYPE] : null;
-    // $this->label = array_key_exists(Names::LABEL, $jsonAsArray) ? $jsonAsArray[Names::LABEL] : null;
-    // $this->metadata = array_key_exists(Names::METADATA, $jsonAsArray) ? $jsonAsArray[Names::METADATA] : null;
-    
-    // $this->service = array_key_exists(Names::SERVICE, $jsonAsArray) ? Service::fromArray($jsonAsArray[Names::SERVICE]) : null;
-    // // TODO According to the specs, some of the resources may provide more than one thumbnail per resource. Value for "thumbnail" can be json array and json object
-    // $this->thumbnail = array_key_exists(Names::THUMBNAIL, $jsonAsArray) && isset($jsonAsArray[Names::THUMBNAIL]) ? Thumbnail::fromArray($jsonAsArray[Names::THUMBNAIL]) : null;
-    // $this->viewingHint = array_key_exists(Names::VIEWING_HINT, $jsonAsArray) && isset($jsonAsArray[Names::VIEWING_HINT]) ? $jsonAsArray[Names::VIEWING_HINT] : null;
-    // // TODO all the other properties
-    // }
-    
-    // // TODO check if one unified method for resource loading is possible
-    // // FIXME make this static and return value
-    // protected function loadResources($jsonAsArray, $resourceFieldName, $resourceClass, &$targetArray, &$allResources)
-    // {
-    // if (!is_array($jsonAsArray))
-    // {
-    // throw new \Exception("$jsonAsArray ".$jsonAsArray." is not an array.");
-    // }
-    // if (array_key_exists($resourceFieldName, $jsonAsArray))
-    // {
-    // $resourcesAsArray = $jsonAsArray[$resourceFieldName];
-    
-    // if (isset($resourcesAsArray)) {
-    // foreach ($resourcesAsArray as $resourceAsArray)
-    // {
-    // $resource = null;
-    // if (is_array($resourceAsArray)) {
-    // $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
-    // }
-    // elseif (is_string($resourceAsArray)) {
-    // $resourceId = self::getResourceIdWithoutFragment($resourceAsArray, $resourceClass);
-    // if (array_key_exists($resourceId, $allResources) && $allResources[$resourceId] != null) {
-    // $resource = $allResources[$resourceId];
-    // }
-    // else {
-    // $resource = new $resourceClass();
-    // $resource->reference = true;
-    // $resource->id = $resourceId;
-    
-    // $allResources[$resourceId] = $resource;
-    // }
-    // }
-    // if ($resource != null) $targetArray[] = $resource;
-    // }
-    // }
-    // }
-    // }
-    
-    // // FIXME make this static and return value
-    // protected function loadSingleResouce($jsonAsArray, $resourceFieldName, $resourceClass, &$targetField, &$allResources)
-    // {
-    // if (!is_array($jsonAsArray))
-    // {
-    // throw new \Exception("$jsonAsArray ".$jsonArray." is not an array.");
-    // }
-    // if (array_key_exists($resourceFieldName, $jsonAsArray))
-    // {
-    // $resourceAsArray = $jsonAsArray[$resourceFieldName];
-    // $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
-    // $targetField = $resource;
-    // }
-    // }
-    
-    // // FIXME make this static and return value
-    // protected function loadMixedResources($jsonAsArray, $resourceFieldName, $configArray, &$targetArray, &$allResources)
-    // {
-    // if (!is_array($jsonAsArray))
-    // {
-    // throw new \Exception("$jsonAsArray ".$jsonArray." is not an array.");
-    // }
-    // if (array_key_exists($resourceFieldName, $jsonAsArray))
-    // {
-    // $resourcesAsArray = $jsonAsArray[$resourceFieldName];
-    // if (isset($resourcesAsArray)) {
-    // foreach ($resourcesAsArray as $resourceAsArray)
-    // {
-    // foreach ($configArray as $config)
-    // {
-    // if ($resourceAsArray[Names::TYPE]==$config[Names::TYPE])
-    // {
-    // $resourceClass = $config[MiscNames::CLAZZ];
-    // $resource = $resourceClass::fromArray($resourceAsArray, $allResources);
-    // $targetArray[] = $resource;
-    // break;
-    // }
-    // }
-    // }
-    // }
-    // }
-    // }
     protected function getContainedResources() {}
 
     /**
@@ -310,7 +171,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
 
     /**
      *
-     * @return \iiif\presentation\v2\model\resources\Service
+     * @return \iiif\services\Service
      */
     public function getService() {
         return $this->service;

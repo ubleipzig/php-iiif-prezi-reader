@@ -34,21 +34,6 @@ class Sequence extends AbstractIiifResource {
 
     /**
      *
-     * {@inheritdoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()
-     */
-    public static function fromArray($jsonAsArray, &$allResources = array()) {
-        $sequence = self::createInstanceFromArray($jsonAsArray, $allResources);
-        $sequence->loadPropertiesFromArray($jsonAsArray, $allResources);
-        /* @var $sequence Sequence */
-        $sequence->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $sequence->canvases, $allResources);
-        $sequence->loadStartCanvasFromJson($jsonAsArray, $allResources);
-        $sequence->setViewingDirection(array_key_exists(Names::VIEWING_DIRECTION, $jsonAsArray) ? $jsonAsArray[Names::VIEWING_DIRECTION] : null);
-        return $sequence;
-    }
-
-    /**
-     *
      * @return multitype:\iiif\model\resources\Canvas
      */
     public function getCanvases() {

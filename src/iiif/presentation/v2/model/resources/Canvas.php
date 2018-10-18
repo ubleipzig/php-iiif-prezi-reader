@@ -2,7 +2,6 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\v2\model\properties\WidthAndHeightTrait;
-use iiif\presentation\v2\model\vocabulary\Names;
 
 class Canvas extends AbstractIiifResource {
     use WidthAndHeightTrait;
@@ -20,20 +19,6 @@ class Canvas extends AbstractIiifResource {
      * @var AnnotationList[]
      */
     protected $otherContent = array();
-
-    /**
-     *
-     * {@inheritdoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()
-     */
-    public static function fromArray($jsonAsArray, &$allResources = array()) {
-        $canvas = self::createInstanceFromArray($jsonAsArray, $allResources);
-        $canvas->loadPropertiesFromArray($jsonAsArray, $allResources);
-        $canvas->loadResources($jsonAsArray, Names::IMAGES, Annotation::class, $canvas->images, $allResources);
-        $canvas->loadResources($jsonAsArray, Names::OTHER_CONTENT, AnnotationList::class, $canvas->otherContent, $allResources);
-        $canvas->setWidthAndHeightFromJsonArray($jsonAsArray);
-        return $canvas;
-    }
 
     /**
      *

@@ -1,11 +1,8 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
-use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
-use iiif\presentation\v2\model\vocabulary\Names;
-use iiif\presentation\v2\model\vocabulary\Types;
-use iiif\presentation\v2\model\vocabulary\MiscNames;
 use iiif\presentation\v2\model\properties\StartCanvasTrait;
+use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 
 class Range extends AbstractIiifResource {
     use ViewingDirectionTrait;
@@ -33,36 +30,6 @@ class Range extends AbstractIiifResource {
             "canvases" => Canvas::class,
             "startCanvas" => Canvas::class
         ];
-    }
-
-    /**
-     *
-     * {@inheritdoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()
-     */
-    public static function fromArray($jsonAsArray, &$allResources = array()) {
-        $range = self::createInstanceFromArray($jsonAsArray, $allResources);
-        $range->loadPropertiesFromArray($jsonAsArray, $allResources);
-        /* @var $range Range */
-        $range->loadResources($jsonAsArray, Names::CANVASES, Canvas::class, $range->canvases, $allResources);
-        $range->loadResources($jsonAsArray, Names::RANGES, Range::class, $range->ranges, $allResources);
-        
-        $memberRanges = array(
-            Names::TYPE => Types::SC_RANGE,
-            MiscNames::CLAZZ => Range::class
-        );
-        $memberCanvases = array(
-            Names::TYPE => Types::SC_CANVAS,
-            MiscNames::CLAZZ => Canvas::class
-        );
-        $range->loadMixedResources($jsonAsArray, Names::MEMBERS, array(
-            $memberRanges,
-            $memberCanvases
-        ), $range->members, $allResources);
-        $range->loadStartCanvasFromJson($jsonAsArray, $allResources);
-        $range->setViewingDirection(array_key_exists(Names::VIEWING_DIRECTION, $jsonAsArray) ? $jsonAsArray[Names::VIEWING_DIRECTION] : null);
-        
-        return $range;
     }
 
     /**

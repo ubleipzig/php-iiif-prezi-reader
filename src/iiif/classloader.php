@@ -5,9 +5,8 @@ require_once (__DIR__ . "/presentation/IiifHelper.php");
 
 require_once (__DIR__ . "/presentation/common/model/AbstractIiifEntity.php");
 
-require_once (__DIR__ . "/presentation/v2/model/constants/Profile.php");
+require_once (__DIR__ . "/presentation/common/Profile.php");
 require_once (__DIR__ . "/presentation/v2/model/constants/ViewingDirectionValues.php");
-require_once (__DIR__ . "/presentation/v2/model/helper/IiifReader.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/FormatTrait.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/NavDateTrait.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/StartCanvasTrait.php");
@@ -24,9 +23,6 @@ require_once (__DIR__ . "/presentation/v2/model/resources/Layer.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Manifest.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Range.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Sequence.php");
-require_once (__DIR__ . "/presentation/v2/model/resources/Service.php");
-require_once (__DIR__ . "/presentation/v2/model/resources/Thumbnail.php");
-require_once (__DIR__ . "/presentation/v2/model/vocabulary/MiscNames.php");
 require_once (__DIR__ . "/presentation/v2/model/vocabulary/Motivation.php");
 require_once (__DIR__ . "/presentation/v2/model/vocabulary/Names.php");
 require_once (__DIR__ . "/presentation/v2/model/vocabulary/Types.php");

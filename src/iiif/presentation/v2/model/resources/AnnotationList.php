@@ -1,7 +1,6 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
-use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\presentation\IiifHelper;
 
 class AnnotationList extends AbstractIiifResource {
@@ -15,18 +14,6 @@ class AnnotationList extends AbstractIiifResource {
     protected $resources = array();
 
     private $resourcesLoaded = false;
-
-    /**
-     *
-     * {@inheritdoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()
-     */
-    public static function fromArray($jsonAsArray, &$allResources = array()) {
-        $annotationList = self::createInstanceFromArray($jsonAsArray, $allResources);
-        $annotationList->loadPropertiesFromArray($jsonAsArray, $allResources);
-        $annotationList->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $annotationList->resources, $allResources);
-        return $annotationList;
-    }
 
     /**
      *

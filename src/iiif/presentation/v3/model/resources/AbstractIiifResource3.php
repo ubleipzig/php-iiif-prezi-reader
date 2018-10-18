@@ -99,18 +99,6 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity {
      *            URI of the IIIF manifest, json string representation of the manifest or decoded json array
      * @return \iiif\presentation\v3\model\resources\AbstractIiifResource3 | NULL
      */
-    public static function loadIiifResource($resource) {
-        if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
-            $resource = file_get_contents($resource);
-        }
-        if (is_string($resource)) {
-            $resource = json_decode($resource, true);
-        }
-        if (JsonLdProcessor::isDictionary($resource)) {
-            return self::parseDictionary($resource);
-        }
-        return null;
-    }
 
     protected function getTranslationFor($dictionary, string $language = null, $joinValueDelimiter = null) {
         if ($dictionary == null || ! JsonLdProcessor::isDictionary($dictionary)) {

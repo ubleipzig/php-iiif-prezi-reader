@@ -1,10 +1,9 @@
 <?php
 
+use iiif\presentation\IiifHelper;
 use iiif\presentation\v2\model\AbstractIiifTest;
-use iiif\presentation\v2\model\helper\IiifReader;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Sequence;
-use iiif\presentation\IiifHelper;
 
 class TestUblManifestsTest extends AbstractIiifTest
 {
@@ -16,17 +15,6 @@ class TestUblManifestsTest extends AbstractIiifTest
         {
             $manifestAsJson=self::getJson($manifestFile);
             Manifest::loadIiifResource($manifestAsJson, $manifestFile." did not load");
-        }
-    }
-    
-    public function testUBLManifestGetResourceClassForString()
-    {
-        foreach (self::MANIFEST_EXAMPLES as $manifestFile)
-        {
-            $documentAsJson=self::getJson($manifestFile);
-            $classForDocument = IiifReader::getResourceClassForString($documentAsJson);
-            self::assertEquals(Manifest::class, $classForDocument, 'Wrong resource class for '.$manifestFile);
-            $classForDocument::loadIiifResource($documentAsJson, 'Loading '.$manifestFile.'by class did not work');
         }
     }
     

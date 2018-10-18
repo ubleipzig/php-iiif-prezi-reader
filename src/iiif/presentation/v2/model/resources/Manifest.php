@@ -4,7 +4,6 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\presentation\v2\model\constants\ViewingHintValues;
 use iiif\presentation\v2\model\properties\NavDateTrait;
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
-use iiif\presentation\v2\model\vocabulary\Names;
 
 class Manifest extends AbstractIiifResource {
     use NavDateTrait;
@@ -43,18 +42,6 @@ class Manifest extends AbstractIiifResource {
      * @var AbstractIiifResource[]
      */
     protected $containedResources = array();
-
-    public static function fromArray($jsonAsArray, &$allResources = array()) {
-        $manifest = self::createInstanceFromArray($jsonAsArray, $allResources);
-        $manifest->loadPropertiesFromArray($jsonAsArray, $allResources);
-        /* @var $manifest Manifest */
-        $manifest->containedResources = &$allResources;
-        $manifest->loadResources($jsonAsArray, Names::SEQUENCES, Sequence::class, $manifest->sequences, $manifest->containedResources);
-        $manifest->loadResources($jsonAsArray, Names::STRUCTURES, Range::class, $manifest->structures, $manifest->containedResources);
-        $manifest->navDate = array_key_exists(Names::NAV_DATE, $jsonAsArray) ? $jsonAsArray[Names::NAV_DATE] : null;
-        $manifest->setViewingDirection(array_key_exists(Names::VIEWING_DIRECTION, $jsonAsArray) ? $jsonAsArray[Names::VIEWING_DIRECTION] : null);
-        return $manifest;
-    }
 
     /**
      *
