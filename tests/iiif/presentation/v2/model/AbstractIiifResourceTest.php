@@ -1,7 +1,6 @@
 <?php
-use iiif\presentation\v2\model\resources\MockIiifResource;
-use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\presentation\v2\model\resources\Manifest;
+use iiif\presentation\v2\model\resources\MockIiifResource;
 
 /**
  * AbstractIiifResource test case.
@@ -44,17 +43,6 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
     public function __construct()
     {
         // TODO Auto-generated constructor
-    }
-
-    /**
-     * Tests AbstractIiifResource::fromJson()
-     */
-    public function testFromJson()
-    {
-        // TODO Auto-generated AbstractIiifResourceTest::testFromJson()
-        $this->markTestIncomplete("fromJson test not implemented");
-        
-        MockIiifResource::fromJson(/* parameters */);
     }
 
     /**
@@ -293,38 +281,6 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         self::assertContains("My third other value", $metadataValue);
     }
     
-    public function testFromArray()
-    {
-        // TODO mock context
-        $mockArray[Names::ID] = 'http://www.example.com/mockresource/id';
-        $mockArray[Names::METADATA] = json_decode('[{"label": "My label", "value": "My value"}, {"label": "My other label", "value": "My other value"}]', true);
-        $mockArray[Names::TYPE] = 'http://www.example.com/types/mockresource';
-        $mockArray[Names::CONTEXT] = 'https://iiif.io/api/presentation/2/context.json';
-        $mockResource = MockIiifResource::loadIiifResource($mockArray);
-        
-        $metadata = $mockResource->getMetadata();
-        self::assertNotNull($metadata);
-        self::assertTrue(is_array($metadata));
-
-        $valueForLabel1 = $mockResource->getMetadataForLabel('My label');
-        self::assertNotNull($valueForLabel1);
-        self::assertEquals('My value', $valueForLabel1);
-        
-        $valueForLabel2 = $mockResource->getMetadataForLabel('My other label');
-        self::assertNotNull($valueForLabel2);
-        self::assertEquals('My other value', $valueForLabel2);
-
-        $mockArray[Names::METADATA] = json_decode('[{"label": null, "value": null}]', true);
-        $mockResource = MockIiifResource::loadIiifResource($mockArray);
-        
-        $metadata = $mockResource->getMetadata();
-        self::assertNotNull($metadata);
-        self::assertTrue(is_array($metadata));
-        self::assertEquals(1, sizeof($metadata));
-        self::assertTrue(array_key_exists('label', $metadata[0]));
-        self::assertNull($metadata[0]['label']);
-    }
-
     public function testJsonPath()
     {
         $manifest = Manifest::loadIiifResource(file_get_contents(__DIR__.'/../../../../resources/manifest-0000006761.json'));
