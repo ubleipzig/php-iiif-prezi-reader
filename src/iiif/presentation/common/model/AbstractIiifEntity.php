@@ -53,11 +53,16 @@ abstract class AbstractIiifEntity {
         return [];
     }
 
+    /**
+     * Names of properties that resolve to AbstractIiifEntity but have not @type given. Applies to "service" property.
+     * Method has to be overridden by affected classes.
+     * @return array
+     */
     protected function getTypelessProperties() {
         return [];
     }
 
-    protected function getValueForSpecialProperty($property, $dictionary, JsonLdContext $context) {}
+    protected function getValueForTypelessProperty(string $property, array $dictionary, JsonLdContext $context) {}
 
     /**
      *
@@ -137,7 +142,6 @@ abstract class AbstractIiifEntity {
                     $resource = new $class();
                     $resource->id = $valueWithoutFragment;
                     self::registerResource($resource, $this->id, $term, $allResources);
-                    // $allResources[$value] = $resource;
                     $this->$property = $resource;
                 }
             } elseif (is_array($value)) {
@@ -176,7 +180,7 @@ abstract class AbstractIiifEntity {
                         $result[] = $member;
                     } elseif (JsonLdProcessor::isDictionary($member)) {
                         if (array_key_exists($term, $this->getTypelessProperties())) {
-                            $resource = $this->getValueForSpecialProperty($term, $member, $context);
+                            $resource = $this->getValueForTypelessProperty($term, $member, $context);
                         } else {
                             $resource = self::parseDictionary($member, $context, $allResources, $processor);
                         }
@@ -193,7 +197,7 @@ abstract class AbstractIiifEntity {
             }
         } elseif (JsonLdProcessor::isDictionary($value)) {
             if (array_key_exists($term, $this->getTypelessProperties())) {
-                $termValue = $this->getValueForSpecialProperty($term, $value, $context);
+                $termValue = $this->getValueForTypelessProperty($term, $value, $context);
             } else {
                 $termValue = $this->parseDictionary($value, $context, $allResources, $processor);
             }

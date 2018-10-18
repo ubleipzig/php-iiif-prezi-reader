@@ -14,14 +14,12 @@ class Collection extends AbstractIiifResource {
     /**
      *
      * @var Collection[]
-     * @deprecated IIIF Presentation API doc: "The collections and manifests properties are likely to be removed in version 3.0 in favor of the single members property."
      */
     protected $collections = array();
 
     /**
      *
      * @var Manifest[]
-     * @deprecated IIIF Presentation API doc: "The collections and manifests properties are likely to be removed in version 3.0 in favor of the single members property."
      */
     protected $manifests = array();
 

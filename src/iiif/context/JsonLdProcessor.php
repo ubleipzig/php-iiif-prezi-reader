@@ -199,7 +199,6 @@ class JsonLdProcessor {
             }
             $defined = array();
             foreach ($context as $key => $v) {
-                // FIXME https://github.com/w3c/json-ld-api/issues/37
                 if (array_search($key, [
                     Keywords::BASE,
                     Keywords::VOCAB,

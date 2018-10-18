@@ -118,7 +118,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
      * {@inheritdoc}
      * @see \iiif\presentation\common\model\AbstractIiifEntity::getValueForSpecialProperty()
      */
-    protected function getValueForSpecialProperty($property, $dictionary, JsonLdContext $context) {
+    protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {
         if ($property = "service") {
             if ($this instanceof ContentResource && $this->getType() == "http://dublincore.org/documents/dcmi-type-vocabulary/#dcmitype-Image") {
                 $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
