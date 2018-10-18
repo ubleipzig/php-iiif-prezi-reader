@@ -1,22 +1,34 @@
 <?php
 namespace iiif\presentation\v2\model\vocabulary;
 
-class Motivation
-{
-    CONST ASSESSING = "assessing";
-    CONST BOOKMARKING = "bookmarking";
-    CONST CLASSIFYING = "classifying";
-    CONST COMMENTING = "commenting";
-    CONST DESCRIBING = "describing";
-    CONST EDITING = "editing";
-    CONST HIGHLIGHTING = "highlighting";
-    CONST IDENTIFYING = "identifying";
-    CONST LINKING = "linking";
-    CONST MODERATING = "moderating";
-    CONST QUESTIONING = "questioning";
-    CONST REPLYING = "replying";
-    CONST TAGGING = "tagging";
-    
-    CONST PAINTING = "sc:painting";
+class Motivation {
+
+    const ASSESSING = "assessing";
+
+    const BOOKMARKING = "bookmarking";
+
+    const CLASSIFYING = "classifying";
+
+    const COMMENTING = "commenting";
+
+    const DESCRIBING = "describing";
+
+    const EDITING = "editing";
+
+    const HIGHLIGHTING = "highlighting";
+
+    const IDENTIFYING = "identifying";
+
+    const LINKING = "linking";
+
+    const MODERATING = "moderating";
+
+    const QUESTIONING = "questioning";
+
+    const REPLYING = "replying";
+
+    const TAGGING = "tagging";
+
+    const PAINTING = "sc:painting";
 }
 

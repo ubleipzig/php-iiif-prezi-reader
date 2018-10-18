@@ -1,21 +1,34 @@
 <?php
 namespace iiif\presentation\v3\model\constants;
 
-class BehaviorValues
-{
-    CONST AUTO_ADVANCE = "auto-advance";
-    CONST CONTINUOUS = "continuous";
-    CONST FACING_PAGES = "facing-pages";
-    CONST INDIVIDUALS = "individuals";
-    CONST MULTI_PART = "multi-part";
-    CONST NO_NAV = "no-nav";
-    CONST NON_PAGED = "non-paged";
-    CONST HIDDEN = "hidden";
-    CONST PAGED = "paged";
-    CONST REPEAT = "repeat";
-    CONST SEQUENCE = "sequence";
-    CONST THUMBNAIL_NAV = "thumbnail-nav";
-    CONST TOGETHER = "together";
-    CONST UNORDERED = "unordered";
+class BehaviorValues {
+
+    const AUTO_ADVANCE = "auto-advance";
+
+    const CONTINUOUS = "continuous";
+
+    const FACING_PAGES = "facing-pages";
+
+    const INDIVIDUALS = "individuals";
+
+    const MULTI_PART = "multi-part";
+
+    const NO_NAV = "no-nav";
+
+    const NON_PAGED = "non-paged";
+
+    const HIDDEN = "hidden";
+
+    const PAGED = "paged";
+
+    const REPEAT = "repeat";
+
+    const SEQUENCE = "sequence";
+
+    const THUMBNAIL_NAV = "thumbnail-nav";
+
+    const TOGETHER = "together";
+
+    const UNORDERED = "unordered";
 }
 

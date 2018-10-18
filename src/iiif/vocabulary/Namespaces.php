@@ -1,8 +1,7 @@
 <?php
 namespace iiif\vocabulary;
 
-class Namespaces
-{
+class Namespaces {
     /*
      * presentation
      * image

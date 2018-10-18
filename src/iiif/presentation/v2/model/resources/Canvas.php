@@ -4,28 +4,29 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\presentation\v2\model\properties\WidthAndHeightTrait;
 use iiif\presentation\v2\model\vocabulary\Names;
 
-class Canvas extends AbstractIiifResource
-{
+class Canvas extends AbstractIiifResource {
     use WidthAndHeightTrait;
-    
-    CONST TYPE="sc:Canvas";
-    
+
+    const TYPE = "sc:Canvas";
+
     /**
-     * 
+     *
      * @var Annotation[]
      */
     protected $images = array();
+
     /**
-     * 
+     *
      * @var AnnotationList[]
      */
     protected $otherContent = array();
+
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray, &$allResources=array())
-    {
+    public static function fromArray($jsonAsArray, &$allResources = array()) {
         $canvas = self::createInstanceFromArray($jsonAsArray, $allResources);
         $canvas->loadPropertiesFromArray($jsonAsArray, $allResources);
         $canvas->loadResources($jsonAsArray, Names::IMAGES, Annotation::class, $canvas->images, $allResources);
@@ -33,24 +34,24 @@ class Canvas extends AbstractIiifResource
         $canvas->setWidthAndHeightFromJsonArray($jsonAsArray);
         return $canvas;
     }
+
     /**
+     *
      * @return Annotation[]:
      */
-    public function getImages()
-    {
+    public function getImages() {
         return $this->images;
     }
 
     /**
+     *
      * @return AnnotationList[]:
      */
-    public function getOtherContent()
-    {
+    public function getOtherContent() {
         return $this->otherContent;
     }
-    
-    public function __construct($id = null, $reference = false)
-    {
+
+    public function __construct($id = null, $reference = false) {
         if ($id !== null) {
             $this->id = $id;
         }
@@ -58,6 +59,5 @@ class Canvas extends AbstractIiifResource
             $this->reference = $reference;
         }
     }
-
 }
 

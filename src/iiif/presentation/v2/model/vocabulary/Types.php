@@ -10,23 +10,28 @@ use iiif\presentation\v2\model\resources\Layer;
 use iiif\presentation\v2\model\resources\Collection;
 use iiif\presentation\v2\model\resources\Annotation;
 
-class Types
-{
+class Types {
+
     const SC_MANIFEST = "sc:Manifest";
+
     const SC_SEQUENCE = "sc:Sequence";
+
     const SC_CANVAS = "sc:Canvas";
+
     const SC_ANNOTATION_LIST = "sc:AnnotationList";
+
     const SC_RANGE = "sc:Range";
+
     const SC_LAYER = "sc:Layer";
+
     const SC_COLLECTION = "sc:Collection";
-    
+
     const CNT_CONTENTASTEXT = "cnt:ContentAsText";
 
-    
     const OA_ANNOTATION = "oa:Annotation";
-    
+
     const DCTYPES_IMAGE = "dctypes:Image";
-    
+
     const IIIF_RESOURCE_TYPES = array(
         self::SC_MANIFEST => Manifest::class,
         self::SC_SEQUENCE => Sequence::class,

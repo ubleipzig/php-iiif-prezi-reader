@@ -1,17 +1,23 @@
 <?php
 namespace iiif\presentation\v2\model\constants;
 
-class ViewingHintValues
-{
-    CONST INDIVIDUALS = "individuals";
-    CONST PAGED = "paged";
-    CONST CONTINUOUS = "continuous";
-    CONST MULTI_PART = "multi-part";
-    CONST NON_PAGED = "non-paged";
-    CONST TOP = "top";
-    CONST FACING_PAGES = "facing-pages";
-    
-    CONST ALLOWED_VALUES = [
+class ViewingHintValues {
+
+    const INDIVIDUALS = "individuals";
+
+    const PAGED = "paged";
+
+    const CONTINUOUS = "continuous";
+
+    const MULTI_PART = "multi-part";
+
+    const NON_PAGED = "non-paged";
+
+    const TOP = "top";
+
+    const FACING_PAGES = "facing-pages";
+
+    const ALLOWED_VALUES = [
         ViewingHintValues::INDIVIDUALS,
         ViewingHintValues::PAGED,
         ViewingHintValues::CONTINUOUS,

@@ -4,24 +4,24 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\presentation\IiifHelper;
 
-class AnnotationList extends AbstractIiifResource
-{
-    const TYPE="sc:AnnotationList";
-    
+class AnnotationList extends AbstractIiifResource {
+
+    const TYPE = "sc:AnnotationList";
+
     /**
-     * 
+     *
      * @var Annotation[]
      */
     protected $resources = array();
-    
+
     private $resourcesLoaded = false;
-    
+
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::fromArray()
      */
-    public static function fromArray($jsonAsArray, &$allResources=array())
-    {
+    public static function fromArray($jsonAsArray, &$allResources = array()) {
         $annotationList = self::createInstanceFromArray($jsonAsArray, $allResources);
         $annotationList->loadPropertiesFromArray($jsonAsArray, $allResources);
         $annotationList->loadResources($jsonAsArray, Names::RESOURCES, Annotation::class, $annotationList->resources, $allResources);
@@ -29,11 +29,11 @@ class AnnotationList extends AbstractIiifResource
     }
 
     /**
-     * @return \iiif\presentation\v2\model\resources\Annotation[] 
+     *
+     * @return \iiif\presentation\v2\model\resources\Annotation[]
      */
-    public function getResources()
-    {
-        if ($resources == null && !$this->resourcesLoaded) {
+    public function getResources() {
+        if ($resources == null && ! $this->resourcesLoaded) {
             
             $content = file_get_contents($this->id);
             $jsonAsArray = json_decode($content, true);

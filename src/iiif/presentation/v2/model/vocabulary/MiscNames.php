@@ -1,8 +1,8 @@
 <?php
 namespace iiif\presentation\v2\model\vocabulary;
 
-class MiscNames
-{
-    CONST CLAZZ = "class";
+class MiscNames {
+
+    const CLAZZ = "class";
 }
 

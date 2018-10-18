@@ -1,8 +1,7 @@
 <?php
 namespace iiif\context;
 
-class TermDefinition
-{
+class TermDefinition {
 
     protected $term;
 
@@ -37,8 +36,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getTerm()
-    {
+    public function getTerm() {
         return $this->term;
     }
 
@@ -46,8 +44,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -55,8 +52,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getExpandedId()
-    {
+    public function getExpandedId() {
         return $this->expandedId;
     }
 
@@ -64,8 +60,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
@@ -73,8 +68,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getLanuage()
-    {
+    public function getLanuage() {
         return $this->lanuage;
     }
 
@@ -82,8 +76,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getCollectionContainer()
-    {
+    public function getCollectionContainer() {
         return $this->collectionContainer;
     }
 
@@ -91,8 +84,7 @@ class TermDefinition
      *
      * @return JsonLdContext
      */
-    public function getContext()
-    {
+    public function getContext() {
         return $this->context;
     }
 
@@ -100,8 +92,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getIriMapping()
-    {
+    public function getIriMapping() {
         return $this->iriMapping;
     }
 
@@ -109,8 +100,7 @@ class TermDefinition
      *
      * @param mixed $iriMapping
      */
-    public function setIriMapping($iriMapping)
-    {
+    public function setIriMapping($iriMapping) {
         $this->iriMapping = $iriMapping;
     }
 
@@ -118,8 +108,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getTypeMapping()
-    {
+    public function getTypeMapping() {
         return $this->typeMapping;
     }
 
@@ -127,8 +116,7 @@ class TermDefinition
      *
      * @param mixed $typeMapping
      */
-    public function setTypeMapping($typeMapping)
-    {
+    public function setTypeMapping($typeMapping) {
         $this->typeMapping = $typeMapping;
     }
 
@@ -136,8 +124,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getLanguageMapping()
-    {
+    public function getLanguageMapping() {
         return $this->languageMapping;
     }
 
@@ -145,8 +132,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getNestValue()
-    {
+    public function getNestValue() {
         return $this->nestValue;
     }
 
@@ -154,8 +140,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getContainerMapping()
-    {
+    public function getContainerMapping() {
         return $this->containerMapping;
     }
 
@@ -163,8 +148,7 @@ class TermDefinition
      *
      * @return boolean
      */
-    public function isReverse()
-    {
+    public function isReverse() {
         return $this->reverse;
     }
 
@@ -172,8 +156,7 @@ class TermDefinition
      *
      * @param mixed $languageMapping
      */
-    public function setLanguageMapping($languageMapping)
-    {
+    public function setLanguageMapping($languageMapping) {
         $this->languageMapping = $languageMapping;
     }
 
@@ -181,8 +164,7 @@ class TermDefinition
      *
      * @param mixed $nestValue
      */
-    public function setNestValue($nestValue)
-    {
+    public function setNestValue($nestValue) {
         $this->nestValue = $nestValue;
     }
 
@@ -190,8 +172,7 @@ class TermDefinition
      *
      * @param mixed $containerMapping
      */
-    public function setContainerMapping($containerMapping)
-    {
+    public function setContainerMapping($containerMapping) {
         $this->containerMapping = $containerMapping;
     }
 
@@ -199,8 +180,7 @@ class TermDefinition
      *
      * @param boolean $reverse
      */
-    public function setReverse($reverse)
-    {
+    public function setReverse($reverse) {
         $this->reverse = $reverse;
     }
 
@@ -208,8 +188,7 @@ class TermDefinition
      *
      * @param \iiif\context\JsonLdContext $context
      */
-    public function setContext($context)
-    {
+    public function setContext($context) {
         $this->context = $context;
     }
 
@@ -217,8 +196,7 @@ class TermDefinition
      *
      * @return mixed
      */
-    public function getPrefix()
-    {
+    public function getPrefix() {
         return $this->prefix;
     }
 
@@ -226,28 +204,23 @@ class TermDefinition
      *
      * @param mixed $prefix
      */
-    public function setPrefix($prefix)
-    {
+    public function setPrefix($prefix) {
         $this->prefix = $prefix;
     }
 
-    public function hasSetContainer()
-    {
+    public function hasSetContainer() {
         return $this->hasContainer(Keywords::SET);
     }
 
-    public function hasLanguageContainer()
-    {
+    public function hasLanguageContainer() {
         return $this->hasContainer(Keywords::LANGUAGE);
     }
 
-    public function hasListContainer()
-    {
+    public function hasListContainer() {
         return $this->hasContainer(Keywords::LIST);
     }
 
-    private function hasContainer($keyword)
-    {
+    private function hasContainer($keyword) {
         return $this->containerMapping != null && ((is_string($this->containerMapping) && $keyword == $this->containerMapping) || (is_array($this->containerMapping) && array_search($keyword, $this->containerMapping) !== false));
     }
 }

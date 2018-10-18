@@ -10,24 +10,26 @@ use iiif\presentation\common\TypeMap;
 use iiif\presentation\v2\model\resources\AbstractIiifResource;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
 
-abstract class AbstractIiifEntity
-{
-    
+abstract class AbstractIiifEntity {
+
     /**
-     * 
+     *
      * @var array
      */
     protected $originalJsonArray;
+
     /**
+     *
      * @var boolean
      */
     protected $initialized = false;
-    
+
     protected $containedResources;
-    
+
     protected $type;
-    
+
     /**
+     *
      * @return boolean
      */
     public function isInitialized() {
@@ -35,30 +37,30 @@ abstract class AbstractIiifEntity
     }
 
     /**
+     *
      * @return array
      */
-    public function getOriginalJsonArray()
-    {
+    public function getOriginalJsonArray() {
         return $this->originalJsonArray;
     }
 
     /**
      * Properties that link to IIIF resources via URI string rather than id:URI/type:type dictionary.
+     *
      * @return array
      */
     protected function getStringResources() {
         return [];
     }
-    
+
     protected function getTypelessProperties() {
         return [];
     }
-    
-    protected function getValueForSpecialProperty($property, $dictionary, JsonLdContext $context) {
-    }
-    
+
+    protected function getValueForSpecialProperty($property, $dictionary, JsonLdContext $context) {}
+
     /**
-     * 
+     *
      * @param array $dictionary
      * @param JsonLdContext $context
      * @return AbstractIiifEntity
@@ -78,7 +80,7 @@ abstract class AbstractIiifEntity
             if ($id != null && array_key_exists($id, $allResources)) {
                 $resource = $allResources[$id]["resource"];
             } else {
-                $typeIri = IRI::isAbsoluteIri($type) ? $type : IRI::isCompactUri($type) ? $processor->expandIRI($context, $type): $context->getTermDefinition($type)->getIriMapping();
+                $typeIri = IRI::isAbsoluteIri($type) ? $type : IRI::isCompactUri($type) ? $processor->expandIRI($context, $type) : $context->getTermDefinition($type)->getIriMapping();
                 $typeClass = TypeMap::getClassForType($typeIri, $context);
                 if ($typeClass == null) {
                     return $dictionary;
@@ -86,16 +88,19 @@ abstract class AbstractIiifEntity
                 $resource = new $typeClass();
             }
             /* @var $resource \AbstractIiifEntity; */
-            if (!$resource->initialized 
-                || 
-                sizeof(array_diff(array_keys($dictionary), [$typeOrAlias, $idOrAlias])) > 0) {
-                foreach ($dictionary as $key=>$value) {
+            if (! $resource->initialized || sizeof(array_diff(array_keys($dictionary), [
+                $typeOrAlias,
+                $idOrAlias
+            ])) > 0) {
+                foreach ($dictionary as $key => $value) {
                     if ($key == $typeOrAlias) {
                         $resource->type = $value;
                         continue;
                     }
-                    if ($key == Keywords::CONTEXT) continue;
-                    if (!Keywords::isKeyword($key) && $context->getTermDefinition($key) == null) continue;
+                    if ($key == Keywords::CONTEXT)
+                        continue;
+                    if (! Keywords::isKeyword($key) && $context->getTermDefinition($key) == null)
+                        continue;
                     $resource->loadProperty($key, $value, $context, $allResources, $processor);
                     if ($key != $idOrAlias) {
                         $resource->initialized = true;
@@ -103,7 +108,7 @@ abstract class AbstractIiifEntity
                 }
             }
             $resource->originalJsonArray = $dictionary;
-            if (($resource instanceof AbstractIiifResource3 || $resource instanceof AbstractIiifResource)  && $noParent) {
+            if (($resource instanceof AbstractIiifResource3 || $resource instanceof AbstractIiifResource) && $noParent) {
                 $containedResources = [];
                 foreach ($allResources as $id => $resourceArray) {
                     $containedResources[$id] = $resourceArray["resource"];
@@ -116,15 +121,15 @@ abstract class AbstractIiifEntity
             return $dictionary;
         }
     }
-    
+
     protected function loadProperty($term, $value, JsonLdContext $context, array &$allResources = array(), $processor) {
         $property = $term;
-        if (strpos($property, "@")===0) {
+        if (strpos($property, "@") === 0) {
             $property = substr($property, 1);
         }
         if (array_key_exists($term, $this->getStringResources())) {
             if (is_string($value)) {
-                $valueWithoutFragment = explode("#", $value)[0]; 
+                $valueWithoutFragment = explode("#", $value)[0];
                 if (array_key_exists($valueWithoutFragment, $allResources)) {
                     $this->$property = $allResources[$valueWithoutFragment]["resource"];
                 } else {
@@ -132,7 +137,7 @@ abstract class AbstractIiifEntity
                     $resource = new $class();
                     $resource->id = $valueWithoutFragment;
                     self::registerResource($resource, $this->id, $term, $allResources);
-                    //$allResources[$value] = $resource;
+                    // $allResources[$value] = $resource;
                     $this->$property = $resource;
                 }
             } elseif (is_array($value)) {
@@ -150,7 +155,7 @@ abstract class AbstractIiifEntity
                         $register[] = $resource;
                     }
                 }
-                if (sizeof($register)>0) {
+                if (sizeof($register) > 0) {
                     self::registerResource($register, $this->id, $term, $allResources);
                 }
                 $this->$property = $valueToSet;
@@ -160,7 +165,7 @@ abstract class AbstractIiifEntity
         $definition = $context->getTermDefinition($term);
         $result = null;
         if (JsonLdProcessor::isSequentialArray($value)) {
-            if (!$definition->hasListContainer() && !$definition->hasSetContainer()){
+            if (! $definition->hasListContainer() && ! $definition->hasSetContainer()) {
                 // FIXME
                 // throw new \Exception("array given for non collection property");
             }
@@ -171,7 +176,7 @@ abstract class AbstractIiifEntity
                         $result[] = $member;
                     } elseif (JsonLdProcessor::isDictionary($member)) {
                         if (array_key_exists($term, $this->getTypelessProperties())) {
-                            $resource=$this->getValueForSpecialProperty($term, $member, $context);
+                            $resource = $this->getValueForSpecialProperty($term, $member, $context);
                         } else {
                             $resource = self::parseDictionary($member, $context, $allResources, $processor);
                         }
@@ -201,10 +206,10 @@ abstract class AbstractIiifEntity
             return;
         }
     }
-    
+
     private static function registerResource(&$resource, $parentId, $property, array &$allResources = array()) {
         if ($resource instanceof AbstractIiifEntity) {
-            if (!array_key_exists($resource->id, $allResources) || !$allResources[$resource->id]["resource"]->initialized) {
+            if (! array_key_exists($resource->id, $allResources) || ! $allResources[$resource->id]["resource"]->initialized) {
                 if (array_key_exists($resource->id, $allResources) && array_key_exists("references", $allResources[$resource->id])) {
                     $references = $allResources[$resource->id]["references"];
                     foreach ($references as $reference) {
@@ -215,12 +220,15 @@ abstract class AbstractIiifEntity
                 }
                 $allResources[$resource->id]["resource"] = $resource;
             }
-            if ($parentId!=null && $property!=null) {
-                $allResources[$resource->id]["references"][] = ["resource"=>$parentId, "property"=>$property];
+            if ($parentId != null && $property != null) {
+                $allResources[$resource->id]["references"][] = [
+                    "resource" => $parentId,
+                    "property" => $property
+                ];
             }
         } elseif (JsonLdProcessor::isSequentialArray($resource) && $resource[0] instanceof AbstractIiifEntity) {
             foreach ($resource as $singleResource) {
-                if (!array_key_exists($singleResource->id, $allResources) || !$allResources[$singleResource->id]["resource"]->initialized) {
+                if (! array_key_exists($singleResource->id, $allResources) || ! $allResources[$singleResource->id]["resource"]->initialized) {
                     if (array_key_exists($singleResource->id, $allResources) && array_key_exists("references", $allResources[$singleResource->id])) {
                         $references = $allResources[$singleResource->id]["references"];
                         foreach ($references as $reference) {
@@ -232,25 +240,25 @@ abstract class AbstractIiifEntity
                     $allResources[$singleResource->id]["resource"] = $singleResource;
                 }
                 
-                
-                if ($parentId!=null && $property!=null) {
-                    $allResources[$singleResource->id]["references"][] = ["resource"=>$parentId, "property"=>$property];
+                if ($parentId != null && $property != null) {
+                    $allResources[$singleResource->id]["references"][] = [
+                        "resource" => $parentId,
+                        "property" => $property
+                    ];
                 }
             }
         }
     }
 
-    public function jsonPath(string $expression)
-    {
+    public function jsonPath(string $expression) {
         $jsonPath = new JSONPath($this->originalJsonArray);
         $results = $jsonPath->find($expression);
-        if (is_array($results->data()) && count($results->data()) == 1)
-        {
+        if (is_array($results->data()) && count($results->data()) == 1) {
             return $results[0];
         }
         return $results;
     }
-    
+
     public function getType() {
         return $this->type;
     }

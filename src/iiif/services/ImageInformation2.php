@@ -1,53 +1,51 @@
 <?php
 namespace iiif\services;
 
-class ImageInformation2 extends AbstractImageService
-{
+class ImageInformation2 extends AbstractImageService {
+
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      * @see \iiif\services\AbstractImageService::getDefaultFormat()
      */
-    protected function getDefaultFormat()
-    {
+    protected function getDefaultFormat() {
         return "jpg";
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      * @see \iiif\services\AbstractImageService::getDefaultQuality()
      */
-    protected function getDefaultQuality()
-    {
+    protected function getDefaultQuality() {
         return "default";
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      * @see \iiif\services\AbstractImageService::getFullRegion()
      */
-    protected function getFullRegion()
-    {
+    protected function getFullRegion() {
         return "full";
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      * @see \iiif\services\AbstractImageService::getMaxSize()
      */
-    protected function getMaxSize()
-    {
+    protected function getMaxSize() {
         return "full";
     }
 
     /**
-     * {@inheritDoc}
+     *
+     * {@inheritdoc}
      * @see \iiif\services\AbstractImageService::getNoRotation()
      */
-    protected function getNoRotation()
-    {
+    protected function getNoRotation() {
         return "0";
     }
-
-    
 }
 

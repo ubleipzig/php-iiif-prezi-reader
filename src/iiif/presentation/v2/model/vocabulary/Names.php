@@ -1,65 +1,96 @@
 <?php
 namespace iiif\presentation\v2\model\vocabulary;
 
-class Names
-{
-    // Structures
-    CONST COLLECTIONS="collections";
-    CONST MANIFESTS="manifests";
-    CONST MEMBERS="members";
-    CONST SEQUENCES="sequences";
-    CONST STRUCTURES="structures";
-    CONST CANVASES="canvases";
-    CONST RESOURCES="resources";
-    CONST OTHER_CONTENT="otherContent";
-    CONST IMAGES="images";
-    CONST RANGES="ranges";
-    
-    // Technical
-    CONST CONTEXT="@context";
-    CONST ID="@id";
-    CONST TYPE="@type";
-    
-    CONST FORMAT="format";
-    CONST HEIGHT="height";
-    CONST WIDTH="width";
-    CONST VIEWING_DIRECTION="viewingDirection";
-    CONST VIEWING_HINT="viewingHint";
-    CONST NAV_DATE="navDate";
-    
-    // Descriptive, rights
-    CONST LABEL="label";
-    CONST DESCRIPTION="description";
-    CONST METADATA="metadata";
-    CONST THUMBNAIL="thumbnail";
-    CONST ATTRIBUTION="attribution";
-    CONST LICENSE="license";
-    CONST LOGO="logo";
-    
-    // Linking
-    CONST SEE_ALSO="seeAlso";
-    CONST SERVICE="service";
-    CONST RELATED="related";
-    CONST RENDERING="rendering";
-    CONST WITHIN="within";
-    CONST START_CANVAS="startCanvas";
-    
-    // Resource specific properties
-    CONST MOTIVATION="motivation";
-    CONST RESOURCE="resource";
-    CONST ON="on";
-    CONST PROFILE="profile";
-    CONST CHARS="chars";
+class Names {
 
-    
+    // Structures
+    const COLLECTIONS = "collections";
+
+    const MANIFESTS = "manifests";
+
+    const MEMBERS = "members";
+
+    const SEQUENCES = "sequences";
+
+    const STRUCTURES = "structures";
+
+    const CANVASES = "canvases";
+
+    const RESOURCES = "resources";
+
+    const OTHER_CONTENT = "otherContent";
+
+    const IMAGES = "images";
+
+    const RANGES = "ranges";
+
+    // Technical
+    const CONTEXT = "@context";
+
+    const ID = "@id";
+
+    const TYPE = "@type";
+
+    const FORMAT = "format";
+
+    const HEIGHT = "height";
+
+    const WIDTH = "width";
+
+    const VIEWING_DIRECTION = "viewingDirection";
+
+    const VIEWING_HINT = "viewingHint";
+
+    const NAV_DATE = "navDate";
+
+    // Descriptive, rights
+    const LABEL = "label";
+
+    const DESCRIPTION = "description";
+
+    const METADATA = "metadata";
+
+    const THUMBNAIL = "thumbnail";
+
+    const ATTRIBUTION = "attribution";
+
+    const LICENSE = "license";
+
+    const LOGO = "logo";
+
+    // Linking
+    const SEE_ALSO = "seeAlso";
+
+    const SERVICE = "service";
+
+    const RELATED = "related";
+
+    const RENDERING = "rendering";
+
+    const WITHIN = "within";
+
+    const START_CANVAS = "startCanvas";
+
+    // Resource specific properties
+    const MOTIVATION = "motivation";
+
+    const RESOURCE = "resource";
+
+    const ON = "on";
+
+    const PROFILE = "profile";
+
+    const CHARS = "chars";
+
     // IIIF Image Profile
     const SUPPORTS = "supports";
 
     // Value for label/value metadata
     const VALUE = "value";
-    
+
     // Language Properties
     const AT_LANGUAGE = "@language";
+
     const AT_VALUE = "@value";
 }
 

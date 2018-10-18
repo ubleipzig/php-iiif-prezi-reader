@@ -1,28 +1,43 @@
 <?php
 namespace iiif\context;
 
+class Keywords {
 
-class Keywords
-{
-    CONST BASE = "@base";
-    CONST CONTAINER = "@container";
-    CONST CONTEXT = "@context";
-    CONST GRAPH = "@graph";
-    CONST ID = "@id";
-    CONST INDEX = "@index";
-    CONST LANGUAGE = "@language";
-    CONST LIST = "@list";
-    CONST NEST = "@nest";
-    CONST NONE = "@none";
-    CONST PREFIX = "@prefix";
-    CONST REVERSE = "@reverse";
-    CONST SET = "@set";
-    CONST TYPE = "@type";
-    CONST VALUE = "@value";
-    CONST VERSION = "@version";
-    CONST VOCAB = "@vocab";
-    
-    CONST KEYWORDS = array(
+    const BASE = "@base";
+
+    const CONTAINER = "@container";
+
+    const CONTEXT = "@context";
+
+    const GRAPH = "@graph";
+
+    const ID = "@id";
+
+    const INDEX = "@index";
+
+    const LANGUAGE = "@language";
+
+    const LIST = "@list";
+
+    const NEST = "@nest";
+
+    const NONE = "@none";
+
+    const PREFIX = "@prefix";
+
+    const REVERSE = "@reverse";
+
+    const SET = "@set";
+
+    const TYPE = "@type";
+
+    const VALUE = "@value";
+
+    const VERSION = "@version";
+
+    const VOCAB = "@vocab";
+
+    const KEYWORDS = array(
         self::BASE,
         self::CONTAINER,
         self::CONTEXT,
@@ -43,8 +58,7 @@ class Keywords
     );
 
     public static function isKeyword($value) {
-        return array_search($value, self::KEYWORDS)!==false;
+        return array_search($value, self::KEYWORDS) !== false;
     }
-
 }
 

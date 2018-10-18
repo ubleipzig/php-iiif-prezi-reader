@@ -22,7 +22,7 @@ use iiif\services\ImageInformation3;
 use iiif\presentation\v3\model\resources\SpecificResource3;
 
 class TypeMap {
-    
+
     protected static $CLASSES = [
         "http://iiif.io/api/presentation/2#Manifest" => Manifest::class,
         "http://iiif.io/api/presentation/2#Sequence" => Sequence::class,
@@ -38,7 +38,7 @@ class TypeMap {
             "http://iiif.io/api/presentation/3/combined-context.json" => Annotation3::class,
             "http://iiif.io/api/presentation/3/context.json" => Annotation3::class,
             "http://www.w3.org/ns/anno.jsonld" => Annotation3::class,
-            "http://iiif.io/api/presentation/2/context.json" => Annotation::class,
+            "http://iiif.io/api/presentation/2/context.json" => Annotation::class
         ],
         "http://www.w3.org/ns/activitystreams#OrderedCollectionPage" => AnnotationPage3::class,
         "http://www.w3.org/ns/activitystreams#OrderedCollection" => AnnotationCollection3::class,
@@ -59,21 +59,21 @@ class TypeMap {
         "http://www.w3.org/ns/oa#FragmentSelector" => null,
         "http://www.w3.org/ns/oa#PointSelector" => null
     ];
-    
+
     const SERVICE_TYPES = [
         "http://iiif.io/api/image/1/context.json" => "http://iiif.io/api/image/1/ImageService",
         "http://iiif.io/api/image/2/context.json" => "http://iiif.io/api/image/2/ImageService",
         "http://iiif.io/api/image/3/context.json" => "http://iiif.io/api/image/3/ImageService"
     ];
-    
+
     public static function getClassForType($typeIri, $context) {
-        if ($typeIri == null || !array_key_exists($typeIri, self::$CLASSES)) return null;
+        if ($typeIri == null || ! array_key_exists($typeIri, self::$CLASSES))
+            return null;
         if (is_array(self::$CLASSES[$typeIri])) {
             return self::$CLASSES[$typeIri][$context->getContextIri()];
         } else {
             return self::$CLASSES[$typeIri];
         }
     }
-    
 }
 
