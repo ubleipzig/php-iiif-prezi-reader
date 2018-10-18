@@ -143,5 +143,9 @@ class ManifestTest extends AbstractIiifTest
         $manifest = Manifest::loadIiifResource($json);
         
     }
+    public function testDynamicProperties() {
+        // All explicitly declared properties are protected. Ensure no additional public property is set after loading.
+        self::assertEmpty(get_object_vars($this->manifest));
+    }
 }
 

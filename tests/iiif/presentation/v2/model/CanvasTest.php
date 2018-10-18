@@ -71,5 +71,9 @@ class CanvasTest extends AbstractIiifTest
         self::assertEquals(200, $this->canvas->getThumbnail()->getHeight(), 'Wrong thumbnail height.');
         self::assertEquals(150, $this->canvas->getThumbnail()->getWidth(), 'Wrong thumbnail width.');
     }
+    public function testDynamicProperties() {
+        // All explicitly declared properties are protected. Ensure no additional public property is set after loading.
+        self::assertEmpty(get_object_vars($this->canvas));
+    }
 }
 

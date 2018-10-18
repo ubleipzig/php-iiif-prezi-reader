@@ -100,5 +100,9 @@ class SequenceTest extends AbstractIiifTest
         self::assertNotNull($startCanvasOrFirstCanvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p2", $startCanvasOrFirstCanvas->getId());
     }
+    public function testDynamicProperties() {
+        // All explicitly declared properties are protected. Ensure no additional public property is set after loading.
+        self::assertEmpty(get_object_vars($this->sequence));
+    }
 }
 
