@@ -81,6 +81,14 @@ class ManifestTest extends AbstractIiifTest
         self::assertNotNull($structures[0]);
         self::assertInstanceOf(Range::class, $structures[0]);
     }
+    
+    public function testGetSeeAlso() {
+        $seeAlso = $this->manifest->getSeeAlso();
+        self::assertNotNull($seeAlso);
+        self::assertTrue(is_array($seeAlso));
+        
+        // TODO
+    }
 
     /**
      * Tests Manifest->getContainedResourceById()

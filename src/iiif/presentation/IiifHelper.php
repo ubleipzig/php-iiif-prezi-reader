@@ -88,6 +88,7 @@ class IiifHelper {
             } elseif ($image->getService() != null && $image->getService()->getProfile() != null) {
                 // thumbnail is not already provided by canvas or image - try to generated thumbnail URL for iiif image server
                 $profile = $image->getService()->getProfile();
+                // FIXME profile is not necessarily a string 
                 $sizeByW = false;
                 $sizeByConfinedWh = false;
                 if (array_key_exists($profile, $thumbnailServiceProfiles)) {

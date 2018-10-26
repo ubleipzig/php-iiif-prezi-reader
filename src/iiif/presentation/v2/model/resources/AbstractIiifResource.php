@@ -229,6 +229,13 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
         return $this->originalJsonArray;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getSeeAlso() {
+        return $this->seeAlso;
+    }
+
     public function getTranslatedLabel($language = null) {
         return self::getTranslatedField($this->label, $language);
     }
@@ -299,4 +306,42 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
         // this shouldn't happen
         return null;
     }
+    
+    public function getSeeAlsoForProfileOrFormat($formatOrProfile) {
+        if (!is_array($this->seeAlso)) {
+            return null;
+        }
+        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $result = [];
+        if (is_string($formatOrProfile)) {
+            $formatOrProfile = [$formatOrProfile];
+        }
+        foreach ($seeAlso as $candidate) {
+            foreach ($formatOrProfile as $fop) {
+                if (array_key_exists("format", $candidate)) {
+                    if ($fop == $candidate["format"]) {
+                        $result[] = $candidate["@id"];
+                        break;
+                    }
+                }
+                if (array_key_exists("profile", $candidate)) {
+                    if (is_string($candidate["profile"])) {
+                        if ($candidate["profile"] == $fop) {
+                            $result[] = $candidate["@id"];
+                            break;
+                        }
+                    } elseif (JsonLdProcessor::isSequentialArray($candidate["profile"])) {
+                        foreach ($candidate["profile"] as $profile) {
+                            if (is_string($profile) && $profile == $fop) {
+                                $result[] = $profile;
+                                break 2;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+    
 }

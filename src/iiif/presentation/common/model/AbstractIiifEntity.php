@@ -188,7 +188,7 @@ abstract class AbstractIiifEntity {
                 // FIXME
                 // throw new \Exception("array given for non collection property");
             }
-            if ($definition->hasSetContainer() || $definition->hasListContainer()) {
+            if ($definition->hasSetContainer() || $definition->hasListContainer() || $term == "seeAlso" || $term == "profile") {
                 $result = array();
                 foreach ($value as $member) {
                     if ($member == null || is_string($member)) {
@@ -207,8 +207,8 @@ abstract class AbstractIiifEntity {
                 }
                 $this->$property = $result;
                 return;
-            } elseif ($definition->hasListContainer()) {
-                $result = array();
+//             } elseif ($definition->hasListContainer()) {
+//                 $result = array();
             }
         } elseif (JsonLdProcessor::isDictionary($value)) {
             if (array_key_exists($term, $this->getTypelessProperties())) {

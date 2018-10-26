@@ -88,6 +88,13 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
         
         $this->abstractIiifResource->getService(/* parameters */);
     }
+    
+    public function testGetSeeAlso() {
+        
+        // TODO
+        $this->markTestIncomplete("getSeeAlso test not implemented");
+        
+    }
 
     /**
      * Tests AbstractIiifResource->getThumbnail()
