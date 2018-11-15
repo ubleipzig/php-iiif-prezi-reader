@@ -76,6 +76,15 @@ abstract class AbstractIiifEntity {
     protected function getTypelessProperties() {
         return [];
     }
+    
+    /**
+     * Names of properites that may contain values as a sequential array but whose term definition does not 
+     * have the suiting @container property. Mostly used for missing @set in Presentation API 2.
+     * @return array
+     */
+    protected function getCollectionProperties() {
+        return [];
+    }
 
     protected function getValueForTypelessProperty(string $property, array $dictionary, JsonLdContext $context) {}
 
@@ -188,7 +197,7 @@ abstract class AbstractIiifEntity {
                 // FIXME
                 // throw new \Exception("array given for non collection property");
             }
-            if ($definition->hasSetContainer() || $definition->hasListContainer() || $term == "seeAlso" || $term == "profile") {
+            if ($definition->hasSetContainer() || $definition->hasListContainer() || array_search($term, $this->getCollectionProperties())!==false) {
                 $result = array();
                 foreach ($value as $member) {
                     if ($member == null || is_string($member)) {

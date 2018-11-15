@@ -4,6 +4,7 @@ use iiif\presentation\v2\model\constants\ViewingDirectionValues;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Range;
 use iiif\presentation\v2\model\resources\Sequence;
+use iiif\presentation\IiifHelper;
 
 /**
  * Manifest test case.
@@ -155,5 +156,36 @@ class ManifestTest extends AbstractIiifTest
         // All explicitly declared properties are protected. Ensure no additional public property is set after loading.
         self::assertEmpty(get_object_vars($this->manifest));
     }
+    
+    public function testGetRenderingUrlsForFormat() {
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-01.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf', false);
+        self::assertEmpty($rendering);
+    
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-01.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
+        self::assertNotEmpty($rendering);
+        self::assertTrue(is_array($rendering));
+        self::assertEquals(2, sizeof($rendering));
+        self::assertEquals("http://example.org/iiif/sequence-rendering.pdf", $rendering[0]);
+        self::assertEquals("http://example.org/iiif/sequence-rendering-2.pdf", $rendering[1]);
+
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-02.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf', false);
+        self::assertNotEmpty($rendering);
+        self::assertTrue(is_array($rendering));
+        self::assertEquals(2, sizeof($rendering));
+        self::assertEquals("http://example.org/iiif/manifest-rendering.pdf", $rendering[0]);
+        self::assertEquals("http://example.org/iiif/manifest-rendering-2.pdf", $rendering[1]);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-02.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
+        self::assertNotEmpty($rendering);
+        self::assertTrue(is_array($rendering));
+        self::assertEquals(2, sizeof($rendering));
+        self::assertEquals("http://example.org/iiif/manifest-rendering.pdf", $rendering[0]);
+        self::assertEquals("http://example.org/iiif/manifest-rendering-2.pdf", $rendering[1]);
+    }
+        
 }
 

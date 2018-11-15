@@ -1,0 +1,16 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/manifest1/manifest",
+  "label": "Manifest label",
+  "rendering": [
+    "http://example.org/iiif/manifest-viewer",
+    "http://example.org/iiif/manifest-rendering.pdf",
+    {
+      "@id": "http://example.org/iiif/manifest-rendering-2.pdf",
+      "label": "Download manifest as PDF, e.g. lower quality",
+      "format": "application/pdf"
+    }
+  ],
+  "sequences": []
+}

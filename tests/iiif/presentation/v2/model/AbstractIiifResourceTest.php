@@ -1,11 +1,13 @@
 <?php
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\MockIiifResource;
+use iiif\presentation\v2\model\AbstractIiifTest;
+use iiif\presentation\IiifHelper;
 
 /**
  * AbstractIiifResource test case.
  */
-class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
+class AbstractIiifResourceTest extends AbstractIiifTest
 {
 
     /**
@@ -309,6 +311,39 @@ class AbstractIiifResourceTest extends PHPUnit_Framework_TestCase
     public function testDynamicProperties() {
         // All explicitly declared properties are protected. Ensure no additional public property is set after loading.    
         self::assertEmpty(get_object_vars($this->abstractIiifResource));
+    }
+    
+    public function testGetRenderingUrlsForFormat() {
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-01.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
+        self::assertEmpty($rendering);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-02.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
+        self::assertEmpty($rendering);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-03.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
+        self::assertNotEmpty($rendering);
+        self::assertTrue(is_array($rendering));
+        self::assertEquals(1, sizeof($rendering));
+        self::assertEquals('http://example.org/iiif/manifest-rendering.pdf', $rendering[0]);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-04.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
+        self::assertNotEmpty($rendering);
+        self::assertTrue(is_array($rendering));
+        self::assertEquals(1, sizeof($rendering));
+        self::assertEquals('http://example.org/iiif/manifest-rendering-2.pdf', $rendering[0]);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-05.json'));
+        $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
+        self::assertNotEmpty($rendering);
+        self::assertTrue(is_array($rendering));
+        self::assertEquals(2, sizeof($rendering));
+        self::assertEquals('http://example.org/iiif/manifest-rendering.pdf', $rendering[0]);
+        self::assertEquals('http://example.org/iiif/manifest-rendering-2.pdf', $rendering[1]);
     }
     
     private function prepareMetadata($metadataString)

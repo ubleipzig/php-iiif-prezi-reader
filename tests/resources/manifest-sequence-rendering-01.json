@@ -1,0 +1,66 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/manifest1/manifest",
+  "label": "Manifest label",
+  "rendering": [
+    {
+      "@id": "http://example.org/iiif/manifest-viewer",
+      "label": "Default display",
+      "format": "text/html"
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "http://example.org/iiif/manifest1/sequence/sequence1",
+      "@type": "sc:Sequence",
+      "label": "Default sequence",
+      "viewingDirection": "left-to-right",
+      "viewingHint": "paged",
+      "rendering": [    {
+          "@id": "http://example.org/iiif/manifest-viewer",
+          "label": "Default display",
+          "format": "text/html"
+        },    
+        {
+          "@id": "http://example.org/iiif/sequence-rendering.pdf",
+          "label": "Download sequence as PDF",
+          "format": "application/pdf"
+        },
+        {
+          "@id": "http://example.org/iiif/sequence-rendering-2.pdf",
+          "label": "Download sequence as PDF, e.g. lower quality",
+          "format": "application/pdf"
+        }
+      ],
+      "canvases": [
+        {
+          "@id": "http://example.org/iiif/manifest1/canvas/canvas1",
+          "@type": "sc:Canvas",
+          "label": "Canvas label",
+          "height":1000,
+          "width":1000,
+          "images": [
+            {
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource":{
+                  "@id": "http://example.org/iiif/image1/full/full/0/default.jpg",
+                  "@type": "dctypes:Image",
+                  "format": "image/jpeg",
+                  "service": {
+                      "@context": "http://iiif.io/api/image/2/context.json",
+                      "@id": "http://example.org/iiif/image1/",
+                      "profile": "http://iiif.io/api/image/2/level1.json"
+                  },
+                  "height":1000,
+                  "width":1000
+              },
+              "on": "http://example.org/iiif/manifest1/canvas/canvas1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

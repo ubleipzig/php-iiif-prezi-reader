@@ -1,7 +1,6 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
-use iiif\context\IRI;
 use iiif\context\JsonLdContext;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
@@ -88,6 +87,14 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
     protected function getTypelessProperties() {
         return [
             "service"
+        ];
+    }
+    
+    protected function getCollectionProperties() {
+        return [
+            "profile",
+            "rendering",
+            "seeAlso"
         ];
     }
 
@@ -255,7 +262,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
          * [{"label": "Example label", "value": "Example value"}]
          * ... and combinations with language/translation info either in the label or in the value.
          *
-         * TODO Presentation API 3 will change the structure: http://prezi3.iiif.io/api/presentation/3.0/#language-of-property-values
+         * Presentation API 3 will fortunately change the structure: http://prezi3.iiif.io/api/presentation/3.0/#language-of-property-values
          */
         if ($this->metadata == null || $label == null)
             return null;
@@ -344,4 +351,48 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
         return $result;
     }
     
+    /**
+     * Get the URL of any resource linked in the "rendering" property for a given format. 
+     * @param string $format format as media type (i.e. MIME type)
+     * @param bool $useChildResources If set to true and the resource has not rendering URL for the requested format, the method will also look
+     * for suitable rendering URLs in child resources where it might be reasonable that a rendering of the child could adequately represent
+     * that resource. If the resource is a Manifest, the default Sequence will be used; if the resource is a Canvas, the first image Annotation
+     * will be used; if the resource is an Annotation, the ContentResource will also be used.
+     * @return string[]
+     */
+    public function getRenderingUrlsForFormat(string $format, bool $useChildResources = true) {
+        $renderingUrls = [];
+        if (empty($format)) {
+            return $renderingUrls;
+        }
+        if ($this->rendering!=null && is_array($this->rendering)) {
+            if (JsonLdProcessor::isSequentialArray($this->rendering)) {
+                foreach ($this->rendering as $rendering) {
+                    if (!is_array($rendering)) {
+                        continue;
+                    }
+                    if (array_key_exists("format", $rendering) && $rendering["format"] == $format && array_key_exists("@id", $rendering)) {
+                        $renderingUrls[] = $rendering["@id"];
+                    }
+                }
+            } else {
+                if (array_key_exists("format", $this->rendering) && $this->rendering["format"] == $format && array_key_exists("@id", $this->rendering)) {
+                    $renderingUrls[] = $this->rendering["@id"];
+                }
+            }
+        }
+        if (empty($renderingUrls) && $useChildResources) {
+            if ($this instanceof Manifest && !empty($this->getSequences())) {
+                $renderingUrls = $this->getSequences()[0]->getRenderingUrlsForFormat($format);
+            }
+            elseif ($this instanceof Canvas && !empty($this->getImages())) {
+                $renderingUrls = $this->getImages()[0]->getRenderingUrlsForFormat($format);
+            }
+            elseif ($this instanceof Annotation && $this->getResource()!=null) {
+                $renderingUrls = $this->getResource()->getRenderingUrlsForFormat($format);
+            }
+        }
+        return $renderingUrls;
+    }
+
 }

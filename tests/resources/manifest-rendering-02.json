@@ -1,7 +1,8 @@
 {
   "@context": "http://iiif.io/api/presentation/2/context.json",
   "@type": "sc:Manifest",
-  "@id": "http://example.org/iiif/book1/manifest",
+  "@id": "http://example.org/iiif/manifest1/manifest",
   "label": "Manifest label",
+  "rendering": "http://example.org/iiif/manifest-rendering.pdf",
   "sequences": []
 }

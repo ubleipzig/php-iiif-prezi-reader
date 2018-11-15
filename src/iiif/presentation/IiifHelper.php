@@ -172,5 +172,11 @@ class IiifHelper {
             }
         }
     }
+    
+    public static function getRenderingUrlsForFormat($resource, $format, $useNestedResources = true) {
+        if ($resource instanceof AbstractIiifResource) {
+            return $resource->getRenderingUrlsForFormat($format, $useNestedResources);
+        }
+    }
 }
 

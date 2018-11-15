@@ -1,0 +1,58 @@
+{
+  "@id": "http://example.org/iiif/manifest1/canvas/canvas1",
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Canvas",
+  "label": "Canvas label",
+  "height":1000,
+  "width":1000,
+  "rendering": [
+    {
+      "@id": "http://example.org/iiif/canvas-viewer",
+      "label": "Default canvas display",
+      "format": "text/html"
+    }
+  ],
+  "images": [
+    {
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+	  "rendering": [
+	    {
+	      "@id": "http://example.org/iiif/image-anno-viewer",
+	      "label": "Default image annotation display",
+	      "format": "text/html"
+	    }
+	  ],
+      "resource":{
+          "@id": "http://example.org/iiif/image1/full/full/0/default.jpg",
+          "@type": "dctypes:Image",
+          "format": "image/jpeg",
+          "service": {
+              "@context": "http://iiif.io/api/image/2/context.json",
+              "@id": "http://example.org/iiif/image1/",
+              "profile": "http://iiif.io/api/image/2/level1.json"
+          },
+          "height":1000,
+          "width":1000,
+		  "rendering": [
+		    {
+		      "@id": "http://example.org/iiif/image-resource-viewer",
+		      "label": "Default image annotation display",
+		      "format": "text/html"
+		    },    
+		    {
+		      "@id": "http://example.org/iiif/image-resource-rendering.pdf",
+		      "label": "Download image annotation as PDF",
+		      "format": "application/pdf"
+		    },
+		    {
+		      "@id": "http://example.org/iiif/image-resource-rendering-2.pdf",
+		      "label": "Download image annotation as PDF, e.g. lower quality",
+		      "format": "application/pdf"
+		    }
+		  ]
+      },
+      "on": "http://example.org/iiif/manifest1/canvas/canvas1"
+    }
+  ]
+}
