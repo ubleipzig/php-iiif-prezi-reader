@@ -346,6 +346,74 @@ class AbstractIiifResourceTest extends AbstractIiifTest
         self::assertEquals('http://example.org/iiif/manifest-rendering-2.pdf', $rendering[1]);
     }
     
+    public function testGetSeeAlsoUrlsForFormat() {
+
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-01.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
+        self::assertEmpty($seeAlso);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-02.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
+        self::assertEmpty($seeAlso);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-03.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
+        self::assertEmpty($seeAlso);
+        $seeAlso = $manifest->getSeeAlsoUrlsForFormat('application/mets+xml');
+        self::assertNotEmpty($seeAlso);
+        self::assertEquals(1, sizeof($seeAlso));
+        self::assertEquals("http://example.org/mets.xml", $seeAlso[0]);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-04.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForFormat('application/mets+xml');
+        self::assertEmpty($seeAlso);
+        $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
+        self::assertNotEmpty($seeAlso);
+        self::assertEquals(3, sizeof($seeAlso));
+        self::assertEquals("http://example.org/iiif/image/v2", $seeAlso[0]);
+        self::assertEquals("http://example.org/iiif/image/v1", $seeAlso[1]);
+        self::assertEquals("http://example.org/iiif/image/v2/2", $seeAlso[2]);
+        
+    }
+
+    public function testGetSeeAlsoUrlsForProfile() {
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-01.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/');
+        self::assertEmpty($seeAlso);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-02.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/');
+        self::assertEmpty($seeAlso);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-03.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/version111/mets.xsd');
+        self::assertNotEmpty($seeAlso);
+        self::assertEquals(1, sizeof($seeAlso));
+        self::assertEquals("http://example.org/mets.xml", $seeAlso[0]);
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/');
+        self::assertEmpty($seeAlso);
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/', true);
+        self::assertNotEmpty($seeAlso);
+        self::assertEquals(1, sizeof($seeAlso));
+        self::assertEquals("http://example.org/mets.xml", $seeAlso[0]);
+        
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-04.json'));
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('https://iiif.io/api/image/');
+        self::assertEmpty($seeAlso);
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('https://iiif.io/api/image/', true);
+        self::assertNotEmpty($seeAlso);
+        self::assertEquals(2, sizeof($seeAlso));
+        self::assertContains("http://example.org/iiif/image/v2", $seeAlso);
+        self::assertContains("http://example.org/iiif/image/v2/2", $seeAlso);
+        
+        $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://library.stanford.edu/iiif/image-api/compliance.html#level1');
+        self::assertNotEmpty($seeAlso);
+        self::assertEquals(1, sizeof($seeAlso));
+        self::assertEquals("http://example.org/iiif/image/v1", $seeAlso[0]);
+
+    }
+    
     private function prepareMetadata($metadataString)
     {
         $metadata = json_decode($metadataString, true);

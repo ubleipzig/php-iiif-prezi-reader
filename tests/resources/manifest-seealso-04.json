@@ -1,0 +1,34 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/manifest1/manifest",
+  "label": "Manifest label",
+  "seeAlso" : [
+    {
+      "@id": "http://example.org/iiif/image/v2",
+      "format": "image/jpg",
+      "profile": [
+        "https://iiif.io/api/image/2/level2.json",
+        {
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "protocol": "http://iiif.io/api/image",
+          "qualities": ["gray", "bitonal"]
+        }
+      ],
+      "label": "IIIF image v2"
+  	},
+    {
+      "@id": "http://example.org/iiif/image/v1",
+      "format": "image/jpg",
+      "profile": "http://library.stanford.edu/iiif/image-api/compliance.html#level1",
+      "label": "IIIF image v1"
+  	},
+    {
+      "@id": "http://example.org/iiif/image/v2/2",
+      "format": "image/jpg",
+      "profile": "https://iiif.io/api/image/2/level2.json",
+      "label": "IIIF image v2 No 2"
+  	}
+  ],
+  "sequences": []
+}

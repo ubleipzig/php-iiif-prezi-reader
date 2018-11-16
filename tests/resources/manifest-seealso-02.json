@@ -1,0 +1,11 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/manifest1/manifest",
+  "label": "Manifest label",
+  "seeAlso" : {
+    "@id": "http://example.org/seealso",
+    "label": "No profile, no format"
+  },
+  "sequences": []
+}

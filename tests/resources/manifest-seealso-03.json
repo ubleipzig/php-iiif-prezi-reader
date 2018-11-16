@@ -1,0 +1,13 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/manifest1/manifest",
+  "label": "Manifest label",
+  "seeAlso" : {
+    "@id": "http://example.org/mets.xml",
+    "format": "application/mets+xml",
+    "profile": "http://www.loc.gov/standards/mets/version111/mets.xsd",
+    "label": "METS/MODS"
+  },
+  "sequences": []
+}

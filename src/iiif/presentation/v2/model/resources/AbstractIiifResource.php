@@ -313,36 +313,40 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
         // this shouldn't happen
         return null;
     }
+
+    public function getSeeAlsoUrlsForFormat(string $format) {
+        if (!is_array($this->seeAlso)) {
+            return null;
+        }
+        $result = [];
+        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        foreach ($seeAlso as $candidate) {
+            if (array_key_exists("format", $candidate)) {
+                if ($format == $candidate["format"]) {
+                    $result[] = $candidate["@id"];
+                }
+            }
+        }
+        return $result;
+    }
     
-    public function getSeeAlsoForProfileOrFormat($formatOrProfile) {
+    public function getSeeAlsoUrlsForProfile(string $profile, bool $startsWith = false) {
         if (!is_array($this->seeAlso)) {
             return null;
         }
         $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         $result = [];
-        if (is_string($formatOrProfile)) {
-            $formatOrProfile = [$formatOrProfile];
-        }
         foreach ($seeAlso as $candidate) {
-            foreach ($formatOrProfile as $fop) {
-                if (array_key_exists("format", $candidate)) {
-                    if ($fop == $candidate["format"]) {
+            if (array_key_exists("profile", $candidate)) {
+                if (is_string($candidate["profile"])) {
+                    if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
                         $result[] = $candidate["@id"];
-                        break;
                     }
-                }
-                if (array_key_exists("profile", $candidate)) {
-                    if (is_string($candidate["profile"])) {
-                        if ($candidate["profile"] == $fop) {
+                } elseif (JsonLdProcessor::isSequentialArray($candidate["profile"])) {
+                    foreach ($candidate["profile"] as $profileItem) {
+                        if (is_string($profileItem) && ($profileItem == $profile || ($startsWith && strpos($profileItem, $profile)===0))) {
                             $result[] = $candidate["@id"];
                             break;
-                        }
-                    } elseif (JsonLdProcessor::isSequentialArray($candidate["profile"])) {
-                        foreach ($candidate["profile"] as $profile) {
-                            if (is_string($profile) && $profile == $fop) {
-                                $result[] = $profile;
-                                break 2;
-                            }
                         }
                     }
                 }
