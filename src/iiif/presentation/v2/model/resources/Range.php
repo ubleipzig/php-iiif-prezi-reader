@@ -96,5 +96,20 @@ class Range extends AbstractIiifResource {
         }
         return $allCanvases;
     }
+    
+    public function getMemberRangesAndRanges() {
+        $result = [];
+        if (!empty($this->ranges)) {
+            $result = $this->ranges;
+        }
+        if (!empty($this->members)) {
+            foreach ($this->members as $member) {
+                if ($member instanceof Range) {
+                    $result[] = $member;
+                }
+            }
+        }
+        return $result;
+    }
 }
 

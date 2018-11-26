@@ -65,6 +65,7 @@ class Manifest extends AbstractIiifResource {
      * @return Range
      */
     public function getTopRanges() {
+        // TODO untested
         if ($this->topRanges == null) {
             $this->topRanges = array();
             foreach ($this->structures as $range) {
@@ -83,7 +84,7 @@ class Manifest extends AbstractIiifResource {
                     }
                 }
             }
-            if (sizeof($ranges) > 0) {
+            if (sizeof($ranges) > 0 && sizeof($this->topRanges)==0) {
                 foreach ($ranges as $rangeId) {
                     $this->topRanges[] = $this->getContainedResourceById($rangeId);
                 }
