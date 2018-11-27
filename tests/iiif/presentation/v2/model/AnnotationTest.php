@@ -1,6 +1,11 @@
 <?php
 use iiif\presentation\v2\model\resources\Annotation;
 use iiif\presentation\v2\model\AbstractIiifTest;
+use iiif\presentation\IiifHelper;
+use iiif\presentation\v2\model\resources\ContentResource;
+use iiif\presentation\v2\model\vocabulary\Motivation;
+use iiif\presentation\v2\model\properties\XYWHFragment;
+use iiif\presentation\v2\model\resources\Canvas;
 
 /**
  * Annotation test case.
@@ -8,67 +13,81 @@ use iiif\presentation\v2\model\AbstractIiifTest;
 class AnnotationTest extends AbstractIiifTest {
 
     /**
-     *
      * @var Annotation
      */
-    private $annotation;
+    private $imageAnnotation;
+    
+    /**
+     * @var Annotation
+     */
+    private $textAnnotation;
 
     /**
      * Prepares the environment before running a test.
      */
     protected function setUp() {
         parent::setUp();
-        
-        // TODO Auto-generated AnnotationTest::setUp()
-        
-        $this->annotation = new Annotation();
+        $this->imageAnnotation = IiifHelper::loadIiifResource(parent::getJson("annotation-image-example.json"));
+        $this->textAnnotation = IiifHelper::loadIiifResource(parent::getJson("annotation-text-example.json"));
+        self::assertInstanceOf(Annotation::class, $this->imageAnnotation);
+        self::assertInstanceOf(Annotation::class, $this->textAnnotation);
     }
 
     /**
      * Cleans up the environment after running a test.
      */
     protected function tearDown() {
-        // TODO Auto-generated AnnotationTest::tearDown()
-        $this->annotation = null;
-        
+        $this->imageAnnotation = null;
+        $this->textAnnotation = null;
         parent::tearDown();
-    }
-
-    /**
-     * Constructs the test case.
-     */
-    public function __construct() {
-        // TODO Auto-generated constructor
     }
 
     /**
      * Tests Annotation->getResource()
      */
     public function testGetResource() {
-        // TODO Auto-generated AnnotationTest->testGetResource()
-        $this->markTestIncomplete("getResource test not implemented");
-        
-        $this->annotation->getResource(/* parameters */);
+        self::assertNotNull($this->imageAnnotation->getResource());
+        self::assertInstanceOf(ContentResource::class, $this->imageAnnotation->getResource());
+        self::assertEquals("http://example.org/iiif/book1/res/page1.jpg", $this->imageAnnotation->getResource()->getId());
+
+        self::assertNotNull($this->textAnnotation->getResource());
+        self::assertInstanceOf(ContentResource::class, $this->textAnnotation->getResource());
+        self::assertNull($this->textAnnotation->getResource()->getId());
     }
 
     /**
      * Tests Annotation->getOn()
      */
     public function testGetOn() {
-        // TODO Auto-generated AnnotationTest->testGetOn()
-        $this->markTestIncomplete("getOn test not implemented");
+        $imageOn = $this->imageAnnotation->getOn();
+        self::assertNotNull($imageOn);
+        self::assertInstanceOf(Canvas::class, $imageOn);
+        self::assertEquals("http://example.org/iiif/book1/canvas/p1", $imageOn->getId());
+
+        $textOn = $this->textAnnotation->getOn();
+        self::assertNotNull($textOn);
+        self::assertInstanceOf(XYWHFragment::class, $textOn);
+        self::assertEquals(100, $textOn->getX());
+        self::assertEquals(150, $textOn->getY());
+        self::assertEquals(500, $textOn->getWidth());
+        self::assertEquals(25, $textOn->getHeight());
+        self::assertNotNull($textOn->getTargetObject());
+        self::assertInstanceOf(Canvas::class, $textOn->getTargetObject());
+        self::assertEquals("http://example.org/iiif/book1/canvas/p1", $textOn->getTargetObject()->getId());
+        self::assertEquals("xywh=100,150,500,25", $textOn->getFragment());
         
-        $this->annotation->getOn(/* parameters */);
+        self::markTestIncomplete("Assert that canvas in XYWHFragment identical to Canvas which contains the annotationslist / images");
     }
 
     /**
      * Tests Annotation->getMotivation()
      */
     public function testGetMotivation() {
-        // TODO Auto-generated AnnotationTest->testGetMotivation()
-        $this->markTestIncomplete("getMotivation test not implemented");
+        self::assertNotNull($this->imageAnnotation);
+        self::assertEquals(Motivation::PAINTING, $this->imageAnnotation->getMotivation());
         
-        $this->annotation->getMotivation(/* parameters */);
+        self::assertNotNull($this->textAnnotation);
+        self::assertEquals(Motivation::COMMENTING, $this->textAnnotation->getMotivation());
     }
 }
 

@@ -1,16 +1,33 @@
 <?php
 namespace iiif\presentation\v2\model\properties;
 
+use iiif\presentation\v2\model\resources\Canvas;
+
 class XYWHFragment {
 
+    /**
+     * @var string
+     */
     protected $fragment;
 
+    /**
+     * @var int
+     */
     protected $x;
 
+    /**
+     * @var int
+     */
     protected $y;
 
+    /**
+     * @var int
+     */
     protected $width;
 
+    /**
+     * @var int
+     */
     protected $height;
 
     /**
@@ -21,6 +38,9 @@ class XYWHFragment {
      */
     protected $targetUri;
 
+    /**
+     * @var Canvas
+     */
     protected $targetObject;
 
     protected function __contruct() {}
@@ -36,11 +56,11 @@ class XYWHFragment {
             $xywhStrings = explode('=', $fragment);
             if (sizeof($xywhStrings) >= 2) {
                 $xywh = explode(',', $xywhStrings[1]);
-                if (sizeof($xywhStrings) == 4) {
+                if (sizeof($xywh) == 4) {
                     $xywhFragment->x = $xywh[0];
                     $xywhFragment->y = $xywh[1];
                     $xywhFragment->width = $xywh[2];
-                    $xywhFragment->height = $xywh[4];
+                    $xywhFragment->height = $xywh[3];
                     $xywhFragment->fragment = $fragment;
                 }
             }
@@ -50,8 +70,14 @@ class XYWHFragment {
             if (array_key_exists($uriParts[0], $allResources)) {
                 $xywhFragment->targetObject = &$allResources[$uriParts[0]];
             } else {
-                $xywhFragment->targetUri = new $targetClass();
-                $allResources[$uriParts[0]] = &$xywhFragment->targetUri;
+                $dummyDoc = [
+                    "@context" => "https://iiif.io/api/presentation/2/context.json",
+                    "@type" => $targetClass::TYPE,
+                    "@id" => $uriParts[0]
+                ];
+                $targetObject = $targetClass::loadIiifResource($dummyDoc);
+                $xywhFragment->targetObject = $targetObject;
+                $allResources[$uriParts[0]] = &$xywhFragment->targetObject;
             }
         }
         return $xywhFragment;
@@ -63,6 +89,47 @@ class XYWHFragment {
      */
     public function getTargetUri() {
         return $this->targetUri;
+    }
+    /**
+     * @return string
+     */
+    public function getFragment() {
+        return $this->fragment;
+    }
+
+    /**
+     * @return number
+     */
+    public function getX() {
+        return $this->x;
+    }
+
+    /**
+     * @return number
+     */
+    public function getY() {
+        return $this->y;
+    }
+
+    /**
+     * @return number
+     */
+    public function getWidth() {
+        return $this->width;
+    }
+
+    /**
+     * @return number
+     */
+    public function getHeight() {
+        return $this->height;
+    }
+
+    /**
+     * @return \iiif\presentation\v2\model\resources\Canvas
+     */
+    public function getTargetObject() {
+        return $this->targetObject;
     }
 }
 

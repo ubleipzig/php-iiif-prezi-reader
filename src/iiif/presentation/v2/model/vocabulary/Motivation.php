@@ -2,33 +2,40 @@
 namespace iiif\presentation\v2\model\vocabulary;
 
 class Motivation {
+    
+    // TODO prefixes and expanded IRIs
+    
+    // http://www.w3.org/ns/oa#tagging etc
 
-    const ASSESSING = "assessing";
+    const ASSESSING = "oa:assessing";
 
-    const BOOKMARKING = "bookmarking";
+    const BOOKMARKING = "oa:bookmarking";
 
-    const CLASSIFYING = "classifying";
+    const CLASSIFYING = "oa:classifying";
 
-    const COMMENTING = "commenting";
+    const COMMENTING = "oa:commenting";
 
-    const DESCRIBING = "describing";
+    const DESCRIBING = "oa:describing";
 
-    const EDITING = "editing";
+    const EDITING = "oa:editing";
 
-    const HIGHLIGHTING = "highlighting";
+    const HIGHLIGHTING = "oa:highlighting";
 
-    const IDENTIFYING = "identifying";
+    const IDENTIFYING = "oa:identifying";
 
-    const LINKING = "linking";
+    const LINKING = "oa:linking";
 
-    const MODERATING = "moderating";
+    const MODERATING = "oa:moderating";
 
-    const QUESTIONING = "questioning";
+    const QUESTIONING = "oa:questioning";
 
-    const REPLYING = "replying";
+    const REPLYING = "oa:replying";
 
-    const TAGGING = "tagging";
+    const TAGGING = "oa:tagging";
 
+    // https://iiif.io/api/presentation/2#painting
     const PAINTING = "sc:painting";
+    
+    
 }
 

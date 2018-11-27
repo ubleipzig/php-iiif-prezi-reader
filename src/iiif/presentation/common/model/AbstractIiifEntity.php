@@ -77,6 +77,10 @@ abstract class AbstractIiifEntity {
         return [];
     }
     
+    protected function getSpecialTreatmentValue($property, $value, $context) {
+        return $value;
+    }
+    
     /**
      * Names of properites that may contain values as a sequential array but whose term definition does not 
      * have the suiting @container property. Mostly used for missing @set in Presentation API 2.
@@ -230,7 +234,10 @@ abstract class AbstractIiifEntity {
             }
             $this->$property = $termValue;
         } elseif (is_scalar($value)) {
-            $this->$property = $value;
+//             $this->$property = $value;
+            $v = $this->getSpecialTreatmentValue($property, $value, $context);
+            $this->$property = $v;
+            self::registerResource($v, $this->id, $term, $allResources);
             return;
         }
     }
