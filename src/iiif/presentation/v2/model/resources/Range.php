@@ -22,6 +22,10 @@ class Range extends AbstractIiifResource {
      */
     protected $canvases = array();
 
+    /**
+     * 
+     * @var (Canvas|Range)[]
+     */
     protected $members = array();
 
     protected function getStringResources() {
@@ -49,8 +53,7 @@ class Range extends AbstractIiifResource {
     }
 
     /**
-     *
-     * @return multitype:
+     * @return (Canvas|Range)[]
      */
     public function getMembers() {
         return $this->members;
@@ -75,6 +78,10 @@ class Range extends AbstractIiifResource {
         return null;
     }
 
+    /**
+     * 
+     * @return Canvas[]
+     */
     public function getAllCanvases() {
         $allCanvases = [];
         if (isset($this->canvases) && sizeof($this->canvases) > 0) {
