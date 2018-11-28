@@ -8,6 +8,9 @@ use iiif\presentation\common\TypeMap;
 use iiif\presentation\common\model\AbstractIiifEntity;
 use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\services\Service;
+use iiif\presentation\common\model\resources\IiifResourceInterface;
+use iiif\presentation\IiifHelper;
+use iiif\services\AbstractImageService;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -16,7 +19,7 @@ use iiif\services\Service;
  * @author lutzhelm
  *        
  */
-abstract class AbstractIiifResource extends AbstractIiifEntity {
+abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifResourceInterface {
 
     // http://iiif.io/api/presentation/2.1/#technical-properties
     /**
@@ -242,6 +245,10 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
     public function getSeeAlso() {
         return $this->seeAlso;
     }
+    
+    public function getRendering() {
+        return $this->rendering;
+    }
 
     public function getTranslatedLabel($language = null) {
         return self::getTranslatedField($this->label, $language);
@@ -398,5 +405,62 @@ abstract class AbstractIiifResource extends AbstractIiifEntity {
         }
         return $renderingUrls;
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatement()
+     */
+    public function getRequiredStatement() {
+        return $this->attribution;
+    }
 
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRights()
+     */
+    public function getRights() {
+        return $this->license;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummary()
+     */
+    public function getSummary() {
+        return $this->description;
+    }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        if ($this->thumbnail!=null) {
+            $thumbnail = JsonLdProcessor::isSequentialArray($this->thumbnail) ? empty ($this->thumbnail) ? null : $this->thumbnail[0] : $this->thumbnail;
+            if (is_string($thumbnail)) {
+                return $thumbnail;
+            }
+            $imageService = null;
+            $width = null;
+            $height = null;
+            if ($thumbnail instanceof ContentResource) {
+                $imageService = $thumbnail->getService();
+                $width = $thumbnail->getWidth();
+                $height = $thumbnail->getHeight();
+            } elseif (JsonLdProcessor::isDictionary($thumbnail)) {
+                if (array_key_exists("service", $thumbnail)) {
+                    if (JsonLdProcessor::isDictionary($thumbnail["service"])) {
+                        $imageService = IiifHelper::loadIiifResource($thumbnail["service"]);
+                    }
+                }
+            }
+            if ($imageService!=null && $imageService instanceof AbstractImageService) {
+                // TODO Add level 0 support. The following uses level 1 features sizeByW or sizeByH
+                $width = $width == null ? 100 : $width;
+                $height = $heigth == null ? 100 : $heigth;
+                $size = $width <= $height ? (",".$height) : ($width.",");
+                return $imageService->getImageUrl(null, $size, null, null, null);
+            }
+        }
+        return null;
+    }
+    
 }

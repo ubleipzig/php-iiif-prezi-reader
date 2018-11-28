@@ -1,11 +1,12 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
+use iiif\presentation\common\model\resources\ManifestInterface;
 use iiif\presentation\v2\model\constants\ViewingHintValues;
 use iiif\presentation\v2\model\properties\NavDateTrait;
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 
-class Manifest extends AbstractIiifResource {
+class Manifest extends AbstractIiifResource implements ManifestInterface {
     use NavDateTrait;
     use ViewingDirectionTrait;
 
@@ -58,7 +59,7 @@ class Manifest extends AbstractIiifResource {
     /**
      * Top structure in hierarchy; either the Range marked with viewingHint=top or the one that is not part of another range
      *
-     * @return Range
+     * @return Range[]
      */
     public function getTopRanges() {
         // TODO untested
@@ -93,6 +94,64 @@ class Manifest extends AbstractIiifResource {
         if (array_key_exists($id, $this->containedResources))
             return $this->containedResources[$id];
     }
+
+    private function getDefaultSequence()
+    {
+        if (!empty($this->sequences)) {
+            return $this->sequences[0];
+        }
+        return null;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ManifestInterface::getDefaultCanvases()
+     */
+    public function getDefaultCanvases() {
+        if ($this->getDefaultSequence() != null) {
+            return $this->getDefaultSequence()->getCanvases();
+        }
+        return null;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvas()
+     */
+    public function getStartCanvas() {
+        if ($this->getDefaultSequence() != null) {
+            return $this->getDefaultSequence()->getStartCanvas();
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvasOrFirstCanvas()
+     */
+    public function getStartCanvasOrFirstCanvas() {
+        if ($this->getDefaultSequence() != null) {
+            return $this->getDefaultSequence()->getStartCanvasOrFirstCanvas();
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        $result = parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        $defaultSequence = $this->getDefaultSequence();
+        if ($defaultSequence != null) {
+            return $defaultSequence->getThumbnailUrl();
+        }
+        return null;
+    }
+
 }
 
 

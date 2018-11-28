@@ -46,5 +46,23 @@ class Sequence extends AbstractIiifResource {
             return $this->canvases[0];
         }
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        $result = parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        $startCanvas = $this->getStartCanvasOrFirstCanvas();
+        if ($startCanvas != null) {
+            return $startCanvas->getThumbnailUrl();
+        }
+        return null;
+    }
+
+    
+    
 }
 

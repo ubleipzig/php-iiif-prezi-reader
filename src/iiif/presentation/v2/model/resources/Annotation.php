@@ -2,8 +2,10 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\v2\model\properties\XYWHFragment;
+use iiif\presentation\common\model\resources\AnnotationInterface;
+use iiif\presentation\v2\model\vocabulary\Motivation;
 
-class Annotation extends AbstractIiifResource {
+class Annotation extends AbstractIiifResource implements AnnotationInterface {
 
     const TYPE = "oa:Annotation";
 
@@ -59,5 +61,25 @@ class Annotation extends AbstractIiifResource {
     public function getMotivation() {
         return $this->motivation;
     }
+    
+    public function getThumbnailUrl() {
+        $result = parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        if ($this->motivation == Motivation::PAINTING && $this->resource!=null) {
+            return $this->resource->getThumbnailUrl();
+        }
+        return null;
+    }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\AnnotationInterface::getBody()
+     */
+    public function getBody() {
+        return $this->resource;
+    }
+
+
 }
 

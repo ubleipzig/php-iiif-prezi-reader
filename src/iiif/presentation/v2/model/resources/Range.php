@@ -3,8 +3,9 @@ namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\v2\model\properties\StartCanvasTrait;
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
+use iiif\presentation\common\model\resources\RangeInterface;
 
-class Range extends AbstractIiifResource {
+class Range extends AbstractIiifResource implements RangeInterface {
     use ViewingDirectionTrait;
     use StartCanvasTrait;
 
@@ -82,7 +83,7 @@ class Range extends AbstractIiifResource {
      * 
      * @return Canvas[]
      */
-    public function getAllCanvases() {
+    public function getAllCanvasesRecursively() {
         $allCanvases = [];
         if (isset($this->canvases) && sizeof($this->canvases) > 0) {
             $allCanvases = $this->canvases;
@@ -117,6 +118,70 @@ class Range extends AbstractIiifResource {
             }
         }
         return $result;
+    }
+    
+    public function getAllRanges() {
+        return $this->getMemberRangesAndRanges();
+    }
+    
+    public function getAllCanvases() {
+        $result = [];
+        if (!empty($this->canvases)) {
+            $result = $this->canvases;
+        }
+        if (!empty($this->members)) {
+            foreach ($this->members as $member) {
+                if ($member instanceof Canvas) {
+                    $result[] = $canvas;
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllItems()
+     */
+    public function getAllItems() {
+        $items = [];
+        if ($this->getRanges()!=null) {
+            foreach ($this->getRanges() as $range) {
+                $items[] = $range;
+            }
+        }
+        if ($this->getCanvases()!=null) {
+            foreach ($this->getCanvases() as $canvas) {
+                $items[] = $canvas;
+            }
+        }
+        if ($this->getMembers()!=null) {
+            foreach ($this->getMembers() as $member) {
+                $items[] = $member;
+            }
+        }
+        return $items;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        // TODO
+        if ($this->getThumbnail()!=null) {
+            parent::getThumbnailUrl();
+            if ($this->getThumbnail() )
+            if (is_string($this->getThumbnail())) {
+                return $this->getThumbnail();
+            }
+        } else {
+            $start = $this->getStartCanvasOrFirstCanvas();
+            if ($start!=null) {
+                return $start->getThumbnailUrl();
+            }
+        }
+        return null;
     }
 }
 

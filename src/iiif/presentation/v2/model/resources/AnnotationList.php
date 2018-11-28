@@ -35,5 +35,6 @@ class AnnotationList extends AbstractIiifResource {
         }
         return $this->resources;
     }
+
 }
 
