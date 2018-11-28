@@ -19,10 +19,6 @@ class Manifest extends AbstractIiifResource {
      */
     protected $sequences = array();
 
-    protected $viewingDirection;
-
-    protected $navDate;
-
     /**
      *
      * @var Range[]
