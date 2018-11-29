@@ -9,6 +9,7 @@ use iiif\context\Keywords;
 use iiif\presentation\common\TypeMap;
 use iiif\presentation\v2\model\resources\AbstractIiifResource;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
+use iiif\tools\RemoteUrlHelper;
 
 abstract class AbstractIiifEntity {
 
@@ -30,7 +31,7 @@ abstract class AbstractIiifEntity {
 
     public static function loadIiifResource($resource) {
         if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
-            $resource = file_get_contents($resource);
+            $resource = RemoteUrlHelper::getContent($resource);
         }
         if (is_string($resource)) {
             $resource = json_decode($resource, true);

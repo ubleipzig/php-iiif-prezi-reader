@@ -2,6 +2,7 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\IiifHelper;
+use iiif\tools\RemoteUrlHelper;
 
 class AnnotationList extends AbstractIiifResource {
 
@@ -22,7 +23,7 @@ class AnnotationList extends AbstractIiifResource {
     public function getResources() {
         if ($resources == null && ! $this->resourcesLoaded) {
             
-            $content = file_get_contents($this->id);
+            $content = RemoteUrlHelper::getContent($this->id);
             $jsonAsArray = json_decode($content, true);
             
             $remoteAnnotationList = IiifHelper::loadIiifResource($content);

@@ -1,6 +1,8 @@
 <?php
 namespace iiif\context;
 
+use iiif\tools\RemoteUrlHelper;
+
 /**
  * Implementation of the context processing algorithm of the JSON-LD API version 1.1.
  * Expansion, Compaction and Flattening algorithms are not implemented.
@@ -74,7 +76,7 @@ class JsonLdProcessor {
             // only for testing purposes
             return '{"@context":{}}';
         }
-        return file_get_contents($context);
+        return RemoteUrlHelper::getContent($context);
     }
 
     public static function isSequentialArray($array) {

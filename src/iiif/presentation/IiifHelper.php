@@ -16,6 +16,7 @@ use iiif\presentation\v3\model\resources\Canvas3;
 use iiif\presentation\v3\model\resources\ContentResource3;
 use iiif\presentation\v3\model\resources\Manifest3;
 use iiif\presentation\v3\model\resources\Range3;
+use iiif\tools\RemoteUrlHelper;
 
 class IiifHelper {
 
@@ -42,7 +43,7 @@ class IiifHelper {
         }
     }
 
-    public static function getThumbnailUrlForIiifResource(AbstractIiifEntity $resource, $width = null, $height = null, &$thumbnailServiceProfiles = array(), $classWithStaticGetUrlMethod = null) {
+    public static function getThumbnailUrlForIiifResource(AbstractIiifEntity $resource, $width = null, $height = null, &$thumbnailServiceProfiles = array()) {
         if ($resource->getThumbnail() != null) {
             if (is_string($resource->getThumbnail())) {
                 return $resource->getThumbnail();
@@ -102,12 +103,7 @@ class IiifHelper {
                     $thumbnailServiceProfiles[$profile] = Profile::SUPPORTED_BY_LEVEL[$profile];
                 } else {
                     try {
-                        // Try to load profile
-                        if ($classWithStaticGetUrlMethod != null) {
-                            $profileContent = $classWithStaticGetUrlMethod::getUrl($profile);
-                        } else {
-                            $profileContent = file_get_contents($profile);
-                        }
+                        $profileContent = RemoteUrlHelper::getContent($profile);
                         if ($profileContent != null && $profileContent != false) {
                             $profileArray = json_decode($profileContent, true);
                             if (array_key_exists(Names::SUPPORTS, $profileArray)) {
@@ -152,9 +148,9 @@ class IiifHelper {
             return $thumbnailUrl;
         } elseif ($resource instanceof AbstractIiifResource3) {
             if ($resource instanceof Manifest3 || $resource instanceof Range3) {
-                return empty($resource->getItems()) ? null : self::getThumbnailUrlForIiifResource(self::getStartCanvasOrFirstCanvas($resource), $width, $height, $thumbnailServiceProfiles, $classWithStaticGetUrlMethod);
+                return empty($resource->getItems()) ? null : self::getThumbnailUrlForIiifResource(self::getStartCanvasOrFirstCanvas($resource), $width, $height, $thumbnailServiceProfiles);
             } elseif ($resource instanceof Canvas3) {
-                return empty($resource->getItems()) ? null : self::getThumbnailUrlForIiifResource($resource->getItems()[0], $width, $height, $thumbnailServiceProfiles, $classWithStaticGetUrlMethod);
+                return empty($resource->getItems()) ? null : self::getThumbnailUrlForIiifResource($resource->getItems()[0], $width, $height, $thumbnailServiceProfiles);
             } elseif ($resource instanceof AnnotationPage3) {
                 if (empty($resource->getItems())) {
                     return null;
@@ -162,11 +158,11 @@ class IiifHelper {
                 foreach ($resource->getItems() as $annotation) {
                     /* @var $annotation Annotation3 */
                     if ($annotation->getMotivation() == "painting" && $annotation->getBody() != null && $annotation->getBody()->getType() == "Image") {
-                        return self::getThumbnailUrlForIiifResource($annotation, $width, $height, $thumbnailServiceProfiles, $classWithStaticGetUrlMethod);
+                        return self::getThumbnailUrlForIiifResource($annotation, $width, $height, $thumbnailServiceProfiles);
                     }
                 }
             } elseif ($resource instanceof Annotation3) {
-                return self::getThumbnailUrlForIiifResource($resource->getBody(), $width, $height, $thumbnailServiceProfiles, $classWithStaticGetUrlMethod);
+                return self::getThumbnailUrlForIiifResource($resource->getBody(), $width, $height, $thumbnailServiceProfiles);
             } elseif ($resource instanceof ContentResource3) {
                 return $resource->getImageUrl($width, $height);
             }
