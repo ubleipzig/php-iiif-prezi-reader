@@ -47,3 +47,6 @@ require_once (__DIR__ . "/services/ImageInformation3.php");
 require_once (__DIR__ . "/services/PhysicalDimensions.php");
 require_once (__DIR__ . "/services/Service.php");
 
+require_once (__DIR__ . "/tools/UrlReaderInterface.php");
+require_once (__DIR__ . "/tools/RemoteUrlHelper.php");
+
