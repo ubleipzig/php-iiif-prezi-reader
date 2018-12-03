@@ -11,7 +11,7 @@ class RemoteUrlHelper {
     /**
      * @param \iiif\tools\UrlReaderInterface $urlReader
      */
-    public static function setUrlResolver(UrlReaderInterface $urlReader) {
+    public static function setUrlReader(UrlReaderInterface $urlReader) {
         self::$urlReader = $urlReader;
     }
     

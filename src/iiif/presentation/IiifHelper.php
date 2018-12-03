@@ -17,6 +17,7 @@ use iiif\presentation\v3\model\resources\ContentResource3;
 use iiif\presentation\v3\model\resources\Manifest3;
 use iiif\presentation\v3\model\resources\Range3;
 use iiif\tools\RemoteUrlHelper;
+use iiif\tools\UrlReaderInterface;
 
 class IiifHelper {
 
@@ -173,6 +174,10 @@ class IiifHelper {
         if ($resource instanceof AbstractIiifResource) {
             return $resource->getRenderingUrlsForFormat($format, $useNestedResources);
         }
+    }
+    
+    public static function setUrlReader(UrlReaderInterface $urlReader) {
+        RemoteUrlHelper::setUrlReader($urlReader);
     }
 }
 
