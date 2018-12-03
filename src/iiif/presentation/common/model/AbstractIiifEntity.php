@@ -298,5 +298,13 @@ abstract class AbstractIiifEntity {
     public function getType() {
         return $this->type;
     }
+    
+    public function __construct($id = null) {
+        if (isset($id)) {
+            $this->id = $id;
+        }
+        
+    }
+    
 }
 

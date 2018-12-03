@@ -1,9 +1,9 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
-use iiif\presentation\v2\model\properties\XYWHFragment;
 use iiif\presentation\common\model\resources\AnnotationInterface;
 use iiif\presentation\v2\model\vocabulary\Motivation;
+use iiif\presentation\v2\model\properties\XYWHFragment;
 
 class Annotation extends AbstractIiifResource implements AnnotationInterface {
 

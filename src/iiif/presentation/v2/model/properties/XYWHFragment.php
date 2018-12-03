@@ -70,12 +70,7 @@ class XYWHFragment {
             if (array_key_exists($uriParts[0], $allResources)) {
                 $xywhFragment->targetObject = &$allResources[$uriParts[0]];
             } else {
-                $dummyDoc = [
-                    "@context" => "https://iiif.io/api/presentation/2/context.json",
-                    "@type" => $targetClass::TYPE,
-                    "@id" => $uriParts[0]
-                ];
-                $targetObject = $targetClass::loadIiifResource($dummyDoc);
+                $targetObject = new $targetClass($uriParts[0]);
                 $xywhFragment->targetObject = $targetObject;
                 $allResources[$uriParts[0]] = &$xywhFragment->targetObject;
             }

@@ -37,15 +37,6 @@ class Canvas extends AbstractIiifResource implements CanvasInterface {
         return $this->otherContent;
     }
 
-    public function __construct($id = null, $reference = false) {
-        if ($id !== null) {
-            $this->id = $id;
-        }
-        if ($reference !== null) {
-            $this->reference = $reference;
-        }
-    }
-
     /**
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\CanvasInterface::getImageAnnotations()
