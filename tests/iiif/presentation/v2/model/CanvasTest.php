@@ -33,7 +33,7 @@ class CanvasTest extends AbstractIiifTest
         self::assertNotNull($this->canvas);
         self::assertInstanceOf(Canvas::class, $this->canvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p1", $this->canvas->getId());
-        self::assertEquals("The label of the canvas", $this->canvas->getDefaultLabel());
+        self::assertEquals("The label of the canvas", $this->canvas->getLabelForDisplay());
     }
 
     /**

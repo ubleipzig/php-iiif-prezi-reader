@@ -13,12 +13,14 @@ interface ManifestInterface extends IiifResourceInterface {
     /**
      * version 2: first range marked as top or any ranges that are no children of other ranges
      * version 3: ...
+     * @return RangeInterface[]
      */
-    public function getTopRanges();
+    public function getRootRanges();
     
     /**
      * version 2: startCanvas
      * version 3: "start" if "start" is a canvas; otherwise the canvas whose part is given as "start"
+     * @return CanvasInterface
      */
     public function getStartCanvas();
     
@@ -28,7 +30,7 @@ interface ManifestInterface extends IiifResourceInterface {
     public function getStartCanvasOrFirstCanvas();
     
     /**
-     * @return RangeInterface
+     * @return RangeInterface[]
      */
     public function getStructures();
     

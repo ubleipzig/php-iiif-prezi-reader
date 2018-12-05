@@ -32,7 +32,7 @@ class Manifest extends AbstractIiifResource implements ManifestInterface {
      *
      * @var Range[]
      */
-    protected $topRanges;
+    protected $rootRanges;
 
     /**
      *
@@ -61,17 +61,17 @@ class Manifest extends AbstractIiifResource implements ManifestInterface {
      *
      * @return Range[]
      */
-    public function getTopRanges() {
+    public function getRootRanges() {
         // TODO untested
-        if ($this->topRanges == null) {
-            $this->topRanges = array();
+        if ($this->rootRanges == null) {
+            $this->rootRanges = array();
             foreach ($this->structures as $range) {
                 $ranges[] = $range->getId();
             }
             foreach ($this->structures as $range) {
                 if ($range->getViewingHint() == ViewingHintValues::TOP) {
                     // if there is a top structure, use it!
-                    $this->topRanges[] = $range;
+                    $this->rootRanges[] = $range;
                     break;
                 }
                 foreach ($this->structures as $r) {
@@ -81,13 +81,13 @@ class Manifest extends AbstractIiifResource implements ManifestInterface {
                     }
                 }
             }
-            if (sizeof($ranges) > 0 && sizeof($this->topRanges)==0) {
+            if (sizeof($ranges) > 0 && sizeof($this->rootRanges)==0) {
                 foreach ($ranges as $rangeId) {
-                    $this->topRanges[] = $this->getContainedResourceById($rangeId);
+                    $this->rootRanges[] = $this->getContainedResourceById($rangeId);
                 }
             }
         }
-        return $this->topRanges;
+        return $this->rootRanges;
     }
 
     public function getContainedResourceById($id) {

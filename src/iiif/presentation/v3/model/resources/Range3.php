@@ -1,7 +1,9 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
-class Range3 extends AbstractIiifResource3 {
+use iiif\presentation\common\model\resources\RangeInterface;
+
+class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      *
@@ -103,17 +105,90 @@ class Range3 extends AbstractIiifResource3 {
 
     public function getAllCanvases() {
         $allCanvases = [];
-        if (isset($this->items) && sizeof($this->items) > 0) {
+        if (!empty($this->items)) {
             foreach ($this->items as $item) {
                 if ($item instanceof Canvas3) {
                     $allCanvases[] = $item;
-                }
-                if ($item instanceof Range3) {
-                    $allCanvases = array_merge($allCanvases, $item->getAllCanvases());
                 }
             }
         }
         return $allCanvases;
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllCanvasesRecursively()
+     */
+    public function getAllCanvasesRecursively() {
+        $result = [];
+        if (!empty($this->items)) {
+            foreach ($this->items as $item) {
+                if ($item instanceof Canvas3) {
+                    $result[] = $item;
+                }
+                elseif ($item instanceof Range3) {
+                    $childCanvases = $item->getAllCanvasesRecursively();
+                    if (!empty($childCanvases)) {
+                        array_merge($result, $childCanvases);
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllItems()
+     */
+    public function getAllItems() {
+        return $this->items;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllRanges()
+     */
+    public function getAllRanges() {
+        $result = [];
+        if (!empty($this->items)) {
+            foreach ($this->items as $item) {
+                if ($item instanceof Range3) {
+                    $result[] = $item;
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvas()
+     */
+    public function getStartCanvas() {
+        if (isset($this->start) && $this->start instanceof Canvas3) {
+            return $this->start;
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvasOrFirstCanvas()
+     */
+    public function getStartCanvasOrFirstCanvas() {
+        if ($this->getStartCanvas() != null) {
+            return $this->getStartCanvas();
+        }
+        $canvases = $this->getAllCanvasesRecursively();
+        if (!empty($canvases)) {
+            return $canvases[0];
+        }
+        return null;
+    }
+
+    public function isTopRange() {
+        return false;
+    }
+    
 }
 

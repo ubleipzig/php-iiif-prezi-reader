@@ -41,5 +41,7 @@ interface RangeInterface extends IiifResourceInterface {
      */
     public function getAllCanvasesRecursively();
     
+    public function isTopRange();
+    
 }
 

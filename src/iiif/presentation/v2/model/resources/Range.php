@@ -4,6 +4,7 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\presentation\v2\model\properties\StartCanvasTrait;
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 use iiif\presentation\common\model\resources\RangeInterface;
+use iiif\presentation\v2\model\constants\ViewingHintValues;
 
 class Range extends AbstractIiifResource implements RangeInterface {
     use ViewingDirectionTrait;
@@ -182,6 +183,10 @@ class Range extends AbstractIiifResource implements RangeInterface {
             }
         }
         return null;
+    }
+    
+    public function isTopRange() {
+        return isset($this->viewingHint) && $this->viewingHint == ViewingHintValues::TOP;
     }
 }
 

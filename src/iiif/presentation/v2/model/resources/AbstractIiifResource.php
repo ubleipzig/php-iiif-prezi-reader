@@ -145,14 +145,6 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         return null;
     }
 
-    protected function getPreferredTranslation($field) {
-        return $this->getTranslatedField($field, $this->preferredLanguage);
-    }
-
-    public function getDefaultLabel() {
-        return $this->getPreferredTranslation($this->label);
-    }
-
     protected function getContainedResources() {}
 
     /**
@@ -252,6 +244,11 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
 
     public function getTranslatedLabel($language = null) {
         return self::getTranslatedField($this->label, $language);
+    }
+    
+    public function getLabelForDisplay(string $language = null, string $joinChar = "; ", bool $switchToExistingLanguage = true) {
+        // TODO replace method
+        return $this->getTranslatedField($this->label, $language);
     }
 
     /**
@@ -360,6 +357,12 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
             }
         }
         return $result;
+    }
+    
+    public function getSingleService() {
+        return $this->service == null ? null :
+            JsonLdProcessor::isSequentialArray($this->service) ? $this->service[0]:
+            $this->service;
     }
     
     /**

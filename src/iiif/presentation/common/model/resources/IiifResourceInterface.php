@@ -20,6 +20,8 @@ interface IiifResourceInterface {
      */
     public function getLabel();
     
+    public function getLabelForDisplay(string $language = null, string $joinChar = "; ", bool $switchToExistingLanguage = true);
+    
     /**
      * @return string|array
      */
@@ -53,9 +55,14 @@ interface IiifResourceInterface {
     public function getSeeAlsoUrlsForProfile(string $profile, bool $startsWith = false);
         
     /**
-     * @return Service
+     * @return Service|Service[]
      */
     public function getService();
+    
+    /**
+     * @return Service
+     */
+    public function getSingleService();
     
     public function getRendering();
     
@@ -65,7 +72,5 @@ interface IiifResourceInterface {
      * @return string
      */
     public function getThumbnailUrl();
-
-    public function getDefaultLabel();
 }
 

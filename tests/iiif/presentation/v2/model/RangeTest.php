@@ -34,7 +34,7 @@ class RangeTest extends AbstractIiifTest
         /* @var $range1 Range */
         self::assertInstanceOf(Range::class, $range1);
         self::assertEquals('http://example.org/iiif/book1/range/r0', $range1->getId());
-        self::assertEquals('Table of Contents', $range1->getDefaultLabel());
+        self::assertEquals('Table of Contents', $range1->getLabelForDisplay());
         self::assertEmpty($range1->getCanvases());
         self::assertEmpty($range1->getRanges());
         self::assertNotEmpty($range1->getMembers());
@@ -50,7 +50,7 @@ class RangeTest extends AbstractIiifTest
         /* @var $range2 Range */
         self::assertInstanceOf(Range::class, $range2);
         self::assertEquals('http://example.org/iiif/book1/range/r1', $range2->getId());
-        self::assertEquals('Introduction', $range2->getDefaultLabel());
+        self::assertEquals('Introduction', $range2->getLabelForDisplay());
         self::assertEmpty($range2->getMembers());
         self::assertNotEmpty($range2->getRanges());
         self::assertNotEmpty($range2->getCanvases());
@@ -77,7 +77,7 @@ class RangeTest extends AbstractIiifTest
         /* @var $range3 Range */
         self::assertInstanceOf(Range::class, $range3);
         self::assertEquals('http://example.org/iiif/book1/range/r1-1', $range3->getId(), 'Wrong range id.');
-        self::assertEquals('Objectives and Scope', $range3->getDefaultLabel(), 'Wrong label.');
+        self::assertEquals('Objectives and Scope', $range3->getLabelForDisplay(), 'Wrong label.');
         self::assertEmpty($range3->getMembers());
         self::assertEmpty($range3->getRanges());
         self::assertNotEmpty($range3->getCanvases());

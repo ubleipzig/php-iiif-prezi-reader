@@ -2,8 +2,9 @@
 namespace iiif\presentation\v3\model\resources;
 
 use iiif\presentation\v2\model\vocabulary\Motivation;
+use iiif\presentation\common\model\resources\CanvasInterface;
 
-class Canvas3 extends AbstractIiifResource3 {
+class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
 
     /**
      *
@@ -77,7 +78,7 @@ class Canvas3 extends AbstractIiifResource3 {
      * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3
      */
     public function getAnnotations() {
-        return $this->annotations;
+        return $this->items;
     }
 
     /**
@@ -118,6 +119,23 @@ class Canvas3 extends AbstractIiifResource3 {
      */
     public function getDuration() {
         return $this->duration;
+    }
+    
+    public function getImageAnnotations() {
+        $result = [];
+        if (isset($this->items)) {
+            foreach ($this->items as $annotationPage) {
+                // TODO ensure to only use embeded annotations
+                if (!empty($annotationPage->getItems())) {
+                    foreach ($annotationPage->getItems() as $annotation) {
+                        if ($annotation->getMotivation() == "painting" && $annotation->getBody()!=null && $annotation->getBody()->getType() == "Image") {
+                            $result[] = $annotation;
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
     }
 }
 

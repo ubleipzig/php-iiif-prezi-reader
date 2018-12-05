@@ -3,10 +3,13 @@ namespace iiif\presentation\v3\model\resources;
 
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
+use iiif\presentation\IiifHelper;
 use iiif\presentation\common\model\AbstractIiifEntity;
+use iiif\presentation\common\model\resources\IiifResourceInterface;
+use iiif\services\AbstractImageService;
 use iiif\services\Service;
 
-abstract class AbstractIiifResource3 extends AbstractIiifEntity {
+abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifResourceInterface {
 
     /**
      *
@@ -280,8 +283,126 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity {
     public function getPartOf() {
         return $this->partOf;
     }
+
+    public function getLabelForDisplay(string $language = null, string $joinChars = "; ", bool $switchToExistingLanguage = true) {
+        if (empty($this->label)) {
+            return null;
+        }
+        $label = null;
+        if (isset($language) && array_key_exists($language, $this->label)) {
+            $label = $this->label[$language];
+        } elseif (array_key_exists(Keywords::NONE, $this->label)) {
+            $label = $this->label[Keywords::NONE];
+        }
+        if ($label == null && $switchToExistingLanguage) {
+            $label = reset($this->label);
+        }
+        if (is_array($label) && isset($joinChars)) {
+            $label = implode($joinChars, $label);
+        }
+        return $label;
+            
+    }
+    
+    public function getRenderingUrlsForFormat(string $format, bool $useChildResources = true) {
+        $renderingUrls = [];
+        if (empty($format) || !JsonLdProcessor::isSequentialArray($this->rendering)) {
+            return $renderingUrls;
+        }
+        foreach ($this->rendering as $rendering) {
+            if (!is_array($rendering)) {
+                continue;
+            }
+            if (array_key_exists("format", $rendering) && $rendering["format"] == $format && array_key_exists("@id", $rendering)) {
+                $renderingUrls[] = $rendering["@id"];
+            }
+        }
+        if (empty($renderingUrls) && $useChildResources) {
+            if (empty($renderingUrls) && $useChildResources) {
+                if ($this instanceof Manifest3) {
+                    // TODO use rendering of Range with behaviour="sequence" 
+                }
+                elseif ($this instanceof Canvas3 && !empty($this->getImageAnnotations())) {
+                    $renderingUrls = $this->getImageAnnotations()[0]->getRenderingUrlsForFormat($format);
+                }
+                elseif ($this instanceof Annotation3 && $this->getResource()!=null) {
+                    $renderingUrls = $this->getBody()->getRenderingUrlsForFormat($format);
+                }
+            }
+        }
+        return $renderingUrls;
+    }
+    
+    public function getSeeAlsoUrlsForFormat(string $format) {
+        if (!is_array($this->seeAlso)) {
+            return null;
+        }
+        $result = [];
+        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        foreach ($seeAlso as $candidate) {
+            if (array_key_exists("format", $candidate)) {
+                if ($format == $candidate["format"]) {
+                    $result[] = $candidate["@id"];
+                }
+            }
+        }
+        return $result;
+    }
+    
+    public function getSeeAlsoUrlsForProfile(string $profile, bool $startsWith = false) {
+        if (!is_array($this->seeAlso)) {
+            return null;
+        }
+        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $result = [];
+        foreach ($seeAlso as $candidate) {
+            if (array_key_exists("profile", $candidate)) {
+                if (is_string($candidate["profile"])) {
+                    if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
+                        $result[] = $candidate["@id"];
+                    }
+                } elseif (JsonLdProcessor::isSequentialArray($candidate["profile"])) {
+                    foreach ($candidate["profile"] as $profileItem) {
+                        if (is_string($profileItem) && ($profileItem == $profile || ($startsWith && strpos($profileItem, $profile)===0))) {
+                            $result[] = $candidate["@id"];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function getSingleService() {
+        return empty($this->service) ? null : $this->service[0];
+    }
+    
+    public function getThumbnailUrl() {
+        if ($this->thumbnail!=null) {
+            $imageService = null;
+            $width = null;
+            $height = null;
+            if ($thumbnail instanceof ContentResource3) {
+                $imageService = $thumbnail->getService();
+                $width = $thumbnail->getWidth();
+                $height = $thumbnail->getHeight();
+            } elseif (JsonLdProcessor::isDictionary($thumbnail)) {
+                if (array_key_exists("service", $thumbnail)) {
+                    if (JsonLdProcessor::isDictionary($thumbnail["service"])) {
+                        $imageService = IiifHelper::loadIiifResource($thumbnail["service"]);
+                    }
+                }
+            }
+            if ($imageService!=null && $imageService instanceof AbstractImageService) {
+                // TODO Add level 0 support. The following uses level 1 features sizeByW or sizeByH
+                $width = $width == null ? 100 : $width;
+                $height = $heigth == null ? 100 : $heigth;
+                $size = $width <= $height ? (",".$height) : ($width.",");
+                return $imageService->getImageUrl(null, $size, null, null, null);
+            }
+        }
+    }
+    
+    
 }
-
-
-
-

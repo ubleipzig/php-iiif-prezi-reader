@@ -1,7 +1,9 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
-class Annotation3 extends AbstractIiifResource3 {
+use iiif\presentation\common\model\resources\AnnotationInterface;
+
+class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
 
     /**
      *

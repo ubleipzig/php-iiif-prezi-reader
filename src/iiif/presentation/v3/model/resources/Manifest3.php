@@ -1,7 +1,9 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
-class Manifest3 extends AbstractIiifResource3 {
+use iiif\presentation\common\model\resources\ManifestInterface;
+
+class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
 
     /**
      *
@@ -99,6 +101,34 @@ class Manifest3 extends AbstractIiifResource3 {
      */
     public function getStart() {
         return $this->start;
+    }
+
+    public function getDefaultCanvases() {
+        return $this->items;
+        // TODO Use items of first Range with behaviour="sequence" if present
+    }
+
+    public function getStartCanvas() {
+        if (!isset($this->start)) {
+            return null;
+        }
+        if ($this->start instanceof Canvas3) {
+            return $this->start;
+        }
+        // TODO start could be a selector
+    }
+
+    public function getStartCanvasOrFirstCanvas() {
+        $startCanvas = $this->getStartCanvas();
+        if (isset($startCanvas)) {
+            return $startCanvas;
+        }
+        $canvases = $this->getDefaultCanvases();
+        return empty($canvases) ? null : $canvases[0];
+    }
+    
+    public function getRootRanges() {
+        return $this->getStructures();
     }
 }
 

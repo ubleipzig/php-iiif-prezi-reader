@@ -2,8 +2,9 @@
 namespace iiif\presentation\v3\model\resources;
 
 use iiif\services\AbstractImageService;
+use iiif\presentation\common\model\resources\ContentResourceInterface;
 
-class ContentResource3 extends AbstractIiifResource3 {
+class ContentResource3 extends AbstractIiifResource3 implements ContentResourceInterface {
 
     /**
      *
