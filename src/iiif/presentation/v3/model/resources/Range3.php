@@ -189,6 +189,22 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
     public function isTopRange() {
         return false;
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        $result =  parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        if ($this->getStartCanvasOrFirstCanvas()!=null) {
+            return $this->getStartCanvasOrFirstCanvas()->getThumbnailUrl();
+        }
+        return null;
+    }
+
+
     
 }
 

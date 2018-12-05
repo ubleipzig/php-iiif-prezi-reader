@@ -71,5 +71,22 @@ class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
     public function getBody() {
         return $this->body;
     }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        // TODO Auto-generated method stub
+        $result = parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        if ($this->motivation == "painting" && $this->getBody()!=null && $this->getBody()->getType() == "Image") {
+            return $this->getBody()->getThumbnailUrl();
+        }
+        return null;
+    }
+    
 }
 

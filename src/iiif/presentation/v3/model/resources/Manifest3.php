@@ -118,6 +118,11 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
         // TODO start could be a selector
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvasOrFirstCanvas()
+     */
     public function getStartCanvasOrFirstCanvas() {
         $startCanvas = $this->getStartCanvas();
         if (isset($startCanvas)) {
@@ -130,5 +135,22 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
     public function getRootRanges() {
         return $this->getStructures();
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        $result =  parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        if ($this->getStartCanvasOrFirstCanvas()!=null) {
+            return $this->getStartCanvasOrFirstCanvas()->getThumbnailUrl();
+        }
+        return null;
+    }
+
+
+    
 }
 

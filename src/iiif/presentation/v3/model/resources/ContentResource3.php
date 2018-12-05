@@ -128,5 +128,24 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
             }
         }
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        $result = parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        $services = is_array($this->service) ? $this->service : [$this->service];
+        foreach ($services as $service) {
+            if ($service instanceof AbstractImageService) {
+                $size = $this->width <= $this->height ? ",100" : "100,";
+                return $service->getImageUrl(null, $size);
+            }
+        }
+        return null;
+    }
+
 }
 

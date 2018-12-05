@@ -57,7 +57,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
         foreach ($this->getItems() as $annotationPage) {
             foreach ($annotationPage->getItems() as $annotation) {
                 /* @var $annotation Annotation3 */
-                if ($annotation->getMotivation() == Motivation::PAINTING && $annotation->getBody()->getType() == "http://purl.org/dc/dcmitype/StillImage") {
+                if ($annotation->getMotivation() == "painting" && $annotation->getBody()->getType() == "Image") {
                     $imageAnnotations[] = $annotation;
                 }
             }
@@ -137,5 +137,24 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
         }
         return $result;
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     */
+    public function getThumbnailUrl() {
+        // TODO Auto-generated method stub
+        $result= parent::getThumbnailUrl();
+        if ($result != null) {
+            return $result;
+        }
+        $images = $this->getImageAnnotationsForDisplay();
+        if (!empty($images)) {
+            return $images[0]->getThumbnailUrl();
+        }
+        return null;
+    }
+
+    
+
 }
 
