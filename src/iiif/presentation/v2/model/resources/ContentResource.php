@@ -52,7 +52,7 @@ class ContentResource extends AbstractIiifResource implements ContentResourceInt
         $services = is_array($this->service) ? $this->service : [$this->service];
         foreach ($services as $service) {
             if ($service instanceof AbstractImageService) {
-                $size = $width <= $this->height ? ",100" : "100,";
+                $size = $this->width <= $this->height ? ",100" : "100,";
                 return $service->getImageUrl(null, $size);
             }
         }
