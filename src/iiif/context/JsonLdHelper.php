@@ -17,16 +17,20 @@ class JsonLdHelper {
     }
 
     public static function isDictionary($dictionary) {
-        if ($dictionary == null || ! is_array($dictionary))
+        if ($dictionary == null || ! is_array($dictionary)){
             return false;
-            foreach ($dictionary as $key => $value) {
-                if (! is_string($key))
-                    return false;
-                    if ($value != null && ! is_scalar($value) && ! is_array($value))
-                        return false;
+        }
+        foreach ($dictionary as $key => $value) {
+            if (! is_string($key))
+            {
+                return false;
             }
-            return true;
+            if ($value != null && ! is_scalar($value) && ! is_array($value)) {
+                return false;
+            }
+        }
+        return true;
     }
-    
+
 }
 
