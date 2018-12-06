@@ -2,23 +2,22 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\context\JsonLdContext;
-use iiif\context\JsonLdProcessor;
+use iiif\context\JsonLdHelper;
 use iiif\context\Keywords;
+use iiif\presentation\IiifHelper;
 use iiif\presentation\common\TypeMap;
 use iiif\presentation\common\model\AbstractIiifEntity;
-use iiif\presentation\v2\model\vocabulary\Names;
-use iiif\services\Service;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
-use iiif\presentation\IiifHelper;
+use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\services\AbstractImageService;
-use iiif\context\JsonLdHelper;
+use iiif\services\Service;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
  * see http://iiif.io/api/presentation/2.1/#resource-properties
  *
  * @author lutzhelm
- *        
+ *
  */
 abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifResourceInterface {
 
@@ -78,15 +77,6 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      * @var boolean
      */
     protected $reference;
-
-    private static function getResourceIdWithoutFragment($original, $resourceClass = null) {
-        $resourceClass = $resourceClass == null ? get_called_class() : $resourceClass;
-        if ($original != null && $resourceClass == Canvas::class && strpos($original, '#') !== false) {
-            // FIXME xywh URL fragments are currently lost
-            return explode('#', $original)[0];
-        }
-        return $original;
-    }
 
     protected function getTypelessProperties() {
         return [
@@ -186,10 +176,6 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      */
     public function getThumbnail() {
         return $this->thumbnail;
-    }
-
-    public function getThumbnailImageUrl($width = null, $height = null) {
-        // TODO
     }
 
     /**
@@ -367,7 +353,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
     }
     
     /**
-     * Get the URL of any resource linked in the "rendering" property for a given format. 
+     * Get the URL of any resource linked in the "rendering" property for a given format.
      * @param string $format format as media type (i.e. MIME type)
      * @param bool $useChildResources If set to true and the resource has not rendering URL for the requested format, the method will also look
      * for suitable rendering URLs in child resources where it might be reasonable that a rendering of the child could adequately represent
