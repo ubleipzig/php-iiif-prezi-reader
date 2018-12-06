@@ -445,15 +445,19 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
             $imageService = null;
             $width = null;
             $height = null;
+            $simpleUrl = null;
             if ($thumbnail instanceof ContentResource) {
                 $imageService = $thumbnail->getService();
                 $width = $thumbnail->getWidth();
                 $height = $thumbnail->getHeight();
+                $simpleUrl = $thumbnail->getId();
             } elseif (JsonLdHelper::isDictionary($thumbnail)) {
                 if (array_key_exists("service", $thumbnail)) {
                     if (JsonLdHelper::isDictionary($thumbnail["service"])) {
                         $imageService = IiifHelper::loadIiifResource($thumbnail["service"]);
                     }
+                } elseif (array_key_exists(Keywords::ID, $thumbnail)) {
+                    $simpleUrl = $thumbnail[Keywords::ID];
                 }
             }
             if ($imageService!=null && $imageService instanceof AbstractImageService) {
@@ -462,6 +466,8 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
                 $height = $heigth == null ? 100 : $heigth;
                 $size = $width <= $height ? (",".$height) : ($width.",");
                 return $imageService->getImageUrl(null, $size, null, null, null);
+            } elseif ($simpleUrl!=null) {
+                return $simpleUrl;
             }
         }
         return null;
