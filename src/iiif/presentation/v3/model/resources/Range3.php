@@ -119,6 +119,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::getAllCanvasesRecursively()
      */
     public function getAllCanvasesRecursively() {
+        // TODO untested
         $result = [];
         if (!empty($this->items)) {
             foreach ($this->items as $item) {
@@ -128,7 +129,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
                 elseif ($item instanceof Range3) {
                     $childCanvases = $item->getAllCanvasesRecursively();
                     if (!empty($childCanvases)) {
-                        array_merge($result, $childCanvases);
+                        $result = array_merge($result, $childCanvases);
                     }
                 }
             }
