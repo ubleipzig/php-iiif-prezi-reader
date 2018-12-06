@@ -169,7 +169,6 @@ class Range extends AbstractIiifResource implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
-        // TODO
         if ($this->getThumbnail()!=null) {
             parent::getThumbnailUrl();
             if ($this->getThumbnail() )
