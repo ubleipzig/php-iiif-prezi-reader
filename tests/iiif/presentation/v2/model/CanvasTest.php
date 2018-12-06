@@ -64,11 +64,11 @@ class CanvasTest extends AbstractIiifTest
     {
         self::assertEquals(750, $this->canvas->getWidth());
     }
-    public function testGetThumbnail()
+    public function testGetThumbnailUrl()
     {
         self::assertNotNull($this->canvas->getThumbnail(), 'No thumbnail.');
-        self::assertNotNull($this->canvas->getThumbnail()->getImageUrl(), 'No thumbnail image URL.');
-        self::assertEquals('http://example.org/iiif/book1/canvas/p1/thumb.jpg', $this->canvas->getThumbnail()->getImageUrl(), 'Wrong thumbnail image URL.');
+        self::assertNotNull($this->canvas->getThumbnailUrl(), 'No thumbnail image URL.');
+        self::assertEquals('http://example.org/iiif/book1/canvas/p1/thumb.jpg', $this->canvas->getThumbnailUrl());
         self::assertEquals(200, $this->canvas->getThumbnail()->getHeight(), 'Wrong thumbnail height.');
         self::assertEquals(150, $this->canvas->getThumbnail()->getWidth(), 'Wrong thumbnail width.');
     }
