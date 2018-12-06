@@ -1,6 +1,7 @@
 <?php
 use iiif\context\JsonLdProcessor;
 use iiif\context\JsonLdContext;
+use iiif\context\JsonLdHelper;
 
 require_once 'iiif/context/JsonLdProcessor.php';
 
@@ -26,7 +27,7 @@ class JsonLdProcessorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests JsonLdProcessor::isSequentialArray()
+     * Tests JsonLdHelper::isSequentialArray()
      */
     public function testIsSequentialArray()
     {
@@ -35,10 +36,10 @@ class JsonLdProcessorTest extends PHPUnit_Framework_TestCase
         $nonSequential1 = [0 => '1', -1 => 'a', 2 => 'x'];
         $nonSequential2 = ['I' => '1', 0 => 'a', 1 => 'x'];
         
-        self::assertTrue(JsonLdProcessor::isSequentialArray($sequential1));
-        self::assertTrue(JsonLdProcessor::isSequentialArray($sequential2));
-        self::assertFalse(JsonLdProcessor::isSequentialArray($nonSequential1));
-        self::assertFalse(JsonLdProcessor::isSequentialArray($nonSequential2));
+        self::assertTrue(JsonLdHelper::isSequentialArray($sequential1));
+        self::assertTrue(JsonLdHelper::isSequentialArray($sequential2));
+        self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential1));
+        self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential2));
     }
 }
 

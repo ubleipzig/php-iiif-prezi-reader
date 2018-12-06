@@ -8,6 +8,7 @@ use iiif\presentation\common\model\AbstractIiifEntity;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\services\AbstractImageService;
 use iiif\services\Service;
+use iiif\context\JsonLdHelper;
 
 abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifResourceInterface {
 
@@ -103,7 +104,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
      */
 
     protected function getTranslationFor($dictionary, string $language = null, $joinValueDelimiter = null) {
-        if ($dictionary == null || ! JsonLdProcessor::isDictionary($dictionary)) {
+        if ($dictionary == null || ! JsonLdHelper::isDictionary($dictionary)) {
             return null;
         }
         if ($language != null && array_key_exists($language, $dictionary)) {
@@ -306,7 +307,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
     
     public function getRenderingUrlsForFormat(string $format, bool $useChildResources = true) {
         $renderingUrls = [];
-        if (empty($format) || !JsonLdProcessor::isSequentialArray($this->rendering)) {
+        if (empty($format) || !JsonLdHelper::isSequentialArray($this->rendering)) {
             return $renderingUrls;
         }
         foreach ($this->rendering as $rendering) {
@@ -338,7 +339,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
             return null;
         }
         $result = [];
-        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("format", $candidate)) {
                 if ($format == $candidate["format"]) {
@@ -353,7 +354,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
         if (!is_array($this->seeAlso)) {
             return null;
         }
-        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         $result = [];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("profile", $candidate)) {
@@ -361,7 +362,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
                     if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
                         $result[] = $candidate["@id"];
                     }
-                } elseif (JsonLdProcessor::isSequentialArray($candidate["profile"])) {
+                } elseif (JsonLdHelper::isSequentialArray($candidate["profile"])) {
                     foreach ($candidate["profile"] as $profileItem) {
                         if (is_string($profileItem) && ($profileItem == $profile || ($startsWith && strpos($profileItem, $profile)===0))) {
                             $result[] = $candidate["@id"];
@@ -387,9 +388,9 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
                 $imageService = $thumbnail->getService();
                 $width = $thumbnail->getWidth();
                 $height = $thumbnail->getHeight();
-            } elseif (JsonLdProcessor::isDictionary($thumbnail)) {
+            } elseif (JsonLdHelper::isDictionary($thumbnail)) {
                 if (array_key_exists("service", $thumbnail)) {
-                    if (JsonLdProcessor::isDictionary($thumbnail["service"])) {
+                    if (JsonLdHelper::isDictionary($thumbnail["service"])) {
                         $imageService = IiifHelper::loadIiifResource($thumbnail["service"]);
                     }
                 }

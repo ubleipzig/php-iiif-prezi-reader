@@ -79,34 +79,9 @@ class JsonLdProcessor {
         return RemoteUrlHelper::getContent($context);
     }
 
-    public static function isSequentialArray($array) {
-        if (! is_array($array)) {
-            return false;
-        }
-        $lastIndex = sizeof($array) - 1;
-        foreach ($array as $key => $value) {
-            if (! is_int($key) || $key < 0 || $key > $lastIndex) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static function isDictionary($dictionary) {
-        if ($dictionary == null || ! is_array($dictionary))
-            return false;
-        foreach ($dictionary as $key => $value) {
-            if (! is_string($key))
-                return false;
-            if ($value != null && ! is_scalar($value) && ! is_array($value))
-                return false;
-        }
-        return true;
-    }
-
     public function processContext($localContext, JsonLdContext $activeContext, $remoteContexts = array()) {
         $result = $activeContext->clone();
-        if (! self::isSequentialArray($localContext)) {
+        if (! JsonLdHelper::isSequentialArray($localContext)) {
             $localContext = [
                 $localContext
             ];
@@ -139,7 +114,7 @@ class JsonLdProcessor {
                         throw new \Exception('Loading remote context failed', null, $e);
                     }
                 }
-                if ($context == null || ! self::isDictionary($context) || ! array_key_exists(Keywords::CONTEXT, $context)) {
+                if ($context == null || ! JsonLdHelper::isDictionary($context) || ! array_key_exists(Keywords::CONTEXT, $context)) {
                     throw new \Exception('Invalid remote context');
                 }
                 $context = $context[Keywords::CONTEXT];
@@ -147,7 +122,7 @@ class JsonLdProcessor {
                 continue;
             }
             // 3.3
-            if (! self::isDictionary($context)) {
+            if (! JsonLdHelper::isDictionary($context)) {
                 throw new \Exception('Invalid local context: Resulting context is not a dictionary');
             }
             // 3.4
@@ -228,7 +203,7 @@ class JsonLdProcessor {
         }
         $activeContext->removeTermDefinition($term);
         $value = $localContext[$term];
-        if ($value == null || (self::isDictionary($value) && array_key_exists(Keywords::ID, $value) && $value[Keywords::ID] == null)) {
+        if ($value == null || (JsonLdHelper::isDictionary($value) && array_key_exists(Keywords::ID, $value) && $value[Keywords::ID] == null)) {
             $defined[$term] = true;
             return;
         }
@@ -238,7 +213,7 @@ class JsonLdProcessor {
             ];
             $simpleTerm = true;
         } else {
-            if (! self::isDictionary($value)) {
+            if (! JsonLdHelper::isDictionary($value)) {
                 throw new \Exception("invalid term definition");
             }
             $simpleTerm = false;

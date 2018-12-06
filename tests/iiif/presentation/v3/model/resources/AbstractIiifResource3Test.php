@@ -12,6 +12,7 @@ use iiif\presentation\v2\model\resources\Canvas;
 use iiif\presentation\v3\model\resources\AnnotationPage3;
 use iiif\presentation\v3\model\resources\Annotation3;
 use iiif\presentation\v3\model\resources\Range3;
+use iiif\context\JsonLdHelper;
 
 /**
  *  test case.
@@ -59,23 +60,23 @@ class AbstractIiifResource3Test extends PHPUnit_Framework_TestCase
         
         self::assertEquals("https://example.org/iiif/book1/manifest", $iiifResource->getId());
         self::assertTrue(is_array($iiifResource->getLabel()));
-        self::assertTrue(JsonLdProcessor::isDictionary($iiifResource->getLabel()));
+        self::assertTrue(JsonLdHelper::isDictionary($iiifResource->getLabel()));
         self::assertEquals(["Book 1"], $iiifResource->getLabelTranslated());
         self::assertEquals(["Book 1"], $iiifResource->getLabelTranslated("en"));
         self::assertNull($iiifResource->getLabelTranslated("de"));
         
         self::assertNotNull($iiifResource->getMetadata());
-        self::assertTrue(JsonLdProcessor::isSequentialArray($iiifResource->getMetadata()));
+        self::assertTrue(JsonLdHelper::isSequentialArray($iiifResource->getMetadata()));
         self::assertEquals(4, sizeof($iiifResource->getMetadata()));
         foreach ($iiifResource->getMetadata() as $metadatum) {
             self::assertTrue(array_key_exists("label", $metadatum));
             self::assertTrue(array_key_exists("value", $metadatum));
-            self::assertTrue(JsonLdProcessor::isDictionary($metadatum["label"]));
-            self::assertTrue(JsonLdProcessor::isDictionary($metadatum["value"]));
+            self::assertTrue(JsonLdHelper::isDictionary($metadatum["label"]));
+            self::assertTrue(JsonLdHelper::isDictionary($metadatum["value"]));
         }
         
         self::assertTrue(is_array($iiifResource->getLabel()));
-        self::assertTrue(JsonLdProcessor::isDictionary($iiifResource->getLabel()));
+        self::assertTrue(JsonLdHelper::isDictionary($iiifResource->getLabel()));
         self::assertEquals(["Book 1"], $iiifResource->getLabelTranslated());
         self::assertEquals(["Book 1"], $iiifResource->getLabelTranslated("en"));
         self::assertNull($iiifResource->getLabelTranslated("de"));
@@ -90,7 +91,7 @@ class AbstractIiifResource3Test extends PHPUnit_Framework_TestCase
         self::assertEquals(null, $iiifResource->getMetadataForLabel("Published", "de"));
         
         self::assertNotNull($iiifResource->getSummary());
-        self::assertTrue(JsonLdProcessor::isDictionary($iiifResource->getSummary()));
+        self::assertTrue(JsonLdHelper::isDictionary($iiifResource->getSummary()));
         
         
         $thumbnails = $iiifResource->getThumbnail();
@@ -115,7 +116,7 @@ class AbstractIiifResource3Test extends PHPUnit_Framework_TestCase
         self::assertEquals("https://creativecommons.org/licenses/by/4.0/", $iiifResource->getRights());
         
         self::assertNotNull($iiifResource->getRequiredStatement());
-        self::assertTrue(JsonLdProcessor::isDictionary($iiifResource->getRequiredStatement()));
+        self::assertTrue(JsonLdHelper::isDictionary($iiifResource->getRequiredStatement()));
         self::assertTrue(array_key_exists("label", $iiifResource->getRequiredStatement()));
         self::assertTrue(array_key_exists("value", $iiifResource->getRequiredStatement()));
         
@@ -182,7 +183,7 @@ class AbstractIiifResource3Test extends PHPUnit_Framework_TestCase
         
         $structures = $iiifResource->getStructures();
         self::assertNotNull($structures);
-        self::assertTrue(JsonLdProcessor::isSequentialArray($structures));
+        self::assertTrue(JsonLdHelper::isSequentialArray($structures));
         self::assertEquals(1, sizeof($structures));
         
         $toc = $structures[0];

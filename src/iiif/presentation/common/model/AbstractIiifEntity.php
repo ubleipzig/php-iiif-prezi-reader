@@ -10,6 +10,7 @@ use iiif\presentation\common\TypeMap;
 use iiif\presentation\v2\model\resources\AbstractIiifResource;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
 use iiif\tools\RemoteUrlHelper;
+use iiif\context\JsonLdHelper;
 
 abstract class AbstractIiifEntity {
 
@@ -36,7 +37,7 @@ abstract class AbstractIiifEntity {
         if (is_string($resource)) {
             $resource = json_decode($resource, true);
         }
-        if (JsonLdProcessor::isDictionary($resource)) {
+        if (JsonLdHelper::isDictionary($resource)) {
             return self::parseDictionary($resource);
         }
         return null;
@@ -197,7 +198,7 @@ abstract class AbstractIiifEntity {
         }
         $definition = $context->getTermDefinition($term);
         $result = null;
-        if (JsonLdProcessor::isSequentialArray($value)) {
+        if (JsonLdHelper::isSequentialArray($value)) {
             if (! $definition->hasListContainer() && ! $definition->hasSetContainer()) {
                 // FIXME
                 // throw new \Exception("array given for non collection property");
@@ -207,7 +208,7 @@ abstract class AbstractIiifEntity {
                 foreach ($value as $member) {
                     if ($member == null || is_string($member)) {
                         $result[] = $member;
-                    } elseif (JsonLdProcessor::isDictionary($member)) {
+                    } elseif (JsonLdHelper::isDictionary($member)) {
                         if (array_key_exists($term, $this->getTypelessProperties())) {
                             $resource = $this->getValueForTypelessProperty($term, $member, $context);
                         } else {
@@ -224,7 +225,7 @@ abstract class AbstractIiifEntity {
 //             } elseif ($definition->hasListContainer()) {
 //                 $result = array();
             }
-        } elseif (JsonLdProcessor::isDictionary($value)) {
+        } elseif (JsonLdHelper::isDictionary($value)) {
             if (array_key_exists($term, $this->getTypelessProperties())) {
                 $termValue = $this->getValueForTypelessProperty($term, $value, $context);
             } else {
@@ -262,7 +263,7 @@ abstract class AbstractIiifEntity {
                     "property" => $property
                 ];
             }
-        } elseif (JsonLdProcessor::isSequentialArray($resource) && $resource[0] instanceof AbstractIiifEntity) {
+        } elseif (JsonLdHelper::isSequentialArray($resource) && $resource[0] instanceof AbstractIiifEntity) {
             foreach ($resource as $singleResource) {
                 if (! array_key_exists($singleResource->id, $allResources) || ! $allResources[$singleResource->id]["resource"]->initialized) {
                     if (array_key_exists($singleResource->id, $allResources) && array_key_exists("references", $allResources[$singleResource->id])) {

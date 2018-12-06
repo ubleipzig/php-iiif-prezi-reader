@@ -11,6 +11,7 @@ use iiif\services\Service;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\presentation\IiifHelper;
 use iiif\services\AbstractImageService;
+use iiif\context\JsonLdHelper;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -323,7 +324,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
             return null;
         }
         $result = [];
-        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("format", $candidate)) {
                 if ($format == $candidate["format"]) {
@@ -338,7 +339,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         if (!is_array($this->seeAlso)) {
             return null;
         }
-        $seeAlso = JsonLdProcessor::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         $result = [];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("profile", $candidate)) {
@@ -346,7 +347,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
                     if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
                         $result[] = $candidate["@id"];
                     }
-                } elseif (JsonLdProcessor::isSequentialArray($candidate["profile"])) {
+                } elseif (JsonLdHelper::isSequentialArray($candidate["profile"])) {
                     foreach ($candidate["profile"] as $profileItem) {
                         if (is_string($profileItem) && ($profileItem == $profile || ($startsWith && strpos($profileItem, $profile)===0))) {
                             $result[] = $candidate["@id"];
@@ -361,7 +362,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
     
     public function getSingleService() {
         return $this->service == null ? null :
-            JsonLdProcessor::isSequentialArray($this->service) ? $this->service[0]:
+            JsonLdHelper::isSequentialArray($this->service) ? $this->service[0]:
             $this->service;
     }
     
@@ -380,7 +381,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
             return $renderingUrls;
         }
         if ($this->rendering!=null && is_array($this->rendering)) {
-            if (JsonLdProcessor::isSequentialArray($this->rendering)) {
+            if (JsonLdHelper::isSequentialArray($this->rendering)) {
                 foreach ($this->rendering as $rendering) {
                     if (!is_array($rendering)) {
                         continue;
@@ -437,7 +438,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      */
     public function getThumbnailUrl() {
         if ($this->thumbnail!=null) {
-            $thumbnail = JsonLdProcessor::isSequentialArray($this->thumbnail) ? empty ($this->thumbnail) ? null : $this->thumbnail[0] : $this->thumbnail;
+            $thumbnail = JsonLdHelper::isSequentialArray($this->thumbnail) ? empty ($this->thumbnail) ? null : $this->thumbnail[0] : $this->thumbnail;
             if (is_string($thumbnail)) {
                 return $thumbnail;
             }
@@ -448,9 +449,9 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
                 $imageService = $thumbnail->getService();
                 $width = $thumbnail->getWidth();
                 $height = $thumbnail->getHeight();
-            } elseif (JsonLdProcessor::isDictionary($thumbnail)) {
+            } elseif (JsonLdHelper::isDictionary($thumbnail)) {
                 if (array_key_exists("service", $thumbnail)) {
-                    if (JsonLdProcessor::isDictionary($thumbnail["service"])) {
+                    if (JsonLdHelper::isDictionary($thumbnail["service"])) {
                         $imageService = IiifHelper::loadIiifResource($thumbnail["service"]);
                     }
                 }
