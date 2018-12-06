@@ -142,7 +142,6 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
      * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
-        // TODO Auto-generated method stub
         $result= parent::getThumbnailUrl();
         if ($result != null) {
             return $result;
