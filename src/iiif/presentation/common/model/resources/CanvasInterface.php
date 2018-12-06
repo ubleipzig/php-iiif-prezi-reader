@@ -4,7 +4,7 @@ namespace iiif\presentation\common\model\resources;
 interface CanvasInterface extends IiifResourceInterface {
     
     /**
-     * @return AnnotationInterface[]
+     * @return AnnotationInterface[] All embedded image annotations.
      */
     public function getImageAnnotations();
     

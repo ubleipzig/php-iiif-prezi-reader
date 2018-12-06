@@ -20,6 +20,13 @@ interface IiifResourceInterface {
      */
     public function getLabel();
     
+    /**
+     * 
+     * @param string $language Language code. If none is given, "@none" will be used. 
+     * @param string $joinChar Used to join multi value labels. If set to null, array will be return.
+     * @param bool $switchToExistingLanguage Use the first existing language if requested language is not present.
+     * @return string|string[]
+     */
     public function getLabelForDisplay(string $language = null, string $joinChar = "; ", bool $switchToExistingLanguage = true);
     
     /**
