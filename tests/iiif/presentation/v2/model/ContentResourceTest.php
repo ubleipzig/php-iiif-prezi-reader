@@ -1,5 +1,5 @@
 <?php
-use iiif\presentation\v2\model\AbstractIiifTest;
+use iiif\AbstractIiifTest;
 use iiif\presentation\v2\model\resources\ContentResource;
 
 /**

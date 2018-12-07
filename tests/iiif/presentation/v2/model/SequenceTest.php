@@ -1,5 +1,5 @@
 <?php
-use iiif\presentation\v2\model\AbstractIiifTest;
+use iiif\AbstractIiifTest;
 use iiif\presentation\v2\model\resources\Canvas;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Sequence;

@@ -1,18 +1,16 @@
 <?php
 
-use iiif\context\JsonLdProcessor;
+use iiif\context\JsonLdHelper;
 use iiif\presentation\v2\model\constants\ViewingDirectionValues;
 use iiif\presentation\v3\model\constants\BehaviorValues;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
+use iiif\presentation\v3\model\resources\Annotation3;
+use iiif\presentation\v3\model\resources\AnnotationPage3;
 use iiif\presentation\v3\model\resources\Canvas3;
 use iiif\presentation\v3\model\resources\Collection3;
 use iiif\presentation\v3\model\resources\ContentResource3;
 use iiif\presentation\v3\model\resources\Manifest3;
-use iiif\presentation\v2\model\resources\Canvas;
-use iiif\presentation\v3\model\resources\AnnotationPage3;
-use iiif\presentation\v3\model\resources\Annotation3;
 use iiif\presentation\v3\model\resources\Range3;
-use iiif\context\JsonLdHelper;
 
 /**
  *  test case.

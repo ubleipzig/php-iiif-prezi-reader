@@ -1,9 +1,10 @@
 <?php
 namespace iiif\presentation\v2\model;
 
+use iiif\AbstractIiifTest;
+use iiif\presentation\v2\model\resources\Canvas;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Range;
-use iiif\presentation\v2\model\resources\Canvas;
 
 class RangeTest extends AbstractIiifTest
 {
