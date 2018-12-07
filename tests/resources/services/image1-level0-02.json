@@ -1,0 +1,10 @@
+{
+  "@context": "http://library.stanford.edu/iiif/image-api/1.1/context.json",
+  "@id": "http://example.com/image/02",
+  "width": 1000,
+  "height" : 2000,
+  "profile":"http://library.stanford.edu/iiif/image-api/compliance.html#level0",
+  "formats": ["jpg","png"],
+  "qualities": ["grey"],
+  "scale_factors": [1,2,4,8,16,32]
+}
