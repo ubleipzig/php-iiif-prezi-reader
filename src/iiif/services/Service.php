@@ -13,7 +13,7 @@ class Service extends AbstractIiifEntity {
 
     /**
      *
-     * @var string
+     * @var string|array
      */
     protected $profile;
 
@@ -27,7 +27,7 @@ class Service extends AbstractIiifEntity {
 
     /**
      *
-     * @return string
+     * @return string|array
      */
     public function getProfile() {
         return $this->profile;
