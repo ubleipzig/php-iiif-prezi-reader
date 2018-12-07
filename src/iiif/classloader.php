@@ -4,8 +4,15 @@
 require_once (__DIR__ . "/presentation/IiifHelper.php");
 
 require_once (__DIR__ . "/presentation/common/model/AbstractIiifEntity.php");
-
 require_once (__DIR__ . "/presentation/common/Profile.php");
+
+require_once (__DIR__ . "/context/IRI.php");
+require_once (__DIR__ . "/context/JsonLdContext.php");
+require_once (__DIR__ . "/context/JsonLdHelper.php");
+require_once (__DIR__ . "/context/JsonLdProcessor.php");
+require_once (__DIR__ . "/context/Keywords.php");
+require_once (__DIR__ . "/context/TermDefinition.php");
+
 require_once (__DIR__ . "/presentation/v2/model/constants/ViewingDirectionValues.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/FormatTrait.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/NavDateTrait.php");
@@ -50,3 +57,16 @@ require_once (__DIR__ . "/services/Service.php");
 require_once (__DIR__ . "/tools/UrlReaderInterface.php");
 require_once (__DIR__ . "/tools/RemoteUrlHelper.php");
 
+// TODO remove
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/AccessHelper.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPath.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPathException.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPathLexer.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPathToken.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/AbstractFilter.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/IndexesFilter.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/IndexFilter.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/QueryMatchFilter.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/QueryResultFilter.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/RecursiveFilter.php");
+require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/SliceFilter.php");
