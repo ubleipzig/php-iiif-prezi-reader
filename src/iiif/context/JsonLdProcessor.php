@@ -55,11 +55,15 @@ class JsonLdProcessor {
         $this->dereferencedContexts = array();
         $this->knownIiifContexts = array();
         if (! $requestKnownIiifContexts) {
-            $this->knownIiifContexts["http://iiif.io/api/presentation/3/context.json"] = __DIR__ . "/../../../resources/contexts/presentation-context-3.json";
             $this->knownIiifContexts["http://www.w3.org/ns/anno.jsonld"] = __DIR__ . "/../../../resources/contexts/annotation-context.json";
+            $this->knownIiifContexts["http://www.shared-canvas.org/ns/context.json"] = __DIR__ . "/../../../resources/contexts/presentation-context-1.json";
+            $this->knownIiifContexts["http://iiif.io/api/presentation/1/context.json"] = __DIR__ . "/../../../resources/contexts/presentation-context-1.json";
+            $this->knownIiifContexts["http://iiif.io/api/presentation/2/context.json"] = __DIR__ . "/../../../resources/contexts/presentation-context-2.json";
+            $this->knownIiifContexts["http://iiif.io/api/presentation/3/context.json"] = __DIR__ . "/../../../resources/contexts/presentation-context-3.json";
             $this->knownIiifContexts["http://iiif.io/api/presentation/3/combined-context.json"] = __DIR__ . "/../../../resources/contexts/presentation-combined-context-3.json";
             $this->knownIiifContexts["http://iiif.io/api/image/1/context.json"] = __DIR__ . "/../../../resources/contexts/image-context-1.json";
             $this->knownIiifContexts["http://iiif.io/api/image/2/context.json"] = __DIR__ . "/../../../resources/contexts/image-context-2.json";
+            $this->knownIiifContexts["http://iiif.io/api/image/3/context.json"] = __DIR__ . "/../../../resources/contexts/image-context-3.json";
             $this->knownIiifContexts["http://iiif.io/api/search/1/context.json"] = __DIR__ . "/../../../resources/contexts/search-context-1.json";
             $this->knownIiifContexts["http://iiif.io/api/auth/1/context.json"] = __DIR__ . "/../../../resources/contexts/auth-context-1.json";
         }
