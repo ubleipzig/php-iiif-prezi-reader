@@ -67,7 +67,7 @@ interface IiifResourceInterface {
     public function getService();
     
     /**
-     * @return Service
+     * @return Service The first service.
      */
     public function getSingleService();
     
@@ -76,7 +76,7 @@ interface IiifResourceInterface {
     public function getRenderingUrlsForFormat(string $format, bool $useChildResources = true);
     
     /**
-     * @return string
+     * @return string A thumbnail URL for the resource.
      */
     public function getThumbnailUrl();
 }
