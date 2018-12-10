@@ -228,14 +228,21 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertFalse($service->isFeatureSupported(Profile::REGION_BY_PX));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_SQUARE));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH_LISTED));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_W));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_H));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_WH));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_CONFINED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_DISTORTED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_FORCED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_ABOVE_FULL));
         self::assertFalse($service->isFeatureSupported(Profile::ROTATION_BY_90S));
         self::assertFalse($service->isFeatureSupported(Profile::ROTATION_ARBITRARY));
         self::assertFalse($service->isFeatureSupported(Profile::MIRRORING));
+        self::assertFalse($service->isFeatureSupported(Profile::BASE_URI_REDIRECT));
+        self::assertFalse($service->isFeatureSupported(Profile::CORS));
+        self::assertFalse($service->isFeatureSupported(Profile::JSONLD_MEDIA_TYPE));
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level0-02.json"));
         self::assertNotNull($service);
@@ -243,14 +250,21 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertFalse($service->isFeatureSupported(Profile::REGION_BY_PX));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_SQUARE));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH_LISTED));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_W));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_H));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_WH));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_CONFINED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_DISTORTED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_FORCED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_ABOVE_FULL));
         self::assertTrue($service->isFeatureSupported(Profile::ROTATION_BY_90S));
         self::assertFalse($service->isFeatureSupported(Profile::ROTATION_ARBITRARY));
         self::assertFalse($service->isFeatureSupported(Profile::MIRRORING));
+        self::assertFalse($service->isFeatureSupported(Profile::BASE_URI_REDIRECT));
+        self::assertFalse($service->isFeatureSupported(Profile::CORS));
+        self::assertFalse($service->isFeatureSupported(Profile::JSONLD_MEDIA_TYPE));
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level1-01.json"));
         self::assertNotNull($service);
@@ -258,29 +272,43 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertTrue($service->isFeatureSupported(Profile::REGION_BY_PX));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_SQUARE));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH_LISTED));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_W));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_H));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_WH));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_CONFINED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_DISTORTED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_FORCED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_ABOVE_FULL));
         self::assertFalse($service->isFeatureSupported(Profile::ROTATION_BY_90S));
         self::assertFalse($service->isFeatureSupported(Profile::ROTATION_ARBITRARY));
         self::assertFalse($service->isFeatureSupported(Profile::MIRRORING));
+        self::assertTrue($service->isFeatureSupported(Profile::BASE_URI_REDIRECT));
+        self::assertTrue($service->isFeatureSupported(Profile::CORS));
+        self::assertTrue($service->isFeatureSupported(Profile::JSONLD_MEDIA_TYPE));
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level1-02.json"));
         self::assertNotNull($service);
         self::assertInstanceOf(ImageInformation2::class, $service);
-        self::assertTrue($service->isFeatureSupported(Profile::REGION_BY_PX));
+        self::asserttrue($service->isFeatureSupported(Profile::REGION_BY_PX));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_SQUARE));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH_LISTED));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_W));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_H));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_PCT));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH));
         self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_CONFINED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_DISTORTED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_BY_FORCED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_ABOVE_FULL));
         self::assertTrue($service->isFeatureSupported(Profile::ROTATION_BY_90S));
-        self::assertTrue($service->isFeatureSupported(Profile::MIRRORING));
         self::assertFalse($service->isFeatureSupported(Profile::ROTATION_ARBITRARY));
+        self::assertTrue($service->isFeatureSupported(Profile::MIRRORING));
+        self::assertTrue($service->isFeatureSupported(Profile::BASE_URI_REDIRECT));
+        self::assertTrue($service->isFeatureSupported(Profile::CORS));
+        self::assertTrue($service->isFeatureSupported(Profile::JSONLD_MEDIA_TYPE));
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level2-01.json"));
         self::assertNotNull($service);
@@ -288,13 +316,21 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertTrue($service->isFeatureSupported(Profile::REGION_BY_PX));
         self::assertTrue($service->isFeatureSupported(Profile::REGION_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_SQUARE));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH_LISTED));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_W));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_H));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_PCT));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_CONFINED_WH));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_DISTORTED_WH));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_FORCED_WH));
+        self::assertFalse($service->isFeatureSupported(Profile::SIZE_ABOVE_FULL));
         self::assertTrue($service->isFeatureSupported(Profile::ROTATION_BY_90S));
         self::assertFalse($service->isFeatureSupported(Profile::ROTATION_ARBITRARY));
+        self::assertFalse($service->isFeatureSupported(Profile::MIRRORING));
+        self::assertTrue($service->isFeatureSupported(Profile::BASE_URI_REDIRECT));
+        self::assertTrue($service->isFeatureSupported(Profile::CORS));
+        self::assertTrue($service->isFeatureSupported(Profile::JSONLD_MEDIA_TYPE));
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level2-02.json"));
         self::assertNotNull($service);
@@ -302,15 +338,21 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertTrue($service->isFeatureSupported(Profile::REGION_BY_PX));
         self::assertTrue($service->isFeatureSupported(Profile::REGION_BY_PCT));
         self::assertFalse($service->isFeatureSupported(Profile::REGION_SQUARE));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH_LISTED));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_W));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_H));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_PCT));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_WH));
         self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_CONFINED_WH));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_DISTORTED_WH));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_BY_FORCED_WH));
+        self::assertTrue($service->isFeatureSupported(Profile::SIZE_ABOVE_FULL));
         self::assertTrue($service->isFeatureSupported(Profile::ROTATION_BY_90S));
         self::assertTrue($service->isFeatureSupported(Profile::ROTATION_ARBITRARY));
-
-        $this->markTestIncomplete("isFeatureSupported test not implemented");
+        self::assertTrue($service->isFeatureSupported(Profile::MIRRORING));
+        self::assertTrue($service->isFeatureSupported(Profile::BASE_URI_REDIRECT));
+        self::assertTrue($service->isFeatureSupported(Profile::CORS));
+        self::assertTrue($service->isFeatureSupported(Profile::JSONLD_MEDIA_TYPE));
     }
     
     /**
