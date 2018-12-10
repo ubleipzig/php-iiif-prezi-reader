@@ -4,7 +4,6 @@
 require_once (__DIR__ . "/presentation/IiifHelper.php");
 
 require_once (__DIR__ . "/presentation/common/model/AbstractIiifEntity.php");
-require_once (__DIR__ . "/presentation/common/Profile.php");
 
 require_once (__DIR__ . "/context/IRI.php");
 require_once (__DIR__ . "/context/JsonLdContext.php");
@@ -52,6 +51,7 @@ require_once (__DIR__ . "/services/ImageInformation1.php");
 require_once (__DIR__ . "/services/ImageInformation2.php");
 require_once (__DIR__ . "/services/ImageInformation3.php");
 require_once (__DIR__ . "/services/PhysicalDimensions.php");
+require_once (__DIR__ . "/services/Profile.php");
 require_once (__DIR__ . "/services/Service.php");
 
 require_once (__DIR__ . "/tools/UrlReaderInterface.php");
