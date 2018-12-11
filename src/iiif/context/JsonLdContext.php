@@ -37,7 +37,7 @@ class JsonLdContext {
         $this->baseIri = $baseIri;
     }
 
-    public function clone() {
+    public function cloned() {
         // TODO
         $clone = new JsonLdContext();
         foreach ($this->termDefinitions as $term => $definition) {

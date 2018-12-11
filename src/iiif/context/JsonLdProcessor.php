@@ -84,7 +84,7 @@ class JsonLdProcessor {
     }
 
     public function processContext($localContext, JsonLdContext $activeContext, $remoteContexts = array()) {
-        $result = $activeContext->clone();
+        $result = $activeContext->cloned();
         if (! JsonLdHelper::isSequentialArray($localContext)) {
             $localContext = [
                 $localContext
