@@ -57,9 +57,9 @@ interface IiifResourceInterface {
     
     public function getSeeAlso();
     
-    public function getSeeAlsoUrlsForFormat(string $format);
+    public function getSeeAlsoUrlsForFormat($format);
     
-    public function getSeeAlsoUrlsForProfile(string $profile, $startsWith = false);
+    public function getSeeAlsoUrlsForProfile($profile, $startsWith = false);
         
     /**
      * @return Service|Service[]
@@ -73,7 +73,7 @@ interface IiifResourceInterface {
     
     public function getRendering();
     
-    public function getRenderingUrlsForFormat(string $format, $useChildResources = true);
+    public function getRenderingUrlsForFormat($format, $useChildResources = true);
     
     /**
      * @return string A thumbnail URL for the resource.

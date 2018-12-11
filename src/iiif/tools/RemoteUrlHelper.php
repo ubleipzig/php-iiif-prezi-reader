@@ -15,7 +15,7 @@ class RemoteUrlHelper {
         self::$urlReader = $urlReader;
     }
     
-    public static function getContent(string $url) {
+    public static function getContent($url) {
         if (isset(self::$urlReader)) {
             return self::$urlReader->getContent($url);
         }

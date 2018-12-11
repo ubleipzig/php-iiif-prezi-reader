@@ -92,7 +92,7 @@ abstract class AbstractIiifEntity {
         return [];
     }
 
-    protected function getValueForTypelessProperty(string $property, array $dictionary, JsonLdContext $context) {}
+    protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {}
 
     /**
      *
@@ -287,7 +287,7 @@ abstract class AbstractIiifEntity {
         }
     }
 
-    public function jsonPath(string $expression) {
+    public function jsonPath($expression) {
         $jsonPath = new JSONPath($this->originalJsonArray);
         $results = $jsonPath->find($expression);
         if (is_array($results->data()) && count($results->data()) == 1) {

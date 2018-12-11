@@ -253,23 +253,23 @@ class Profile {
         "level2" => self::IMAGE3_LEVEL2
     ];
     
-    public static function getComplianceLevelProfile(string $level) {
+    public static function getComplianceLevelProfile($level) {
         return array_key_exists($level, Profile::PROFILES) ? Profile::PROFILES[$level] : null;
     }
     
-    public static function getQualities(string $level) {
+    public static function getQualities($level) {
         return array_key_exists($level, Profile::PROFILES) ? Profile::PROFILES[$level]["qualities"] : null;
     }
     
-    public static function getFormats(string $level) {
+    public static function getFormats($level) {
         return array_key_exists($level, Profile::PROFILES) ? Profile::PROFILES[$level]["formats"] : null;
     }
     
-    public static function getSupported(string $level) {
+    public static function getSupported($level) {
         return array_key_exists($level, Profile::PROFILES) ? Profile::PROFILES[$level]["supported"] : null;
     }
     
-    public static function isFeatureSupported(string $level, string $feature) {
+    public static function isFeatureSupported($level, $feature) {
         return array_key_exists($level, Profile::PROFILES) && array_key_exists($feature, Profile::PROFILES[$level]["supported"]) ;
         
     }

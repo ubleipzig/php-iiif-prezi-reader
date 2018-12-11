@@ -97,7 +97,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      * {@inheritdoc}
      * @see \iiif\presentation\common\model\AbstractIiifEntity::getValueForSpecialProperty()
      */
-    protected function getValueForTypelessProperty(string $property, array $dictionary, JsonLdContext $context) {
+    protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {
         if ($property = "service") {
             if ($this instanceof ContentResource && $this->getType() == "http://dublincore.org/documents/dcmi-type-vocabulary/#dcmitype-Image") {
                 $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
@@ -305,7 +305,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         return null;
     }
 
-    public function getSeeAlsoUrlsForFormat(string $format) {
+    public function getSeeAlsoUrlsForFormat($format) {
         if (!is_array($this->seeAlso)) {
             return null;
         }
@@ -321,7 +321,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         return $result;
     }
     
-    public function getSeeAlsoUrlsForProfile(string $profile, $startsWith = false) {
+    public function getSeeAlsoUrlsForProfile($profile, $startsWith = false) {
         if (!is_array($this->seeAlso)) {
             return null;
         }
@@ -361,7 +361,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      * will be used; if the resource is an Annotation, the ContentResource will also be used.
      * @return string[]
      */
-    public function getRenderingUrlsForFormat(string $format, $useChildResources = true) {
+    public function getRenderingUrlsForFormat($format, $useChildResources = true) {
         $renderingUrls = [];
         if (empty($format)) {
             return $renderingUrls;

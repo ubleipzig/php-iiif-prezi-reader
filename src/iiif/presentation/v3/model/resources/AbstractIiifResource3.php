@@ -103,7 +103,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
      * @return \iiif\presentation\v3\model\resources\AbstractIiifResource3 | NULL
      */
 
-    protected function getTranslationFor($dictionary, string $language = null, $joinValueDelimiter = null) {
+    protected function getTranslationFor($dictionary, $language = null, $joinValueDelimiter = null) {
         if ($dictionary == null || ! JsonLdHelper::isDictionary($dictionary)) {
             return null;
         }
@@ -118,11 +118,11 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
         return null;
     }
 
-    public function getLabelTranslated(string $language = null, $joinValueDelimiter = null) {
+    public function getLabelTranslated($language = null, $joinValueDelimiter = null) {
         return $this->getTranslationFor($this->label, $language, $joinValueDelimiter);
     }
 
-    public function getMetadataForLabel($label, string $language = null, $joinValueDelimiter = null) {
+    public function getMetadataForLabel($label, $language = null, $joinValueDelimiter = null) {
         if ($this->metadata != null) {
             $selectedMetaDatum = null;
             foreach ($this->metadata as $metadatum) {
@@ -305,7 +305,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
             
     }
     
-    public function getRenderingUrlsForFormat(string $format, $useChildResources = true) {
+    public function getRenderingUrlsForFormat($format, $useChildResources = true) {
         $renderingUrls = [];
         if (empty($format) || !JsonLdHelper::isSequentialArray($this->rendering)) {
             return $renderingUrls;
@@ -334,7 +334,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
         return $renderingUrls;
     }
     
-    public function getSeeAlsoUrlsForFormat(string $format) {
+    public function getSeeAlsoUrlsForFormat($format) {
         if (!is_array($this->seeAlso)) {
             return null;
         }
@@ -350,7 +350,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
         return $result;
     }
     
-    public function getSeeAlsoUrlsForProfile(string $profile, $startsWith = false) {
+    public function getSeeAlsoUrlsForProfile($profile, $startsWith = false) {
         if (!is_array($this->seeAlso)) {
             return null;
         }

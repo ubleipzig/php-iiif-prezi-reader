@@ -100,11 +100,11 @@ class JsonLdContext {
         $this->defaultLanguage = $defaultLanguage;
     }
 
-    public function addKeywordAlias(string $keyword, string $alias) {
+    public function addKeywordAlias($keyword, $alias) {
         $this->keywordAliases[$keyword] = $alias;
     }
 
-    public function getKeywordOrAlias(string $keyword) {
+    public function getKeywordOrAlias($keyword) {
         if (array_key_exists($keyword, $this->keywordAliases)) {
             return $this->keywordAliases[$keyword];
         }

@@ -81,7 +81,7 @@ class IRI {
      * @param string $relativeIri
      * @return string
      */
-    public static function resolveAbsoluteIri(string $baseIri, string $relativeIri) {
+    public static function resolveAbsoluteIri($baseIri, $relativeIri) {
         $base = new IRI($baseIri);
         $rel = new IRI($relativeIri);
         if (! empty($rel->getScheme())) {
@@ -130,7 +130,7 @@ class IRI {
      * @param string $path
      * @return string
      */
-    private static function removeDotSegments(string $path) {
+    private static function removeDotSegments($path) {
         $input = $path;
         $output = "";
         while (! empty($input)) {
