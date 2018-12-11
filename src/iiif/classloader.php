@@ -54,13 +54,13 @@ require_once (__DIR__ . "/presentation/v3/model/resources/Manifest3.php");
 require_once (__DIR__ . "/presentation/v3/model/resources/Range3.php");
 require_once (__DIR__ . "/presentation/v3/model/resources/SpecificResource3.php");
 
+require_once (__DIR__ . "/services/Service.php");
 require_once (__DIR__ . "/services/AbstractImageService.php");
 require_once (__DIR__ . "/services/ImageInformation1.php");
 require_once (__DIR__ . "/services/ImageInformation2.php");
 require_once (__DIR__ . "/services/ImageInformation3.php");
 require_once (__DIR__ . "/services/PhysicalDimensions.php");
 require_once (__DIR__ . "/services/Profile.php");
-require_once (__DIR__ . "/services/Service.php");
 
 require_once (__DIR__ . "/tools/UrlReaderInterface.php");
 require_once (__DIR__ . "/tools/RemoteUrlHelper.php");
