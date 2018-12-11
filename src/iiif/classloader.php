@@ -12,10 +12,10 @@ require_once (__DIR__ . "/context/TermDefinition.php");
 require_once (__DIR__ . "/presentation/IiifHelper.php");
 require_once (__DIR__ . "/presentation/common/TypeMap.php");
 require_once (__DIR__ . "/presentation/common/model/AbstractIiifEntity.php");
+require_once (__DIR__ . "/presentation/common/model/resources/IiifResourceInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/AnnotationInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/CanvasInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/ContentResourceInterface.php");
-require_once (__DIR__ . "/presentation/common/model/resources/IiifResourceInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/ManifestInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/RangeInterface.php");
 
