@@ -17,7 +17,7 @@ class Keywords {
 
     const LANGUAGE = "@language";
 
-    const LIST = "@list";
+    const LIST_ = "@list";
 
     const NEST = "@nest";
 
@@ -45,7 +45,7 @@ class Keywords {
         self::ID,
         self::INDEX,
         self::LANGUAGE,
-        self::LIST,
+        self::LIST_,
         self::NEST,
         self::NONE,
         self::PREFIX,

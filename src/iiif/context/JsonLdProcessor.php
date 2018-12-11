@@ -300,7 +300,7 @@ class JsonLdProcessor {
                 Keywords::ID,
                 Keywords::INDEX,
                 Keywords::LANGUAGE,
-                Keywords::LIST,
+                Keywords::LIST_,
                 Keywords::SET,
                 Keywords::TYPE
             ];

@@ -217,7 +217,7 @@ class TermDefinition {
     }
 
     public function hasListContainer() {
-        return $this->hasContainer(Keywords::LIST);
+        return $this->hasContainer(Keywords::LIST_);
     }
 
     private function hasContainer($keyword) {
