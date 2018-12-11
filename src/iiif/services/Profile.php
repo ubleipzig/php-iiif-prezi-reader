@@ -61,7 +61,7 @@ class Profile {
     
     // Qualities
     
-    const DEFAULT = "default";
+    const DEFAULT_ = "default";
     
     const NATIVE = "native";
     
@@ -127,7 +127,7 @@ class Profile {
             self::JPG
         ],
         "qualities" => [
-            self::DEFAULT
+            self::DEFAULT_
         ],
         "supported" => [
             self::SIZE_BY_WH_LISTED
@@ -139,7 +139,7 @@ class Profile {
             self::JPG
         ],
         "qualities" => [
-            self::DEFAULT
+            self::DEFAULT_
         ],
         "supported" => [
             self::SIZE_BY_WH_LISTED,
@@ -159,7 +159,7 @@ class Profile {
             self::PNG
         ],
         "qualities" => [
-            self::DEFAULT,
+            self::DEFAULT_,
             self::BITONAL
         ],
         "supported" => [
@@ -185,7 +185,7 @@ class Profile {
             self::JPG
         ],
         "qualities" => [
-            self::DEFAULT
+            self::DEFAULT_
         ],
         "supported" => []
     ];
@@ -193,7 +193,7 @@ class Profile {
     public const IMAGE3_LEVEL1 = [
         "formats" => [self::JPG],
         "qualities" => [
-            self::DEFAULT
+            self::DEFAULT_
         ],
         "supported" => [
             self::BASE_URI_REDIRECT,
@@ -212,7 +212,7 @@ class Profile {
             self::PNG
         ],
         "qualities" => [
-            self::DEFAULT,
+            self::DEFAULT_,
             self::COLOR,
             self::GRAY,
             self::BITONAL

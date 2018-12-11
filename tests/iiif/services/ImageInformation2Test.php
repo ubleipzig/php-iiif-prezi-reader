@@ -75,14 +75,14 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertInstanceOf(ImageInformation2::class, $service);
         self::assertNotEmpty($service->getQualities());
         self::assertEquals(1, count($service->getQualities()));
-        self::assertContains(Profile::DEFAULT, $service->getQualities());
+        self::assertContains(Profile::DEFAULT_, $service->getQualities());
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level0-02.json"));
         self::assertNotNull($service);
         self::assertInstanceOf(ImageInformation2::class, $service);
         self::assertNotEmpty($service->getQualities());
         self::assertEquals(3, count($service->getQualities()));
-        self::assertContains(Profile::DEFAULT, $service->getQualities());
+        self::assertContains(Profile::DEFAULT_, $service->getQualities());
         self::assertContains(Profile::COLOR, $service->getQualities());
         self::assertContains(Profile::GRAY, $service->getQualities());
         
@@ -91,14 +91,14 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertInstanceOf(ImageInformation2::class, $service);
         self::assertNotEmpty($service->getQualities());
         self::assertEquals(1, count($service->getQualities()));
-        self::assertContains(Profile::DEFAULT, $service->getQualities());
+        self::assertContains(Profile::DEFAULT_, $service->getQualities());
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level1-02.json"));
         self::assertNotNull($service);
         self::assertInstanceOf(ImageInformation2::class, $service);
         self::assertNotEmpty($service->getQualities());
         self::assertEquals(3, count($service->getQualities()));
-        self::assertContains(Profile::DEFAULT, $service->getQualities());
+        self::assertContains(Profile::DEFAULT_, $service->getQualities());
         self::assertContains(Profile::COLOR, $service->getQualities());
         self::assertContains(Profile::BITONAL, $service->getQualities());
         
@@ -107,7 +107,7 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertInstanceOf(ImageInformation2::class, $service);
         self::assertNotEmpty($service->getQualities());
         self::assertEquals(2, count($service->getQualities()));
-        self::assertContains(Profile::DEFAULT, $service->getQualities());
+        self::assertContains(Profile::DEFAULT_, $service->getQualities());
         self::assertContains(Profile::BITONAL, $service->getQualities());
         
         $service = IiifHelper::loadIiifResource(static::getJson("services/image2-level2-02.json"));
@@ -115,7 +115,7 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertInstanceOf(ImageInformation2::class, $service);
         self::assertNotEmpty($service->getQualities());
         self::assertEquals(3, count($service->getQualities()));
-        self::assertContains(Profile::DEFAULT, $service->getQualities());
+        self::assertContains(Profile::DEFAULT_, $service->getQualities());
         self::assertContains(Profile::COLOR, $service->getQualities());
         self::assertContains(Profile::BITONAL, $service->getQualities());
     }
