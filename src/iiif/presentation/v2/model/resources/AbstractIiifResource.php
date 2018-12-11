@@ -233,7 +233,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         return self::getTranslatedField($this->label, $language);
     }
     
-    public function getLabelForDisplay(string $language = null, string $joinChar = "; ", bool $switchToExistingLanguage = true) {
+    public function getLabelForDisplay($language = null, $joinChar = "; ", $switchToExistingLanguage = true) {
         // TODO replace method
         return $this->getTranslatedField($this->label, $language);
     }
@@ -321,7 +321,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         return $result;
     }
     
-    public function getSeeAlsoUrlsForProfile(string $profile, bool $startsWith = false) {
+    public function getSeeAlsoUrlsForProfile(string $profile, $startsWith = false) {
         if (!is_array($this->seeAlso)) {
             return null;
         }
@@ -361,7 +361,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      * will be used; if the resource is an Annotation, the ContentResource will also be used.
      * @return string[]
      */
-    public function getRenderingUrlsForFormat(string $format, bool $useChildResources = true) {
+    public function getRenderingUrlsForFormat(string $format, $useChildResources = true) {
         $renderingUrls = [];
         if (empty($format)) {
             return $renderingUrls;

@@ -285,7 +285,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
         return $this->partOf;
     }
 
-    public function getLabelForDisplay(string $language = null, string $joinChars = "; ", bool $switchToExistingLanguage = true) {
+    public function getLabelForDisplay($language = null, $joinChars = "; ", $switchToExistingLanguage = true) {
         if (empty($this->label)) {
             return null;
         }
@@ -305,7 +305,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
             
     }
     
-    public function getRenderingUrlsForFormat(string $format, bool $useChildResources = true) {
+    public function getRenderingUrlsForFormat(string $format, $useChildResources = true) {
         $renderingUrls = [];
         if (empty($format) || !JsonLdHelper::isSequentialArray($this->rendering)) {
             return $renderingUrls;
@@ -350,7 +350,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
         return $result;
     }
     
-    public function getSeeAlsoUrlsForProfile(string $profile, bool $startsWith = false) {
+    public function getSeeAlsoUrlsForProfile(string $profile, $startsWith = false) {
         if (!is_array($this->seeAlso)) {
             return null;
         }

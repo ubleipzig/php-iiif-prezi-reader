@@ -27,7 +27,7 @@ interface IiifResourceInterface {
      * @param bool $switchToExistingLanguage Use the first existing language if requested language is not present.
      * @return string|string[]
      */
-    public function getLabelForDisplay(string $language = null, string $joinChar = "; ", bool $switchToExistingLanguage = true);
+    public function getLabelForDisplay($language = null, $joinChar = "; ", $switchToExistingLanguage = true);
     
     /**
      * @return string|array
@@ -59,7 +59,7 @@ interface IiifResourceInterface {
     
     public function getSeeAlsoUrlsForFormat(string $format);
     
-    public function getSeeAlsoUrlsForProfile(string $profile, bool $startsWith = false);
+    public function getSeeAlsoUrlsForProfile(string $profile, $startsWith = false);
         
     /**
      * @return Service|Service[]
@@ -73,7 +73,7 @@ interface IiifResourceInterface {
     
     public function getRendering();
     
-    public function getRenderingUrlsForFormat(string $format, bool $useChildResources = true);
+    public function getRenderingUrlsForFormat(string $format, $useChildResources = true);
     
     /**
      * @return string A thumbnail URL for the resource.

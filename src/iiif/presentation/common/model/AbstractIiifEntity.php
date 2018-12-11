@@ -100,7 +100,7 @@ abstract class AbstractIiifEntity {
      * @param JsonLdContext $context
      * @return AbstractIiifEntity
      */
-    protected static function parseDictionary(array $dictionary, JsonLdContext $context = null, array &$allResources = array(), $processor = null) {
+    protected static function parseDictionary(array $dictionary, JsonLdContext $context = null, &$allResources = array(), $processor = null) {
         $noParent = $context === null;
         if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
             $processor = new JsonLdProcessor();
@@ -157,7 +157,7 @@ abstract class AbstractIiifEntity {
         }
     }
 
-    protected function loadProperty($term, $value, JsonLdContext $context, array &$allResources = array(), $processor) {
+    protected function loadProperty($term, $value, JsonLdContext $context, &$allResources = array(), $processor) {
         $property = $term;
         if (strpos($property, "@") === 0) {
             $property = substr($property, 1);
@@ -244,7 +244,7 @@ abstract class AbstractIiifEntity {
         }
     }
 
-    private static function registerResource(&$resource, $parentId, $property, array &$allResources = array()) {
+    private static function registerResource(&$resource, $parentId, $property, &$allResources = array()) {
         if ($resource instanceof AbstractIiifEntity) {
             if (! array_key_exists($resource->id, $allResources) || ! $allResources[$resource->id]["resource"]->initialized) {
                 if (array_key_exists($resource->id, $allResources) && array_key_exists("references", $allResources[$resource->id])) {
