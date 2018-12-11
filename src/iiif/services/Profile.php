@@ -75,7 +75,7 @@ class Profile {
 
     // Compliance level profiles
 
-    public const IMAGE1_LEVEL0 = [
+    const IMAGE1_LEVEL0 = [
         "formats" => [],
         "qualities" => [
             self::NATIVE
@@ -83,7 +83,7 @@ class Profile {
         "supported" => []
     ];
 
-    public const IMAGE1_LEVEL1 = [
+    const IMAGE1_LEVEL1 = [
         "formats" => [
             self::JPG
         ],
@@ -99,7 +99,7 @@ class Profile {
         ]
     ];
 
-    public const IMAGE1_LEVEL2 = [
+    const IMAGE1_LEVEL2 = [
         "formats" => [
             self::JPG,
             self::PNG
@@ -122,7 +122,7 @@ class Profile {
         ]
     ];
     
-    public const IMAGE2_LEVEL0 = [
+    const IMAGE2_LEVEL0 = [
         "formats" => [
             self::JPG
         ],
@@ -134,7 +134,7 @@ class Profile {
         ]
     ];
 
-    public const IMAGE2_LEVEL1 = [
+    const IMAGE2_LEVEL1 = [
         "formats" => [
             self::JPG
         ],
@@ -153,7 +153,7 @@ class Profile {
         ]
     ];
     
-    public const IMAGE2_LEVEL2 = [
+    const IMAGE2_LEVEL2 = [
         "formats" => [
             self::JPG,
             self::PNG
@@ -180,7 +180,7 @@ class Profile {
         ]
     ];
     
-    public const IMAGE3_LEVEL0 = [
+    const IMAGE3_LEVEL0 = [
         "formats" => [
             self::JPG
         ],
@@ -190,7 +190,7 @@ class Profile {
         "supported" => []
     ];
     
-    public const IMAGE3_LEVEL1 = [
+    const IMAGE3_LEVEL1 = [
         "formats" => [self::JPG],
         "qualities" => [
             self::DEFAULT_
@@ -206,7 +206,7 @@ class Profile {
         ]
     ];
     
-    public const IMAGE3_LEVEL2 = [
+    const IMAGE3_LEVEL2 = [
         "formats" => [
             self::JPG,
             self::PNG
@@ -235,7 +235,7 @@ class Profile {
     ];
     
     // FIXME this will only work as long as versions beyond 3 will either have the same supported features as 3 or different level identifiers 
-    public const PROFILES = [
+    const PROFILES = [
         "http://library.stanford.edu/iiif/image-api/compliance.html#level0" => self::IMAGE1_LEVEL0,
         "http://library.stanford.edu/iiif/image-api/compliance.html#level1" => self::IMAGE1_LEVEL1,
         "http://library.stanford.edu/iiif/image-api/compliance.html#level2" => self::IMAGE1_LEVEL2,
