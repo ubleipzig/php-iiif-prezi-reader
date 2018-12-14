@@ -284,25 +284,35 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
     public function getPartOf() {
         return $this->partOf;
     }
-
-    public function getLabelForDisplay($language = null, $joinChars = "; ", $switchToExistingLanguage = true) {
-        if (empty($this->label)) {
+    
+    protected function getValueForDisplay($value, $language = null, $joinChars = "; ") {
+        if (empty($value)){
             return null;
         }
-        $label = null;
-        if (isset($language) && array_key_exists($language, $this->label)) {
-            $label = $this->label[$language];
-        } elseif (array_key_exists(Keywords::NONE, $this->label)) {
-            $label = $this->label[Keywords::NONE];
+        if (is_string($value)){
+            return $value;
         }
-        if ($label == null && $switchToExistingLanguage) {
-            $label = reset($this->label);
+        if (JsonLdHelper::isDictionary($value)) {
+            $resultArray = [];
+            if (isset($language) && array_key_exists($language, $value)) {
+                $resultArray = $value[$language];
+            } elseif (array_key_exists(Keywords::NONE, $value)) {
+                $resultArray = $value[Keywords::NONE];
+            } else {
+                $resultArray = reset($value);
+            }
+            if (!empty($resultArray)) {
+                if (isset($joinChars)) {
+                    return implode($joinChars, $resultArray);
+                }
+                return $resultArray;
+            }
         }
-        if (is_array($label) && isset($joinChars)) {
-            $label = implode($joinChars, $label);
-        }
-        return $label;
-            
+        return null;
+    }
+
+    public function getLabelForDisplay($language = null, $joinChars = "; ") {
+        return $this->getValueForDisplay($this->label, $language, $joinChars);
     }
     
     public function getRenderingUrlsForFormat($format, $useChildResources = true) {
@@ -404,6 +414,22 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
             }
         }
     }
-    
-    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataForDisplay()
+     */
+    public function getMetadataForDisplay($language = null, $joinChars = "; ") {
+        // TODO Auto-generated method stub
+        
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummaryForDisplay()
+     */
+    public function getSummaryForDisplay($language = null, $joinChars = "; ") {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

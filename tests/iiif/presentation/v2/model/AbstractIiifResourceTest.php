@@ -110,33 +110,33 @@ class AbstractIiifResourceTest extends AbstractIiifTest
     }
     
     /**
-     * Tests AbstractIiifResource->getTranslatedLabel()
+     * Tests AbstractIiifResource->getLabelForDisplay()
      */
-    public function testGetTranslatedLabel()
+    public function testGetLabelForDisplay()
     {
         // no label
         $this->abstractIiifResource->setLabel(null);
-        $label = $this->abstractIiifResource->getTranslatedLabel();
+        $label = $this->abstractIiifResource->getLabelForDisplay();
         self::assertNull($label);
-        $label = $this->abstractIiifResource->getTranslatedLabel("en");
+        $label = $this->abstractIiifResource->getLabelForDisplay("en");
         self::assertNull($label);
         
         // string as label
         $this->prepareLabel('My label');
-        $label = $this->abstractIiifResource->getTranslatedLabel();
+        $label = $this->abstractIiifResource->getLabelForDisplay();
         self::assertEquals('My label', $label);
-        $label = $this->abstractIiifResource->getTranslatedLabel('en');
+        $label = $this->abstractIiifResource->getLabelForDisplay('en');
         self::assertEquals('My label', $label);
 
         // multiple strings as label
         $this->prepareLabel('["My label", "My second label", "My third label"]');
-        $label = $this->abstractIiifResource->getTranslatedLabel();
+        $label = $this->abstractIiifResource->getLabelForDisplay(null, null);
         self::assertTrue(is_array($label));
         self::assertContains('My label', $label);
         self::assertContains('My second label', $label);
         self::assertContains('My third label', $label);
         
-        $label = $this->abstractIiifResource->getTranslatedLabel('en');
+        $label = $this->abstractIiifResource->getLabelForDisplay('en', null);
         self::assertTrue(is_array($label));
         self::assertContains('My label', $label);
         self::assertContains('My second label', $label);
@@ -144,15 +144,15 @@ class AbstractIiifResourceTest extends AbstractIiifTest
         
         // translated label
         $this->prepareLabel('[{"@value": "Title", "@language": "en"}, {"@value": "Titel", "@language": "de"}, {"@value": "Intitulé", "@language": "fr"}]');
-        $label = $this->abstractIiifResource->getTranslatedLabel();
+        $label = $this->abstractIiifResource->getLabelForDisplay();
         self::assertEquals('Title', $label);
-        $label = $this->abstractIiifResource->getTranslatedLabel('en');
+        $label = $this->abstractIiifResource->getLabelForDisplay('en');
         self::assertEquals('Title', $label);
-        $label = $this->abstractIiifResource->getTranslatedLabel('de');
+        $label = $this->abstractIiifResource->getLabelForDisplay('de');
         self::assertEquals('Titel', $label);
-        $label = $this->abstractIiifResource->getTranslatedLabel('fr');
+        $label = $this->abstractIiifResource->getLabelForDisplay('fr');
         self::assertEquals('Intitulé', $label);
-        $label = $this->abstractIiifResource->getTranslatedLabel('ru');
+        $label = $this->abstractIiifResource->getLabelForDisplay('ru');
         self::assertEquals('Title', $label);
     }
 

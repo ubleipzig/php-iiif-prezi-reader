@@ -27,12 +27,18 @@ interface IiifResourceInterface {
      * @param bool $switchToExistingLanguage Use the first existing language if requested language is not present.
      * @return string|string[]
      */
-    public function getLabelForDisplay($language = null, $joinChar = "; ", $switchToExistingLanguage = true);
+    public function getLabelForDisplay($language = null, $joinChar = "; ");
     
     /**
      * @return string|array
      */
     public function getMetadata();
+    
+    public function getMetadataForDisplay($language = null, $joinChars = "; ");
+    
+//     public function getMetadataLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true);
+    
+//     public function getMetadataValueByLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true);
     
     /**
      * version 2: description
@@ -40,6 +46,8 @@ interface IiifResourceInterface {
      * @return string|array  
      */
     public function getSummary();
+
+    public function getSummaryForDisplay($language = null, $joinChars = "; ");
     
     /**
      * version 2: license

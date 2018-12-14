@@ -114,24 +114,42 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         }
     }
 
-    protected function getTranslatedField($field, $language) {
-        if (is_null($field))
+    protected function getValueForDisplay($value, $language = null, $joinChars = "; ") {
+        if (is_null($value)){
             return null;
-        if (is_string($field))
-            return $field;
-        if (is_array($field)) {
-            if (is_array($field[0])) {
-                $selectedValue = $field[0];
-                if (! (is_null($language))) {
-                    foreach ($field as $valueAndLanguage) {
-                        if ($valueAndLanguage[Names::AT_LANGUAGE] == $language) {
-                            $selectedValue = $valueAndLanguage;
+        }
+        if (is_string($value)){
+            return $value;
+        }
+        if (is_array($value)) {
+            if (!JsonLdHelper::isSequentialArray($value)) {
+                $value = [$value];
+            }
+            $defaultLanguage = null;
+            $defaultLanguageArray = [];
+            $noLanguageArray = [];
+            $requestedLanguageArray = [];
+            foreach ($value as $entry){
+                if (is_string($entry)) {
+                    $noLanguageArray[] = $entry;
+                } elseif (array_key_exists(Keywords::LANGUAGE, $entry) && array_key_exists(Keywords::VALUE, $entry)) {
+                    if ($language == $entry[Keywords::LANGUAGE]) {
+                        $requestedLanguageArray[] = $entry[Keywords::VALUE];
+                    } elseif (empty($requestedLanguageArray)) {
+                        if (!isset($defaultLanguage)) {
+                            $defaultLanguage = $entry[Keywords::LANGUAGE];
+                        }
+                        if ($defaultLanguage == $entry[Keywords::LANGUAGE]) {
+                            $defaultLanguageArray[] = $entry[Keywords::VALUE];
                         }
                     }
                 }
-                return is_null($selectedValue) ? null : $selectedValue["@value"];
             }
-            return $field;
+            $resultArray = !empty($requestedLanguageArray) ? $requestedLanguageArray : (!empty($noLanguageArray) ? $noLanguageArray : $defaultLanguageArray);
+            if (isset($joinChars)) {
+                return implode($joinChars, $resultArray);
+            }
+            return $resultArray;
         }
         return null;
     }
@@ -229,13 +247,96 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         return $this->rendering;
     }
 
-    public function getTranslatedLabel($language = null) {
-        return self::getTranslatedField($this->label, $language);
+    public function getLabelForDisplay($language = null, $joinChars = "; ") {
+        return $this->getValueForDisplay($this->label, $language, $joinChars);
     }
     
-    public function getLabelForDisplay($language = null, $joinChar = "; ", $switchToExistingLanguage = true) {
-        // TODO replace method
-        return $this->getTranslatedField($this->label, $language);
+    
+    private function getMetadataByLabel($requestedLabel, $language = null) {
+//         if (empty($this->metadata) || !is_array($this->metadata) || empty($requestedLabel)) {
+//             return null;
+//         }
+//         $candidates = [];
+//         $requestedLabelArray = is_array($requestedLabel) ? $requestedLabel : [$requestedLabel];
+//         foreach ($this->metadata as $metadata) {
+//             if (empty($metadata) || !is_array($metadata) || !array_key_exists("label", $metadata)) {
+//                 continue;
+//             }
+//             $entryLabel = $metadata["label"];
+//             // both are string or the param is the exact same array
+//             if ($entryLabel == $requestedLabel) {
+//                 $candidates[] = $metadata;
+//                 continue;
+//             }
+//             if (is_string($entryLabel)) {
+//                 continue;
+//             }
+//             if (JsonLdHelper::isDictionary($entryLabel)) {
+//                 $entryLabel = [$entryLabel];
+//             }
+//             foreach ($entryLabel as $entryLabelMember) {
+                
+//             }
+//         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataForDisplay()
+     */
+    public function getMetadataForDisplay($language = null, $joinChars = "; ") {
+        if (!isset($this->metadata) || !JsonLdHelper::isSequentialArray($this->metadata)) {
+            return null;
+        }
+        $result = null;
+        foreach ($this->metadata as $metadata) {
+            $resultData = [];
+            if (array_key_exists("label", $metadata)) {
+                $resultData["label"] = $this->getValueForDisplay($metadata["label"], $language, $joinChars);
+            } else {
+                $resultData["label"] = "";
+            }
+            if (array_key_exists("value", $metadata)) {
+                $resultData["value"] = $this->getValueForDisplay($metadata["value"], $language, $joinChars);
+            } else {
+                $resultData["value"] = "";
+            }
+            $result[] = $resultData;
+        }
+        return $result;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataLabelForDisplay()
+     */
+    public function getMetadataLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true) {
+        // TODO Auto-generated method stub
+        /*
+         * label is string (single value)
+         * label is sequential array (multiple values or multiple languages or both)
+         */
+        if (empty($label) || empty($this->getMetadata())) {
+            return null;
+        }
+        if (is_string($label)) {
+            
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataValueByLabelForDisplay()
+     */
+    public function getMetadataValueByLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true) {
+        // TODO Auto-generated method stub
+        
+        /*
+         * value is string
+         * value is sequential array (multiple values or multiple languages or both)
+         * 
+         */
+        
     }
 
     /**
@@ -418,6 +519,15 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
     public function getSummary() {
         return $this->description;
     }
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummaryForDisplay()
+     */
+    public function getSummaryForDisplay($language = null, $joinChars = "; ") {
+        return $this->getValueForDisplay($this->description, $language = null, $joinChars = "; ");
+    }
+
     /**
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
