@@ -17,7 +17,7 @@ class JsonLdProcessorTest extends PHPUnit_Framework_TestCase
     public function testProcessContext()
     {
         $helper = new JsonLdProcessor();
-        $context = new JsonLdContext();
+        $context = new JsonLdContext($helper);
         $context->setBaseIri("http://iiif.io/api/presentation/3/context.json");
         $processedContext = $helper->processContext(["http://iiif.io/api/presentation/3/context.json"], $context);
         $widthTerm = $processedContext->getTermDefinition("width");

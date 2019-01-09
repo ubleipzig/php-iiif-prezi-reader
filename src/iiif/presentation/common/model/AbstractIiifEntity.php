@@ -104,7 +104,7 @@ abstract class AbstractIiifEntity {
         $noParent = $context === null;
         if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
             $processor = new JsonLdProcessor();
-            $context = $processor->processContext($dictionary[Keywords::CONTEXT], new JsonLdContext());
+            $context = $processor->processContext($dictionary[Keywords::CONTEXT], new JsonLdContext($processor));
         }
         $typeOrAlias = $context->getKeywordOrAlias(Keywords::TYPE);
         $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
@@ -127,15 +127,29 @@ abstract class AbstractIiifEntity {
                 $typeOrAlias,
                 $idOrAlias
             ])) > 0) {
+                $dictionaryOfDictionaries = [];
                 foreach ($dictionary as $key => $value) {
                     if ($key == $typeOrAlias) {
                         $resource->type = $value;
                         continue;
                     }
-                    if ($key == Keywords::CONTEXT)
+                    if ($key == Keywords::CONTEXT) {
                         continue;
-                    if (! Keywords::isKeyword($key) && $context->getTermDefinition($key) == null)
+                    }
+                    if (! Keywords::isKeyword($key) && $context->getTermDefinition($key) == null) {
                         continue;
+                    }
+                    if (JsonLdHelper::isDictionary($value)) {
+                        // set basic values first
+                        $dictionaryOfDictionaries[$key] = $value;
+                        continue;
+                    }
+                    $resource->loadProperty($key, $value, $context, $allResources, $processor);
+                    if ($key != $idOrAlias) {
+                        $resource->initialized = true;
+                    }
+                }
+                foreach ($dictionaryOfDictionaries as $key => $value) {
                     $resource->loadProperty($key, $value, $context, $allResources, $processor);
                     if ($key != $idOrAlias) {
                         $resource->initialized = true;
@@ -209,7 +223,7 @@ abstract class AbstractIiifEntity {
                     if ($member == null || is_string($member)) {
                         $result[] = $member;
                     } elseif (JsonLdHelper::isDictionary($member)) {
-                        if (array_key_exists($term, $this->getTypelessProperties())) {
+                        if (array_search($term, $this->getTypelessProperties()) !== false) {
                             $resource = $this->getValueForTypelessProperty($term, $member, $context);
                         } else {
                             $resource = self::parseDictionary($member, $context, $allResources, $processor);
@@ -226,7 +240,7 @@ abstract class AbstractIiifEntity {
 //                 $result = array();
             }
         } elseif (JsonLdHelper::isDictionary($value)) {
-            if (array_key_exists($term, $this->getTypelessProperties())) {
+            if (array_search($term, $this->getTypelessProperties()) !== false) {
                 $termValue = $this->getValueForTypelessProperty($term, $value, $context);
             } else {
                 $termValue = $this->parseDictionary($value, $context, $allResources, $processor);

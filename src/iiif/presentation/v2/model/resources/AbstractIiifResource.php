@@ -99,17 +99,18 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      */
     protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {
         if ($property = "service") {
-            if ($this instanceof ContentResource && $this->getType() == "http://dublincore.org/documents/dcmi-type-vocabulary/#dcmitype-Image") {
+            $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
+            $clazz = null;
+            if ($this instanceof ContentResource && $context->expandIRI($this->getType()) == "http://purl.org/dc/dcmitype/Image") {
                 $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
-                $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
                 if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeMap::SERVICE_TYPES)) {
-                    $clazz = TypeMap::SERVICE_TYPES[$dictionary[$contextOrAlias]];
+                    $clazz = TypeMap::getClassForType(TypeMap::SERVICE_TYPES[$dictionary[$contextOrAlias]], $context);
                 }
             }
-            $service = $clazz == null ? new Service() : new $clazz();
-            $service->id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
+            $id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
             // TODO use a profile entity
-            $service->profile = array_key_exists("profile", $dictionary) ? $dictionary["profile"] : null;
+            $profile = array_key_exists("profile", $dictionary) ? $dictionary["profile"] : null;
+            $service = $clazz == null ? new Service($id, $profile) : new $clazz($id, $profile);
             return $service;
         }
     }
@@ -490,7 +491,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
             elseif ($this instanceof Canvas && !empty($this->getImages())) {
                 $renderingUrls = $this->getImages()[0]->getRenderingUrlsForFormat($format);
             }
-            elseif ($this instanceof Annotation && $this->getResource()!=null) {
+            elseif ($this instanceof Annotation && $this->getResource()!=null && $this->getResource() instanceof ContentResource) {
                 $renderingUrls = $this->getResource()->getRenderingUrlsForFormat($format);
             }
         }

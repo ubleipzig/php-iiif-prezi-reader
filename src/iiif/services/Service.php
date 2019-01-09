@@ -32,5 +32,10 @@ class Service extends AbstractIiifEntity {
     public function getProfile() {
         return $this->profile;
     }
+    
+    public function __construct($id = null, $profile = null) {
+        $this->id = $id;
+        $this->profile = $profile;
+    }
 }
 

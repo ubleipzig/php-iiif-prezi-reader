@@ -20,9 +20,17 @@ class JsonLdContext {
      */
     protected $keywordAliases = array();
 
+    /**
+     * 
+     * @var JsonLdProcessor
+     */
+    protected $processor;
+    
     public function expandIRI($toExpand) {
-        if (! IRI::isCompressedUri($toExpand))
+        if (!IRI::isCompactUri($toExpand)) {
             return $toExpand;
+        }
+        return $this->processor->expandIRI($this, $toExpand);
     }
 
     public function getBaseIri() {
@@ -39,7 +47,7 @@ class JsonLdContext {
 
     public function cloned() {
         // TODO
-        $clone = new JsonLdContext();
+        $clone = new JsonLdContext($this->processor);
         foreach ($this->termDefinitions as $term => $definition) {
             $clone->addTermDefinition($term, $definition);
         }
@@ -125,6 +133,10 @@ class JsonLdContext {
      */
     public function setContextIri($contextIri) {
         $this->contextIri = $contextIri;
+    }
+    
+    public function __construct(JsonLdProcessor $processor) {
+        $this->processor = $processor;
     }
 }
 
