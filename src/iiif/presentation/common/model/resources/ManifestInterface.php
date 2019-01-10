@@ -34,6 +34,11 @@ interface ManifestInterface extends IiifResourceInterface {
      */
     public function getStructures();
     
+    /**
+     * @param string $id
+     * @return IiifResourceInterface The PHP object representation of the IIIF resource the ID $id.
+     * If the manifest does not contain such a resource, return null.  
+     */
     public function getContainedResourceById($id);
     
 }
