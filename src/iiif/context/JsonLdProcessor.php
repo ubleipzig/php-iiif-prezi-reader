@@ -84,7 +84,7 @@ class JsonLdProcessor {
     }
 
     public function processContext($localContext, JsonLdContext $activeContext, $remoteContexts = array()) {
-        $result = $activeContext->cloned();
+        $result = clone $activeContext;
         if (! JsonLdHelper::isSequentialArray($localContext)) {
             $localContext = [
                 $localContext
@@ -92,7 +92,7 @@ class JsonLdProcessor {
         }
         foreach ($localContext as $context) {
             if ($context == null) {
-                $result = new JsonLdContext();
+                $result = new JsonLdContext($this);
                 // TODO handle base iri
                 continue;
             }
