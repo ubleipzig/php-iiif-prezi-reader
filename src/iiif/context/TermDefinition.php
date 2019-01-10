@@ -28,8 +28,6 @@ class TermDefinition {
      *
      * @var JsonLdContext
      */
-    protected $context;
-
     protected $localContext;
 
     /**
@@ -84,8 +82,8 @@ class TermDefinition {
      *
      * @return JsonLdContext
      */
-    public function getContext() {
-        return $this->context;
+    public function getLocalContext() {
+        return $this->localContext;
     }
 
     /**
@@ -186,10 +184,10 @@ class TermDefinition {
 
     /**
      *
-     * @param \iiif\context\JsonLdContext $context
+     * @param \iiif\context\JsonLdContext $localContext
      */
-    public function setContext($context) {
-        $this->context = $context;
+    public function setLocalContext($localContext) {
+        $this->localContext = $localContext;
     }
 
     /**

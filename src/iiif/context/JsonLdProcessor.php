@@ -436,7 +436,7 @@ class JsonLdProcessor {
                 throw new \Exception("invalid scoped context", null, $e);
             }
             // 19.4
-            $definition->setContext($context); // FIXME local context, 19.4
+            $definition->setLocalContext($context);
         }
         // 20
         if (array_key_exists(Keywords::LANGUAGE, $value) && ! array_key_exists(Keywords::TYPE, $value)) {
