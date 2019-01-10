@@ -241,7 +241,7 @@ class JsonLdProcessor {
         $value = $localContext[$term];
         //4
         if ($this->processingMode == self::PROCESSING_MODE_JSON_LD_1_1 && $term == Keywords::TYPE &&
-            (!JsonLdHelper::isDictionary($value) || !(array_key_exists(Keywords::CONTAINER, $value) && array_key_exists(Keywords::SET, $value)))) {
+            (!JsonLdHelper::isDictionary($value) || $value != [Keywords::CONTAINER => Keywords::SET])) {
             throw new \Exception("keyword redefinition");
         }
         // 5
