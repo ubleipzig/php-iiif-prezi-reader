@@ -1,14 +1,13 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
-use iiif\context\JsonLdProcessor;
+use iiif\context\JsonLdHelper;
 use iiif\context\Keywords;
 use iiif\presentation\IiifHelper;
 use iiif\presentation\common\model\AbstractIiifEntity;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\services\AbstractImageService;
 use iiif\services\Service;
-use iiif\context\JsonLdHelper;
 
 abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifResourceInterface {
 
@@ -331,7 +330,14 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
         if (empty($renderingUrls) && $useChildResources) {
             if (empty($renderingUrls) && $useChildResources) {
                 if ($this instanceof Manifest3) {
-                    // TODO use rendering of Range with behaviour="sequence" 
+                    if (!($this->structures)) {
+                        foreach ($this->structures as $range) {
+                            if ($range->behavior == "sequence") {
+                                $renderingUrls = $range->getRenderingUrlsForFormat($format);
+                                break;
+                            }
+                        }
+                    }
                 }
                 elseif ($this instanceof Canvas3 && !empty($this->getImageAnnotations())) {
                     $renderingUrls = $this->getImageAnnotations()[0]->getRenderingUrlsForFormat($format);
