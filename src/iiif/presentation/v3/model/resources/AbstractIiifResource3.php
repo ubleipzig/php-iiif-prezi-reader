@@ -3,11 +3,10 @@ namespace iiif\presentation\v3\model\resources;
 
 use iiif\context\JsonLdHelper;
 use iiif\context\Keywords;
-use iiif\presentation\IiifHelper;
 use iiif\presentation\common\model\AbstractIiifEntity;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\services\AbstractImageService;
-use iiif\services\Service;
+use iiif\tools\IiifHelper;
 
 abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifResourceInterface {
 

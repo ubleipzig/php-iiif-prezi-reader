@@ -4,13 +4,13 @@ namespace iiif\presentation\common\model;
 use Flow\JSONPath\JSONPath;
 use iiif\context\IRI;
 use iiif\context\JsonLdContext;
+use iiif\context\JsonLdHelper;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
 use iiif\presentation\common\TypeMap;
 use iiif\presentation\v2\model\resources\AbstractIiifResource;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
-use iiif\tools\RemoteUrlHelper;
-use iiif\context\JsonLdHelper;
+use iiif\tools\IiifHelper;
 
 abstract class AbstractIiifEntity {
 
@@ -32,7 +32,7 @@ abstract class AbstractIiifEntity {
 
     public static function loadIiifResource($resource) {
         if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
-            $resource = RemoteUrlHelper::getContent($resource);
+            $resource = IiifHelper::getRemoteContent($resource);
         }
         if (is_string($resource)) {
             $resource = json_decode($resource, true);

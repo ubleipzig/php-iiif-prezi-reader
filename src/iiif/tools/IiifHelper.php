@@ -1,5 +1,5 @@
 <?php
-namespace iiif\presentation;
+namespace iiif\tools;
 
 use iiif\presentation\common\model\AbstractIiifEntity;
 use iiif\presentation\v2\model\resources\AbstractIiifResource;
@@ -15,8 +15,8 @@ use iiif\presentation\v3\model\resources\Canvas3;
 use iiif\presentation\v3\model\resources\ContentResource3;
 use iiif\presentation\v3\model\resources\Manifest3;
 use iiif\presentation\v3\model\resources\Range3;
-use iiif\tools\RemoteUrlHelper;
 use iiif\tools\UrlReaderInterface;
+use iiif\tools\Options;
 
 class IiifHelper {
 
@@ -175,8 +175,24 @@ class IiifHelper {
         }
     }
     
-    public static function setUrlReader(UrlReaderInterface $urlReader) {
-        RemoteUrlHelper::setUrlReader($urlReader);
+    public static function getRemoteContent($url) {
+        if (isset(Options::$urlReader)) {
+            return Options::$urlReader->getContent($url);
+        }
+        return file_get_contents($url);
     }
+    
+    public static function setUrlReader(UrlReaderInterface $urlReader) {
+        Options::setUrlReader($urlReader);
+    }
+    
+    public static function setMaxThumbnailWidth($maxThumbnailWidth) {
+        Options::setMaxThumbnailWidth($maxThumbnailWidth);
+    }
+
+    public static function setMaxThumbnailHeight($maxThumbnailHeight) {
+        Options::setMaxThumbnailHeight($maxThumbnailHeight);
+    }
+    
 }
 

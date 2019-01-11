@@ -1,11 +1,11 @@
 <?php
 use iiif\AbstractIiifTest;
-use iiif\presentation\IiifHelper;
 use iiif\presentation\v2\model\properties\XYWHFragment;
 use iiif\presentation\v2\model\resources\Annotation;
 use iiif\presentation\v2\model\resources\Canvas;
 use iiif\presentation\v2\model\resources\ContentResource;
 use iiif\presentation\v2\model\vocabulary\Motivation;
+use iiif\tools\IiifHelper;
 
 /**
  * Annotation test case.

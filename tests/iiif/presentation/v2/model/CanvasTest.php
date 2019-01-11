@@ -1,8 +1,8 @@
 <?php
 use iiif\AbstractIiifTest;
-use iiif\presentation\IiifHelper;
 use iiif\presentation\v2\model\resources\AnnotationList;
 use iiif\presentation\v2\model\resources\Canvas;
+use iiif\tools\IiifHelper;
 
 /**
  * Canvas test case.

@@ -4,13 +4,13 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\context\JsonLdContext;
 use iiif\context\JsonLdHelper;
 use iiif\context\Keywords;
-use iiif\presentation\IiifHelper;
 use iiif\presentation\common\TypeMap;
 use iiif\presentation\common\model\AbstractIiifEntity;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\services\AbstractImageService;
 use iiif\services\Service;
+use iiif\tools\IiifHelper;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have

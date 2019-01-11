@@ -1,8 +1,8 @@
 <?php
 use iiif\AbstractIiifTest;
 use iiif\services\ImageInformation1;
-use iiif\presentation\IiifHelper;
 use iiif\services\Profile;
+use iiif\tools\IiifHelper;
 
 require_once 'iiif/services/ImageInformation1.php';
 

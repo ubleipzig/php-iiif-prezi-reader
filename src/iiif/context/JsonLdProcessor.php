@@ -1,8 +1,7 @@
 <?php
 namespace iiif\context;
 
-use iiif\tools\RemoteUrlHelper;
-use iiif\presentation\common\model\resources\IiifResourceInterface;
+use iiif\tools\IiifHelper;
 
 /**
  * Implementation of the context processing algorithm of the JSON-LD API version 1.1.
@@ -81,7 +80,7 @@ class JsonLdProcessor {
             // only for testing purposes
             return '{"@context":{}}';
         }
-        return RemoteUrlHelper::getContent($context);
+        return IiifHelper::getRemoteContent($context);
     }
 
     public function processContext($localContext, JsonLdContext $activeContext, $remoteContexts = array()) {

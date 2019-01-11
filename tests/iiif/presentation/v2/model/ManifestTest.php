@@ -1,10 +1,10 @@
 <?php
 use iiif\AbstractIiifTest;
-use iiif\presentation\IiifHelper;
 use iiif\presentation\v2\model\constants\ViewingDirectionValues;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Range;
 use iiif\presentation\v2\model\resources\Sequence;
+use iiif\tools\IiifHelper;
 
 /**
  * Manifest test case.

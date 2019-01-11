@@ -1,7 +1,6 @@
 <?php
 namespace iiif\presentation\v3\model\resources;
 
-use iiif\presentation\v2\model\vocabulary\Motivation;
 use iiif\presentation\common\model\resources\CanvasInterface;
 
 class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {

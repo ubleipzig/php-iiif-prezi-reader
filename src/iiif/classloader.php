@@ -9,7 +9,6 @@ require_once (__DIR__ . "/context/JsonLdProcessor.php");
 require_once (__DIR__ . "/context/Keywords.php");
 require_once (__DIR__ . "/context/TermDefinition.php");
 
-require_once (__DIR__ . "/presentation/IiifHelper.php");
 require_once (__DIR__ . "/presentation/common/TypeMap.php");
 require_once (__DIR__ . "/presentation/common/model/AbstractIiifEntity.php");
 require_once (__DIR__ . "/presentation/common/model/resources/IiifResourceInterface.php");
@@ -62,8 +61,9 @@ require_once (__DIR__ . "/services/ImageInformation3.php");
 require_once (__DIR__ . "/services/PhysicalDimensions.php");
 require_once (__DIR__ . "/services/Profile.php");
 
+require_once (__DIR__ . "/tools/IiifHelper.php");
+require_once (__DIR__ . "/tools/Options.php");
 require_once (__DIR__ . "/tools/UrlReaderInterface.php");
-require_once (__DIR__ . "/tools/RemoteUrlHelper.php");
 
 // TODO remove
 require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/AccessHelper.php");
