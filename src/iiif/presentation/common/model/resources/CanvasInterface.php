@@ -9,6 +9,11 @@ interface CanvasInterface extends IiifResourceInterface {
     public function getImageAnnotations();
     
     /**
+     * @return AnnotationContainerInterface[]
+     */
+    public function getPossibleTextAnnotationContainers();
+    
+    /**
      * @return int
      */
     public function getWidth();

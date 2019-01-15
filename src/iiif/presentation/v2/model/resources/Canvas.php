@@ -60,5 +60,13 @@ class Canvas extends AbstractIiifResource implements CanvasInterface {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CanvasInterface::getPossibleTextAnnotationContainers()
+     */
+    public function getPossibleTextAnnotationContainers() {
+        return $this->otherContent;
+    }
+
 }
 

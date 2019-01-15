@@ -49,6 +49,13 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
     protected $duration;
 
     /**
+     * 
+     * @var string
+     */
+    protected $value;
+    
+
+    /**
      *
      * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3
      */
@@ -145,6 +152,14 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
             }
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::getChars()
+     */
+    public function getChars() {
+        return $value;
     }
 
 }

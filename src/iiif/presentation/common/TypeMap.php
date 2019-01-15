@@ -55,7 +55,7 @@ class TypeMap {
         "http://purl.org/dc/dcmitype/Dataset" => ContentResource3::class,
         "http://purl.org/dc/dcmitype/Text" => ContentResource3::class,
         "http://www.w3.org/ns/oa#SpecificResource" => SpecificResource3::class,
-        "http://www.w3.org/ns/oa#TextualBody" => null,
+        "http://www.w3.org/ns/oa#TextualBody" => ContentResource3::class,
         "http://www.w3.org/ns/oa#FragmentSelector" => null,
         "http://www.w3.org/ns/oa#PointSelector" => null
     ];

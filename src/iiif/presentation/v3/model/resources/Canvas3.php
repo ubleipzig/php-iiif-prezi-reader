@@ -151,8 +151,14 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
         }
         return null;
     }
-
-    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CanvasInterface::getPossibleTextAnnotationContainers()
+     */
+    public function getPossibleTextAnnotationContainers() {
+        // TODO Auto-generated method stub
+        
+    }
 
 }
 

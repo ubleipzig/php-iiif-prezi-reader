@@ -17,5 +17,11 @@ interface ContentResourceInterface extends IiifResourceInterface {
      * @return string
      */
     public function getFormat();
+    
+    /**
+     * @return string
+     */
+    public function getChars();
+
 }
 

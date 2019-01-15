@@ -2,8 +2,9 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\tools\IiifHelper;
+use iiif\presentation\common\model\resources\AnnotationContainerInterface;
 
-class AnnotationList extends AbstractIiifResource {
+class AnnotationList extends AbstractIiifResource implements AnnotationContainerInterface {
 
     const TYPE = "sc:AnnotationList";
 
@@ -36,5 +37,21 @@ class AnnotationList extends AbstractIiifResource {
         return $this->resources;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\AnnotationContainerInterface::getTextAnnotations()
+     */
+    public function getTextAnnotations($motivation = null) {
+        $resources = $this->getResources();
+        $textAnnotations = [];
+        foreach ($resources as $annotation) {
+            if ($annotation->getMotivation() == "sc:painting" && $annotation->getResource()!=null 
+                && $annotation->getResource() instanceof ContentResource && $annotation->getResource()->getType()=="cnt:ContentAsText") {
+                $textAnnotations[] = $annotation;
+            }
+        }
+        return $textAnnotations;
+    }
+    
 }
 
