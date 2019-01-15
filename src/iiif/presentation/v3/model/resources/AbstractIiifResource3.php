@@ -7,6 +7,7 @@ use iiif\presentation\common\model\AbstractIiifEntity;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\services\AbstractImageService;
 use iiif\tools\IiifHelper;
+use iiif\services\Service;
 
 abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifResourceInterface {
 

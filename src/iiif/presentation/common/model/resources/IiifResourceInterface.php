@@ -23,8 +23,7 @@ interface IiifResourceInterface {
     /**
      * 
      * @param string $language Language code. If none is given, "@none" will be used. 
-     * @param string $joinChar Used to join multi value labels. If set to null, array will be return.
-     * @param bool $switchToExistingLanguage Use the first existing language if requested language is not present.
+     * @param string $joinChar Used to join multi value labels. If set to null, array will be returned.
      * @return string|string[]
      */
     public function getLabelForDisplay($language = null, $joinChar = "; ");
@@ -35,10 +34,6 @@ interface IiifResourceInterface {
     public function getMetadata();
     
     public function getMetadataForDisplay($language = null, $joinChars = "; ");
-    
-//     public function getMetadataLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true);
-    
-//     public function getMetadataValueByLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true);
     
     /**
      * version 2: description
