@@ -337,7 +337,7 @@ class JsonLdProcessor {
             }
             $definition->setIriMapping($expanededIri);
             // 14.3
-            if (strpos($term, ":") === false && $simpleTerm && array_search(mb_substr($definition->getIriMapping(), count($definition->getIriMapping()) - 1, 1, 'utf-8'), self::GEN_DELIM) !== false) {
+            if (strpos($term, ":") === false && $simpleTerm && array_search(mb_substr($definition->getIriMapping(), strlen($definition->getIriMapping()) - 1, 1, 'utf-8'), self::GEN_DELIM) !== false) {
                 $definition->setPrefix(true);
             }
         } elseif (strpos($term, ":") !== false) {
