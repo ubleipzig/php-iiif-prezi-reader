@@ -1,0 +1,29 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/book1/manifest",
+  "label": "Manifest label",
+  "metadata": [
+    {
+      "label": "No HTML",
+      "value": "A text without tags but with < and >"
+    },
+    {
+      "label": "Simple HTML",
+      "value": "<span>Some HTML.  <img alt='It has images' src='withsources'><a href='http://example.org' target='blank'>and <b>bold</b> links</a><a href='urn:example'>and forbidden hrefs</a><script>alert('And scripts.')</script><!-- and comments--></span>"
+    },
+    {
+      "label": "Broken HTML 1",
+      "value": "<span>broken<span><  script  >"
+    },
+    {
+      "label": "Broken HTML 2",
+      "value": "<span>broken <![CDATA[]normaldata<script>alert('with invalid parts')</script>]</span>"
+    },
+    {
+      "label": "empty",
+      "value": ""
+    }
+  ],
+  "sequences": []
+}

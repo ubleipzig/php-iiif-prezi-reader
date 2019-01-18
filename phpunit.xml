@@ -3,6 +3,7 @@
     <testsuites>
         <testsuite name="IIIF Reader Test Suite">
             <directory>./tests/iiif/context</directory>
+            <directory>./tests/iiif/presentation/common/model</directory>
             <directory>./tests/iiif/presentation/v2/model</directory>
             <directory>./tests/iiif/presentation/v3/model</directory>
             <directory>./tests/iiif/services</directory>

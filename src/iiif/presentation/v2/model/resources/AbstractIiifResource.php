@@ -115,11 +115,16 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         }
     }
 
-    protected function getValueForDisplay($value, $language = null, $joinChars = "; ") {
+    protected function getValueForDisplay($value, $language = null, $joinChars = "; ", $html = false, $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         if (is_null($value)){
             return null;
         }
         if (is_string($value)){
+            if ($html) {
+                $value = $this->sanitizeHtml($value, $options);
+            } elseif ($options&(IiifResourceInterface::SANITIZE_XML_ENCODE_ALL|IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML)) {
+                $value = htmlspecialchars($value,  ENT_QUOTES);
+            }
             return $value;
         }
         if (is_array($value)) {
@@ -141,7 +146,13 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
                             $defaultLanguage = $entry[Keywords::LANGUAGE];
                         }
                         if ($defaultLanguage == $entry[Keywords::LANGUAGE]) {
-                            $defaultLanguageArray[] = $entry[Keywords::VALUE];
+                            $entryValue = $entry[Keywords::VALUE];
+                            if ($html) {
+                                $entryValue = $this->sanitizeHtml($entryValue, $options);
+                            } elseif ($options&(IiifResourceInterface::SANITIZE_XML_ENCODE_ALL|IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML)) {
+                                $entryValue = htmlspecialchars($entryValue,  ENT_QUOTES);
+                            }
+                            $defaultLanguageArray[] = $entryValue;
                         }
                     }
                 }
@@ -285,7 +296,7 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataForDisplay()
      */
-    public function getMetadataForDisplay($language = null, $joinChars = "; ") {
+    public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         if (!isset($this->metadata) || !JsonLdHelper::isSequentialArray($this->metadata)) {
             return null;
         }
@@ -293,12 +304,12 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         foreach ($this->metadata as $metadata) {
             $resultData = [];
             if (array_key_exists("label", $metadata)) {
-                $resultData["label"] = $this->getValueForDisplay($metadata["label"], $language, $joinChars);
+                $resultData["label"] = $this->getValueForDisplay($metadata["label"], $language, $joinChars, false, IiifResourceInterface::SANITIZE_XML_ENCODE_ALL);
             } else {
                 $resultData["label"] = "";
             }
             if (array_key_exists("value", $metadata)) {
-                $resultData["value"] = $this->getValueForDisplay($metadata["value"], $language, $joinChars);
+                $resultData["value"] = $this->getValueForDisplay($metadata["value"], $language, $joinChars, true, $options);
             } else {
                 $resultData["value"] = "";
             }

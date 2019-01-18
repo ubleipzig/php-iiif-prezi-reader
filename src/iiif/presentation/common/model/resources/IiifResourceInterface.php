@@ -4,6 +4,12 @@ namespace iiif\presentation\common\model\resources;
 use iiif\services\Service;
 
 interface IiifResourceInterface {
+
+    const SANITIZE_NO_TAGS = 1;
+    
+    const SANITIZE_XML_ENCODE_ALL = 2;
+    
+    const SANITIZE_XML_ENCODE_NONHTML = 4;
     
     /**
      * @return string
@@ -33,7 +39,7 @@ interface IiifResourceInterface {
      */
     public function getMetadata();
     
-    public function getMetadataForDisplay($language = null, $joinChars = "; ");
+    public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = 0);
     
     /**
      * version 2: description

@@ -424,7 +424,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataForDisplay()
      */
-    public function getMetadataForDisplay($language = null, $joinChars = "; ") {
+    public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub
         
     }
