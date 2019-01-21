@@ -3,18 +3,39 @@ namespace iiif\context;
 
 class TermDefinition {
 
+    /**
+     * @var string
+     */
     protected $term;
 
+    /**
+     * @var string
+     */
     protected $prefix;
 
+    /**
+     * @var string
+     */
     protected $iriMapping;
 
+    /**
+     * @var string
+     */
     protected $typeMapping;
 
+    /**
+     * @var string
+     */
     protected $languageMapping;
 
+    /**
+     * @var string
+     */
     protected $nestValue;
 
+    /**
+     * @var string
+     */
     protected $containerMapping;
 
     /**
@@ -32,50 +53,10 @@ class TermDefinition {
 
     /**
      *
-     * @return mixed
+     * @return string
      */
     public function getTerm() {
         return $this->term;
-    }
-
-    /**
-     *
-     * @return mixed
-     */
-    public function getId() {
-        return $this->id;
-    }
-
-    /**
-     *
-     * @return mixed
-     */
-    public function getExpandedId() {
-        return $this->expandedId;
-    }
-
-    /**
-     *
-     * @return mixed
-     */
-    public function getType() {
-        return $this->type;
-    }
-
-    /**
-     *
-     * @return mixed
-     */
-    public function getLanuage() {
-        return $this->lanuage;
-    }
-
-    /**
-     *
-     * @return mixed
-     */
-    public function getCollectionContainer() {
-        return $this->collectionContainer;
     }
 
     /**
@@ -88,7 +69,7 @@ class TermDefinition {
 
     /**
      *
-     * @return mixed
+     * @return string
      */
     public function getIriMapping() {
         return $this->iriMapping;
@@ -96,7 +77,7 @@ class TermDefinition {
 
     /**
      *
-     * @param mixed $iriMapping
+     * @param string $iriMapping
      */
     public function setIriMapping($iriMapping) {
         $this->iriMapping = $iriMapping;
@@ -104,7 +85,7 @@ class TermDefinition {
 
     /**
      *
-     * @return mixed
+     * @return string
      */
     public function getTypeMapping() {
         return $this->typeMapping;
@@ -112,7 +93,7 @@ class TermDefinition {
 
     /**
      *
-     * @param mixed $typeMapping
+     * @param string $typeMapping
      */
     public function setTypeMapping($typeMapping) {
         $this->typeMapping = $typeMapping;
@@ -120,7 +101,7 @@ class TermDefinition {
 
     /**
      *
-     * @return mixed
+     * @return string
      */
     public function getLanguageMapping() {
         return $this->languageMapping;
@@ -136,7 +117,7 @@ class TermDefinition {
 
     /**
      *
-     * @return mixed
+     * @return string
      */
     public function getContainerMapping() {
         return $this->containerMapping;
@@ -152,7 +133,7 @@ class TermDefinition {
 
     /**
      *
-     * @param mixed $languageMapping
+     * @param string $languageMapping
      */
     public function setLanguageMapping($languageMapping) {
         $this->languageMapping = $languageMapping;
@@ -168,7 +149,7 @@ class TermDefinition {
 
     /**
      *
-     * @param mixed $containerMapping
+     * @param string $containerMapping
      */
     public function setContainerMapping($containerMapping) {
         $this->containerMapping = $containerMapping;
@@ -192,7 +173,7 @@ class TermDefinition {
 
     /**
      *
-     * @return mixed
+     * @return string
      */
     public function getPrefix() {
         return $this->prefix;
@@ -200,7 +181,7 @@ class TermDefinition {
 
     /**
      *
-     * @param mixed $prefix
+     * @param string $prefix
      */
     public function setPrefix($prefix) {
         $this->prefix = $prefix;
