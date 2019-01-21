@@ -330,6 +330,8 @@ abstract class AbstractIiifEntity {
             } else {
                 $xsl->load(__DIR__."/../../../../../resources/xslt/sanitize.xsl");
             }
+            
+            $disableEntityLoaderBak = libxml_disable_entity_loader(true);
             $doc = new \DOMDocument();
             
             // We will only accept wellformed XML and therefore need an exception instead of a warning message  
@@ -339,12 +341,13 @@ abstract class AbstractIiifEntity {
                 }
             });
             try {
-                $doc->loadHTML($input , LIBXML_NOCDATA | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                $doc->loadHTML($input , LIBXML_NOCDATA | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NONET);
             } catch (\ErrorException $ex) {
                 $stripped = strip_tags($input);
                 return ($options&(IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML|IiifResourceInterface::SANITIZE_XML_ENCODE_ALL)) ? htmlspecialchars($stripped,  ENT_QUOTES) : $stripped;
             } finally {
                 restore_error_handler();
+                libxml_disable_entity_loader($disableEntityLoaderBak);
             }
             
             $xslProcessor = new \XSLTProcessor();

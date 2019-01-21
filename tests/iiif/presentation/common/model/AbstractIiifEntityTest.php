@@ -54,6 +54,9 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
         echo $manifest->getMetadataForDisplay(null, "; ", IiifResourceInterface::SANITIZE_XML_ENCODE_ALL)[3]["value"]."\n";
         echo $manifest->getMetadataForDisplay()[3]["value"]."\n";
         
+        echo $manifest->getMetadataForDisplay()[4]["value"]."\n";
+        echo $manifest->getMetadataForDisplay()[5]["value"]."\n";
+        echo $manifest->getMetadataForDisplay()[6]["value"]."\n";
         
         
         //self::assertEquals("<span>Some HTML.  <img alt='It has images' src='with sources'><a href='http://example.org'>and <b>bold</b> links</a>and forbidden hrefsalert('And scripts.')</span>", $manifest->getMetadataForDisplay()[0]["value"]);

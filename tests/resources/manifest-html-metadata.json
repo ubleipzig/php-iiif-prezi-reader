@@ -21,8 +21,16 @@
       "value": "<span>broken <![CDATA[]normaldata<script>alert('with invalid parts')</script>]</span>"
     },
     {
-      "label": "empty",
-      "value": ""
+      "label": "Broken 3",
+      "value": "<span><![CDATA[<]]>script<![CDATA[>]]>alert('xss')<![CDATA[<]]>/script<![CDATA[>]]></span>"
+    },
+    {
+      "label": "Danger 1",
+      "value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY xxe SYSTEM \"file:///etc/passwd\" >]><span>&xxe;</span>"
+    },
+    {
+      "label" : "Danger 2",
+      "value": "<?xml version='1.0'?><!DOCTYPE results [<!ENTITY harmless 'completely harmless'>]><span><results><result>This result is &harmless;</result></results></span>"
     }
   ],
   "sequences": []
