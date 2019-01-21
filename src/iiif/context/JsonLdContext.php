@@ -46,15 +46,12 @@ class JsonLdContext {
     }
 
     public function __clone() {
-        // TODO
-        $clone = new JsonLdContext($this->processor);
+        $termDefinitions = [];
         foreach ($this->termDefinitions as $term => $definition) {
-            $clone->addTermDefinition($term, $definition);
+            // TODO do we really need cloned term definitions?
+            $termDefinitions[$term] = clone $definition;
         }
-        $clone->setVocabularyMapping($this->getVocabularyMapping());
-        $clone->setBaseIri($this->getBaseIri());
-        $clone->setContextIri($this->getContextIri());
-        return $clone;
+        $this->termDefinitions = $termDefinitions;
     }
 
     public function addTermDefinition($term, $definition) {
