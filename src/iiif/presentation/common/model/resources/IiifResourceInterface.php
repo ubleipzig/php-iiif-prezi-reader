@@ -80,6 +80,10 @@ interface IiifResourceInterface {
      */
     public function getSingleService();
     
+    /**
+     * @return string|array Any number of URLs representing a rendered version of the current resource, e.g. a PDF, HTML doc etc,
+     * as string, array of strings, assotiated array of @id an label where the @id contains the URL, or an array with a list of the latter.  
+     */
     public function getRendering();
     
     public function getRenderingUrlsForFormat($format, $useChildResources = true);
