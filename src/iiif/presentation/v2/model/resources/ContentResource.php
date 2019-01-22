@@ -4,6 +4,7 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\services\AbstractImageService;
 use iiif\presentation\v2\model\properties\WidthAndHeightTrait;
 use iiif\presentation\common\model\resources\ContentResourceInterface;
+use iiif\tools\Options;
 
 class ContentResource extends AbstractIiifResource implements ContentResourceInterface {
     use WidthAndHeightTrait;
@@ -52,7 +53,7 @@ class ContentResource extends AbstractIiifResource implements ContentResourceInt
         $services = is_array($this->service) ? $this->service : [$this->service];
         foreach ($services as $service) {
             if ($service instanceof AbstractImageService) {
-                $size = $this->width <= $this->height ? ",100" : "100,";
+                $size = $this->width <= $this->height ? ",".Options::getMaxThumbnailHeight() : (Options::getMaxThumbnailWidth().",");
                 return $service->getImageUrl(null, $size);
             }
         }

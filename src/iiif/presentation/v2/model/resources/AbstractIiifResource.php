@@ -11,6 +11,7 @@ use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\services\AbstractImageService;
 use iiif\services\Service;
 use iiif\tools\IiifHelper;
+use iiif\tools\Options;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -570,8 +571,8 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
             }
             if ($imageService!=null && $imageService instanceof AbstractImageService) {
                 // TODO Add level 0 support. The following uses level 1 features sizeByW or sizeByH
-                $width = $width == null ? 100 : $width;
-                $height = $heigth == null ? 100 : $heigth;
+                $width = $width == null ? Options::getMaxThumbnailWidth() : $width;
+                $height = $heigth == null ? Options::getMaxThumbnailHeight() : $heigth;
                 $size = $width <= $height ? (",".$height) : ($width.",");
                 return $imageService->getImageUrl(null, $size, null, null, null);
             } elseif ($simpleUrl!=null) {

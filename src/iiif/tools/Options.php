@@ -29,14 +29,14 @@ class Options {
      * @return number
      */
     public static function getMaxThumbnailWidth() {
-        return Options::$maxThumbnailWidth;
+        return self::$maxThumbnailWidth == null ? 100 : self::$maxThumbnailWidth;
     }
 
     /**
      * @return number
      */
     public static function getMaxThumbnailHeight() {
-        return Options::$maxThumbnailHeight;
+        return self::$maxThumbnailHeight == null ? 100 : self::$maxThumbnailHeight;
     }
 
     /**
