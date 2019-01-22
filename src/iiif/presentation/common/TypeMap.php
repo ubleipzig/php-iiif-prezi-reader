@@ -20,10 +20,24 @@ use iiif\services\ImageInformation1;
 use iiif\services\ImageInformation2;
 use iiif\services\ImageInformation3;
 use iiif\presentation\v3\model\resources\SpecificResource3;
+use iiif\presentation\v1\model\resources\Manifest1;
+use iiif\presentation\v1\model\resources\Sequence1;
+use iiif\presentation\v1\model\resources\Canvas1;
+use iiif\presentation\v1\model\resources\Annotation1;
+use iiif\presentation\v1\model\resources\ContentResource1;
+use iiif\presentation\v1\model\resources\AnnotationList1;
+use iiif\presentation\v1\model\resources\Range1;
+use iiif\presentation\v1\model\resources\Layer1;
 
 class TypeMap {
 
     protected static $CLASSES = [
+        "http://www.shared-canvas.org/ns/Manifest" => Manifest1::class,
+        "http://www.shared-canvas.org/ns/Sequence" => Sequence1::class,
+        "http://www.shared-canvas.org/ns/Canvas" => Canvas1::class,
+        "http://www.shared-canvas.org/ns/AnnotationList" => AnnotationList1::class,
+        "http://www.shared-canvas.org/ns/Range" => Range1::class,
+        "http://www.shared-canvas.org/ns/Layer" => Layer1::class,
         "http://iiif.io/api/presentation/2#Manifest" => Manifest::class,
         "http://iiif.io/api/presentation/2#Sequence" => Sequence::class,
         "http://iiif.io/api/presentation/2#Canvas" => Canvas::class,
@@ -35,17 +49,27 @@ class TypeMap {
         "http://iiif.io/api/presentation/3#Canvas" => Canvas3::class,
         "http://iiif.io/api/presentation/3#Range" => Range3::class,
         "http://www.w3.org/ns/oa#Annotation" => [
+            "http://www.shared-canvas.org/ns/context.json" => Annotation1::class,
+            "http://iiif.io/api/presentation/1/context.json" => Annotation1::class,
+            "http://iiif.io/api/presentation/2/context.json" => Annotation::class,
             "http://iiif.io/api/presentation/3/combined-context.json" => Annotation3::class,
             "http://iiif.io/api/presentation/3/context.json" => Annotation3::class,
-            "http://www.w3.org/ns/anno.jsonld" => Annotation3::class,
-            "http://iiif.io/api/presentation/2/context.json" => Annotation::class
+            "http://www.w3.org/ns/anno.jsonld" => Annotation3::class
         ],
         "http://www.w3.org/ns/activitystreams#OrderedCollectionPage" => AnnotationPage3::class,
         "http://www.w3.org/ns/activitystreams#OrderedCollection" => AnnotationCollection3::class,
         "http://www.w3.org/ns/activitystreams#Application" => null,
         "http://purl.org/dc/dcmitype/StillImage" => ContentResource3::class,
-        "http://purl.org/dc/dcmitype/Image" => ContentResource::class,
-        "http://www.w3.org/2011/content#ContentAsText" => ContentResource::class,
+        "http://purl.org/dc/dcmitype/Image" => [
+            "http://www.shared-canvas.org/ns/context.json" => ContentResource1::class,
+            "http://iiif.io/api/presentation/1/context.json" => ContentResource1::class,
+            "http://iiif.io/api/presentation/2/context.json" => ContentResource::class,
+        ],
+        "http://www.w3.org/2011/content#ContentAsText" => [
+            "http://www.shared-canvas.org/ns/context.json" => ContentResource1::class,
+            "http://iiif.io/api/presentation/1/context.json" => ContentResource1::class,
+            "http://iiif.io/api/presentation/2/context.json" => ContentResource::class,
+        ],
         "http://iiif.io/api/image/1/ImageService" => ImageInformation1::class,
         "http://iiif.io/api/image/2/ImageService" => ImageInformation2::class,
         "http://iiif.io/api/image/3/ImageService" => ImageInformation3::class,
@@ -54,6 +78,7 @@ class TypeMap {
         "http://rdfs.org/sioc/services#Service" => null,
         "http://purl.org/dc/dcmitype/Dataset" => ContentResource3::class,
         "http://purl.org/dc/dcmitype/Text" => ContentResource3::class,
+        // TODO
         "http://www.w3.org/ns/oa#SpecificResource" => SpecificResource3::class,
         "http://www.w3.org/ns/oa#TextualBody" => ContentResource3::class,
         "http://www.w3.org/ns/oa#FragmentSelector" => null,
@@ -61,6 +86,7 @@ class TypeMap {
     ];
 
     const SERVICE_TYPES = [
+        "http://library.stanford.edu/iiif/image-api/1.1/context.json" => "http://iiif.io/api/image/1/ImageService",
         "http://iiif.io/api/image/1/context.json" => "http://iiif.io/api/image/1/ImageService",
         "http://iiif.io/api/image/2/context.json" => "http://iiif.io/api/image/2/ImageService",
         "http://iiif.io/api/image/3/context.json" => "http://iiif.io/api/image/3/ImageService"

@@ -12,6 +12,7 @@ use iiif\presentation\v2\model\resources\AbstractIiifResource;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
 use iiif\tools\IiifHelper;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
+use iiif\presentation\v1\model\resources\AbstractIiifResource1;
 
 abstract class AbstractIiifEntity {
 
@@ -158,7 +159,7 @@ abstract class AbstractIiifEntity {
                 }
             }
             $resource->originalJsonArray = $dictionary;
-            if (($resource instanceof AbstractIiifResource3 || $resource instanceof AbstractIiifResource) && $noParent) {
+            if (($resource instanceof AbstractIiifResource3 || $resource instanceof AbstractIiifResource || $resource instanceof AbstractIiifResource1) && $noParent) {
                 $containedResources = [];
                 foreach ($allResources as $id => $resourceArray) {
                     $containedResources[$id] = $resourceArray["resource"];
