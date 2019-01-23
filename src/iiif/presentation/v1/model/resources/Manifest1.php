@@ -16,6 +16,8 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
      * @var Range1[]
      */
     protected $structures;
+    
+    protected $treeHierarchyInitialized = false;
 
     /**
      * @return multitype:\iiif\presentation\v1\model\resources\Sequence1 
@@ -57,6 +59,18 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
      * @see \iiif\presentation\common\model\resources\ManifestInterface::getRootRanges()
      */
     public function getRootRanges() {
+        
+        if (!$this->treeHierarchyInitialized) {
+            
+            if (!empty($this->structures)) {
+                foreach ($this->structures as $range) {
+                    $range->initTreeHierarchy();
+                }
+            }
+            
+            $this->treeHierarchyInitialized = true;
+        }
+        
         // TODO Auto-generated method stub
         
     }

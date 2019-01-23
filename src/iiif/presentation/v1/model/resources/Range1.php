@@ -16,6 +16,22 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @var Range1|Manifest1
      */
     protected $within;
+    
+    protected $childRanges = [];
+    
+    protected function getStringResources() {
+        return [
+            "within" => Range1::class,
+            "canvases" => Canvas1::class
+        ];
+    }
+
+    public function initTreeHierarchy() {
+        if ($this->within != null && $this->within instanceof Range1) {
+            $this->within->childRanges[] = &$this;
+        }
+    }
+    
     /**
      * @return multitype:\iiif\presentation\v1\model\resources\Canvas1 
      */
@@ -34,8 +50,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::getAllCanvases()
      */
     public function getAllCanvases() {
-        // TODO Auto-generated method stub
-        
+        return $this->canvases;
     }
 
     /**

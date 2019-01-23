@@ -3,7 +3,6 @@ namespace iiif\presentation\v1\model\resources;
 
 use iiif\presentation\common\model\resources\ContentResourceInterface;
 use iiif\services\AbstractImageService;
-use iiif\tools\IiifHelper;
 use iiif\tools\Options;
 
 class ContentResource1 extends AbstractIiifResource1 implements ContentResourceInterface {

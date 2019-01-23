@@ -1,6 +1,9 @@
 <?php
 namespace iiif\presentation\v1\model\resources;
 
+use iiif\context\JsonLdHelper;
+use iiif\presentation\common\model\resources\IiifResourceInterface;
+
 abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
     /**
      * 
@@ -33,8 +36,25 @@ abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
      * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getMetadataForDisplay()
      */
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = 0) {
-        // TODO Auto-generated method stub
-        return null;
+        if (!isset($this->metadata) || !JsonLdHelper::isSequentialArray($this->metadata)) {
+            return null;
+        }
+        $result = null;
+        foreach ($this->metadata as $metadata) {
+            $resultData = [];
+            if (array_key_exists("label", $metadata)) {
+                $resultData["label"] = $this->getValueForDisplay($metadata["label"], $language, $joinChars, false, IiifResourceInterface::SANITIZE_XML_ENCODE_ALL);
+            } else {
+                $resultData["label"] = "";
+            }
+            if (array_key_exists("value", $metadata)) {
+                $resultData["value"] = $this->getValueForDisplay($metadata["value"], $language, $joinChars, true, $options);
+            } else {
+                $resultData["value"] = "";
+            }
+            $result[] = $resultData;
+        }
+        return $result;
     }
 
     /**

@@ -75,8 +75,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getLabelForDisplay()
      */
     public function getLabelForDisplay($language = null, $joinChar = "; ") {
-        // TODO Auto-generated method stub
-        
+        return $this->getValueForDisplay($this->label, $language, $joinChar);
     }
 
     /**
@@ -93,8 +92,12 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataForDisplay()
      */
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = 0) {
-        // TODO Auto-generated method stub
-        
+        /*
+         *  Metadata API https://iiif.io/api/metadata/1.0/#md-requirements
+         *  - only manifests, sequences, canvases, ranges and layers may have metadata
+         *  - see AbstractDescribableResource1
+         */ 
+        return null;
     }
 
     /**
@@ -143,8 +146,19 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSeeAlsoUrlsForFormat()
      */
     public function getSeeAlsoUrlsForFormat($format) {
-        // TODO Auto-generated method stub
-        
+        if (!is_array($this->seeAlso)) {
+            return null;
+        }
+        $result = [];
+        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        foreach ($seeAlso as $candidate) {
+            if (array_key_exists("format", $candidate)) {
+                if ($format == $candidate["format"]) {
+                    $result[] = $candidate["@id"];
+                }
+            }
+        }
+        return $result;
     }
 
     /**
@@ -152,8 +166,28 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSeeAlsoUrlsForProfile()
      */
     public function getSeeAlsoUrlsForProfile($profile, $startsWith = false) {
-        // TODO Auto-generated method stub
-        
+        if (!is_array($this->seeAlso)) {
+            return null;
+        }
+        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $result = [];
+        foreach ($seeAlso as $candidate) {
+            if (array_key_exists("profile", $candidate)) {
+                if (is_string($candidate["profile"])) {
+                    if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
+                        $result[] = $candidate["@id"];
+                    }
+                } elseif (JsonLdHelper::isSequentialArray($candidate["profile"])) {
+                    foreach ($candidate["profile"] as $profileItem) {
+                        if (is_string($profileItem) && ($profileItem == $profile || ($startsWith && strpos($profileItem, $profile)===0))) {
+                            $result[] = $candidate["@id"];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
     }
 
     /**
