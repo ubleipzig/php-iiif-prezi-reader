@@ -27,8 +27,8 @@ class AnnotationTest extends AbstractIiifTest {
      */
     protected function setUp() {
         parent::setUp();
-        $this->imageAnnotation = IiifHelper::loadIiifResource(parent::getJson("annotation-image-example.json"));
-        $this->textAnnotation = IiifHelper::loadIiifResource(parent::getJson("annotation-text-example.json"));
+        $this->imageAnnotation = IiifHelper::loadIiifResource(parent::getJson("v2/annotation-image-example.json"));
+        $this->textAnnotation = IiifHelper::loadIiifResource(parent::getJson("v2/annotation-text-example.json"));
         self::assertInstanceOf(Annotation::class, $this->imageAnnotation);
         self::assertInstanceOf(Annotation::class, $this->textAnnotation);
     }

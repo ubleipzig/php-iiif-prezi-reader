@@ -15,7 +15,7 @@ class RangeTest extends AbstractIiifTest
     
     protected function setup()
     {
-        $jsonAsString = parent::getJson('structures-example.json');
+        $jsonAsString = parent::getJson('v2/structures-example.json');
         $this->manifest = Manifest::loadIiifResource($jsonAsString);
     }
     

@@ -19,7 +19,7 @@ class CanvasTest extends AbstractIiifTest
 
     protected function setUp()
     {
-        $this->json = parent::getJson('canvas-example.json');
+        $this->json = parent::getJson('v2/canvas-example.json');
         $array = json_decode($this->json, true);
         $this->canvas = Canvas::loadIiifResource($array);
     }
@@ -77,32 +77,32 @@ class CanvasTest extends AbstractIiifTest
         self::assertEmpty(get_object_vars($this->canvas));
     }
     public function testGetRenderingUrlsForFormat() {
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('canvas-rendering-01.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/canvas-rendering-01.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertEquals(2, sizeof($rendering));
         self::assertEquals("http://example.org/iiif/canvas-rendering.pdf", $rendering[0]);
         self::assertEquals("http://example.org/iiif/canvas-rendering-2.pdf", $rendering[1]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('canvas-rendering-02.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/canvas-rendering-02.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertEquals(2, sizeof($rendering));
         self::assertEquals("http://example.org/iiif/image-anno-rendering.pdf", $rendering[0]);
         self::assertEquals("http://example.org/iiif/image-anno-rendering-2.pdf", $rendering[1]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('canvas-rendering-02.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/canvas-rendering-02.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf', false);
         self::assertEmpty($rendering);
 
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('canvas-rendering-03.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/canvas-rendering-03.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertEquals(2, sizeof($rendering));
         self::assertEquals("http://example.org/iiif/image-resource-rendering.pdf", $rendering[0]);
         self::assertEquals("http://example.org/iiif/image-resource-rendering-2.pdf", $rendering[1]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('canvas-rendering-03.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/canvas-rendering-03.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf', false);
         self::assertEmpty($rendering);
     }

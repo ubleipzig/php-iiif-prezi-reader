@@ -24,7 +24,7 @@ class ManifestTest extends AbstractIiifTest
      */
     protected function setUp()
     {
-        $this->json = parent::getJson('manifest-example.json');
+        $this->json = parent::getJson('v2/manifest-example.json');
         $this->manifest = Manifest::loadIiifResource($this->json);
     }
 
@@ -148,7 +148,7 @@ class ManifestTest extends AbstractIiifTest
     
     public function testEmptyManifest()
     {
-        $json = parent::getJson('empty-manifest.json');
+        $json = parent::getJson('v2/empty-manifest.json');
         $manifest = Manifest::loadIiifResource($json);
         
     }
@@ -158,11 +158,11 @@ class ManifestTest extends AbstractIiifTest
     }
     
     public function testGetRenderingUrlsForFormat() {
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-01.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-sequence-rendering-01.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf', false);
         self::assertEmpty($rendering);
     
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-01.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-sequence-rendering-01.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertTrue(is_array($rendering));
@@ -170,7 +170,7 @@ class ManifestTest extends AbstractIiifTest
         self::assertEquals("http://example.org/iiif/sequence-rendering.pdf", $rendering[0]);
         self::assertEquals("http://example.org/iiif/sequence-rendering-2.pdf", $rendering[1]);
 
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-02.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-sequence-rendering-02.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf', false);
         self::assertNotEmpty($rendering);
         self::assertTrue(is_array($rendering));
@@ -178,7 +178,7 @@ class ManifestTest extends AbstractIiifTest
         self::assertEquals("http://example.org/iiif/manifest-rendering.pdf", $rendering[0]);
         self::assertEquals("http://example.org/iiif/manifest-rendering-2.pdf", $rendering[1]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-sequence-rendering-02.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-sequence-rendering-02.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertTrue(is_array($rendering));

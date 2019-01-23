@@ -292,7 +292,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
     
     public function testJsonPath()
     {
-        $manifest = Manifest::loadIiifResource(file_get_contents(__DIR__.'/../../../../resources/manifest-0000006761.json'));
+        $manifest = Manifest::loadIiifResource(parent::getJson('v2/manifest-0000006761.json'));
         
         /* @var $manifest Manifest */
         
@@ -315,29 +315,29 @@ class AbstractIiifResourceTest extends AbstractIiifTest
     
     public function testGetRenderingUrlsForFormat() {
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-01.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-rendering-01.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertEmpty($rendering);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-02.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-rendering-02.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertEmpty($rendering);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-03.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-rendering-03.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertTrue(is_array($rendering));
         self::assertEquals(1, sizeof($rendering));
         self::assertEquals('http://example.org/iiif/manifest-rendering.pdf', $rendering[0]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-04.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-rendering-04.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertTrue(is_array($rendering));
         self::assertEquals(1, sizeof($rendering));
         self::assertEquals('http://example.org/iiif/manifest-rendering-2.pdf', $rendering[0]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-rendering-05.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-rendering-05.json'));
         $rendering = $manifest->getRenderingUrlsForFormat('application/pdf');
         self::assertNotEmpty($rendering);
         self::assertTrue(is_array($rendering));
@@ -348,15 +348,15 @@ class AbstractIiifResourceTest extends AbstractIiifTest
     
     public function testGetSeeAlsoUrlsForFormat() {
 
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-01.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-01.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
         self::assertEmpty($seeAlso);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-02.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-02.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
         self::assertEmpty($seeAlso);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-03.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-03.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
         self::assertEmpty($seeAlso);
         $seeAlso = $manifest->getSeeAlsoUrlsForFormat('application/mets+xml');
@@ -364,7 +364,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
         self::assertEquals(1, sizeof($seeAlso));
         self::assertEquals("http://example.org/mets.xml", $seeAlso[0]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-04.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-04.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForFormat('application/mets+xml');
         self::assertEmpty($seeAlso);
         $seeAlso = $manifest->getSeeAlsoUrlsForFormat('image/jpg');
@@ -378,15 +378,15 @@ class AbstractIiifResourceTest extends AbstractIiifTest
 
     public function testGetSeeAlsoUrlsForProfile() {
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-01.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-01.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/');
         self::assertEmpty($seeAlso);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-02.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-02.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/');
         self::assertEmpty($seeAlso);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-03.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-03.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForProfile('http://www.loc.gov/standards/mets/version111/mets.xsd');
         self::assertNotEmpty($seeAlso);
         self::assertEquals(1, sizeof($seeAlso));
@@ -398,7 +398,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
         self::assertEquals(1, sizeof($seeAlso));
         self::assertEquals("http://example.org/mets.xml", $seeAlso[0]);
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('manifest-seealso-04.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getJson('v2/manifest-seealso-04.json'));
         $seeAlso = $manifest->getSeeAlsoUrlsForProfile('https://iiif.io/api/image/');
         self::assertEmpty($seeAlso);
         $seeAlso = $manifest->getSeeAlsoUrlsForProfile('https://iiif.io/api/image/', true);

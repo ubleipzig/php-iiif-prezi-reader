@@ -7,7 +7,7 @@ use iiif\tools\IiifHelper;
 
 class TestUblManifestsTest extends AbstractIiifTest
 {
-    const MANIFEST_EXAMPLES = array('manifest-0000006761.json', 'manifest-0000000720.json');
+    const MANIFEST_EXAMPLES = array('v2/manifest-0000006761.json', 'v2/manifest-0000000720.json');
     
     public function testUBLManifest()
     {
