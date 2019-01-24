@@ -268,7 +268,18 @@ abstract class AbstractIiifEntity {
                     foreach ($references as $reference) {
                         $refResource = $reference["resource"];
                         $refProperty = $reference["property"];
-                        $allResources[$refResource]["resource"]->$refProperty = &$resource;
+                        if (is_array($allResources[$refResource]["resource"]->$refProperty)) {
+                            $index = 0; 
+                            foreach ($allResources[$refResource]["resource"]->$refProperty as $item) {
+                                if ($item->id = $resource->id) {
+                                    break;
+                                }
+                                $index++;
+                            }
+                            $allResources[$refResource]["resource"]->$refProperty[$index] = &$resource;
+                        } else {
+                            $allResources[$refResource]["resource"]->$refProperty = &$resource;
+                        }
                     }
                 }
                 $allResources[$resource->id]["resource"] = $resource;
