@@ -66,9 +66,11 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
      */
     public function getRootRanges() {
         $result = [];
-        foreach ($this->structures as $range) {
-            if (empty($range->getWithin()) || (!$range->getWithin() instanceof Range1)) {
-                $result[] = &$range;
+        if (!empty($this->structures)) {
+            foreach ($this->structures as $range) {
+                if (empty($range->getWithin()) || (!$range->getWithin() instanceof Range1)) {
+                    $result[] = &$range;
+                }
             }
         }
         return $result;
