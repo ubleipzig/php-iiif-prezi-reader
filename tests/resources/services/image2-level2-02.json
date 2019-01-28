@@ -1,6 +1,6 @@
 {
   "@context" : "http://iiif.io/api/image/2/context.json",
-  "@id" : "http://example.com/image/10",
+  "@id" : "http://example.com/image/12",
   "protocol" : "http://iiif.io/api/image",
   "width" : 1000,
   "height" : 2000,
