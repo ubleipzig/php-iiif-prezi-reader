@@ -1,0 +1,88 @@
+{
+  "@context": "http://www.shared-canvas.org/ns/context.json",
+  "@id": "http://www.example.org/item1/manifest.json",
+  "@type": "sc:Manifest",
+  "sequences":[
+    {
+      "@id":"http://www.example.org/iiif/item1/canvas/page1.json",
+      "@type":"sc:Canvas",
+      "label":"1",
+      "width":800,    
+      "height":1200
+    },
+    {
+      "@id":"http://www.example.org/iiif/item1/canvas/page2.json",
+      "@type":"sc:Canvas",
+      "label":"2",
+      "width":800,    
+      "height":1200
+    },
+    {
+      "@id":"http://www.example.org/iiif/item1/canvas/page3.json",
+      "@type":"sc:Canvas",
+      "label":"3",
+      "width":800,    
+      "height":1200
+    },
+    {
+      "@id":"http://www.example.org/iiif/item1/canvas/page4.json",
+      "@type":"sc:Canvas",
+      "label":"4",
+      "width":800,    
+      "height":1200
+    },
+    {
+      "@id":"http://www.example.org/iiif/item1/canvas/page5.json",
+      "@type":"sc:Canvas",
+      "label":"5",
+      "width":800,    
+      "height":1200
+    }
+  ],
+  "structures": [
+    {
+      "@id": "http://www.example.org/iiif/item1/range/range1.json",
+      "@type": "sc:Range",
+      "label": "Table of Contents",
+      "canvases": [
+        "http://www.example.org/iiif/item1/canvas/page1.json",
+        "http://www.example.org/iiif/item1/canvas/page2.json"
+      ]
+    },
+    {
+      "@id": "http://www.example.org/iiif/item1/range/range2.json",
+      "@type": "sc:Range",
+      "label": "Chapter 1",
+      "canvases": [
+        "http://www.example.org/iiif/item1/canvas/page2.json",
+        "http://www.example.org/iiif/item1/canvas/page3.json"
+      ]
+    },
+    {
+      "@id": "http://www.example.org/iiif/item1/range/range2-1.json",
+      "@type": "sc:Range",
+      "label": "Illustration",
+      "within": "http://www.example.org/iiif/item1/range/range2.json",
+      "canvases": [
+        "http://www.example.org/iiif/item1/canvas/page3.json"
+      ]
+    },
+    {
+      "@id": "http://www.example.org/iiif/item1/range/range2-2.json",
+      "@type": "sc:Range",
+      "label": "Illustration",
+      "within": "http://www.example.org/iiif/item1/range/range2.json",
+      "canvases": [
+        "http://www.example.org/iiif/item1/canvas/page4.json"
+      ]
+    },
+    {
+      "@id": "http://www.example.org/iiif/item1/range/range3.json",
+      "@type": "sc:Range",
+      "label": "Chapter 2",
+      "canvases": [
+        "http://www.example.org/iiif/item1/canvas/page5.json"
+      ]
+    }
+  ]
+}

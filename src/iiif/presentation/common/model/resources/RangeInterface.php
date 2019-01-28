@@ -44,6 +44,7 @@ interface RangeInterface extends IiifResourceInterface {
     public function getAllCanvasesRecursively();
     
     /**
+     * A top range is a Range with the viewingHint "top" and represents the root of the hierarchy tree.
      *@return bool Range is a version 2 range with viewingHint=top
      */
     public function isTopRange();

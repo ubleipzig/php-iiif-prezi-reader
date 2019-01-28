@@ -17,7 +17,13 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
      */
     protected $structures;
     
-    protected $treeHierarchyInitialized = false;
+    protected function executeAfterLoading() {
+        foreach ($this->containedResources as $resource) {
+            if ($resource instanceof Range1) {
+                $resource->initTreeHierarchy();
+            }
+        }
+    }
 
     /**
      * @return multitype:\iiif\presentation\v1\model\resources\Sequence1 
@@ -31,7 +37,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
      * @see \iiif\presentation\common\model\resources\ManifestInterface::getStructures()
      */
     public function getStructures() {
-        $this->structures;
+        return $this->structures;
     }
     
     /**
@@ -59,20 +65,13 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
      * @see \iiif\presentation\common\model\resources\ManifestInterface::getRootRanges()
      */
     public function getRootRanges() {
-        
-        if (!$this->treeHierarchyInitialized) {
-            
-            if (!empty($this->structures)) {
-                foreach ($this->structures as $range) {
-                    $range->initTreeHierarchy();
-                }
+        $result = [];
+        foreach ($this->structures as $range) {
+            if (empty($range->getWithin()) || (!$range->getWithin() instanceof Range1)) {
+                $result[] = &$range;
             }
-            
-            $this->treeHierarchyInitialized = true;
         }
-        
-        // TODO Auto-generated method stub
-        
+        return $result;
     }
 
     /**

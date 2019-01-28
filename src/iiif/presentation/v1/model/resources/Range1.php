@@ -19,6 +19,8 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
     
     protected $childRanges = [];
     
+    protected $treeHierarchyInitialized = false;
+    
     protected function getStringResources() {
         return [
             "within" => Range1::class,
@@ -27,9 +29,13 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
     }
 
     public function initTreeHierarchy() {
+        if ($this->treeHierarchyInitialized) {
+            return;
+        }
         if ($this->within != null && $this->within instanceof Range1) {
             $this->within->childRanges[] = &$this;
         }
+        $this->treeHierarchyInitialized = true;
     }
     
     /**
@@ -58,8 +64,23 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::getAllCanvasesRecursively()
      */
     public function getAllCanvasesRecursively() {
-        // TODO Auto-generated method stub
-        
+        $result = $this->getCanvases();
+        if ($result == null) {
+            $result = [];
+        }
+        if (!empty($this->getAllRanges())) {
+            foreach ($this->getAllRanges() as $range) {
+                $childCanvases = $range->getAllCanvasesRecursively();
+                if (!empty($childCanvases)) {
+                    foreach ($childCanvases as &$childCanvas) {
+                        if (array_search($childCanvas, $result) === false) {
+                            $result[] = &$childCanvas;
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
     }
 
     /**
@@ -67,8 +88,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::getAllItems()
      */
     public function getAllItems() {
-        // TODO Auto-generated method stub
-        
+        return $items = array_merge($this->getCanvases() == null ? [] : $this->getCanvases(), $this->childRanges == null ? [] : $this->childRanges);
     }
 
     /**
@@ -76,8 +96,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::getAllRanges()
      */
     public function getAllRanges() {
-        // TODO Auto-generated method stub
-        
+        return $this->childRanges;
     }
 
     /**
@@ -85,8 +104,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvas()
      */
     public function getStartCanvas() {
-        // TODO Auto-generated method stub
-        
+        return null;
     }
 
     /**
@@ -94,8 +112,8 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvasOrFirstCanvas()
      */
     public function getStartCanvasOrFirstCanvas() {
-        // TODO Auto-generated method stub
-        
+        $canvases = $this->getAllCanvasesRecursively();
+        return empty($canvases) ? null : $canvases[0];
     }
 
     /**
@@ -103,7 +121,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \iiif\presentation\common\model\resources\RangeInterface::isTopRange()
      */
     public function isTopRange() {
-        return $this->within == null || $this->within instanceof Manifest1;
+        return false;
     }
     
 }

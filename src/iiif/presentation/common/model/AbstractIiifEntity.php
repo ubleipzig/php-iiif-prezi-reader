@@ -23,8 +23,10 @@ abstract class AbstractIiifEntity {
     protected $originalJsonArray;
 
     /**
-     *
-     * @var boolean
+     * Only used during intialization / loading of a IIIF document
+     *  
+     * @var boolean true if the object has been created or updated after evaluating the resource's definition;
+     * false if the object for the resource has just been created to represent a reference from another object 
      */
     protected $initialized = false;
 
@@ -117,7 +119,7 @@ abstract class AbstractIiifEntity {
             if ($id != null && array_key_exists($id, $allResources)) {
                 $resource = $allResources[$id]["resource"];
             } else {
-                $typeIri = IRI::isAbsoluteIri($type) ? $type : IRI::isCompactUri($type) ? $processor->expandIRI($context, $type) : $context->getTermDefinition($type)->getIriMapping();
+                $typeIri = IRI::isAbsoluteIri($type) ? $type : (IRI::isCompactUri($type) ? $processor->expandIRI($context, $type) : $context->getTermDefinition($type)->getIriMapping());
                 $typeClass = TypeMap::getClassForType($typeIri, $context);
                 if ($typeClass == null) {
                     return $dictionary;
@@ -167,6 +169,7 @@ abstract class AbstractIiifEntity {
                 $containedResources[$resource->id] = $resource;
                 $resource->containedResources = $containedResources;
             }
+            $resource->executeAfterLoading();
             return $resource;
         } else {
             return $dictionary;
@@ -403,6 +406,13 @@ abstract class AbstractIiifEntity {
 //             return $stripped;
 //         }
 //         return null;
+    }
+    
+    /**
+     * Executed after resource has been eveluted. Used if any additional properties have to be set.
+     */
+    protected function executeAfterLoading() {
+        // Do nothing
     }
     
 }
