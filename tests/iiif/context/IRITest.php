@@ -59,14 +59,17 @@ class IRITest extends \PHPUnit_Framework_TestCase
         }
     }
     
-    public function testIsCompressedUri() {
-        self::assertFalse(IRI::isCompactUri(null));
-        self::assertFalse(IRI::isCompactUri(""));
-        self::assertFalse(IRI::isCompactUri("path"));
-        self::assertTrue(IRI::isCompactUri("ns:path"));
-        self::assertFalse(IRI::isCompactUri("ssh://root@127.0.0.1/"));
-        self::assertFalse(IRI::isCompactUri("schema://host"));
-        self::assertFalse(IRI::isCompactUri("http://iiif.io/api/presentation/3/context.json"));
+    public function testIsCompactUri() {
+        $processor = new JsonLdProcessor();
+        $context = $processor->processContext(json_decode('{"ns":"http://www.example.org/schema#"}', true), new JsonLdContext($processor));
+        self::assertFalse(IRI::isCompactUri(null, $context));
+        self::assertFalse(IRI::isCompactUri("", $context));
+        self::assertFalse(IRI::isCompactUri("path", $context));
+        self::assertTrue(IRI::isCompactUri("ns:path", $context));
+        self::assertFalse(IRI::isCompactUri("urn:ISBN:3-8273-7019-1", $context));
+        self::assertFalse(IRI::isCompactUri("ssh://root@127.0.0.1/", $context));
+        self::assertFalse(IRI::isCompactUri("schema://host", $context));
+        self::assertFalse(IRI::isCompactUri("http://iiif.io/api/presentation/3/context.json", $context));
     }
     
     public function testIsUri() {
@@ -75,6 +78,7 @@ class IRITest extends \PHPUnit_Framework_TestCase
         self::assertTrue(IRI::isUri("path"));
         self::assertTrue(IRI::isUri("ns:path"));
         self::assertTrue(IRI::isUri("ssh://root@127.0.0.1/"));
+        self::assertTrue(IRI::isUri("urn:ISBN:3-8273-7019-1"));
         self::assertTrue(IRI::isUri("schema://host"));
         self::assertTrue(IRI::isUri("http://iiif.io/api/presentation/3/context.json"));
     }
@@ -91,6 +95,7 @@ class IRITest extends \PHPUnit_Framework_TestCase
 
     public function testIsAbsoluteUri() {
         self::assertTrue(IRI::isAbsoluteIri("http://iiif.io/api/presentation/3/context.json"));
+        self::assertTrue(IRI::isAbsoluteIri("urn:ISBN:3-8273-7019-1"));
         self::assertFalse(IRI::isAbsoluteIri('{"jsonkey":"jsonvalue"}'));
     }
 

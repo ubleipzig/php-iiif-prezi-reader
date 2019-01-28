@@ -119,7 +119,7 @@ abstract class AbstractIiifEntity {
             if ($id != null && array_key_exists($id, $allResources)) {
                 $resource = $allResources[$id]["resource"];
             } else {
-                $typeIri = IRI::isAbsoluteIri($type) ? $type : (IRI::isCompactUri($type) ? $processor->expandIRI($context, $type) : $context->getTermDefinition($type)->getIriMapping());
+                $typeIri = IRI::isAbsoluteIri($type) && !IRI::isCompactUri($type, $context) ? $type : (IRI::isCompactUri($type, $context) ? $processor->expandIRI($context, $type) : $context->getTermDefinition($type)->getIriMapping());
                 $typeClass = TypeMap::getClassForType($typeIri, $context);
                 if ($typeClass == null) {
                     return $dictionary;

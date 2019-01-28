@@ -1,32 +1,65 @@
 <?php
 namespace iiif\context;
 
+/**
+ * Represents an Internationalized Resource Identifier and offers several methods for information about a given IRI in the context of JSON-LD.
+ *
+ * @author lutzhelm
+ *
+ */
 class IRI {
 
     /**
      * IRI regex with named groups.
-     * See https://tools.ietf.org/html/rfc3986#appendix-B
+     * @link https://tools.ietf.org/html/rfc3986#appendix-B
      */
     const URI_REGEX = '_^((?P<scheme>[^:/?#]+):)?(?P<authority>(//)([^/?#]*))?(?P<path>[^?#]*)(\?(?P<query>[^#]*))?(#(?P<fragment>.*))?_';
 
-    const COMPRESS_URI_REGEX = "_^(?P<namespace>[^:/?#]+):(?P<term>[^:/?#]+)_";
+    const COMPACT_URI_REGEX = "_^(?P<prefix>[^:/?#]+):(?P<term>[^:/?#]+)_";
 
+    /**
+     * @var string
+     */
     protected $uri;
 
+    /**
+     * @var string
+     */
     protected $scheme;
 
+    /**
+     * @var string
+     */
     protected $authority;
 
+    /**
+     * @var string
+     */
     protected $userInfo;
 
+    /**
+     * @var string
+     */
     protected $host;
 
+    /**
+     * @var string
+     */
     protected $port;
 
+    /**
+     * @var string
+     */
     protected $path;
 
+    /**
+     * @var string
+     */
     protected $query;
 
+    /**
+     * @var string
+     */
     protected $fragment;
 
     public function __construct($iri = null) {
@@ -49,37 +82,73 @@ class IRI {
         }
     }
 
-    public static function isCompactUri($uri) {
-        return preg_match(IRI::COMPRESS_URI_REGEX, $uri) === 1;
+    /**
+     * Checks if a given string is a compact URI. It therefore has to have a prefix and a term definition for the prefix in the current JSON-LD context. 
+     * @param string $uri
+     * @param JsonLdContext $context
+     * @return boolean
+     */
+    public static function isCompactUri($uri, JsonLdContext $context) {
+        if (!preg_match(self::COMPACT_URI_REGEX, $uri)) {
+            return false;
+        }
+        preg_match(self::COMPACT_URI_REGEX, $uri, $matches);
+        $prefix = $matches["prefix"];
+        return !empty($prefix) && $context->getTermDefinition($prefix) != null && !empty($context->getTermDefinition($prefix)->getIriMapping());
     }
 
+    /**
+     * Checks if a string has the form of a URI by matching the regex in https://tools.ietf.org/html/rfc3986#appendix-B
+     * @param string $uri
+     * @return boolean
+     * @link https://tools.ietf.org/html/rfc3986#appendix-B
+     */
     public static function isUri($uri) {
         if ($uri == null)
             return false;
         return preg_match(IRI::URI_REGEX, $uri) === 1;
     }
 
+    /**
+     * 
+     * @param string $uri
+     * @return boolean
+     * @deprecated A URI is only expanded or compacted in the context of a JSON-LD context. Use isCompactUri() instead.
+     */
     public static function isExpandedUri($uri) {
         $matches = array();
         $result = preg_match(IRI::URI_REGEX, $uri, $matches);
         return $result === 1 && ! empty($matches["scheme"]) && ! empty($matches["authority"]);
     }
 
+    /**
+     * Checks if a URI is an absolute URI for JSON-LD purposes.
+     * From https://www.w3.org/TR/json-ld11-api/#dfn-absolute-iri :
+     * "An absolute IRI is defined in [RFC3987] containing a scheme along with a path and optional query and fragment segments."
+     *  
+     * @param string $uri
+     * @return boolean true
+     */
     public static function isAbsoluteIri($uri) {
         $iri = new IRI($uri);
-        return self::isUri($uri) && ! empty($iri->scheme) && ! empty($iri->authority) && ! (strpos($uri, "{") === 0 && strrpos($uri, "}") === 0);
+        $absoluteIri = self::isUri($uri) && ! empty($iri->scheme) && ! empty($iri->path) && ! (strpos(trim($uri), "{") === 0 && strrpos(trim($uri), "}") === strlen(trim($uri))-1);
+        return self::isUri($uri) && ! empty($iri->scheme) && ! empty($iri->path) && ! (strpos(trim($uri), "{") === 0 && strrpos(trim($uri), "}") === strlen(trim($uri))-1);
     }
 
+    /**
+     * Checks if a URI is a relative URI. For that purpose we check if it matches the URI regex and misses a scheme.
+     * @param string $uri
+     * @return boolean true if $uri has the form of a relative URI, otherwise false
+     */
     public static function isRelativeIri($uri) {
         return self::isUri($uri) && empty((new IRI($uri))->scheme);
     }
 
     /**
-     * See https://tools.ietf.org/html/rfc3986#section-5.2
-     *
      * @param string $baseIri
      * @param string $relativeIri
      * @return string
+     * @link https://tools.ietf.org/html/rfc3986#section-5.2
      */
     public static function resolveAbsoluteIri($baseIri, $relativeIri) {
         $base = new IRI($baseIri);
@@ -125,10 +194,9 @@ class IRI {
     }
 
     /**
-     * See https://tools.ietf.org/html/rfc3986#section-5.2.4
-     *
      * @param string $path
      * @return string
+     * @link https://tools.ietf.org/html/rfc3986#section-5.2.4
      */
     private static function removeDotSegments($path) {
         $input = $path;
@@ -165,7 +233,6 @@ class IRI {
     }
 
     /**
-     *
      * @return string
      */
     public function getUri() {
@@ -173,64 +240,56 @@ class IRI {
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getScheme() {
         return $this->scheme;
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getAuthority() {
         return $this->authority;
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getUserInfo() {
         return $this->userInfo;
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getHost() {
         return $this->host;
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getPort() {
         return $this->port;
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getPath() {
         return $this->path;
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getQuery() {
         return $this->query;
     }
 
     /**
-     *
-     * @return mixed
+     * @return string
      */
     public function getFragment() {
         return $this->fragment;
