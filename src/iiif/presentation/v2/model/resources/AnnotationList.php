@@ -4,7 +4,7 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\tools\IiifHelper;
 use iiif\presentation\common\model\resources\AnnotationContainerInterface;
 
-class AnnotationList extends AbstractIiifResource implements AnnotationContainerInterface {
+class AnnotationList extends AbstractIiifResource2 implements AnnotationContainerInterface {
 
     const TYPE = "sc:AnnotationList";
 

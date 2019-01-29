@@ -4,7 +4,7 @@ namespace iiif\presentation\v2\model\resources;
 use iiif\presentation\v2\model\properties\WidthAndHeightTrait;
 use iiif\presentation\common\model\resources\CanvasInterface;
 
-class Canvas extends AbstractIiifResource implements CanvasInterface {
+class Canvas extends AbstractIiifResource2 implements CanvasInterface {
     use WidthAndHeightTrait;
 
     const TYPE = "sc:Canvas";

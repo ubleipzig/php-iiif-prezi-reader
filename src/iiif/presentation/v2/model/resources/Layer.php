@@ -3,7 +3,7 @@ namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 
-class Layer extends AbstractIiifResource {
+class Layer extends AbstractIiifResource2 {
     use ViewingDirectionTrait;
 
 }

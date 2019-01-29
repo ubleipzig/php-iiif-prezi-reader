@@ -6,7 +6,7 @@ use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 use iiif\presentation\common\model\resources\RangeInterface;
 use iiif\presentation\v2\model\constants\ViewingHintValues;
 
-class Range extends AbstractIiifResource implements RangeInterface {
+class Range extends AbstractIiifResource2 implements RangeInterface {
     use ViewingDirectionTrait;
     use StartCanvasTrait;
 

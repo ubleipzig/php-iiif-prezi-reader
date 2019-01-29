@@ -20,7 +20,7 @@ use iiif\tools\Options;
  * @author lutzhelm
  *
  */
-abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifResourceInterface {
+abstract class AbstractIiifResource2 extends AbstractIiifEntity implements IiifResourceInterface {
 
     // http://iiif.io/api/presentation/2.1/#technical-properties
     /**

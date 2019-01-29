@@ -6,7 +6,7 @@ use iiif\presentation\v2\model\properties\WidthAndHeightTrait;
 use iiif\presentation\common\model\resources\ContentResourceInterface;
 use iiif\tools\Options;
 
-class ContentResource extends AbstractIiifResource implements ContentResourceInterface {
+class ContentResource extends AbstractIiifResource2 implements ContentResourceInterface {
     use WidthAndHeightTrait;
 
     /**
@@ -43,7 +43,7 @@ class ContentResource extends AbstractIiifResource implements ContentResourceInt
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource::getThumbnailUrl()
+     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result = parent::getThumbnailUrl();

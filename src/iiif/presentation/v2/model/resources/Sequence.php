@@ -1,12 +1,10 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
-include_once 'AbstractIiifResource.php';
-
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 use iiif\presentation\v2\model\properties\StartCanvasTrait;
 
-class Sequence extends AbstractIiifResource {
+class Sequence extends AbstractIiifResource2 {
     use ViewingDirectionTrait;
     use StartCanvasTrait;
 

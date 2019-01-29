@@ -27,7 +27,7 @@ require_once (__DIR__ . "/presentation/v2/model/properties/StartCanvasTrait.php"
 require_once (__DIR__ . "/presentation/v2/model/properties/ViewingDirectionTrait.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/WidthAndHeightTrait.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/XYWHFragment.php");
-require_once (__DIR__ . "/presentation/v2/model/resources/AbstractIiifResource.php");
+require_once (__DIR__ . "/presentation/v2/model/resources/AbstractIiifResource2.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Annotation.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/AnnotationList.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Canvas.php");

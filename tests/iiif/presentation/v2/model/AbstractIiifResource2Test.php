@@ -5,9 +5,9 @@ use iiif\presentation\v2\model\resources\MockIiifResource;
 use iiif\tools\IiifHelper;
 
 /**
- * AbstractIiifResource test case.
+ * AbstractIiifResource2 test case.
  */
-class AbstractIiifResourceTest extends AbstractIiifTest
+class AbstractIiifResource2Test extends AbstractIiifTest
 {
 
     /**
@@ -23,7 +23,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
     {
         parent::setUp();
         
-        // TODO Auto-generated AbstractIiifResourceTest::setUp()
+        // TODO Auto-generated AbstractIiifResource2Test::setUp()
         
         $this->abstractIiifResource = new MockIiifResource();
     }
@@ -33,7 +33,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
      */
     protected function tearDown()
     {
-        // TODO Auto-generated AbstractIiifResourceTest::tearDown()
+        // TODO Auto-generated AbstractIiifResource2Test::tearDown()
         $this->abstractIiifResource = null;
         
         parent::tearDown();
@@ -52,7 +52,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
      */
     public function testGetDefaultLabel()
     {
-        // TODO Auto-generated AbstractIiifResourceTest->testGetDefaultLabel()
+        // TODO Auto-generated AbstractIiifResource2Test->testGetDefaultLabel()
         $this->markTestIncomplete("getDefaultLabel test not implemented");
         
         $this->abstractIiifResource->getDefaultLabel(/* parameters */);
@@ -63,7 +63,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
      */
     public function testIsReference()
     {
-        // TODO Auto-generated AbstractIiifResourceTest->testIsReference()
+        // TODO Auto-generated AbstractIiifResource2Test->testIsReference()
         $this->markTestIncomplete("isReference test not implemented");
         
         $this->abstractIiifResource->isReference(/* parameters */);
@@ -74,7 +74,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
      */
     public function testGetId()
     {
-        // TODO Auto-generated AbstractIiifResourceTest->testGetId()
+        // TODO Auto-generated AbstractIiifResource2Test->testGetId()
         $this->markTestIncomplete("getId test not implemented");
         
         $this->abstractIiifResource->getId(/* parameters */);
@@ -85,7 +85,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
      */
     public function testGetService()
     {
-        // TODO Auto-generated AbstractIiifResourceTest->testGetService()
+        // TODO Auto-generated AbstractIiifResource2Test->testGetService()
         $this->markTestIncomplete("getService test not implemented");
         
         $this->abstractIiifResource->getService(/* parameters */);
@@ -103,7 +103,7 @@ class AbstractIiifResourceTest extends AbstractIiifTest
      */
     public function testGetThumbnail()
     {
-        // TODO Auto-generated AbstractIiifResourceTest->testGetThumbnail()
+        // TODO Auto-generated AbstractIiifResource2Test->testGetThumbnail()
         $this->markTestIncomplete("getThumbnail test not implemented");
         
         $this->abstractIiifResource->getThumbnail(/* parameters */);

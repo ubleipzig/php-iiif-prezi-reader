@@ -6,7 +6,7 @@ use iiif\presentation\v2\model\constants\ViewingHintValues;
 use iiif\presentation\v2\model\properties\NavDateTrait;
 use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
 
-class Manifest extends AbstractIiifResource implements ManifestInterface {
+class Manifest extends AbstractIiifResource2 implements ManifestInterface {
     use NavDateTrait;
     use ViewingDirectionTrait;
 
@@ -36,7 +36,7 @@ class Manifest extends AbstractIiifResource implements ManifestInterface {
 
     /**
      *
-     * @var AbstractIiifResource[]
+     * @var AbstractIiifResource2[]
      */
     protected $containedResources = array();
 

@@ -1,10 +1,10 @@
 <?php
 namespace iiif\presentation\v2\model\resources;
 
-class MockIiifResource extends AbstractIiifResource
+class MockIiifResource extends AbstractIiifResource2
 {
     /**
-     * Only for testing AbstractIiifResource methods
+     * Only for testing AbstractIiifResource2 methods
      * 
      * @param array $jsonAsArray
      * @param array $allResources

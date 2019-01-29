@@ -5,7 +5,7 @@ use iiif\presentation\common\model\resources\AnnotationInterface;
 use iiif\presentation\v2\model\vocabulary\Motivation;
 use iiif\presentation\v2\model\properties\XYWHFragment;
 
-class Annotation extends AbstractIiifResource implements AnnotationInterface {
+class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
     const TYPE = "oa:Annotation";
 

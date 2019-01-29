@@ -8,7 +8,7 @@ use iiif\context\JsonLdHelper;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
 use iiif\presentation\common\TypeMap;
-use iiif\presentation\v2\model\resources\AbstractIiifResource;
+use iiif\presentation\v2\model\resources\AbstractIiifResource2;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
 use iiif\tools\IiifHelper;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
@@ -161,7 +161,7 @@ abstract class AbstractIiifEntity {
                 }
             }
             $resource->originalJsonArray = $dictionary;
-            if (($resource instanceof AbstractIiifResource3 || $resource instanceof AbstractIiifResource || $resource instanceof AbstractIiifResource1) && $noParent) {
+            if (($resource instanceof AbstractIiifResource3 || $resource instanceof AbstractIiifResource2 || $resource instanceof AbstractIiifResource1) && $noParent) {
                 $containedResources = [];
                 foreach ($allResources as $id => $resourceArray) {
                     $containedResources[$id] = $resourceArray["resource"];

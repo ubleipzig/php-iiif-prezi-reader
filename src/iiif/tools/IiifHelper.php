@@ -2,7 +2,7 @@
 namespace iiif\tools;
 
 use iiif\presentation\common\model\AbstractIiifEntity;
-use iiif\presentation\v2\model\resources\AbstractIiifResource;
+use iiif\presentation\v2\model\resources\AbstractIiifResource2;
 use iiif\presentation\v2\model\resources\Canvas;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Range;
@@ -36,7 +36,7 @@ class IiifHelper {
     }
     
     public static function getRenderingUrlsForFormat($resource, $format, $useNestedResources = true) {
-        if ($resource instanceof AbstractIiifResource) {
+        if ($resource instanceof AbstractIiifResource2) {
             return $resource->getRenderingUrlsForFormat($format, $useNestedResources);
         }
     }
