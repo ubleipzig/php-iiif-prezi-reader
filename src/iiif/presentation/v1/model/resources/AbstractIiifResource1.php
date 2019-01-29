@@ -38,6 +38,12 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
     protected $license;
 
     /**
+     *
+     * @var string|array
+     */
+    protected $related;
+
+    /**
      * 
      * @var string|array|\iiif\services\Service
      */
@@ -98,6 +104,10 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
          *  - see AbstractDescribableResource1
          */ 
         return null;
+    }
+    
+    public function getRelated() {
+        return $this->related;
     }
 
     /**
@@ -288,5 +298,13 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
         }
         return null;
     }
-    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getWeblinksForDisplay()
+     */
+    public function getWeblinksForDisplay($language = null, $joinChars = " ") {
+        // TODO untested
+        return $this->getWeblinksForDisplayCommon($this->related, $language, $joinChars, "@id");
+    }
+
 }

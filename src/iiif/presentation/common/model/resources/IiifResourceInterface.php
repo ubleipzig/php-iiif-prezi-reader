@@ -42,6 +42,16 @@ interface IiifResourceInterface {
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = 0);
     
     /**
+     * Get a normalized and translated form of the related (v1, v2) or homepage (v3) field.
+     * @param string $language
+     * @param string $joinChars If multiple labels of the same language are 
+     * present for any related resource, join them with $joinChars; set label
+     * to array if $joinchars is null.
+     * @return array A list of assiociative arrays containg the URL as "@id" and optionally a translated "label" as well as a "format".
+     */
+    public function getWeblinksForDisplay($language = null, $joinChars = "; ");
+    
+    /**
      * version 2: description
      * version 3: summary
      * @return string|array  

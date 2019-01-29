@@ -1,0 +1,50 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/book1/manifest",
+  "label": "Manifest label",
+  "related": "http://www.example.org/related-to-manifest",
+  "sequences": [
+    {
+      "@id": "http://example.org/iiif/book1/sequence/default",
+      "@type": "sc:Sequence",
+      "canvases": [
+        {
+	      "@id": "http://example.org/iiif/book1/canvas/page1",
+		  "@type": "sc:Canvas",
+		  "related" : {
+		    "@id": "http://www.example.org/related-to-canvas-1"
+		  }
+        },
+        {
+	      "@id": "http://example.org/iiif/book1/canvas/page2",
+		  "@type": "sc:Canvas",
+		  "related" : [
+		    {
+		      "@id": "http://www.example.org/related-to-canvas-2-1"
+		    },
+            "http://www.example.org/related-to-canvas-2-2",
+		    {
+		      "@id": "http://www.example.org/related-to-canvas-2-3",
+		      "format": "text/html",
+		      "label": "Label 2-3"
+		    },
+		    {
+		      "@id": "http://www.example.org/related-to-canvas-2-4",
+		      "format": "text/html",
+		      "label": [ { "@language": "en", "@value": "Label 2-4"}, "Label II-IV"]
+		    },
+		    {
+		      "format": "text/html",
+		      "label": "Label 2-5"
+		    }
+		  ]
+        },
+        {
+	      "@id": "http://example.org/iiif/book1/canvas/page3",
+		  "@type": "sc:Canvas"
+        }
+      ]
+    }
+  ]
+}

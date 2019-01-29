@@ -5,7 +5,7 @@ use iiif\context\JsonLdContext;
 use iiif\context\JsonLdHelper;
 use iiif\context\Keywords;
 use iiif\presentation\common\TypeMap;
-use iiif\presentation\common\model\AbstractIiifEntity;
+use iiif\presentation\common\model\resources\AbstractIiifResource;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\presentation\v2\model\vocabulary\Names;
 use iiif\services\AbstractImageService;
@@ -20,7 +20,7 @@ use iiif\tools\Options;
  * @author lutzhelm
  *
  */
-abstract class AbstractIiifResource2 extends AbstractIiifEntity implements IiifResourceInterface {
+abstract class AbstractIiifResource2 extends AbstractIiifResource implements IiifResourceInterface {
 
     // http://iiif.io/api/presentation/2.1/#technical-properties
     /**
@@ -89,7 +89,8 @@ abstract class AbstractIiifResource2 extends AbstractIiifEntity implements IiifR
         return [
             "profile",
             "rendering",
-            "seeAlso"
+            "seeAlso",
+            "related"
         ];
     }
 
@@ -582,4 +583,11 @@ abstract class AbstractIiifResource2 extends AbstractIiifEntity implements IiifR
         return null;
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getWeblinksForDisplay()
+     */
+    public function getWeblinksForDisplay($language = null, $joinChars = "; ") {
+        return $this->getWeblinksForDisplayCommon($this->related, $language, $joinChars, "@id");
+    }
 }

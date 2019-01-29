@@ -11,11 +11,13 @@ use iiif\presentation\v3\model\resources\Collection3;
 use iiif\presentation\v3\model\resources\ContentResource3;
 use iiif\presentation\v3\model\resources\Manifest3;
 use iiif\presentation\v3\model\resources\Range3;
+use iiif\AbstractIiifTest;
+use iiif\tools\IiifHelper;
 
 /**
  *  test case.
  */
-class AbstractIiifResource3Test extends PHPUnit_Framework_TestCase
+class AbstractIiifResource3Test extends AbstractIiifTest
 {
 
     /**
@@ -200,6 +202,20 @@ class AbstractIiifResource3Test extends PHPUnit_Framework_TestCase
         
         $this->markTestIncomplete("getLoadIiifResource test not implemented");
     }
+    
+    public function testGetWeblinksForDisplay() {
+        $manifest = IiifHelper::loadIiifResource(self::getFile("v3/manifest3-example.json"));
+        /* @var $manifest \iiif\presentation\v3\model\resources\Manifest3 */
+        self::assertNotNull($manifest);
+        self::assertNotNull($manifest->getWeblinksForDisplay());
+        self::assertTrue(JsonLdHelper::isSequentialArray($manifest->getWeblinksForDisplay()));
+        self::assertEquals(1, count($manifest->getWeblinksForDisplay()));
+        $homepage = $manifest->getWeblinksForDisplay()[0];
+        self::assertTrue(JsonLdHelper::isDictionary($homepage));
+        self::assertEquals(3, count($homepage));
+        self::assertEquals("https://example.org/info/book1/", $homepage["@id"]);
+        self::assertEquals("Home page for Book 1", $homepage["label"]);
+        self::assertEquals("text/html", $homepage["format"]);
+    }
+    
 }
-
-;

@@ -31,7 +31,7 @@ class Sequence extends AbstractIiifResource2 {
 
     /**
      *
-     * @return multitype:\iiif\model\resources\Canvas
+     * @return Canvas[]
      */
     public function getCanvases() {
         return $this->canvases;

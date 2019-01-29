@@ -3,14 +3,13 @@ namespace iiif\presentation\v3\model\resources;
 
 use iiif\context\JsonLdHelper;
 use iiif\context\Keywords;
-use iiif\presentation\common\model\AbstractIiifEntity;
+use iiif\presentation\common\model\resources\AbstractIiifResource;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\services\AbstractImageService;
 use iiif\tools\IiifHelper;
-use iiif\services\Service;
 use iiif\tools\Options;
 
-abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifResourceInterface {
+abstract class AbstractIiifResource3 extends AbstractIiifResource implements IiifResourceInterface {
 
     /**
      *
@@ -68,7 +67,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
 
     /**
      *
-     * @var Service
+     * @var \iiif\services\Service
      */
     protected $service;
 
@@ -313,6 +312,12 @@ abstract class AbstractIiifResource3 extends AbstractIiifEntity implements IiifR
 
     public function getLabelForDisplay($language = null, $joinChars = "; ") {
         return $this->getValueForDisplay($this->label, $language, $joinChars);
+    }
+
+    public function getWeblinksForDisplay($language = null, $joinChars = " ") {
+        // TODO untested
+        // TODO Version 3 is still not final; cardinality of "homepage" is still in discussion: https://github.com/IIIF/trc/issues/4
+        return $this->getWeblinksForDisplayCommon($this->homepage, $language, $joinChars, "id");
     }
     
     public function getRenderingUrlsForFormat($format, $useChildResources = true) {

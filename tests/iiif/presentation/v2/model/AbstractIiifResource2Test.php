@@ -3,6 +3,7 @@ use iiif\AbstractIiifTest;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\MockIiifResource;
 use iiif\tools\IiifHelper;
+use iiif\context\JsonLdHelper;
 
 /**
  * AbstractIiifResource2 test case.
@@ -412,6 +413,39 @@ class AbstractIiifResource2Test extends AbstractIiifTest
         self::assertEquals(1, sizeof($seeAlso));
         self::assertEquals("http://example.org/iiif/image/v1", $seeAlso[0]);
 
+    }
+    
+    public function testGetWeblinksForDisplay() {
+        $manifest = IiifHelper::loadIiifResource(self::getFile("v2/manifest-data.json"));
+        self::assertNotNull($manifest);
+        /* @var $manifest Manifest */
+        self::assertInstanceOf(Manifest::class, $manifest);
+        self::assertNotNull($manifest->getWeblinksForDisplay());
+        self::assertTrue(is_array($manifest->getWeblinksForDisplay()));
+        self::assertTrue(JsonLdHelper::isSequentialArray($manifest->getWeblinksForDisplay()));
+        self::assertEquals(1, count($manifest->getWeblinksForDisplay()));
+        self::assertTrue(JsonLdHelper::isDictionary($manifest->getWeblinksForDisplay()[0]));
+        self::assertEquals("http://www.example.org/related-to-manifest", $manifest->getWeblinksForDisplay()[0]["@id"]);
+        $canvases = $manifest->getSequences()[0]->getCanvases();
+        self::assertNotNull($canvases);
+        self::assertEquals(3, count($canvases));
+        self::assertEquals(1, count($canvases[0]->getWeblinksForDisplay()));
+        self::assertEquals(1, count($canvases[0]->getWeblinksForDisplay()[0]));
+        self::assertEquals("http://www.example.org/related-to-canvas-1", $canvases[0]->getWeblinksForDisplay()[0]["@id"]);
+        self::assertEquals(4, count($canvases[1]->getWeblinksForDisplay()));
+        self::assertEquals(1, count($canvases[1]->getWeblinksForDisplay()[0]));
+        self::assertEquals("http://www.example.org/related-to-canvas-2-1", $canvases[1]->getWeblinksForDisplay()[0]["@id"]);
+        self::assertEquals(1, count($canvases[1]->getWeblinksForDisplay()[1]));
+        self::assertEquals("http://www.example.org/related-to-canvas-2-2", $canvases[1]->getWeblinksForDisplay()[1]["@id"]);
+        self::assertEquals(3, count($canvases[1]->getWeblinksForDisplay()[2]));
+        self::assertEquals("http://www.example.org/related-to-canvas-2-3", $canvases[1]->getWeblinksForDisplay()[2]["@id"]);
+        self::assertEquals("text/html", $canvases[1]->getWeblinksForDisplay()[2]["format"]);
+        self::assertEquals("Label 2-3", $canvases[1]->getWeblinksForDisplay()[2]["label"]);
+        self::assertEquals(3, count($canvases[1]->getWeblinksForDisplay()[3]));
+        self::assertEquals("http://www.example.org/related-to-canvas-2-4", $canvases[1]->getWeblinksForDisplay()[3]["@id"]);
+        self::assertEquals("text/html", $canvases[1]->getWeblinksForDisplay()[3]["format"]);
+        self::assertEquals("Label II-IV", $canvases[1]->getWeblinksForDisplay()[3]["label"]);
+        self::assertNull($canvases[2]->getWeblinksForDisplay());
     }
     
     private function prepareMetadata($metadataString)
