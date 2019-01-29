@@ -13,7 +13,7 @@ class TestUblManifestsTest extends AbstractIiifTest
     {
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
-            $manifestAsJson=self::getJson($manifestFile);
+            $manifestAsJson=self::getFile($manifestFile);
             Manifest::loadIiifResource($manifestAsJson, $manifestFile." did not load");
         }
     }
@@ -22,7 +22,7 @@ class TestUblManifestsTest extends AbstractIiifTest
     {
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
-            $documentAsJson=self::getJson($manifestFile);
+            $documentAsJson=self::getFile($manifestFile);
             $resource=IiifHelper::loadIiifResource($documentAsJson);
             self::assertInstanceOf(Manifest::class, $resource, 'Not a manifest: '.$manifestFile);
             self::assertNotNull($resource->getSequences(), 'No sequences found: '.$manifestFile);

@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  test case.
+ *  Test case to ensure contexts are up to date
  */
 class ContextResourceTest extends PHPUnit_Framework_TestCase {
     
@@ -18,6 +18,9 @@ class ContextResourceTest extends PHPUnit_Framework_TestCase {
         "http://iiif.io/api/search/1/context.json" => "search-context-1.json"
     ];
 
+    /**
+     * Ensure that the JSON-LD contexts that are provided with this library are the same as the online resources.
+     */
     public function testLocalResoucesEqualRemoteResources() {
         foreach (self::CONTEXTS as $url => $localFilename) {
             $remoteContent = file_get_contents($url);

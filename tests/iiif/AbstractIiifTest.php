@@ -5,7 +5,7 @@ use PHPUnit\Framework\TestCase;
 
 abstract class AbstractIiifTest extends TestCase
 {
-    public static function getJson($filename)
+    public static function getFile($filename)
     {
         return file_get_contents(__DIR__.'/../resources/'.$filename);
     }

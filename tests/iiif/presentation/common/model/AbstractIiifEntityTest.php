@@ -16,7 +16,7 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
         self::assertEquals(IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML, $options&IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML);
         self::assertEquals(0, $options&IiifResourceInterface::SANITIZE_XML_ENCODE_ALL);
         
-        $doc = parent::getJson("v2/manifest-html-metadata.json");
+        $doc = parent::getFile("v2/manifest-html-metadata.json");
         $manifest = IiifHelper::loadIiifResource($doc);
         
         /* @var $manifest Manifest */

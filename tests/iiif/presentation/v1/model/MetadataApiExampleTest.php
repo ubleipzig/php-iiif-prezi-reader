@@ -8,7 +8,7 @@ class MetadataApiExampleTest extends AbstractIiifTest {
     
     public function testExampleManifest() {
         
-        $manifest = IiifHelper::loadIiifResource(parent::getJson('v1/example-manifest-v1.json'));
+        $manifest = IiifHelper::loadIiifResource(parent::getFile('v1/example-manifest-v1.json'));
         $manifest->getRootRanges();
         self::assertInstanceOf(Manifest1::class, $manifest);
         
