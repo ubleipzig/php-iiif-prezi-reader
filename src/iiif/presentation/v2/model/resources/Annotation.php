@@ -2,8 +2,8 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\common\model\resources\AnnotationInterface;
-use iiif\presentation\v2\model\vocabulary\Motivation;
 use iiif\presentation\v2\model\properties\XYWHFragment;
+use iiif\presentation\common\vocabulary\Motivation;
 
 class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
@@ -67,7 +67,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
         if ($result != null) {
             return $result;
         }
-        if ($this->motivation == Motivation::PAINTING && $this->resource!=null) {
+        if (Motivation::isPaintingMotivation($this->motivation) && $this->resource!=null) {
             return $this->resource->getThumbnailUrl();
         }
         return null;

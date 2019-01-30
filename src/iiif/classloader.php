@@ -9,6 +9,7 @@ require_once (__DIR__ . "/context/JsonLdProcessor.php");
 require_once (__DIR__ . "/context/Keywords.php");
 require_once (__DIR__ . "/context/TermDefinition.php");
 
+require_once (__DIR__ . "/presentation/common/Motivation.php");
 require_once (__DIR__ . "/presentation/common/TypeMap.php");
 require_once (__DIR__ . "/presentation/common/model/AbstractIiifEntity.php");
 require_once (__DIR__ . "/presentation/common/model/resources/IiifResourceInterface.php");

@@ -4,8 +4,8 @@ use iiif\presentation\v2\model\properties\XYWHFragment;
 use iiif\presentation\v2\model\resources\Annotation;
 use iiif\presentation\v2\model\resources\Canvas;
 use iiif\presentation\v2\model\resources\ContentResource;
-use iiif\presentation\v2\model\vocabulary\Motivation;
 use iiif\tools\IiifHelper;
+use iiif\presentation\common\vocabulary\Motivation;
 
 /**
  * Annotation test case.
@@ -84,10 +84,10 @@ class AnnotationTest extends AbstractIiifTest {
      */
     public function testGetMotivation() {
         self::assertNotNull($this->imageAnnotation);
-        self::assertEquals(Motivation::PAINTING, $this->imageAnnotation->getMotivation());
+        self::assertEquals(Motivation::IIIF_PRESENTATION2_PAINTING, $this->imageAnnotation->getMotivation());
         
         self::assertNotNull($this->textAnnotation);
-        self::assertEquals(Motivation::COMMENTING, $this->textAnnotation->getMotivation());
+        self::assertEquals(Motivation::OA_COMMENTING, $this->textAnnotation->getMotivation());
     }
 }
 
