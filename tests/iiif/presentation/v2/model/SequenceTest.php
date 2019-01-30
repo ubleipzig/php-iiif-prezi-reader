@@ -38,14 +38,6 @@ class SequenceTest extends AbstractIiifTest
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
      * Tests Sequence::fromArray()
      */
     public function testFromArray()

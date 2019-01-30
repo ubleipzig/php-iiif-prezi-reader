@@ -4,8 +4,6 @@ use iiif\services\ImageInformation1;
 use iiif\services\Profile;
 use iiif\tools\IiifHelper;
 
-require_once 'iiif/services/ImageInformation1.php';
-
 /**
  * ImageInformation1 test case.
  */

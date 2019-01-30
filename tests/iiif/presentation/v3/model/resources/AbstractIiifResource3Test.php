@@ -39,16 +39,6 @@ class AbstractIiifResource3Test extends AbstractIiifTest
         parent::tearDown();
     }
 
-    /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-    
-    
-    
     public function testLoadIiifResource() {
         $resource = "file://".__DIR__."/../../../../../resources/v3/manifest3-example.json";
         $iiifResource = AbstractIiifResource3::loadIiifResource($resource);

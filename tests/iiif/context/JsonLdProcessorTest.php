@@ -2,13 +2,12 @@
 use iiif\context\JsonLdProcessor;
 use iiif\context\JsonLdContext;
 use iiif\context\JsonLdHelper;
-
-require_once 'iiif/context/JsonLdProcessor.php';
+use PHPUnit\Framework\TestCase;
 
 /**
  * JsonLdProcessor test case.
  */
-class JsonLdProcessorTest extends PHPUnit_Framework_TestCase
+class JsonLdProcessorTest extends TestCase
 {
 
     /**

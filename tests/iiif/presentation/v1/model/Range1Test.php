@@ -5,8 +5,6 @@ use iiif\tools\IiifHelper;
 use iiif\presentation\v1\model\resources\Manifest1;
 use iiif\presentation\v1\model\resources\Canvas1;
 
-require_once 'iiif/presentation/v1/model/resources/Range1.php';
-
 /**
  * Range1 test case.
  */

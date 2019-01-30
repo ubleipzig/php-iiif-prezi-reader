@@ -1,12 +1,11 @@
 <?php
 use iiif\context\Keywords;
-
-require_once 'iiif/context/Keywords.php';
+use PHPUnit\Framework\TestCase;
 
 /**
  * Keywords test case.
  */
-class KeywordsTest extends PHPUnit_Framework_TestCase
+class KeywordsTest extends TestCase
 {
 
     /**

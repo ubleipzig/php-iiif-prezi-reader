@@ -35,13 +35,6 @@ class ContentResourceTest extends AbstractIiifTest {
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct() {
-        // TODO Auto-generated constructor
-    }
-
-    /**
      * Tests ContentResource->getFormat()
      */
     public function testGetFormat() {

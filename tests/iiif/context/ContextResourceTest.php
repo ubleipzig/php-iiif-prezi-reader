@@ -1,9 +1,11 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+
 /**
  *  Test case to ensure contexts are up to date
  */
-class ContextResourceTest extends PHPUnit_Framework_TestCase {
+class ContextResourceTest extends TestCase {
     
     const CONTEXTS = [
         "http://www.w3.org/ns/anno.jsonld" => "annotation-context.json",

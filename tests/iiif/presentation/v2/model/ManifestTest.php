@@ -39,13 +39,6 @@ class ManifestTest extends AbstractIiifTest
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Tests Manifest::fromArray()
      */
     public function testFromArray()
@@ -142,8 +135,8 @@ class ManifestTest extends AbstractIiifTest
         $navDate = $this->manifest->getNavDateAsDateTime();
         self::assertInstanceOf(DateTime::class, $navDate);
         self::assertEquals('1856', $navDate->format('Y'));
-        self::assertEquals('1', $navDate->format('m'));
-        self::assertEquals('1', $navDate->format('d'));
+        self::assertEquals('1', $navDate->format('n'));
+        self::assertEquals('1', $navDate->format('j'));
     }
     
     public function testEmptyManifest()

@@ -1,8 +1,6 @@
 <?php
 use iiif\AbstractIiifTest;
 
-require_once 'iiif/services/ImageInformation3.php';
-
 /**
  * ImageInformation3 test case.
  */

@@ -41,14 +41,6 @@ class AbstractIiifResource2Test extends AbstractIiifTest
     }
 
     /**
-     * Constructs the test case.
-     */
-    public function __construct()
-    {
-        // TODO Auto-generated constructor
-    }
-
-    /**
      * Tests AbstractIiifResource->getDefaultLabel()
      */
     public function testGetDefaultLabel()
@@ -56,7 +48,7 @@ class AbstractIiifResource2Test extends AbstractIiifTest
         // TODO Auto-generated AbstractIiifResource2Test->testGetDefaultLabel()
         $this->markTestIncomplete("getDefaultLabel test not implemented");
         
-        $this->abstractIiifResource->getDefaultLabel(/* parameters */);
+        //$this->abstractIiifResource->getDefaultLabel(/* parameters */);
     }
 
     /**

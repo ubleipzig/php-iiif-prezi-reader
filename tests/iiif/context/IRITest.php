@@ -2,12 +2,12 @@
 namespace iiif\context;
 
 
-require_once 'iiif/context/IRI.php';
+use PHPUnit\Framework\TestCase;
 
 /**
  * IRI test case.
  */
-class IRITest extends \PHPUnit_Framework_TestCase
+class IRITest extends TestCase
 {
     protected $expectations = [
         [
