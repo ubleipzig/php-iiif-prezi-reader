@@ -9,7 +9,6 @@ require_once (__DIR__ . "/context/JsonLdProcessor.php");
 require_once (__DIR__ . "/context/Keywords.php");
 require_once (__DIR__ . "/context/TermDefinition.php");
 
-require_once (__DIR__ . "/presentation/common/Motivation.php");
 require_once (__DIR__ . "/presentation/common/TypeMap.php");
 require_once (__DIR__ . "/presentation/common/model/AbstractIiifEntity.php");
 require_once (__DIR__ . "/presentation/common/model/resources/IiifResourceInterface.php");
@@ -19,6 +18,7 @@ require_once (__DIR__ . "/presentation/common/model/resources/CanvasInterface.ph
 require_once (__DIR__ . "/presentation/common/model/resources/ContentResourceInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/ManifestInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/RangeInterface.php");
+require_once (__DIR__ . "/presentation/common/vocabulary/Motivation.php");
 
 require_once (__DIR__ . "/presentation/v2/model/constants/ViewingDirectionValues.php");
 require_once (__DIR__ . "/presentation/v2/model/constants/ViewingHintValues.php");
@@ -38,7 +38,6 @@ require_once (__DIR__ . "/presentation/v2/model/resources/Layer.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Manifest.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Range.php");
 require_once (__DIR__ . "/presentation/v2/model/resources/Sequence.php");
-require_once (__DIR__ . "/presentation/v2/model/vocabulary/Motivation.php");
 require_once (__DIR__ . "/presentation/v2/model/vocabulary/Names.php");
 require_once (__DIR__ . "/presentation/v2/model/vocabulary/Types.php");
 
