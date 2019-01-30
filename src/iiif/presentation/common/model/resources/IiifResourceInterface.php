@@ -74,6 +74,8 @@ interface IiifResourceInterface {
      */
     public function getRequiredStatement();
     
+    public function getRequiredStatementForDisplay();
+    
     public function getSeeAlso();
     
     public function getSeeAlsoUrlsForFormat($format);

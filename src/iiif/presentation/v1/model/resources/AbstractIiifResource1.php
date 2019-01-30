@@ -134,6 +134,15 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
     public function getRequiredStatement() {
         return $this->attribution;
     }
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatementForDisplay()
+     */
+    public function getRequiredStatementForDisplay() {
+        // TODO Auto-generated method stub
+        
+    }
 
     /**
      * {@inheritDoc}
