@@ -22,7 +22,7 @@ class Options {
      * @return \iiif\tools\UrlReaderInterface
      */
     public static function getUrlReader() {
-        return Options::$urlReader;
+        return self::$urlReader;
     }
 
     /**
@@ -50,14 +50,14 @@ class Options {
      * @param number $maxThumbnailWidth
      */
     public static function setMaxThumbnailWidth($maxThumbnailWidth) {
-        Options::$maxThumbnailWidth = $maxThumbnailWidth;
+        self::$maxThumbnailWidth = $maxThumbnailWidth;
     }
 
     /**
      * @param number $maxThumbnailHeight
      */
     public static function setMaxThumbnailHeight($maxThumbnailHeight) {
-        Options::$maxThumbnailHeight = $maxThumbnailHeight;
+        self::$maxThumbnailHeight = $maxThumbnailHeight;
     }
 
 }

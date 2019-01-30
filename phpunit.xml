@@ -2,6 +2,7 @@
 <phpunit bootstrap="vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="IIIF Reader Test Suite">
+            <directory>./tests/iiif/</directory>
             <directory>./tests/iiif/context</directory>
             <directory>./tests/iiif/presentation/common/model</directory>
             <directory>./tests/iiif/presentation/v1/model</directory>
@@ -10,4 +11,9 @@
             <directory>./tests/iiif/services</directory>
         </testsuite>
     </testsuites>
+	<filter>
+	  <whitelist processUncoveredFilesFromWhitelist="true">
+	    <directory suffix=".php">src</directory>
+	  </whitelist>
+	</filter>    
 </phpunit>
