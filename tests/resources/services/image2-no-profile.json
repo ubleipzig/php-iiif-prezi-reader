@@ -1,0 +1,14 @@
+{
+  "@context" : "http://iiif.io/api/image/2/context.json",
+  "@id" : "http://example.com/image/13",
+  "protocol" : "http://iiif.io/api/image",
+  "width" : 1000,
+  "height" : 2000,
+  "tiles" : [
+     {
+       "width" : 256,
+       "height" : 256,
+       "scaleFactors" : [ 1, 2, 4, 8, 16 ]
+     }
+  ]
+}

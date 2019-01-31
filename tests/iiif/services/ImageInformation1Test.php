@@ -279,8 +279,9 @@ class ImageInformation1Test extends AbstractIiifTest {
      * Tests ImageInformation1->getImageUrl()
      */
     public function testGetImageUrl() {
-        // TODO
-        $this->markTestIncomplete("getImageUrl test not implemented");
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image1-level2-01.json"));
+        self::assertEquals("http://example.com/image/05/full/full/0/native.jpg", $service->getImageUrl());
+        self::assertEquals("http://example.com/image/05/100,100,200,200/200,/90/bitonal.png", $service->getImageUrl("100,100,200,200", "200,","90","bitonal","png"));
     }
 }
 

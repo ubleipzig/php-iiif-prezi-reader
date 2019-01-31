@@ -351,14 +351,23 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertTrue($service->isFeatureSupported(Profile::BASE_URI_REDIRECT));
         self::assertTrue($service->isFeatureSupported(Profile::CORS));
         self::assertTrue($service->isFeatureSupported(Profile::JSONLD_MEDIA_TYPE));
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-no-profile.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        foreach (Profile::IMAGE2_LEVEL2["supported"] as $feature) {
+            self::assertFalse($service->isFeatureSupported($feature), "Service should not support ".$feature);
+        }
+        
     }
     
     /**
      * Tests ImageInformation2->getImageUrl()
      */
     public function testGetImageUrl() {
-        // TODO
-        $this->markTestIncomplete("getImageUrl test not implemented");
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level2-01.json"));
+        self::assertEquals("http://example.com/image/11/full/full/0/default.jpg", $service->getImageUrl());
+        self::assertEquals("http://example.com/image/11/100,100,200,200/200,/90/bitonal.png", $service->getImageUrl("100,100,200,200", "200,","90","bitonal","png"));
     }
 }
 

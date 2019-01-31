@@ -46,7 +46,7 @@ abstract class AbstractImageService extends Service {
     
     public function isFeatureSupported($feature) {
         if ($this->profile == null) {
-            return null;
+            return false;
         }
         $this->initializeProfile();
         return array_search($feature, $this->supports) !== false;
