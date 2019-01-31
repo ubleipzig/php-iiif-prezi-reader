@@ -28,6 +28,7 @@ use iiif\presentation\v1\model\resources\ContentResource1;
 use iiif\presentation\v1\model\resources\AnnotationList1;
 use iiif\presentation\v1\model\resources\Range1;
 use iiif\presentation\v1\model\resources\Layer1;
+use iiif\services\PhysicalDimensions;
 
 class TypeMap {
 
@@ -82,14 +83,18 @@ class TypeMap {
         "http://www.w3.org/ns/oa#SpecificResource" => SpecificResource3::class,
         "http://www.w3.org/ns/oa#TextualBody" => ContentResource3::class,
         "http://www.w3.org/ns/oa#FragmentSelector" => null,
-        "http://www.w3.org/ns/oa#PointSelector" => null
+        "http://www.w3.org/ns/oa#PointSelector" => null,
+        // FIXME at the moment, we only have a JSON-LD context URI instead of a name from a vocabulary
+        "http://iiif.io/api/annex/services/physdim/1/context.json" => PhysicalDimensions::class
     ];
 
     const SERVICE_TYPES = [
         "http://library.stanford.edu/iiif/image-api/1.1/context.json" => "http://iiif.io/api/image/1/ImageService",
         "http://iiif.io/api/image/1/context.json" => "http://iiif.io/api/image/1/ImageService",
         "http://iiif.io/api/image/2/context.json" => "http://iiif.io/api/image/2/ImageService",
-        "http://iiif.io/api/image/3/context.json" => "http://iiif.io/api/image/3/ImageService"
+        "http://iiif.io/api/image/3/context.json" => "http://iiif.io/api/image/3/ImageService",
+        // Not explicit @type, use profile instead 
+        "http://iiif.io/api/annex/services/physdim/1/context.json" => "http://iiif.io/api/annex/services/physdim/1/context.json"
     ];
 
     public static function getClassForType($typeIri, $context) {

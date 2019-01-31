@@ -343,23 +343,19 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
             }
         }
         if (empty($renderingUrls) && $useChildResources) {
-            if (empty($renderingUrls) && $useChildResources) {
-                if ($this instanceof Manifest3) {
-                    if (!($this->structures)) {
-                        foreach ($this->structures as $range) {
-                            if ($range->behavior == "sequence") {
-                                $renderingUrls = $range->getRenderingUrlsForFormat($format);
-                                break;
-                            }
-                        }
+            if ($this instanceof Manifest3 && empty($this->structures)) {
+                foreach ($this->structures as $range) {
+                    if ($range->behavior == "sequence") {
+                        $renderingUrls = $range->getRenderingUrlsForFormat($format);
+                        break;
                     }
                 }
-                elseif ($this instanceof Canvas3 && !empty($this->getImageAnnotations())) {
-                    $renderingUrls = $this->getImageAnnotations()[0]->getRenderingUrlsForFormat($format);
-                }
-                elseif ($this instanceof Annotation3 && $this->getResource()!=null) {
-                    $renderingUrls = $this->getBody()->getRenderingUrlsForFormat($format);
-                }
+            }
+            elseif ($this instanceof Canvas3 && !empty($this->getImageAnnotations())) {
+                $renderingUrls = $this->getImageAnnotations()[0]->getRenderingUrlsForFormat($format);
+            }
+            elseif ($this instanceof Annotation3 && $this->getResource()!=null) {
+                $renderingUrls = $this->getBody()->getRenderingUrlsForFormat($format);
             }
         }
         return $renderingUrls;
