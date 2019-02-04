@@ -11,7 +11,7 @@ class IRITest extends TestCase
 {
     protected $expectations = [
         [
-            "uri" => "scheme://userinfo@host:port/path?query#fragment",
+            "iri" => "scheme://userinfo@host:port/path?query#fragment",
             "scheme" => "scheme",
             "authority" => "//userinfo@host:port",
             "path" => "/path",
@@ -19,7 +19,7 @@ class IRITest extends TestCase
             "fragment" => "fragment"
         ],
         [
-            "uri" => "scheme://userinfo@host:port/path/morepath?queryparam=value&p=v#fragment",
+            "iri" => "scheme://userinfo@host:port/path/morepath?queryparam=value&p=v#fragment",
             "scheme" => "scheme",
             "authority" => "//userinfo@host:port",
             "path" => "/path/morepath",
@@ -30,70 +30,69 @@ class IRITest extends TestCase
     
     public function testConstruct() {
         $data = $this->expectations[1];
-        $byUri = new IRI($data["uri"]);
+        $byIri = new IRI($data["iri"]);
         foreach ($data as $key => $value) {
-            self::assertEquals($value, $byUri->$key, $key." in ".$data["uri"]." should be ".$value.", is ".$byUri->$key);
+            self::assertEquals($value, $byIri->$key, $key." in ".$data["iri"]." should be ".$value.", is ".$byIri->$key);
         }
         
-        $byObject = new IRI($byUri);
+        $byObject = new IRI($byIri);
         foreach ($data as $key => $value) {
-            self::assertEquals($value, $byObject->$key, $key." in ".$data["uri"]." should be ".$value.", is ".$byObject->$key);
+            self::assertEquals($value, $byObject->$key, $key." in ".$data["iri"]." should be ".$value.", is ".$byObject->$key);
         }
         
         $empty = new IRI();
         foreach ($data as $key => $value) {
-            self::assertNull($empty->$key, $key." in ".$data["uri"]." should be null, is ".$empty->$key);
+            self::assertNull($empty->$key, $key." in ".$data["iri"]." should be null, is ".$empty->$key);
         }
     }
     
     
-    public function testUriRegex() {
+    public function testIriRegex() {
         foreach ($this->expectations as $array) {
             $matches = array();
-            $found = preg_match(IRI::URI_REGEX, $array["uri"], $matches);
-            self::assertEquals(1, $found, $array["uri"].' does not match regex');
+            $found = preg_match(IRI::IRI_REGEX, $array["iri"], $matches);
+            self::assertEquals(1, $found, $array["iri"].' does not match regex');
             foreach ($array as $key => $value) {
-                if ($key == "uri") continue;
-                self::assertEquals($value, $matches[$key], $key." in ".$array["uri"]." should be ".$value.", is ".$matches[$key]);
+                if ($key == "iri") continue;
+                self::assertEquals($value, $matches[$key], $key." in ".$array["iri"]." should be ".$value.", is ".$matches[$key]);
             }
         }
     }
     
-    public function testIsCompactUri() {
+    public function testIsCompactIri() {
         $processor = new JsonLdProcessor();
-        $context = $processor->processContext(json_decode('{"ns":"http://www.example.org/schema#"}', true), new JsonLdContext($processor));
-        self::assertFalse(IRI::isCompactUri(null, $context));
-        self::assertFalse(IRI::isCompactUri("", $context));
-        self::assertFalse(IRI::isCompactUri("path", $context));
-        self::assertTrue(IRI::isCompactUri("ns:path", $context));
-        self::assertFalse(IRI::isCompactUri("urn:ISBN:3-8273-7019-1", $context));
-        self::assertFalse(IRI::isCompactUri("ssh://root@127.0.0.1/", $context));
-        self::assertFalse(IRI::isCompactUri("schema://host", $context));
-        self::assertFalse(IRI::isCompactUri("http://iiif.io/api/presentation/3/context.json", $context));
+        $context = $processor->processContext(json_decode('{"ns":"http://www.example.org/schema#", "üöä":"http://example.org/vocab"}', true), new JsonLdContext($processor));
+        self::assertFalse(IRI::isCompactIri(null, $context));
+        self::assertFalse(IRI::isCompactIri("", $context));
+        self::assertFalse(IRI::isCompactIri("path", $context));
+        self::assertFalse(IRI::isCompactIri("ns:", $context));
+        self::assertTrue(IRI::isCompactIri("ns:path", $context));
+        self::assertTrue(IRI::isCompactIri("ns:öäü", $context));
+        self::assertTrue(IRI::isCompactIri("üöä:öäü", $context));
+        self::assertFalse(IRI::isCompactIri("urn:ISBN:3-8273-7019-1", $context));
+        self::assertFalse(IRI::isCompactIri("ssh://root@127.0.0.1/", $context));
+        self::assertFalse(IRI::isCompactIri("schema://host", $context));
+        self::assertFalse(IRI::isCompactIri("http://iiif.io/api/presentation/3/context.json", $context));
+        
+        $processor = new JsonLdProcessor();
+        $context = $processor->processContext(json_decode('{"urn":"http://www.example.org/override-scheme"}', true), new JsonLdContext($processor));
+        self::assertTrue(IRI::isCompactIri("urn:ISBN:3-8273-7019-1", $context));
+        
     }
     
-    public function testIsUri() {
-        self::assertFalse(IRI::isUri(null));
-        self::assertFalse(IRI::isUri(""));
-        self::assertTrue(IRI::isUri("path"));
-        self::assertTrue(IRI::isUri("ns:path"));
-        self::assertTrue(IRI::isUri("ssh://root@127.0.0.1/"));
-        self::assertTrue(IRI::isUri("urn:ISBN:3-8273-7019-1"));
-        self::assertTrue(IRI::isUri("schema://host"));
-        self::assertTrue(IRI::isUri("http://iiif.io/api/presentation/3/context.json"));
+    public function testIsIri() {
+        self::assertFalse(IRI::isIri(null));
+        self::assertFalse(IRI::isIri(""));
+        self::assertTrue(IRI::isIri("path"));
+        self::assertTrue(IRI::isIri("ns:path"));
+        self::assertTrue(IRI::isIri("http://öäüéè.example.org"));
+        self::assertTrue(IRI::isIri("ssh://root@127.0.0.1/"));
+        self::assertTrue(IRI::isIri("urn:ISBN:3-8273-7019-1"));
+        self::assertTrue(IRI::isIri("schema://host"));
+        self::assertTrue(IRI::isIri("http://iiif.io/api/presentation/3/context.json"));
     }
     
-    public function testIsExpandedUri() {
-        self::assertFalse(IRI::isExpandedUri(null));
-        self::assertFalse(IRI::isExpandedUri(""));
-        self::assertFalse(IRI::isExpandedUri("path"));
-        self::assertFalse(IRI::isExpandedUri("ns:path"));
-        self::assertTrue(IRI::isExpandedUri("ssh://root@127.0.0.1/"));
-        self::assertTrue(IRI::isExpandedUri("schema://host"));
-        self::assertTrue(IRI::isExpandedUri("http://iiif.io/api/presentation/3/context.json"));
-    }
-
-    public function testIsAbsoluteUri() {
+    public function testIsAbsoluteIri() {
         self::assertTrue(IRI::isAbsoluteIri("http://iiif.io/api/presentation/3/context.json"));
         self::assertTrue(IRI::isAbsoluteIri("urn:ISBN:3-8273-7019-1"));
         self::assertFalse(IRI::isAbsoluteIri('{"jsonkey":"jsonvalue"}'));

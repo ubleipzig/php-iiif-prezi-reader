@@ -27,7 +27,7 @@ class JsonLdContext {
     protected $processor;
     
     public function expandIRI($toExpand) {
-        if (!IRI::isCompactUri($toExpand, $this)) {
+        if (!IRI::isCompactIri($toExpand, $this)) {
             return $toExpand;
         }
         return $this->processor->expandIRI($this, $toExpand);

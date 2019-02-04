@@ -345,7 +345,7 @@ class JsonLdProcessor {
             $prefix = explode(":", $term)[0];
             $suffix = explode(":", $term, 2)[1];
             // 15.1
-            if (preg_match(IRI::COMPACT_URI_REGEX, $term) && array_key_exists($prefix, $localContext)) {
+            if (preg_match(IRI::COMPACT_IRI_REGEX, $term) && array_key_exists($prefix, $localContext)) {
                 $this->createTermDefinition($activeContext, $localContext, $prefix, $defined);
             }
             // 15.2

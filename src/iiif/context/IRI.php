@@ -13,14 +13,14 @@ class IRI {
      * IRI regex with named groups.
      * @link https://tools.ietf.org/html/rfc3986#appendix-B
      */
-    const URI_REGEX = '_^((?P<scheme>[^:/?#]+):)?(?P<authority>(//)([^/?#]*))?(?P<path>[^?#]*)(\?(?P<query>[^#]*))?(#(?P<fragment>.*))?_';
+    const IRI_REGEX = '_^((?P<scheme>[^:/?#]+):)?(?P<authority>(//)([^/?#]*))?(?P<path>[^?#]*)(\?(?P<query>[^#]*))?(#(?P<fragment>.*))?_';
 
-    const COMPACT_URI_REGEX = "_^(?P<prefix>[^:/?#]+):(?P<term>[^:/?#]+)_";
+    const COMPACT_IRI_REGEX = "_^(?P<prefix>[^:/?#]+):(?P<term>[^:/?#]+)_";
 
     /**
      * @var string
      */
-    protected $uri;
+    protected $iri;
 
     /**
      * @var string
@@ -63,14 +63,14 @@ class IRI {
     protected $fragment;
 
     public function __construct($iri = null) {
-        if (is_string($iri) && self::isUri($iri)) {
-            $this->uri = $iri;
-            $found = preg_match(self::URI_REGEX, $iri, $matches);
+        if (is_string($iri) && self::isIri($iri)) {
+            $this->iri = $iri;
+            $found = preg_match(self::IRI_REGEX, $iri, $matches);
             foreach ($matches as $key => $value) {
                 $this->$key = $value;
             }
         } elseif ($iri instanceof IRI) {
-            $this->uri = $iri->uri;
+            $this->iri = $iri->iri;
             $this->scheme = $iri->scheme;
             $this->authority = $iri->authority;
             $this->userInfo = $iri->userInfo;
@@ -83,65 +83,53 @@ class IRI {
     }
 
     /**
-     * Checks if a given string is a compact URI. It therefore has to have a prefix and a term definition for the prefix in the current JSON-LD context. 
-     * @param string $uri
+     * Checks if a given string is a compact IRI. It therefore has to have a prefix and a term definition for the prefix in the current JSON-LD context. 
+     * @param string $iri
      * @param JsonLdContext $context
      * @return boolean
      */
-    public static function isCompactUri($uri, JsonLdContext $context) {
-        if (!preg_match(self::COMPACT_URI_REGEX, $uri)) {
+    public static function isCompactIri($iri, JsonLdContext $context) {
+        if (!preg_match(self::COMPACT_IRI_REGEX, $iri)) {
             return false;
         }
-        preg_match(self::COMPACT_URI_REGEX, $uri, $matches);
+        preg_match(self::COMPACT_IRI_REGEX, $iri, $matches);
         $prefix = $matches["prefix"];
         return !empty($prefix) && $context->getTermDefinition($prefix) != null && !empty($context->getTermDefinition($prefix)->getIriMapping());
     }
 
     /**
-     * Checks if a string has the form of a URI by matching the regex in https://tools.ietf.org/html/rfc3986#appendix-B
-     * @param string $uri
+     * Checks if a string has the form of a IRI by matching the regex in https://tools.ietf.org/html/rfc3986#appendix-B
+     * @param string $iri
      * @return boolean
      * @link https://tools.ietf.org/html/rfc3986#appendix-B
      */
-    public static function isUri($uri) {
-        if ($uri == null)
+    public static function isIri($iri) {
+        if ($iri == null)
             return false;
-        return preg_match(IRI::URI_REGEX, $uri) === 1;
+        return preg_match(IRI::IRI_REGEX, $iri) === 1;
     }
 
     /**
-     * 
-     * @param string $uri
-     * @return boolean
-     * @deprecated A URI is only expanded or compacted in the context of a JSON-LD context. Use isCompactUri() instead.
-     */
-    public static function isExpandedUri($uri) {
-        $matches = array();
-        $result = preg_match(IRI::URI_REGEX, $uri, $matches);
-        return $result === 1 && ! empty($matches["scheme"]) && ! empty($matches["authority"]);
-    }
-
-    /**
-     * Checks if a URI is an absolute URI for JSON-LD purposes.
+     * Checks if an IRI is an absolute IRI for JSON-LD purposes.
      * From https://www.w3.org/TR/json-ld11-api/#dfn-absolute-iri :
      * "An absolute IRI is defined in [RFC3987] containing a scheme along with a path and optional query and fragment segments."
      *  
-     * @param string $uri
+     * @param string $iri
      * @return boolean true
      */
-    public static function isAbsoluteIri($uri) {
-        $iri = new IRI($uri);
-        $absoluteIri = self::isUri($uri) && ! empty($iri->scheme) && ! empty($iri->path) && ! (strpos(trim($uri), "{") === 0 && strrpos(trim($uri), "}") === strlen(trim($uri))-1);
-        return self::isUri($uri) && ! empty($iri->scheme) && ! empty($iri->path) && ! (strpos(trim($uri), "{") === 0 && strrpos(trim($uri), "}") === strlen(trim($uri))-1);
+    public static function isAbsoluteIri($iri) {
+        $iriObject = new IRI($iri);
+        $absoluteIri = self::isIri($iri) && ! empty($iriObject->scheme) && ! empty($iriObject->path) && ! (strpos(trim($iri), "{") === 0 && strrpos(trim($iri), "}") === strlen(trim($iri))-1);
+        return self::isIri($iri) && ! empty($iriObject->scheme) && ! empty($iriObject->path) && ! (strpos(trim($iri), "{") === 0 && strrpos(trim($iri), "}") === strlen(trim($iri))-1);
     }
 
     /**
-     * Checks if a URI is a relative URI. For that purpose we check if it matches the URI regex and misses a scheme.
-     * @param string $uri
-     * @return boolean true if $uri has the form of a relative URI, otherwise false
+     * Checks if an IRI is a relative IRI. For that purpose we check if it matches the IRI regex and misses a scheme.
+     * @param string $iri
+     * @return boolean true if $iri has the form of a relative IRI, otherwise false
      */
-    public static function isRelativeIri($uri) {
-        return self::isUri($uri) && empty((new IRI($uri))->scheme);
+    public static function isRelativeIri($iri) {
+        return self::isIri($iri) && empty((new IRI($iri))->scheme);
     }
 
     /**
@@ -235,8 +223,8 @@ class IRI {
     /**
      * @return string
      */
-    public function getUri() {
-        return $this->uri;
+    public function getIri() {
+        return $this->iri;
     }
 
     /**
