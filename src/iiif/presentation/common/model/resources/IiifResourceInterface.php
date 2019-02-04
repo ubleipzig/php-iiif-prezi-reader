@@ -74,7 +74,7 @@ interface IiifResourceInterface {
      */
     public function getRequiredStatement();
     
-    public function getRequiredStatementForDisplay();
+    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ");
     
     public function getSeeAlso();
     

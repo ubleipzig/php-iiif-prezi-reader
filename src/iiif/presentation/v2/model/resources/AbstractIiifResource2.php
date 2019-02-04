@@ -522,9 +522,8 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatementForDisplay()
      */
-    public function getRequiredStatementForDisplay() {
-        // TODO Auto-generated method stub
-        
+    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ") {
+        return $this->getValueForDisplay($this->attribution, $language, $joinChars);
     }
 
     /**

@@ -139,7 +139,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatementForDisplay()
      */
-    public function getRequiredStatementForDisplay() {
+    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ") {
         // TODO Auto-generated method stub
         
     }
