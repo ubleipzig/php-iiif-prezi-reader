@@ -46,7 +46,10 @@ class IRITest extends TestCase
         }
     }
     
-    
+    /**
+     * Test if the named groups for the IRI regex do actual work as expected.
+     * 
+     */
     public function testIriRegex() {
         foreach ($this->expectations as $array) {
             $matches = array();
@@ -59,15 +62,18 @@ class IRITest extends TestCase
         }
     }
     
+    /**
+     * Tests IRI::isCompactIri()
+     */
     public function testIsCompactIri() {
         $processor = new JsonLdProcessor();
-        $context = $processor->processContext(json_decode('{"ns":"http://www.example.org/schema#", "üöä":"http://example.org/vocab"}', true), new JsonLdContext($processor));
+        $context = $processor->processContext(json_decode('{"schema":"http://www.example.org/schema#", "üöä":"http://example.org/vocab"}', true), new JsonLdContext($processor));
         self::assertFalse(IRI::isCompactIri(null, $context));
         self::assertFalse(IRI::isCompactIri("", $context));
         self::assertFalse(IRI::isCompactIri("path", $context));
-        self::assertFalse(IRI::isCompactIri("ns:", $context));
-        self::assertTrue(IRI::isCompactIri("ns:path", $context));
-        self::assertTrue(IRI::isCompactIri("ns:öäü", $context));
+        self::assertFalse(IRI::isCompactIri("schema:", $context));
+        self::assertTrue(IRI::isCompactIri("schema:path", $context));
+        self::assertTrue(IRI::isCompactIri("schema:öäü", $context));
         self::assertTrue(IRI::isCompactIri("üöä:öäü", $context));
         self::assertFalse(IRI::isCompactIri("urn:ISBN:3-8273-7019-1", $context));
         self::assertFalse(IRI::isCompactIri("ssh://root@127.0.0.1/", $context));
@@ -80,11 +86,14 @@ class IRITest extends TestCase
         
     }
     
+    /**
+     * Tests IRI::isIri()
+     */
     public function testIsIri() {
         self::assertFalse(IRI::isIri(null));
         self::assertFalse(IRI::isIri(""));
         self::assertTrue(IRI::isIri("path"));
-        self::assertTrue(IRI::isIri("ns:path"));
+        self::assertTrue(IRI::isIri("schema:path"));
         self::assertTrue(IRI::isIri("http://öäüéè.example.org"));
         self::assertTrue(IRI::isIri("ssh://root@127.0.0.1/"));
         self::assertTrue(IRI::isIri("urn:ISBN:3-8273-7019-1"));
@@ -92,6 +101,9 @@ class IRITest extends TestCase
         self::assertTrue(IRI::isIri("http://iiif.io/api/presentation/3/context.json"));
     }
     
+    /**
+     * Tests IRI::isAbsoluteIri()
+     */
     public function testIsAbsoluteIri() {
         self::assertTrue(IRI::isAbsoluteIri("http://iiif.io/api/presentation/3/context.json"));
         self::assertTrue(IRI::isAbsoluteIri("urn:ISBN:3-8273-7019-1"));
