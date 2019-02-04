@@ -1,6 +1,13 @@
 <?php
 namespace iiif\context;
 
+/**
+ * JSON-LD Keywords
+ * 
+ * @lnk https://www.w3.org/TR/json-ld11/#syntax-tokens-and-keywords
+ * @author lutzhelm
+ *
+ */
 class Keywords {
 
     const BASE = "@base";
@@ -57,8 +64,14 @@ class Keywords {
         self::VOCAB
     );
 
-    public static function isKeyword($value) {
-        return array_search($value, self::KEYWORDS) !== false;
+    /**
+     * 
+     * @param string $term
+     * @return boolean true if the given $term is a JSON-LD keyword, otherwise false
+     * @link https://www.w3.org/TR/json-ld11/#syntax-tokens-and-keywords
+     */
+    public static function isKeyword($term) {
+        return array_search($term, self::KEYWORDS) !== false;
     }
 }
 

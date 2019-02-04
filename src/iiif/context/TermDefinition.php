@@ -1,6 +1,13 @@
 <?php
 namespace iiif\context;
 
+/**
+ * Represents a JSON-LD term definition.
+ * 
+ * @author lutzhelm
+ *
+ * @link https://w3c.github.io/json-ld-api/#dfn-term-definition
+ */
 class TermDefinition {
 
     /**

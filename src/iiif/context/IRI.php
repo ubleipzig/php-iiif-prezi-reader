@@ -119,7 +119,6 @@ class IRI {
      */
     public static function isAbsoluteIri($iri) {
         $iriObject = new IRI($iri);
-        $absoluteIri = self::isIri($iri) && ! empty($iriObject->scheme) && ! empty($iriObject->path) && ! (strpos(trim($iri), "{") === 0 && strrpos(trim($iri), "}") === strlen(trim($iri))-1);
         return self::isIri($iri) && ! empty($iriObject->scheme) && ! empty($iriObject->path) && ! (strpos(trim($iri), "{") === 0 && strrpos(trim($iri), "}") === strlen(trim($iri))-1);
     }
 
@@ -133,6 +132,8 @@ class IRI {
     }
 
     /**
+     * Resolve an absolute IRI by a given base IRI and the relative IRI that needs to be resolved.
+     * Implementation of the algorithm described in https://tools.ietf.org/html/rfc3986#section-5.2
      * @param string $baseIri
      * @param string $relativeIri
      * @return string
@@ -182,6 +183,7 @@ class IRI {
     }
 
     /**
+     * Remove dot segments ( ".." and "." ) in IRI paths. Implements the algorithm described in https://tools.ietf.org/html/rfc3986#section-5.2.4
      * @param string $path
      * @return string
      * @link https://tools.ietf.org/html/rfc3986#section-5.2.4

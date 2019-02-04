@@ -1,6 +1,14 @@
 <?php
 namespace iiif\context;
 
+/**
+ * Represents a JSON-LD context
+ * 
+ * 
+ * @author lutzhelm
+ * @link https://www.w3.org/TR/json-ld11/#the-context
+ */
+
 class JsonLdContext {
 
     protected $contextIri = "";
