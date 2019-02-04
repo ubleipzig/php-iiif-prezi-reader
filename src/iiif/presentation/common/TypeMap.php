@@ -30,6 +30,15 @@ use iiif\presentation\v1\model\resources\Range1;
 use iiif\presentation\v1\model\resources\Layer1;
 use iiif\services\PhysicalDimensions;
 
+/**
+ * Map the @type of a JSON-LD resource to a PHP class. If a type IRI is used in more than one
+ * API version, the context IRI is used to further differentiate.
+ *  
+ * FIXME From a RDF perspective, resources might have multiple types.  
+ * 
+ * @author lutzhelm
+ *
+ */
 class TypeMap {
 
     protected static $CLASSES = [
