@@ -369,5 +369,81 @@ class ImageInformation2Test extends AbstractIiifTest {
         self::assertEquals("http://example.com/image/11/full/full/0/default.jpg", $service->getImageUrl());
         self::assertEquals("http://example.com/image/11/100,100,200,200/200,/90/bitonal.png", $service->getImageUrl("100,100,200,200", "200,","90","bitonal","png"));
     }
+    
+    public function testGetId() {
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level0-01.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://example.com/image/07", $service->getId());
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level0-02.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://example.com/image/08", $service->getId());
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level1-01.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://example.com/image/09", $service->getId());
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level1-02.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://example.com/image/10", $service->getId());
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level2-01.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://example.com/image/11", $service->getId());
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level2-02.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://example.com/image/12", $service->getId());
+    }
+    
+    public function testGetProfile() {
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level0-01.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://iiif.io/api/image/2/level0.json", $service->getProfile()[0]);
+        self::assertEquals(1, count($service->getProfile()));
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level0-02.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://iiif.io/api/image/2/level0.json", $service->getProfile()[0]);
+        self::assertEquals(2, count($service->getProfile()));
+        self::assertEquals(["rotationBy90s"], $service->getProfile()[1]["supports"]);
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level1-01.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://iiif.io/api/image/2/level1.json", $service->getProfile()[0]);
+        self::assertEquals(1, count($service->getProfile()));
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level1-02.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://iiif.io/api/image/2/level1.json", $service->getProfile()[0]);
+        self::assertEquals(2, count($service->getProfile()));
+        self::assertEquals(["sizeByWh","rotationBy90s","mirroring"], $service->getProfile()[1]["supports"]);
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level2-01.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://iiif.io/api/image/2/level2.json", $service->getProfile()[0]);
+        self::assertEquals(1, count($service->getProfile()));
+        
+        $service = IiifHelper::loadIiifResource(static::getFile("services/image2-level2-02.json"));
+        self::assertNotNull($service);
+        self::assertInstanceOf(ImageInformation2::class, $service);
+        self::assertEquals("http://iiif.io/api/image/2/level2.json", $service->getProfile()[0]);
+        self::assertEquals(2, count($service->getProfile()));
+        self::assertEquals(["sizeAboveFull","rotationArbitrary","mirroring"], $service->getProfile()[1]["supports"]);
+        
+    }
+    
 }
 

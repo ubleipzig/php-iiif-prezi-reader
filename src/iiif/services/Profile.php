@@ -269,10 +269,5 @@ class Profile {
         return array_key_exists($level, Profile::PROFILES) ? Profile::PROFILES[$level]["supported"] : null;
     }
     
-    public static function isFeatureSupported($level, $feature) {
-        return array_key_exists($level, Profile::PROFILES) && array_key_exists($feature, Profile::PROFILES[$level]["supported"]) ;
-        
-    }
-    
 }
 
