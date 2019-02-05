@@ -37,12 +37,12 @@ class JsonLdProcessor {
 
     /**
      * IIIF image api version 1.1 context URI is http://library.stanford.edu/iiif/image-api/1.1/context.json which is no longer available via HTTP and results in a 404 error.
-     * https://iiif.io/api/image/1/context.json provides the content of the context. See https://github.com/IIIF/api/issues/1300 .
+     * http://iiif.io/api/image/1/context.json provides the content of the context. See https://github.com/IIIF/api/issues/1300 .
      *
      * @var array Array with the original URI as key and a replacement URL as value
      */
     const REDIRECTIONS = [
-        "http://library.stanford.edu/iiif/image-api/1.1/context.json" => "https://iiif.io/api/image/1/context.json"
+        "http://library.stanford.edu/iiif/image-api/1.1/context.json" => "http://iiif.io/api/image/1/context.json"
     ];
 
     protected $processingMode;
