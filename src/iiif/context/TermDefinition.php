@@ -16,7 +16,9 @@ class TermDefinition {
     protected $term;
 
     /**
-     * @var string
+     * Indicate wether the term is only used as a prefix of a compact IRI
+     * 
+     * @var boolean
      */
     protected $prefix;
 
@@ -180,7 +182,7 @@ class TermDefinition {
 
     /**
      *
-     * @return string
+     * @return boolean
      */
     public function getPrefix() {
         return $this->prefix;
@@ -188,7 +190,7 @@ class TermDefinition {
 
     /**
      *
-     * @param string $prefix
+     * @param boolean $prefix
      */
     public function setPrefix($prefix) {
         $this->prefix = $prefix;
