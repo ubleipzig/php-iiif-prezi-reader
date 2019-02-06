@@ -1,12 +1,14 @@
 <?php
 namespace iiif\presentation\v1\model\resources;
 
-use iiif\presentation\common\model\AbstractIiifEntity;
-use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\context\JsonLdHelper;
 use iiif\context\Keywords;
+use iiif\presentation\common\model\resources\AbstractIiifResource;
+use iiif\presentation\common\model\resources\IiifResourceInterface;
+use iiif\presentation\common\TypeMap;
+use iiif\services\Service;
 
-abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifResourceInterface {
+abstract class AbstractIiifResource1 extends AbstractIiifResource implements IiifResourceInterface {
 
     /**
      * 
@@ -60,6 +62,44 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * @var AbstractIiifResource1
      */
     protected $within;
+
+    
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getValueForTypelessProperty()
+     */
+    protected function getValueForTypelessProperty($property, $dictionary, \iiif\context\JsonLdContext $context) {
+        if ($property = "service") {
+            $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
+            $clazz = null;
+            if ($this instanceof ContentResource1 && $context->expandIRI($this->getType()) == "http://purl.org/dc/dcmitype/Image") {
+                $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
+                if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeMap::SERVICE_TYPES_BY_CONTEXT)) {
+                    $clazz = TypeMap::getClassForType(TypeMap::SERVICE_TYPES_BY_CONTEXT[$dictionary[$contextOrAlias]], $context);
+                } elseif (array_key_exists("profile", $dictionary) && array_key_exists($dictionary["profile"], TypeMap::SERVICE_TYPES_BY_PROFILE)) {
+                    $clazz = TypeMap::getClassForType(TypeMap::SERVICE_TYPES_BY_PROFILE[$dictionary["profile"]], $context);
+                }
+            }
+            $id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
+            $profile = array_key_exists("profile", $dictionary) ? $dictionary["profile"] : null;
+            $service = $clazz == null ? new Service($id, $profile) : new $clazz($id, $profile);
+            return $service;
+        }
+    }
+    
+    
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getTypelessProperties()
+     */
+    protected function getTypelessProperties() {
+        return [
+            "service"
+        ];
+    }
+
     /**
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getId()
@@ -139,7 +179,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatementForDisplay()
      */
-    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ") {
+    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub
         
     }
@@ -245,7 +285,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifEntity implements IiifR
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummaryForDisplay()
      */
-    public function getSummaryForDisplay($language = null, $joinChars = "; ") {
+    public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         return null;
     }
 

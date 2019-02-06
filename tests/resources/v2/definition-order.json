@@ -1,0 +1,110 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/id1/manifest",
+  "@type": "sc:Manifest",
+
+  "structures": [
+    {
+      "@id": "http://example.org/iiif/id1/range/range0",
+      "@type": "sc:Range",
+      "label": "TOC",
+      "viewingHint": "top",
+      "members": [
+        {
+          "@id": "http://example.org/iiif/id1/canvas/page1",
+          "@type": "sc:Canvas",
+          "label": "Title page"
+        },
+        {
+          "@id": "http://example.org/iiif/id1/range/range1",
+          "@type": "sc:Range",
+          "label": "Content"
+        },
+        {
+          "@id": "http://example.org/iiif/id1/canvas/backCover",
+          "@type": "sc:Canvas",
+          "label": "Back Cover"
+        }
+      ]
+    },
+    {
+      "@id": "http://example.org/iiif/id1/range/range1",
+      "@type": "sc:Range",
+      "label": "Content",
+      "ranges": [
+        "http://example.org/iiif/id1/range/range1-1",
+        "http://example.org/iiif/id1/range/range1-2"
+      ],
+      "startCanvas": "http://example.org/iiif/id1/canvas/p2",
+      "canvases": [
+        "http://example.org/iiif/id1/canvas/p1",
+        "http://example.org/iiif/id1/canvas/p2",
+        "http://example.org/iiif/id1/canvas/p3#xywh=0,0,750,300"
+      ]
+    },
+    {
+      "@id": "http://example.org/iiif/id1/range/range1-1",
+      "@type": "sc:Range",
+      "label": "Preface",
+      "canvases": ["http://example.org/iiif/id1/canvas/p2#xywh=0,0,500,500"]
+    },
+    {
+      "@id": "http://example.org/iiif/id1/range/range1-2",
+      "@type": "sc:Range",
+      "label": "Text",
+      "ranges": ["http://example.org/iiif/id1/range/range1-2-1"],
+      "canvases": null
+    },
+    {
+      "@id": "http://example.org/iiif/id1/range/range1-2-1",
+      "@type": "sc:Range",
+      "label": "Chapter 1",
+      "ranges": null,
+      "members": null, 
+      "canvases": [
+         "http://example.org/iiif/id1/canvas/p3",
+         "http://example.org/iiif/id1/canvas/p4",
+         "http://example.org/iiif/id1/canvas/p5",
+         "http://example.org/iiif/id1/canvas/p6"
+      ]
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "http://example.org/iiif/id1/sequence/default",
+      "@type": "sc:Sequence",
+      "canvases": [
+        {
+          "@id": "http://example.org/iiif/id1/canvas/page1",
+          "@type": "sc:Canvas",
+          "label": "1"
+        },
+        {
+          "@id": "http://example.org/iiif/id1/canvas/page2",
+          "@type": "sc:Canvas",
+          "label": "2"
+        },
+        {
+          "@id": "http://example.org/iiif/id1/canvas/page3",
+          "@type": "sc:Canvas",
+          "label": "3"
+        },
+        {
+          "@id": "http://example.org/iiif/id1/canvas/page4",
+          "@type": "sc:Canvas",
+          "label": "4"
+        },
+        {
+          "@id": "http://example.org/iiif/id1/canvas/page5",
+          "@type": "sc:Canvas",
+          "label": "5"
+        },
+        {
+          "@id": "http://example.org/iiif/id1/canvas/page6",
+          "@type": "sc:Canvas",
+          "label": "6"
+        }
+      ]
+    }
+  ]
+}

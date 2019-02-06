@@ -232,7 +232,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatementForDisplay()
      */
-    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ") {
+    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub
         
     }
@@ -444,7 +444,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
      * {@inheritDoc}
      * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummaryForDisplay()
      */
-    public function getSummaryForDisplay($language = null, $joinChars = "; ") {
+    public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub
         
     }

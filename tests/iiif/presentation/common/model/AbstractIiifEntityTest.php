@@ -9,6 +9,7 @@ use iiif\presentation\v2\model\resources\Manifest;
  * AbstractIiifEntity test case.
  */
 class AbstractIiifEntityTest extends AbstractIiifTest {
+
     public function testSanitizeHTML() {
         $options = IiifResourceInterface::SANITIZE_NO_TAGS|IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML;
         self::assertEquals(5, $options);
@@ -63,5 +64,22 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
         
         self::markTestIncomplete("not yet implemented");
     }
+
+    /**
+     * Tests \iiif\presentation\common\model\AbstractIiifEntity->registerResource()
+     */
+    public function testRegisterResources() {
+        
+        $manifest = IiifHelper::loadIiifResource(self::getFile("v2/definition-order.json"));
+        
+        self::assertInstanceOf(Manifest::class, $manifest);
+        self::assertEquals(6, count($manifest->getDefaultCanvases()));
+        self::assertEquals(5, count($manifest->getStructures()));
+        self::assertEquals(1, count($manifest->getRootRanges()));
+        self::assertEquals("http://example.org/iiif/id1/range/range0", $manifest->getRootRanges()[0]->getId());
+        
+        self::markTestIncomplete("implement");
+    }
+
 }
 

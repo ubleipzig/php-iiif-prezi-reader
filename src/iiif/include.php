@@ -21,6 +21,17 @@ require_once (__DIR__ . "/presentation/common/model/resources/ManifestInterface.
 require_once (__DIR__ . "/presentation/common/model/resources/RangeInterface.php");
 require_once (__DIR__ . "/presentation/common/vocabulary/Motivation.php");
 
+require_once (__DIR__ . "/presentation/v1/model/resources/AbstractIiifResource1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/AbstractDescribableResource1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/Annotation1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/AnnotationList1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/Canvas1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/ContentResource1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/Layer1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/Manifest1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/Range1.php");
+require_once (__DIR__ . "/presentation/v1/model/resources/Sequence1.php");
+
 require_once (__DIR__ . "/presentation/v2/model/constants/ViewingDirectionValues.php");
 require_once (__DIR__ . "/presentation/v2/model/constants/ViewingHintValues.php");
 require_once (__DIR__ . "/presentation/v2/model/properties/FormatTrait.php");

@@ -58,7 +58,7 @@ interface IiifResourceInterface {
      */
     public function getSummary();
 
-    public function getSummaryForDisplay($language = null, $joinChars = "; ");
+    public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML);
     
     /**
      * version 2: license
@@ -74,7 +74,7 @@ interface IiifResourceInterface {
      */
     public function getRequiredStatement();
     
-    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ");
+    public function getRequiredStatementForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML);
     
     public function getSeeAlso();
     

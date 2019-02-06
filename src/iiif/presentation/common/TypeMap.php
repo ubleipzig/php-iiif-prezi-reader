@@ -97,13 +97,22 @@ class TypeMap {
         "http://iiif.io/api/annex/services/physdim/1/context.json" => PhysicalDimensions::class
     ];
 
-    const SERVICE_TYPES = [
+    const SERVICE_TYPES_BY_CONTEXT = [
         "http://library.stanford.edu/iiif/image-api/1.1/context.json" => "http://iiif.io/api/image/1/ImageService",
         "http://iiif.io/api/image/1/context.json" => "http://iiif.io/api/image/1/ImageService",
         "http://iiif.io/api/image/2/context.json" => "http://iiif.io/api/image/2/ImageService",
         "http://iiif.io/api/image/3/context.json" => "http://iiif.io/api/image/3/ImageService",
         // Not explicit @type, use profile instead 
         "http://iiif.io/api/annex/services/physdim/1/context.json" => "http://iiif.io/api/annex/services/physdim/1/context.json"
+    ];
+    
+    const SERVICE_TYPES_BY_PROFILE = [
+        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0" => "http://iiif.io/api/image/1/ImageService",
+        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1" => "http://iiif.io/api/image/1/ImageService",
+        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2" => "http://iiif.io/api/image/1/ImageService",
+        "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0" => "http://iiif.io/api/image/1/ImageService",
+        "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1" => "http://iiif.io/api/image/1/ImageService",
+        "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2" => "http://iiif.io/api/image/1/ImageService"
     ];
 
     public static function getClassForType($typeIri, $context) {

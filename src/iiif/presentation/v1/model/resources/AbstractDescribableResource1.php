@@ -69,7 +69,7 @@ abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
      * {@inheritDoc}
      * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getSummaryForDisplay()
      */
-    public function getSummaryForDisplay($language = null, $joinChars = "; ") {
+    public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         return $this->getValueForDisplay($this->description, $language, $joinChars);
     }
     
