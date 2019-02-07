@@ -93,6 +93,10 @@ class TypeMap {
         "http://www.w3.org/ns/oa#TextualBody" => ContentResource3::class,
         "http://www.w3.org/ns/oa#FragmentSelector" => null,
         "http://www.w3.org/ns/oa#PointSelector" => null,
+        "http://iiif.io/api/image/2#Size" => null,
+        "http://iiif.io/api/image/3#Size" => null,
+        "http://iiif.io/api/image/2#Tile" => null,
+        "http://iiif.io/api/image/3#Tile" => null,
         // FIXME at the moment, we only have a JSON-LD context URI instead of a name from a vocabulary
         "http://iiif.io/api/annex/services/physdim/1/context.json" => PhysicalDimensions::class
     ];
