@@ -13,9 +13,11 @@ class ImageInformation2 extends AbstractImageService {
     
     protected $protocol;
     
-    protected $sizes;
+    protected $maxWidth = null;
     
-    protected $tiles;
+    protected $maxHeight = null;
+    
+    protected $maxArea = null;
     
     protected function getCollectionProperties() {
         return ["profile"];
@@ -54,6 +56,18 @@ class ImageInformation2 extends AbstractImageService {
      * @see \iiif\services\AbstractImageService::getMaxSize()
      */
     protected function getMaxSize() {
+        $this->initializeProfile();
+        /*
+         * Although the API offers "max" as the maximum size, we check if "max" is different from "full".
+         * If "full" is not supported because there are limitations on the maximum dimensions or area,
+         * we use "max". Otherwise, "full" and "max" are the same and we use "full".
+         * The reason behind this is a bug in the widely used iipsrv image server that has only been fixed
+         * in December 2017 and is still present in older IIP installations:
+         * https://github.com/ruven/iipsrv/commit/916f400c8be9872ff7afec569ad2601eb01a192e#diff-2e48c0738b9a10e853164eacecb8c6ca
+         */
+        if (isset($this->maxArea) || isset($this->maxWidth) || isset($this->maxHeight)) {
+            return "max";
+        }
         return "full";
     }
 
@@ -100,6 +114,11 @@ class ImageInformation2 extends AbstractImageService {
                                         $this->supports = array_unique(array_merge($this->supports, $value));
                                     }
                                     break;
+                                case "maxWidth":
+                                case "maxHeight":
+                                case "maxMaxArea":
+                                    $this->$key = $value;
+                                    break;
                             }
                         }
                     }
@@ -108,6 +127,13 @@ class ImageInformation2 extends AbstractImageService {
             $this->profileInitialized = true;
         }
     }
-
+    /**
+     * {@inheritDoc}
+     * @see \iiif\services\AbstractImageService::getSizes()
+     */
+    public function getSizes() {
+        return $this->sizes;
+    }
+    
 }
 

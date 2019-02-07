@@ -12,6 +12,7 @@ use iiif\services\AbstractImageService;
 use iiif\services\Service;
 use iiif\tools\IiifHelper;
 use iiif\tools\Options;
+use iiif\services\Profile;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -111,7 +112,11 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
             }
             $id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
             $profile = array_key_exists("profile", $dictionary) ? $dictionary["profile"] : null;
-            $service = $clazz == null ? new Service($id, $profile) : new $clazz($id, $profile);
+            $width = array_key_exists("width", $dictionary) ? $dictionary["width"] : null;
+            $height = array_key_exists("height", $dictionary) ? $dictionary["height"] : null;
+            $sizes = array_key_exists("sizes", $dictionary) ? $dictionary["sizes"] : null;
+            $tiles = array_key_exists("tiles", $dictionary) ? $dictionary["tiles"] : null;
+            $service = $clazz == null ? new Service($id, $profile) : new $clazz($id, $profile, $width, $height, $sizes, $tiles);
             return $service;
         }
     }
@@ -578,12 +583,36 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
                 }
             }
             if ($imageService!=null && $imageService instanceof AbstractImageService) {
-                // TODO Add level 0 support. The following uses level 1 features sizeByW or sizeByH
-                $width = $width == null ? Options::getMaxThumbnailWidth() : $width;
-                $height = $heigth == null ? Options::getMaxThumbnailHeight() : $heigth;
-                $size = $width <= $height ? (",".$height) : ($width.",");
-                return $imageService->getImageUrl(null, $size, null, null, null);
-            } elseif ($simpleUrl!=null) {
+                if ($imageService->isFeatureSupported(Profile::SIZE_BY_H) && $imageService->isFeatureSupported(Profile::SIZE_BY_W)) {
+                    // Level 1 or Level 2 or at least sufficient additional features in profile
+                    $width = $width == null ? Options::getMaxThumbnailWidth() : $width;
+                    $height = $heigth == null ? Options::getMaxThumbnailHeight() : $heigth;
+                    $size = $width <= $height ? (",".$height) : ($width.",");
+                    return $imageService->getImageUrl(null, $size, null, null, null);
+                }
+                if (!empty($imageService->getSizes()) && is_array($imageService->getSizes())) {
+                    // Level 0 image with given "sizes"
+                    $sizeWidth = null;
+                    $sizeHeight = null;
+                    foreach ($imageService->getSizes() as $sizeItem) {
+                        if ($sizeWidth == null || $sizeHeight == null || ($sizeItem["width"]<Options::getMaxThumbnailWidth() && $sizeItem["height"]<Options::getMaxThumbnailHeight())) {
+                            $sizeWidth = $sizeItem["width"];
+                            $sizeHeight = $sizeItem["height"];
+                        }
+                    }
+                    $size = $sizeWidth <= $sizeHeight ? (",".$sizeHeight) : ($sizeWidth.",");
+                    return $imageService->getImageUrl(null, $size, null, null, null);
+                }
+                if ($imageService->getWidth()!= null) {
+                    // Level 0 image with at least a given width
+                    return $imageService->getImageUrl(null, $imageService->getWidth().",", null, null, null);
+                }
+                if ($imageService->getHeight()!= null) {
+                    // Level 0 image with at least a given height
+                    return $imageService->getImageUrl(null, ",".$imageService->getHeight(), null, null, null);
+                }
+            }
+            if ($simpleUrl!=null) {
                 return $simpleUrl;
             }
         }

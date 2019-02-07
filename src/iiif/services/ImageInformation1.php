@@ -68,6 +68,13 @@ class ImageInformation1 extends AbstractImageService {
             $this->profileInitialized = true;
         }
     }
-    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\services\AbstractImageService::getSizes()
+     */
+    public function getSizes() {
+        return null;
+    }
+
 }
 
