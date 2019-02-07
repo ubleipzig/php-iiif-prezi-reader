@@ -1,5 +1,7 @@
 <?php
 use iiif\AbstractIiifTest;
+use iiif\context\JsonLdProcessor;
+use iiif\context\JsonLdContext;
 
 /**
  * ImageInformation3 test case.
@@ -42,6 +44,20 @@ class ImageInformation3Test extends AbstractIiifTest {
     public function testGetImageUrl() {
         // TODO
         $this->markTestIncomplete("getImageUrl test not implemented");
+    }
+    
+    /**
+     * @see https://github.com/IIIF/api/pull/1774
+     */
+    public function testUndefinedTypes() {
+        $processor = new JsonLdProcessor();
+        $context = $processor->processContext("http://iiif.io/api/image/3/context.json", new JsonLdContext($processor));
+        $tileDefinition = $context->getTermDefinition("Tile");
+        self::assertNotNull($tileDefinition);
+        self::assertEquals("http://iiif.io/api/image/3#Tile", $tileDefinition->getIriMapping());
+        $sizeDefinition = $context->getTermDefinition("Size");
+        self::assertNotNull($sizeDefinition);
+        self::assertEquals("http://iiif.io/api/image/3#Size", $sizeDefinition->getIriMapping());
     }
 }
 

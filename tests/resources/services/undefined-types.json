@@ -1,0 +1,21 @@
+{
+  "@context" : "http://iiif.io/api/image/3/context.json",
+  "@id": "http://example.org/random",
+  "width": 1000,
+  "height": 1000,
+  "tiles": [
+     {
+       "type": "Tile",
+       "width" : 256,
+       "height" : 256,
+       "scaleFactors" : [ 1, 2, 4, 8, 16 ]
+     }
+  ],
+  "sizes": [
+    {
+      "type": "Size",
+      "width": 1000,
+      "height": 1000
+    }
+  ]
+}
