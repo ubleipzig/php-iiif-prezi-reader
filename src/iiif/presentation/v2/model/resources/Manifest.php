@@ -65,6 +65,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
         // TODO untested
         if ($this->rootRanges == null) {
             $this->rootRanges = array();
+            $ranges = [];
             foreach ($this->structures as $range) {
                 $ranges[] = $range->getId();
             }
