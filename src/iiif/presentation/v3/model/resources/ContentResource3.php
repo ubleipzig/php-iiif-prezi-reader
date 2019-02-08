@@ -163,5 +163,21 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
         return $value;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isImage()
+     */
+    public function isImage() {
+        return $type == "Image";
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isText()
+     */
+    public function isText() {
+        return $type == "Text";
+    }
+    
 }
 

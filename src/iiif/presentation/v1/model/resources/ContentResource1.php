@@ -68,6 +68,21 @@ class ContentResource1 extends AbstractIiifResource1 implements ContentResourceI
         }
         return null;
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isImage()
+     */
+    public function isImage() {
+        return $this->type == "dctypes:Image";
+    }
 
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isText()
+     */
+    public function isText() {
+        return $this->type == "dctypes:Text" || $this->type == "cnt:ContentAsText";
+    }
+    
 }
 

@@ -22,6 +22,16 @@ interface ContentResourceInterface extends IiifResourceInterface {
      * @return string
      */
     public function getChars();
+    
+    /**
+     * @return boolean
+     */
+    public function isImage();
+    
+    /**
+     * @return boolean
+     */
+    public function isText();
 
 }
 
