@@ -36,12 +36,6 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      *
-     * @var AbstractIiifResource2[]
-     */
-    protected $containedResources = array();
-
-    /**
-     *
      * @return Sequence[]:
      */
     public function getSequences() {
@@ -92,6 +86,9 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
     }
 
     public function getContainedResourceById($id) {
+        if (!is_string($id)) {
+            return null;
+        }
         if (array_key_exists($id, $this->containedResources))
             return $this->containedResources[$id];
     }
