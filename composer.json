@@ -1,5 +1,5 @@
 {
-	"name" : "ubl/php-iiif-manifest-reader",
+	"name" : "ubl/php-iiif-prezi-reader",
 	"description" : "Read IIIF Presentation API resources into PHP objects that offer some data extraction methods",
 	"version" : "0.1.0-dev",
 	"type" : "library",
