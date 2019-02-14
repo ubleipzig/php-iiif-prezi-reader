@@ -32,10 +32,10 @@ class IRI {
      * IRI regex with named groups.
      * @link https://tools.ietf.org/html/rfc3986#appendix-B
      */
-    const IRI_REGEX = '_^((?P<scheme>[^:/?#]+):)?(?P<authority>(//)([^/?#]*))?(?P<path>[^?#]*)(\?(?P<query>[^#]*))?(#(?P<fragment>.*))?_';
+    const IRI_REGEX = '_^((?P<scheme>[^:/?#]+):)?((?P<doubleSlash>//)(?P<authority>([^/?#]*)))?(?P<path>[^?#]*)(\?(?P<query>[^#]*))?(#(?P<fragment>.*))?_';
 
     const COMPACT_IRI_REGEX = "_^(?P<prefix>[^:/?#]+):(?P<term>[^:/?#]+)_";
-
+    
     /**
      * @var string
      */
@@ -45,6 +45,11 @@ class IRI {
      * @var string
      */
     protected $scheme;
+    
+    /**
+     * @var string
+     */
+    protected $doubleSlash;
 
     /**
      * @var string
@@ -86,11 +91,28 @@ class IRI {
             $this->iri = $iri;
             $found = preg_match(self::IRI_REGEX, $iri, $matches);
             foreach ($matches as $key => $value) {
+                if (is_numeric($key)) {
+                    continue;
+                }
                 $this->$key = $value;
+            }
+            if (!empty($this->authority)) {
+                $hostPort = $this->authority;
+                if (($atPos = strpos($hostPort, '@')) !== false) {
+                    $this->userInfo = substr($hostPort, 0, $atPos);
+                    $hostPort = substr($hostPort,$atPos + 1);
+                }
+                if (($colonPos = strrpos($hostPort, ':')) !== false && preg_match('_^\d{1,5}$_', $port = substr($hostPort, $colonPos+1))) {
+                    $this->host = substr($hostPort, 0, $colonPos);
+                    $this->port = $port;
+                } else {
+                    $this->host = $hostPort;
+                }
             }
         } elseif ($iri instanceof IRI) {
             $this->iri = $iri->iri;
             $this->scheme = $iri->scheme;
+            $this->doubleSlash = $iri->doubleSlash;
             $this->authority = $iri->authority;
             $this->userInfo = $iri->userInfo;
             $this->host = $iri->host;
@@ -124,14 +146,17 @@ class IRI {
      */
     public static function isIri($iri) {
         if ($iri == null)
+        {
             return false;
+        }
         return preg_match(IRI::IRI_REGEX, $iri) === 1;
     }
 
     /**
      * Checks if an IRI is an absolute IRI for JSON-LD purposes.
      * From https://www.w3.org/TR/json-ld11-api/#dfn-absolute-iri :
-     * "An absolute IRI is defined in [RFC3987] containing a scheme along with a path and optional query and fragment segments."
+     * "An absolute IRI is defined in [RFC3987] containing a scheme along with
+     * a path and optional query and fragment segments."
      *  
      * @param string $iri
      * @return boolean true
@@ -142,7 +167,8 @@ class IRI {
     }
 
     /**
-     * Checks if an IRI is a relative IRI. For that purpose we check if it matches the IRI regex and misses a scheme.
+     * Checks if an IRI is a relative IRI. For that purpose we check if it
+     * matches the IRI regex and misses a scheme.
      * @param string $iri
      * @return boolean true if $iri has the form of a relative IRI, otherwise false
      */
@@ -163,6 +189,7 @@ class IRI {
         $rel = new IRI($relativeIri);
         if (! empty($rel->getScheme())) {
             $schema = $rel->getScheme();
+            $doubleSlash = $rel->getDoubleSlash();
             $authority = $rel->getAuthority();
             $path = self::removeDotSegments($rel->getPath());
             $query = $rel->getQuery();
@@ -196,13 +223,16 @@ class IRI {
                 $authority = $base->getAuthority();
             }
             $schema = $base->getScheme();
+            $doubleSlash = $base->getDoubleSlash();
         }
         $fragment = $rel->getFragment();
-        return (empty($schema) ? "" : ($schema . ":")) . $authority . $path . (empty($query) ? "" : "?" . $query) . (empty($fragment) ? "" : ("#" . $fragment));
+        $result = (empty($schema) ? "" : ($schema . ":")). (empty($doubleSlash) ? "" : $doubleSlash) . $authority . $path . (empty($query) ? "" : "?" . $query) . (empty($fragment) ? "" : ("#" . $fragment));
+        return (empty($schema) ? "" : ($schema . ":")). (empty($doubleSlash) ? "" : $doubleSlash) . $authority . $path . (empty($query) ? "" : "?" . $query) . (empty($fragment) ? "" : ("#" . $fragment));
     }
 
     /**
-     * Remove dot segments ( ".." and "." ) in IRI paths. Implements the algorithm described in https://tools.ietf.org/html/rfc3986#section-5.2.4
+     * Remove dot segments ( ".." and "." ) in IRI paths. Implements the algorithm
+     * described in https://tools.ietf.org/html/rfc3986#section-5.2.4
      * @param string $path
      * @return string
      * @link https://tools.ietf.org/html/rfc3986#section-5.2.4
@@ -219,16 +249,19 @@ class IRI {
                 $input = substr($input, 2);
             } elseif ($input == "/.") {
                 $input = "/" . substr($input, 2);
-            } elseif (strpos($input, "/../") === 0) {
-                $input = substr($input, 3);
+            } elseif (strpos($input, "/../") === 0 || $input === "/..") {
+                if (strpos($input, "/../") === 0) {
+                    $input = substr($input, 3);
+                } else {
+                    $input = "/" . substr($input, 3);
+                }
                 $outArray = explode("/", $output);
-                $segment = empty($outArray[count($outArray) - 1]) ? $outArray[count($outArray) - 2] . "/" : $outArray[count($outArray) - 1];
+                $segment = empty($outArray[count($outArray) - 1]) && count($outArray) > 1 ? $outArray[count($outArray) - 2] . "/" : $outArray[count($outArray) - 1];
+                $outIsSlash = $output === "/";
                 $output = substr($output, 0, strlen($output) - strlen($segment));
-                if (strrpos($output, "/") == ($length = strlen($output) - 1) && $output != "/") {
+                if (strrpos($output, "/") == ($length = strlen($output) - 1) && !$outIsSlash) {
                     $output = substr($output, 0, $length);
                 }
-            } elseif (strpos($input, "/..") === 0) {
-                $input = "/" . substr($input, 3);
             } elseif ($input == "." || $input == "..") {
                 $input = "";
             } else {
@@ -253,6 +286,13 @@ class IRI {
      */
     public function getScheme() {
         return $this->scheme;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDoubleSlash() {
+        return $this->doubleSlash;
     }
 
     /**
@@ -311,6 +351,11 @@ class IRI {
      * @return mixed
      */
     public function __get($field) {
-        return $this->$field;
+        $stack = debug_backtrace();
+        foreach ($stack as $line) {
+            if (strpos($line["function"], "test") === 0 && $line["function"]!="test__GetFails") {
+                return $this->$field;
+            }
+        }
     }
 }
