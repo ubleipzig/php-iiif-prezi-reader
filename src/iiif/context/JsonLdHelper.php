@@ -33,10 +33,12 @@ class JsonLdHelper {
             return false;
         }
         $lastIndex = sizeof($array) - 1;
+        $lastKey = -1;
         foreach ($array as $key => $value) {
-            if (! is_int($key) || $key < 0 || $key > $lastIndex) {
+            if (! is_int($key) || $key < 0 || $key > $lastIndex || $key <= $lastKey) {
                 return false;
             }
+            $lastKey = $key;
         }
         return true;
     }

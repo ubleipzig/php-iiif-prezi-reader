@@ -53,11 +53,13 @@ class JsonLdProcessorTest extends TestCase
         $sequential2 = [0 => '1', 1 => 'a', 2 => 'x'];
         $nonSequential1 = [0 => '1', -1 => 'a', 2 => 'x'];
         $nonSequential2 = ['I' => '1', 0 => 'a', 1 => 'x'];
+        $nonSequential3 = [1 => '1', 0 => 'a', 2 => 'x'];
         
         self::assertTrue(JsonLdHelper::isSequentialArray($sequential1));
         self::assertTrue(JsonLdHelper::isSequentialArray($sequential2));
         self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential1));
         self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential2));
+        self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential3));
     }
 }
 
