@@ -1,0 +1,38 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://example.org/collection/collection3",
+  "type": "Collection",
+  "label": { "@none": ["Top Collection"]},
+  "metadata": [
+    {
+      "label": { "@none": ["A label"] },
+      "value": { "@none": ["A value"] }
+    },
+    {
+      "label": { "@none": ["Another label"] },
+      "value": { "@none": ["Another value"] }
+    }
+  ],
+  "items": [
+    {
+      "id": "http://example.org/manifest/manifest1",
+      "type": "Manifest",
+      "label": { "@none": ["Manifest 3"]}
+    },
+    {
+      "id": "http://example.org/collection/subcollection1",
+      "type": "Collection",
+      "label": { "@none": ["Sub collection 1"]}
+    },
+    {
+      "id": "http://example.org/manifest/manifest2",
+      "type": "Manifest",
+      "label": { "@none": ["Manifest 2"]}
+    },
+    {
+      "id": "http://example.org/collection/subcollection2",
+      "type": "Collection",
+      "label": { "@none": ["Sub collection 2"]}
+    }
+  ]
+}

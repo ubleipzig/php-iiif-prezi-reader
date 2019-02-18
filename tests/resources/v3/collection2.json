@@ -1,0 +1,17 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://example.org/collection/collection2",
+  "type": "Collection",
+  "label": { "@none": ["Empty Collection"]},
+  "metadata": [
+    {
+      "label": { "@none": ["A label"] },
+      "value": { "@none": ["A value"] }
+    },
+    {
+      "label": { "@none": ["Another label"] },
+      "value": { "@none": ["Another value"] }
+    }
+  ],
+  "items": null
+}
