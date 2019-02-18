@@ -26,12 +26,12 @@ use iiif\context\Keywords;
 use iiif\presentation\common\TypeMap;
 use iiif\presentation\common\model\resources\AbstractIiifResource;
 use iiif\presentation\common\model\resources\IiifResourceInterface;
-use iiif\presentation\v2\model\vocabulary\Names;
+use iiif\presentation\v2\model\vocabulary\Terms;
 use iiif\services\AbstractImageService;
+use iiif\services\Profile;
 use iiif\services\Service;
 use iiif\tools\IiifHelper;
 use iiif\tools\Options;
-use iiif\services\Profile;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -398,20 +398,20 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
         $requestedValue = null;
         $targetLanguage = $language == null ? null : $language;
         foreach ($this->metadata as $metadatum) {
-            if (is_string($metadatum[Names::LABEL])) {
-                if ($label == $metadatum[Names::LABEL]) {
-                    $requestedValue = $metadatum[Names::VALUE];
+            if (is_string($metadatum[Terms::LABEL])) {
+                if ($label == $metadatum[Terms::LABEL]) {
+                    $requestedValue = $metadatum[Terms::VALUE];
                     break;
                 }
-            } elseif (is_array($metadatum[Names::LABEL])) {
-                foreach ($metadatum[Names::LABEL] as $translatedLabel) {
-                    if ($label == $translatedLabel[Names::AT_VALUE]) {
-                        $requestedValue = $requestedValue == null ? $metadatum[Names::VALUE] : $requestedValue;
+            } elseif (is_array($metadatum[Terms::LABEL])) {
+                foreach ($metadatum[Terms::LABEL] as $translatedLabel) {
+                    if ($label == $translatedLabel[Terms::AT_VALUE]) {
+                        $requestedValue = $requestedValue == null ? $metadatum[Terms::VALUE] : $requestedValue;
                         if ($targetLanguage == null) {
-                            $targetLanguage = $translatedLabel[Names::AT_LANGUAGE];
+                            $targetLanguage = $translatedLabel[Terms::AT_LANGUAGE];
                         }
-                        if ($language != null && $translatedLabel[Names::AT_LANGUAGE] == $language) {
-                            $requestedValue = $metadatum[Names::VALUE];
+                        if ($language != null && $translatedLabel[Terms::AT_LANGUAGE] == $language) {
+                            $requestedValue = $metadatum[Terms::VALUE];
                             break 2;
                         }
                     }
@@ -428,11 +428,11 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
             if (is_array($requestedValue[0])) {
                 $firstValue = null;
                 foreach ($requestedValue as $translatedValue) {
-                    if ($translatedValue[Names::AT_LANGUAGE] == $targetLanguage) {
-                        return $translatedValue[Names::AT_VALUE];
+                    if ($translatedValue[Terms::AT_LANGUAGE] == $targetLanguage) {
+                        return $translatedValue[Terms::AT_VALUE];
                     }
                     if ($firstValue == null) {
-                        $firstValue = $translatedValue[Names::AT_VALUE];
+                        $firstValue = $translatedValue[Terms::AT_VALUE];
                     }
                 }
                 return $firstValue;

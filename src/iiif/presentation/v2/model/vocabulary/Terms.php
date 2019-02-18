@@ -20,7 +20,7 @@
 
 namespace iiif\presentation\v2\model\vocabulary;
 
-class Names {
+class Terms {
 
     // Structures
     const COLLECTIONS = "collections";
