@@ -21,9 +21,12 @@
 namespace iiif\presentation\v3\model\resources;
 
 use iiif\presentation\common\model\resources\RangeInterface;
+use iiif\presentation\v3\model\properties\PlaceholderAndAccompanyingCanvasTrait;
 
 class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
+    use PlaceholderAndAccompanyingCanvasTrait;
+    
     /**
      *
      * @var (Range3|Canvas3|SpecificResource3)[]
@@ -35,12 +38,6 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
      * @var Annotation3[]
      */
     protected $annotations;
-
-    /**
-     *
-     * @var Canvas3
-     */
-    protected $posterCanvas;
 
     /**
      *
@@ -80,14 +77,6 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
      */
     public function getAnnotations() {
         return $this->annotations;
-    }
-
-    /**
-     *
-     * @return \iiif\presentation\v3\model\resources\Canvas3
-     */
-    public function getPosterCanvas() {
-        return $this->posterCanvas;
     }
 
     /**

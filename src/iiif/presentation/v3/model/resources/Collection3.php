@@ -22,8 +22,11 @@ namespace iiif\presentation\v3\model\resources;
 
 use iiif\presentation\common\model\resources\CollectionInterface;
 use iiif\presentation\common\model\resources\ManifestInterface;
+use iiif\presentation\v3\model\properties\PlaceholderAndAccompanyingCanvasTrait;
 
 class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
+    
+    use PlaceholderAndAccompanyingCanvasTrait;
 
     /**
      *
@@ -36,12 +39,6 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
      * @var AnnotationPage3[]
      */
     protected $annotations;
-
-    /**
-     *
-     * @var Canvas3
-     */
-    protected $posterCanvas;
 
     /**
      *
@@ -69,14 +66,6 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
      */
     public function getAnnotations() {
         return $this->annotations;
-    }
-
-    /**
-     *
-     * @return \iiif\presentation\v3\model\resources\Canvas3
-     */
-    public function getPosterCanvas() {
-        return $this->posterCanvas;
     }
 
     /**

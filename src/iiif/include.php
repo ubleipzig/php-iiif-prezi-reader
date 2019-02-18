@@ -73,6 +73,8 @@ require_once (__DIR__ . "/presentation/v2/model/vocabulary/Terms.php");
 
 require_once (__DIR__ . "/presentation/v3/model/constants/BehaviorValues.php");
 
+require_once (__DIR__ . "/presentation/v3/model/properties/PlaceholderAndAccompanyingCanvasTrait.php");
+
 require_once (__DIR__ . "/presentation/v3/model/resources/AbstractIiifResource3.php");
 require_once (__DIR__ . "/presentation/v3/model/resources/Annotation3.php");
 require_once (__DIR__ . "/presentation/v3/model/resources/AnnotationCollection3.php");

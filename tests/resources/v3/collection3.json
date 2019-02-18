@@ -13,6 +13,16 @@
       "value": { "@none": ["Another value"] }
     }
   ],
+  "navDate": "2019-01-01T00:00:00Z",
+  "viewingDirection": "left-to-right",
+  "placeholderCanvas": {
+    "id": "http://example.org/manifest1/canvas1",
+    "type": "Canvas"
+  },
+  "accompanyingCanvas": {
+    "id": "http://example.org/manifest1/canvas2",
+    "type": "Canvas"
+  },
   "items": [
     {
       "id": "http://example.org/manifest/manifest1",
@@ -33,6 +43,16 @@
       "id": "http://example.org/collection/subcollection2",
       "type": "Collection",
       "label": { "@none": ["Sub collection 2"]}
+    }
+  ],
+  "annotations": [
+    {
+      "id": "http://example.org/annotationpage1",
+      "type": "AnnotationPage"
+    },
+    {
+      "id": "http://example.org/annotationpage2",
+      "type": "AnnotationPage"
     }
   ]
 }

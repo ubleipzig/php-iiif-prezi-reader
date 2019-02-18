@@ -21,9 +21,12 @@
 namespace iiif\presentation\v3\model\resources;
 
 use iiif\presentation\common\model\resources\CanvasInterface;
+use iiif\presentation\v3\model\properties\PlaceholderAndAccompanyingCanvasTrait;
 
 class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
 
+    use PlaceholderAndAccompanyingCanvasTrait;
+    
     /**
      *
      * @var AnnotationPage3[]
@@ -35,12 +38,6 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
      * @var AnnotationPage3[]
      */
     protected $annotations;
-
-    /**
-     *
-     * @var Canvas3
-     */
-    protected $posterCanvas;
 
     /**
      *
@@ -97,14 +94,6 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
      */
     public function getAnnotations() {
         return $this->items;
-    }
-
-    /**
-     *
-     * @return \iiif\presentation\v3\model\resources\Canvas3
-     */
-    public function getPosterCanvas() {
-        return $this->posterCanvas;
     }
 
     /**
