@@ -1,0 +1,90 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/collection/collection3",
+  "@type": "sc:Collection",
+  "label": "Top Collection",
+  "metadata": [
+    {
+      "@label": "A label", "value": "A value"
+    },
+    {
+      "@label": "Another label", "value": "Another value"
+    }
+  ],
+  "members": null,
+  "collections": [
+    {
+      "@id": "http://example.org/collection/subcollection1",
+      "@type": "sc:Collection",
+      "label": "Sub collection 1",
+      "manifests": [
+        {
+          "@id": "http://example.org/manifest/manifest1",
+          "@type": "sc:Manifest",
+          "label": "Manifest 1"
+        },
+        {
+          "@id": "http://example.org/manifest/manifest1",
+          "@type": "sc:Manifest",
+          "label": "Manifest 2"
+        }
+      ]
+    },
+    {
+      "@id": "http://example.org/collection/subcollection2",
+      "@type": "sc:Collection",
+      "label": "Sub collection 2",
+      "members": [
+        {
+          "@id": "http://example.org/manifest/manifest3",
+          "@type": "sc:Manifest",
+          "label": "Manifest 3"
+        },
+        {
+          "@id": "http://example.org/collection/subcollection2-1",
+	      "@type": "sc:Collection",
+	      "label": "Sub collection 2-1"
+        },
+        {
+          "@id": "http://example.org/manifest/manifest4",
+          "@type": "sc:Manifest",
+          "label": "Manifest 4"
+        },
+        {
+          "@id": "http://example.org/collection/subcollection2-2",
+	      "@type": "sc:Collection",
+	      "label": "Sub collection 2-2"
+        }
+      ]
+    },
+    {
+      "@id": "http://example.org/collection/subcollection3",
+      "@type": "sc:Collection",
+      "label": "Sub collection 3",
+      "collections": [
+        {
+          "@id": "http://example.org/collection/subcollection3-1",
+	      "@type": "sc:Collection",
+	      "label": "Sub collection 3-1"
+        },
+        {
+          "@id": "http://example.org/collection/subcollection3-2",
+	      "@type": "sc:Collection",
+	      "label": "Sub collection 3-2"
+        }
+      ]
+    }
+  ], 
+  "manifests": [
+    {
+      "@id": "http://example.org/manifest/manifest5",
+      "@type": "sc:Manifest",
+      "label": "Manifest 5"
+    },
+    {
+      "@id": "http://example.org/manifest/manifest6",
+      "@type": "sc:Manifest",
+      "label": "Manifest 6"
+    }
+  ]
+}

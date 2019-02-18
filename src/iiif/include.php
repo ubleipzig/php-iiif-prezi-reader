@@ -34,6 +34,7 @@ require_once (__DIR__ . "/presentation/common/model/resources/AbstractIiifResour
 require_once (__DIR__ . "/presentation/common/model/resources/AnnotationContainerInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/AnnotationInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/CanvasInterface.php");
+require_once (__DIR__ . "/presentation/common/model/resources/CollectionInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/ContentResourceInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/ManifestInterface.php");
 require_once (__DIR__ . "/presentation/common/model/resources/RangeInterface.php");

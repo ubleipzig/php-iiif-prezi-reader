@@ -1,0 +1,17 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/collection/collection2",
+  "@type": "sc:Collection",
+  "label": "Empty Collection",
+  "metadata": [
+    {
+      "@label": "A label", "value": "A value"
+    },
+    {
+      "@label": "Another label", "value": "Another value"
+    }
+  ],
+  "members": null,
+  "collections": null, 
+  "manifests": null
+}

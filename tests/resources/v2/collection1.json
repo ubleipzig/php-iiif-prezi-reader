@@ -1,0 +1,5 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/collection/collection1",
+  "@type": "sc:Collection"
+}

@@ -20,7 +20,10 @@
 
 namespace iiif\presentation\v3\model\resources;
 
-class Collection3 extends AbstractIiifResource3 {
+use iiif\presentation\common\model\resources\CollectionInterface;
+use iiif\presentation\common\model\resources\ManifestInterface;
+
+class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
 
     /**
      *
@@ -91,4 +94,47 @@ class Collection3 extends AbstractIiifResource3 {
     public function getViewingDirection() {
         return $this->viewingDirection;
     }
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollections()
+     */
+    public function getContainedCollections() {
+        $result = [];
+        if (!empty($this->items)) {
+            foreach ($this->items as $item) {
+                if ($item instanceof CollectionInterface) {
+                    $result[] = $item;
+                }
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollectionsAndManifests()
+     */
+    public function getContainedCollectionsAndManifests() {
+        return $this->items;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedManifests()
+     */
+    public function getContainedManifests() {
+        $result = [];
+        if (!empty($this->items)) {
+            foreach ($this->items as $item) {
+                if ($item instanceof ManifestInterface) {
+                    $result[] = $item;
+                }
+            }
+        }
+        return $result;
+    }
+
+
+
+
 }

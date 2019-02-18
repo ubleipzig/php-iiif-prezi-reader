@@ -21,8 +21,10 @@
 namespace iiif\presentation\v2\model\resources;
 
 use iiif\presentation\v2\model\properties\NavDateTrait;
+use iiif\presentation\common\model\resources\CollectionInterface;
+use iiif\presentation\common\model\resources\ManifestInterface;
 
-class Collection extends AbstractIiifResource2 {
+class Collection extends AbstractIiifResource2 implements CollectionInterface {
     use NavDateTrait;
 
     const TYPE = "sc:Collection";
@@ -42,6 +44,56 @@ class Collection extends AbstractIiifResource2 {
     protected $manifests = array();
 
     protected $members = array();
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollections()
+     */
+    public function getContainedCollections() {
+        $containedCollections = empty($this->collections) ? [] : $this->collections;
+        if (!empty($this->members)) {
+            foreach ($this->members as $member) {
+                if ($member instanceof CollectionInterface) {
+                    $containedCollections[] = $member;
+                }
+            }
+        }
+        return $containedCollections;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollectionsAndManifests()
+     */
+    public function getContainedCollectionsAndManifests() {
+        $result = [];
+        if (!empty($this->members)) {
+            $result = array_merge($result, $this->members);
+        }
+        if (!empty($this->collections)) {
+            $result = array_merge($result, $this->collections);
+        }
+        if (!empty($this->manifests)) {
+            $result = array_merge($result, $this->manifests);
+        }
+        return $result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedManifests()
+     */
+    public function getContainedManifests() {
+        $containedManifests = empty($this->manifests) ? [] : $this->manifests;
+        if (!empty($this->members)) {
+            foreach ($this->members as $member) {
+                if ($member instanceof ManifestInterface) {
+                    $containedManifests[] = $member;
+                }
+            }
+        }
+        return $containedManifests;
+    }
 
 }
 

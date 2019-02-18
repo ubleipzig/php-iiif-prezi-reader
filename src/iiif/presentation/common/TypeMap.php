@@ -23,6 +23,7 @@ namespace iiif\presentation\common;
 use iiif\presentation\v2\model\resources\Manifest;
 use iiif\presentation\v2\model\resources\Sequence;
 use iiif\presentation\v2\model\resources\Canvas;
+use iiif\presentation\v2\model\resources\Collection;
 use iiif\presentation\v2\model\resources\AnnotationList;
 use iiif\presentation\v2\model\resources\Range;
 use iiif\presentation\v3\model\resources\Collection3;
@@ -67,6 +68,7 @@ class TypeMap {
         "http://www.shared-canvas.org/ns/AnnotationList" => AnnotationList1::class,
         "http://www.shared-canvas.org/ns/Range" => Range1::class,
         "http://www.shared-canvas.org/ns/Layer" => Layer1::class,
+        "http://iiif.io/api/presentation/2#Collection" => Collection::class,
         "http://iiif.io/api/presentation/2#Manifest" => Manifest::class,
         "http://iiif.io/api/presentation/2#Sequence" => Sequence::class,
         "http://iiif.io/api/presentation/2#Canvas" => Canvas::class,
