@@ -115,19 +115,20 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
             self::assertInstanceOf(Canvas::class, $canvas);
             self::assertEquals(1, sizeof($canvas->getImageAnnotations()));
             
-            $image = $canvas->getImageAnnotations()[0];
+            $imageAnnotation = $canvas->getImageAnnotations()[0];
 
-            self::assertNotNull($image);
-            self::assertInstanceOf(Annotation::class, $image);
-            self::assertNotEmpty($image->getId());
+            self::assertNotNull($imageAnnotation);
+            self::assertInstanceOf(Annotation::class, $imageAnnotation);
+            self::assertNotEmpty($imageAnnotation->getId());
 
-            self::assertNotNull($image->getBody());
-            self::assertInstanceOf(ContentResource::class, $image->getBody());
-            self::assertNotEmpty($image->getBody()->getId());
+            self::assertNotNull($imageAnnotation->getBody());
+            self::assertInstanceOf(ContentResource::class, $imageAnnotation->getBody());
+            self::assertNotEmpty($imageAnnotation->getBody()->getId());
+            self::assertEquals("image/jpeg", $imageAnnotation->getBody()->getFormat());
 
-            self::assertNotNull($image->getBody()->getSingleService());
-            self::assertInstanceOf(ImageInformation2::class, $image->getBody()->getSingleService());
-            self::assertNotEmpty($image->getBody()->getSingleService()->getId());
+            self::assertNotNull($imageAnnotation->getBody()->getSingleService());
+            self::assertInstanceOf(ImageInformation2::class, $imageAnnotation->getBody()->getSingleService());
+            self::assertNotEmpty($imageAnnotation->getBody()->getSingleService()->getId());
         }
     }
     

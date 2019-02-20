@@ -82,6 +82,12 @@ abstract class AbstractIiifEntity {
         return $this->originalJsonArray;
     }
 
+    protected function getPropertyMap() {
+        return [
+            "@id" => "id"
+        ];
+    }
+    
     /**
      * Properties that link to IIIF resources via URI string rather than id:URI/type:type dictionary.
      *
@@ -182,9 +188,9 @@ abstract class AbstractIiifEntity {
                     if ($key == Keywords::CONTEXT) {
                         continue;
                     }
-                    if (! Keywords::isKeyword($key) && $context->getTermDefinition($key) == null) {
-                        continue;
-                    }
+//                     if (! Keywords::isKeyword($key) && $context->getTermDefinition($key) == null) {
+//                         continue;
+//                     }
                     if (JsonLdHelper::isDictionary($value)) {
                         // set basic values first
                         $dictionaryOfDictionaries[$key] = $value;
@@ -223,7 +229,27 @@ abstract class AbstractIiifEntity {
         if (strpos($property, "@") === 0) {
             $property = substr($property, 1);
         }
-        if (array_key_exists($term, $this->getStringResources())) {
+        if (!property_exists($this, $property)) {
+            $iriOrKeyword = null;
+            if ($context->getTermDefinition($property) != null) {
+                $iriOrKeyword = $context->getTermDefinition($property)->getIriMapping();
+            } elseif (IRI::isCompactIri($property, $context)) {
+                $iriOrKeyword = $context->expandIRI($property);
+            } elseif (Keywords::isKeyword($property) || IRI::isAbsoluteIri($property)) {
+                $iriOrKeyword = $property;
+            }
+            $propertyMap = $this->getPropertyMap();
+            if (array_key_exists($iriOrKeyword, $propertyMap)) {
+                $property = $propertyMap[$iriOrKeyword];
+            } else {
+                // TODO collect undefined JSON properties
+                return;
+            }
+        }
+        if (strpos($property, "@") === 0) {
+            $property = substr($property, 1);
+        }
+        if (array_key_exists($property, $this->getStringResources())) {
             if (is_string($value)) {
                 $valueWithoutFragment = explode("#", $value)[0];
                 if (array_key_exists($valueWithoutFragment, $allResources)) {

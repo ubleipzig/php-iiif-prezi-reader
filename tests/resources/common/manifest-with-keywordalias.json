@@ -25,12 +25,13 @@
           "width":1000,
           "images": [
             {
+              "bar": "http://example.org/iiif/annotation1",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "resource":{
                   "@id": "http://example.org/iiif/image1/full/full/0/default.jpg",
                   "foo": "dctypes:Image",
-                  "format": "image/jpeg",
+                  "http://purl.org/dc/elements/1.1/format": "image/jpeg",
                   "service": {
                       "@context": "http://iiif.io/api/image/2/context.json",
                       "bar": "http://example.org/iiif/image1/",
@@ -51,12 +52,13 @@
           "width":1000,
           "images": [
             {
+              "@id": "http://example.org/iiif/annotation2",
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "resource":{
                   "@id": "http://example.org/iiif/image2/full/full/0/default.jpg",
                   "@type": "dctypes:Image",
-                  "format": "image/jpeg",
+                  "dc:format": "image/jpeg",
                   "service": {
                       "@context": "http://iiif.io/api/image/2/context.json",
                       "bar": "http://example.org/iiif/image2/",
@@ -65,7 +67,7 @@
                   "height":1000,
                   "width":1000
               },
-              "on": "http://example.org/iiif/manifest1/canvas/canvas1"
+              "on": "http://example.org/iiif/manifest1/canvas/canvas2"
             }
           ]
         }
