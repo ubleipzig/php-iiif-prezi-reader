@@ -1,0 +1,75 @@
+{
+  "@context": [
+    {
+      "foo": "@type",
+      "bar": "@id"
+    },
+    "http://iiif.io/api/presentation/2/context.json"
+  ],
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/manifest1/manifest",
+  "label": "Manifest label",
+  "sequences": [
+    {
+      "@id": "http://example.org/iiif/manifest1/sequence/sequence1",
+      "foo": "sc:Sequence",
+      "label": "Default sequence",
+      "viewingDirection": "left-to-right",
+      "viewingHint": "paged",
+      "canvases": [
+        {
+          "@id": "http://example.org/iiif/manifest1/canvas/canvas1",
+          "@type": "sc:Canvas",
+          "label": "Canvas label 1",
+          "height":1000,
+          "width":1000,
+          "images": [
+            {
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource":{
+                  "@id": "http://example.org/iiif/image1/full/full/0/default.jpg",
+                  "foo": "dctypes:Image",
+                  "format": "image/jpeg",
+                  "service": {
+                      "@context": "http://iiif.io/api/image/2/context.json",
+                      "bar": "http://example.org/iiif/image1/",
+                      "profile": "http://iiif.io/api/image/2/level1.json"
+                  },
+                  "height":1000,
+                  "width":1000
+              },
+              "on": "http://example.org/iiif/manifest1/canvas/canvas1"
+            }
+          ]
+        },
+        {
+          "@id": "http://example.org/iiif/manifest1/canvas/canvas2",
+          "@type": "sc:Canvas",
+          "label": "Canvas label 2",
+          "height":1000,
+          "width":1000,
+          "images": [
+            {
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource":{
+                  "@id": "http://example.org/iiif/image2/full/full/0/default.jpg",
+                  "@type": "dctypes:Image",
+                  "format": "image/jpeg",
+                  "service": {
+                      "@context": "http://iiif.io/api/image/2/context.json",
+                      "bar": "http://example.org/iiif/image2/",
+                      "profile": "http://iiif.io/api/image/2/level1.json"
+                  },
+                  "height":1000,
+                  "width":1000
+              },
+              "on": "http://example.org/iiif/manifest1/canvas/canvas1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

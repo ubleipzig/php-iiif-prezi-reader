@@ -27,11 +27,11 @@ use iiif\context\JsonLdHelper;
 use iiif\context\JsonLdProcessor;
 use iiif\context\Keywords;
 use iiif\presentation\common\TypeMap;
+use iiif\presentation\common\model\resources\IiifResourceInterface;
+use iiif\presentation\v1\model\resources\AbstractIiifResource1;
 use iiif\presentation\v2\model\resources\AbstractIiifResource2;
 use iiif\presentation\v3\model\resources\AbstractIiifResource3;
 use iiif\tools\IiifHelper;
-use iiif\presentation\common\model\resources\IiifResourceInterface;
-use iiif\presentation\v1\model\resources\AbstractIiifResource1;
 
 abstract class AbstractIiifEntity {
 
@@ -131,10 +131,24 @@ abstract class AbstractIiifEntity {
         }
         $typeOrAlias = $context->getKeywordOrAlias(Keywords::TYPE);
         $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
-        $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
-        if (array_key_exists($typeOrAlias, $dictionary) || array_key_exists($contextOrAlias, $dictionary)) {
-            $type = array_key_exists($typeOrAlias, $dictionary) ? $dictionary[$typeOrAlias] : $dictionary[$contextOrAlias];
-            $id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
+        if (array_key_exists(Keywords::TYPE, $dictionary) || array_key_exists($typeOrAlias, $dictionary) || array_key_exists(Keywords::CONTEXT, $dictionary)) {
+            $type = null;
+            if (array_key_exists($typeOrAlias, $dictionary)) {
+                $type = $dictionary[$typeOrAlias]; 
+            } elseif (array_key_exists(Keywords::TYPE, $dictionary)) {
+                // Even if "@type" has an alias like "type", "@type" might still be used.
+                $type = $dictionary[Keywords::TYPE];
+            }
+            $localContext = null;
+            if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
+                $localContext = $dictionary[Keywords::CONTEXT];
+            }
+            $id = null;
+            if (array_key_exists(Keywords::ID, $dictionary)) {
+                $id = $dictionary[Keywords::ID];
+            } elseif (array_key_exists($idOrAlias, $dictionary)) {
+                $id = $dictionary[$idOrAlias];
+            }
             if ($id != null && array_key_exists($id, $allResources)) {
                 $resource = $allResources[$id]["resource"];
             } else {
@@ -146,18 +160,22 @@ abstract class AbstractIiifEntity {
                 }
                 $typeClass = TypeMap::getClassForType($typeIri, $context);
                 if ($typeClass == null) {
+                    $typeClass = TypeMap::getClassForContext($localContext, $context);
+                }
+                if ($typeClass == null) {
                     return $dictionary;
                 }
                 $resource = new $typeClass();
             }
             /* @var $resource \AbstractIiifEntity; */
             if (! $resource->initialized || sizeof(array_diff(array_keys($dictionary), [
+                // FIXME The existance of a keyword alias does not rule out the use of a keyword.
                 $typeOrAlias,
                 $idOrAlias
             ])) > 0) {
                 $dictionaryOfDictionaries = [];
                 foreach ($dictionary as $key => $value) {
-                    if ($key == $typeOrAlias) {
+                    if ($key == Keywords::TYPE || $key == $typeOrAlias) {
                         $resource->type = $value;
                         continue;
                     }
@@ -173,13 +191,13 @@ abstract class AbstractIiifEntity {
                         continue;
                     }
                     $resource->loadProperty($key, $value, $context, $allResources, $processor);
-                    if ($key != $idOrAlias) {
+                    if ($key != Keywords::ID && $key != $idOrAlias) {
                         $resource->initialized = true;
                     }
                 }
                 foreach ($dictionaryOfDictionaries as $key => $value) {
                     $resource->loadProperty($key, $value, $context, $allResources, $processor);
-                    if ($key != $idOrAlias) {
+                    if ($key != $idOrAlias && $key != Keywords::ID) {
                         $resource->initialized = true;
                     }
                 }

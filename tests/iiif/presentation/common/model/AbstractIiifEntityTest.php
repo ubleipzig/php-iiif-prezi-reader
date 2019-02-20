@@ -22,6 +22,10 @@ use iiif\presentation\common\model\resources\IiifResourceInterface;
 use iiif\tools\IiifHelper;
 use iiif\AbstractIiifTest;
 use iiif\presentation\v2\model\resources\Manifest;
+use iiif\presentation\v2\model\resources\Canvas;
+use iiif\presentation\v2\model\resources\Annotation;
+use iiif\presentation\v2\model\resources\ContentResource;
+use iiif\services\ImageInformation2;
 
 /**
  * AbstractIiifEntity test case.
@@ -99,5 +103,33 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
         self::markTestIncomplete("implement");
     }
 
+    public function testKeywordAliases() {
+        $manifest = IiifHelper::loadIiifResource(self::getFile("common/manifest-with-keywordalias.json"));
+        self::assertNotNull($manifest);
+        self::assertInstanceOf(Manifest::class, $manifest);
+
+        $canvases = $manifest->getDefaultCanvases();
+        self::assertNotEmpty($canvases);
+        foreach ($canvases as $canvas) {
+            self::assertNotNull($canvas);
+            self::assertInstanceOf(Canvas::class, $canvas);
+            self::assertEquals(1, sizeof($canvas->getImageAnnotations()));
+            
+            $image = $canvas->getImageAnnotations()[0];
+
+            self::assertNotNull($image);
+            self::assertInstanceOf(Annotation::class, $image);
+            self::assertNotEmpty($image->getId());
+
+            self::assertNotNull($image->getBody());
+            self::assertInstanceOf(ContentResource::class, $image->getBody());
+            self::assertNotEmpty($image->getBody()->getId());
+
+            self::assertNotNull($image->getBody()->getSingleService());
+            self::assertInstanceOf(ImageInformation2::class, $image->getBody()->getSingleService());
+            self::assertNotEmpty($image->getBody()->getSingleService()->getId());
+        }
+    }
+    
 }
 

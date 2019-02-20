@@ -140,6 +140,13 @@ class TypeMap {
         "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2" => "http://iiif.io/api/image/1/ImageService"
     ];
 
+    public static function getClassForContext($contextIri, $context) {
+        if ($contextIri == null || ! array_key_exists($contextIri, self::SERVICE_TYPES_BY_CONTEXT)) {
+            return null;
+        }
+        return self::getClassForType(self::SERVICE_TYPES_BY_CONTEXT[$contextIri], $context);
+    }
+    
     public static function getClassForType($typeIri, $context) {
         if ($typeIri == null || ! array_key_exists($typeIri, self::$CLASSES))
             return null;
