@@ -52,6 +52,14 @@ abstract class AbstractIiifEntity {
     protected $containedResources;
 
     protected $type;
+    
+    /**
+     * Resource properties in the JSON-LD document that have not been defined by the
+     * IIIF Presentation or Image API are collected in $otherdata. 
+     * 
+     * @var array
+     */
+    protected $otherData;
 
     public static function loadIiifResource($resource) {
         if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
@@ -84,7 +92,8 @@ abstract class AbstractIiifEntity {
 
     protected function getPropertyMap() {
         return [
-            "@id" => "id"
+            "@id" => "id",
+            "@type" => "type"
         ];
     }
     
@@ -242,7 +251,7 @@ abstract class AbstractIiifEntity {
             if (array_key_exists($iriOrKeyword, $propertyMap)) {
                 $property = $propertyMap[$iriOrKeyword];
             } else {
-                // TODO collect undefined JSON properties
+                $this->otherData[$term] = $value;
                 return;
             }
         }
@@ -397,7 +406,14 @@ abstract class AbstractIiifEntity {
     public function getType() {
         return $this->type;
     }
-    
+
+    /**
+     * @return array
+     */
+    public function getOtherData() {
+        return $this->otherData;
+    }
+
     public function __construct($id = null) {
         if (isset($id)) {
             $this->id = $id;
