@@ -93,7 +93,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
      * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3
      */
     public function getAnnotations() {
-        return $this->items;
+        return $this->annotations;
     }
 
     /**
