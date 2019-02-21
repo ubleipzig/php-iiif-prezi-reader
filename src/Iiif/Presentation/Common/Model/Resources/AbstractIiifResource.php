@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\common\model\resources;
+namespace Ubl\Iiif\Presentation\Common\Model\Resources;
 
-use iiif\presentation\common\model\AbstractIiifEntity;
-use iiif\context\JsonLdHelper;
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
+use Ubl\Iiif\Context\JsonLdHelper;
 
 abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifResourceInterface {
     

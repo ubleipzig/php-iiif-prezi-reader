@@ -8,8 +8,8 @@ use PHPUnit\Framework\TestCase;
 class StaticCodeTest extends TestCase {
     
     public function testInclude() {
-        require_once __DIR__.'/../../src/iiif/include.php';
-        self::assertTrue(class_exists('\\iiif\\tools\\IiifHelper', false));
+        require_once __DIR__.'/../../src/Iiif/include.php';
+        self::assertTrue(class_exists('\\Ubl\Iiif\\Tools\\IiifHelper', false));
     }
 
 }

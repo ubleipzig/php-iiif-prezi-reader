@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\services;
+namespace Ubl\Iiif\Services;
 
-use iiif\presentation\common\model\AbstractIiifEntity;
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
 
 class Service extends AbstractIiifEntity {
 

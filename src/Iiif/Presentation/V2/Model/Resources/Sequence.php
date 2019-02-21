@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
-use iiif\presentation\v2\model\properties\StartCanvasTrait;
+use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
+use Ubl\Iiif\Presentation\V2\Model\Properties\StartCanvasTrait;
 
 class Sequence extends AbstractIiifResource2 {
     use ViewingDirectionTrait;
@@ -37,7 +37,7 @@ class Sequence extends AbstractIiifResource2 {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(), [
@@ -50,7 +50,7 @@ class Sequence extends AbstractIiifResource2 {
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getStringResources()
+     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getStringResources()
      */
     protected function getStringResources() {
         return [
@@ -75,7 +75,7 @@ class Sequence extends AbstractIiifResource2 {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result = parent::getThumbnailUrl();

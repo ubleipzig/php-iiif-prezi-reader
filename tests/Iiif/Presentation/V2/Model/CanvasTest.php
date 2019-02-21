@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\presentation\v2\model\resources\AnnotationList;
-use iiif\presentation\v2\model\resources\Canvas;
-use iiif\tools\IiifHelper;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\AnnotationList;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
+use Ubl\Iiif\Tools\IiifHelper;
 
 /**
  * Canvas test case.

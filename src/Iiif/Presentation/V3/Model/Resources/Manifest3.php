@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\presentation\common\model\resources\ManifestInterface;
-use iiif\presentation\v3\model\properties\PlaceholderAndAccompanyingCanvasTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
+use Ubl\Iiif\Presentation\V3\Model\Properties\PlaceholderAndAccompanyingCanvasTrait;
 
 class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
 
@@ -65,7 +65,7 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\Canvas3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3
      */
     public function getItems() {
         return $this->items;
@@ -73,7 +73,7 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\Range3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\Range3
      */
     public function getStructures() {
         return $this->structures;
@@ -81,7 +81,7 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
 
     /**
      *
-     * @return \iiif\presentation\v3\model\resources\Annotation3[];
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\Annotation3[];
      */
     public function getAnnotations() {
         return $this->annotations;
@@ -105,7 +105,7 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
 
     /**
      *
-     * @return \iiif\presentation\v3\model\resources\Canvas3
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3
      */
     public function getStart() {
         return $this->start;
@@ -129,7 +129,7 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
     /**
      * 
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvasOrFirstCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getStartCanvasOrFirstCanvas()
      */
     public function getStartCanvasOrFirstCanvas() {
         $startCanvas = $this->getStartCanvas();
@@ -145,7 +145,7 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result =  parent::getThumbnailUrl();

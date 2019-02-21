@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\tools\IiifHelper;
-use iiif\presentation\common\model\resources\AnnotationContainerInterface;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationContainerInterface;
 
 class AnnotationList extends AbstractIiifResource2 implements AnnotationContainerInterface {
 
@@ -38,7 +38,7 @@ class AnnotationList extends AbstractIiifResource2 implements AnnotationContaine
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(), [
@@ -48,7 +48,7 @@ class AnnotationList extends AbstractIiifResource2 implements AnnotationContaine
 
     /**
      *
-     * @return \iiif\presentation\v2\model\resources\Annotation[]
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\Annotation[]
      */
     public function getResources() {
         if ($resources == null && ! $this->resourcesLoaded) {
@@ -69,7 +69,7 @@ class AnnotationList extends AbstractIiifResource2 implements AnnotationContaine
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\AnnotationContainerInterface::getTextAnnotations()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationContainerInterface::getTextAnnotations()
      */
     public function getTextAnnotations($motivation = null) {
         $resources = $this->getResources();

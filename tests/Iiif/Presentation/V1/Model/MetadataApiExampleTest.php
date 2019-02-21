@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\tools\IiifHelper;
-use iiif\presentation\v1\model\resources\Manifest1;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Manifest1;
 
 class MetadataApiExampleTest extends AbstractIiifTest {
     

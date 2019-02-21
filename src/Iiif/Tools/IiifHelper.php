@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\tools;
+namespace Ubl\Iiif\Tools;
 
-use iiif\presentation\common\model\AbstractIiifEntity;
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
 
 class IiifHelper {
 
@@ -28,7 +28,7 @@ class IiifHelper {
      * 
      * @param string|array $resource IIIF resource. Can be an IRI, the JSON document as string
      * or a dictionary in form of a PHP associative array 
-     * @return NULL|\iiif\presentation\common\model\AbstractIiifEntity An instance of the IIIF 
+     * @return NULL|\Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity An instance of the IIIF 
      */
     public static function loadIiifResource($resource) {
         return AbstractIiifEntity::loadIiifResource($resource);

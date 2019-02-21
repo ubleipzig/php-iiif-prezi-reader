@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\presentation\common\model\resources\RangeInterface;
-use iiif\presentation\v3\model\properties\PlaceholderAndAccompanyingCanvasTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface;
+use Ubl\Iiif\Presentation\V3\Model\Properties\PlaceholderAndAccompanyingCanvasTrait;
 
 class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
@@ -65,7 +65,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      *
-     * @return multitype:Ambigous <\iiif\presentation\v3\model\resources\Range3, \iiif\presentation\v3\model\resources\Canvas3, \iiif\presentation\v3\model\resources\SpecificResource3>
+     * @return multitype:Ambigous <\Ubl\Iiif\Presentation\V3\Model\Resources\Range3, \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3, \Ubl\Iiif\Presentation\V3\Model\Resources\SpecificResource3>
      */
     public function getItems() {
         return $this->items;
@@ -73,7 +73,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\Annotation3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\Annotation3
      */
     public function getAnnotations() {
         return $this->annotations;
@@ -97,7 +97,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      *
-     * @return (\iiif\presentation\v3\model\resources\Canvas3|\iiif\presentation\v3\model\resources\SpecificResource3)
+     * @return (\Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3|\Ubl\Iiif\Presentation\V3\Model\Resources\SpecificResource3)
      */
     public function getStart() {
         return $this->start;
@@ -105,7 +105,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      *
-     * @return \iiif\presentation\v3\model\resources\AnnotationCollection3
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationCollection3
      */
     public function getSupplementary() {
         return $this->supplementary;
@@ -124,7 +124,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllCanvasesRecursively()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllCanvasesRecursively()
      */
     public function getAllCanvasesRecursively() {
         // TODO untested
@@ -147,7 +147,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllItems()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllItems()
      */
     public function getAllItems() {
         return $this->items;
@@ -155,7 +155,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllRanges()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllRanges()
      */
     public function getAllRanges() {
         $result = [];
@@ -171,7 +171,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getStartCanvas()
      */
     public function getStartCanvas() {
         if (isset($this->start) && $this->start instanceof Canvas3) {
@@ -182,7 +182,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvasOrFirstCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getStartCanvasOrFirstCanvas()
      */
     public function getStartCanvasOrFirstCanvas() {
         if ($this->getStartCanvas() != null) {
@@ -200,7 +200,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result =  parent::getThumbnailUrl();

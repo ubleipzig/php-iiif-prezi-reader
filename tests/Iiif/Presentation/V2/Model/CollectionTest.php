@@ -1,8 +1,8 @@
 <?php
-use iiif\AbstractIiifTest;
-use iiif\presentation\v2\model\resources\Collection;
-use iiif\tools\IiifHelper;
-use iiif\presentation\v2\model\resources\Manifest;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Collection;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
 
 /**
  * Collection test case.

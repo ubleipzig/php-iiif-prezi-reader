@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
 class Layer1 extends AbstractDescribableResource1 {
 }

@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\presentation\v2\model\resources\Canvas;
-use iiif\presentation\v2\model\resources\Manifest;
-use iiif\presentation\v2\model\resources\Sequence;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence;
 
 /**
  * Sequence test case.

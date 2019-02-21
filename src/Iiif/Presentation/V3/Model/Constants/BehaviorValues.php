@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\constants;
+namespace Ubl\Iiif\Presentation\V3\Model\Constants;
 
 class BehaviorValues {
 

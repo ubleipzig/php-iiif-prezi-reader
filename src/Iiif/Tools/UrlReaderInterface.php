@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\tools;
+namespace Ubl\Iiif\Tools;
 
 interface UrlReaderInterface {
     public function getContent($url);

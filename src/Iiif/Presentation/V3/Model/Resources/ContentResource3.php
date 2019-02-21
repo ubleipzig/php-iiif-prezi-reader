@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\services\AbstractImageService;
-use iiif\presentation\common\model\resources\ContentResourceInterface;
-use iiif\tools\Options;
+use Ubl\Iiif\Services\AbstractImageService;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface;
+use Ubl\Iiif\Tools\Options;
 
 class ContentResource3 extends AbstractIiifResource3 implements ContentResourceInterface {
 
@@ -77,7 +77,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3
      */
     public function getAnnotations() {
         return $this->annotations;
@@ -157,7 +157,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result = parent::getThumbnailUrl();
@@ -176,7 +176,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::getChars()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::getChars()
      */
     public function getChars() {
         return $value;
@@ -184,7 +184,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isImage()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isImage()
      */
     public function isImage() {
         return $type == "Image";
@@ -192,7 +192,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isText()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isText()
      */
     public function isText() {
         return $type == "Text";

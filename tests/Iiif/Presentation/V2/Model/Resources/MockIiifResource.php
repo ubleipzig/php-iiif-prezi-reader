@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
 class MockIiifResource extends AbstractIiifResource2
 {
@@ -27,7 +27,7 @@ class MockIiifResource extends AbstractIiifResource2
      * 
      * @param array $jsonAsArray
      * @param array $allResources
-     * @return \iiif\presentation\v2\model\resources\MockIiifResource
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\MockIiifResource
      */
     public static function fromArray($jsonAsArray, &$allResources = array())
     {

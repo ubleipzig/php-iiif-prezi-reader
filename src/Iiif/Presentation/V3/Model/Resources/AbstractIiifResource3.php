@@ -18,15 +18,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\context\JsonLdHelper;
-use iiif\context\Keywords;
-use iiif\presentation\common\model\resources\AbstractIiifResource;
-use iiif\presentation\common\model\resources\IiifResourceInterface;
-use iiif\services\AbstractImageService;
-use iiif\tools\IiifHelper;
-use iiif\tools\Options;
+use Ubl\Iiif\Context\JsonLdHelper;
+use Ubl\Iiif\Context\Keywords;
+use Ubl\Iiif\Presentation\Common\Model\Resources\AbstractIiifResource;
+use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
+use Ubl\Iiif\Services\AbstractImageService;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Tools\Options;
 
 abstract class AbstractIiifResource3 extends AbstractIiifResource implements IiifResourceInterface {
 
@@ -86,7 +86,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @var \iiif\services\Service
+     * @var \Ubl\Iiif\Services\Service
      */
     protected $service;
 
@@ -118,7 +118,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
      *
      * @param string|array $resource
      *            URI of the IIIF manifest, json string representation of the manifest or decoded json array
-     * @return \iiif\presentation\v3\model\resources\AbstractIiifResource3 | NULL
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3 | NULL
      */
 
     protected function getTranslationFor($dictionary, $language = null, $joinValueDelimiter = null) {
@@ -233,7 +233,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3
      */
     public function getThumbnail() {
         return $this->thumbnail;
@@ -249,7 +249,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatementForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getRequiredStatementForDisplay()
      */
     public function getRequiredStatementForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub
@@ -266,7 +266,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3
      */
     public function getSeeAlso() {
         return $this->seeAlso;
@@ -274,7 +274,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return \iiif\services\Service
+     * @return \Ubl\Iiif\Services\Service
      */
     public function getService() {
         return $this->service;
@@ -282,7 +282,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3
      */
     public function getLogo() {
         return $this->logo;
@@ -290,7 +290,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return \iiif\presentation\v3\model\resources\ContentResource3
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3
      */
     public function getHomepage() {
         return $this->homepage;
@@ -298,7 +298,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\ContentResource3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3
      */
     public function getRendering() {
         return $this->rendering;
@@ -306,7 +306,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\Collection3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\Collection3
      */
     public function getPartOf() {
         return $this->partOf;
@@ -452,7 +452,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getMetadataForDisplay()
      */
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub
@@ -461,7 +461,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummaryForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getSummaryForDisplay()
      */
     public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub

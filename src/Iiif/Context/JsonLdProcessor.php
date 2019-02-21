@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\context;
+namespace Ubl\Iiif\Context;
 
-use iiif\tools\IiifHelper;
+use Ubl\Iiif\Tools\IiifHelper;
 
 /**
  * Implementation of the context processing algorithm of the JSON-LD API version 1.1.
@@ -68,23 +68,23 @@ class JsonLdProcessor {
 
     protected $dereferencedContexts;
 
-    protected $knownIiifContexts;
+    protected $knownContexts;
 
-    public function __construct($requestKnownIiifContexts = false) {
+    public function __construct($requestknownContexts = false) {
         $this->dereferencedContexts = array();
-        $this->knownIiifContexts = array();
-        if (! $requestKnownIiifContexts) {
-            $this->knownIiifContexts["http://www.w3.org/ns/anno.jsonld"] = __DIR__ . "/../../../resources/contexts/annotation/annotation-context.json";
-            $this->knownIiifContexts["http://www.shared-canvas.org/ns/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-1.json";
-            $this->knownIiifContexts["http://iiif.io/api/presentation/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-1.json";
-            $this->knownIiifContexts["http://iiif.io/api/presentation/2/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-2.json";
-            $this->knownIiifContexts["http://iiif.io/api/presentation/3/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-3.json";
-            $this->knownIiifContexts["http://iiif.io/api/presentation/3/combined-context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-combined-context-3.json";
-            $this->knownIiifContexts["http://iiif.io/api/image/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-1.json";
-            $this->knownIiifContexts["http://iiif.io/api/image/2/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-2.json";
-            $this->knownIiifContexts["http://iiif.io/api/image/3/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-3.json";
-            $this->knownIiifContexts["http://iiif.io/api/search/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/search-context-1.json";
-            $this->knownIiifContexts["http://iiif.io/api/auth/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/auth-context-1.json";
+        $this->knownContexts = array();
+        if (! $requestknownContexts) {
+            $this->knownContexts["http://www.w3.org/ns/anno.jsonld"] = __DIR__ . "/../../../resources/contexts/annotation/annotation-context.json";
+            $this->knownContexts["http://www.shared-canvas.org/ns/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-1.json";
+            $this->knownContexts["http://iiif.io/api/presentation/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-1.json";
+            $this->knownContexts["http://iiif.io/api/presentation/2/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-2.json";
+            $this->knownContexts["http://iiif.io/api/presentation/3/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-3.json";
+            $this->knownContexts["http://iiif.io/api/presentation/3/combined-context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-combined-context-3.json";
+            $this->knownContexts["http://iiif.io/api/image/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-1.json";
+            $this->knownContexts["http://iiif.io/api/image/2/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-2.json";
+            $this->knownContexts["http://iiif.io/api/image/3/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-3.json";
+            $this->knownContexts["http://iiif.io/api/search/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/search-context-1.json";
+            $this->knownContexts["http://iiif.io/api/auth/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/auth-context-1.json";
         }
     }
 
@@ -92,8 +92,8 @@ class JsonLdProcessor {
         if (array_key_exists($context, self::REDIRECTIONS)) {
             $context = self::REDIRECTIONS[$context];
         }
-        if (array_key_exists($context, $this->knownIiifContexts)) {
-            return file_get_contents($this->knownIiifContexts[$context]);
+        if (array_key_exists($context, $this->knownContexts)) {
+            return file_get_contents($this->knownContexts[$context]);
         }
         if (strpos($context, "http://example.org") === 0) {
             // only for testing purposes

@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\context;
+namespace Ubl\Iiif\Context;
 
 /**
  * Represents a JSON-LD term definition.
@@ -193,7 +193,7 @@ class TermDefinition {
 
     /**
      *
-     * @param \iiif\context\JsonLdContext $localContext
+     * @param \Ubl\Iiif\Context\JsonLdContext $localContext
      */
     public function setLocalContext($localContext) {
         $this->localContext = $localContext;

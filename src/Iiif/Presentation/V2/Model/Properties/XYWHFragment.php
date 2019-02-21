@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\properties;
+namespace Ubl\Iiif\Presentation\V2\Model\Properties;
 
-use iiif\presentation\v2\model\resources\Canvas;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
 
 class XYWHFragment {
 
@@ -140,7 +140,7 @@ class XYWHFragment {
     }
 
     /**
-     * @return \iiif\presentation\v2\model\resources\Canvas
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas
      */
     public function getTargetObject() {
         return $this->targetObject;

@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
-use iiif\presentation\common\model\resources\RangeInterface;
+use Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface;
 
 class Range1 extends AbstractDescribableResource1 implements RangeInterface {
 
@@ -58,7 +58,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
     }
     
     /**
-     * @return multitype:\iiif\presentation\v1\model\resources\Canvas1 
+     * @return multitype:\Ubl\Iiif\Presentation\V1\Model\Resources\Canvas1 
      */
     public function getCanvases() {
         return $this->canvases;
@@ -72,7 +72,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllCanvases()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllCanvases()
      */
     public function getAllCanvases() {
         return $this->canvases;
@@ -80,7 +80,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllCanvasesRecursively()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllCanvasesRecursively()
      */
     public function getAllCanvasesRecursively() {
         $result = $this->getCanvases();
@@ -104,7 +104,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllItems()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllItems()
      */
     public function getAllItems() {
         return $items = array_merge($this->getCanvases() == null ? [] : $this->getCanvases(), $this->childRanges == null ? [] : $this->childRanges);
@@ -112,7 +112,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllRanges()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllRanges()
      */
     public function getAllRanges() {
         return $this->childRanges;
@@ -120,7 +120,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getStartCanvas()
      */
     public function getStartCanvas() {
         return null;
@@ -128,7 +128,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getStartCanvasOrFirstCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getStartCanvasOrFirstCanvas()
      */
     public function getStartCanvasOrFirstCanvas() {
         $canvases = $this->getAllCanvasesRecursively();
@@ -137,7 +137,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::isTopRange()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::isTopRange()
      */
     public function isTopRange() {
         return false;

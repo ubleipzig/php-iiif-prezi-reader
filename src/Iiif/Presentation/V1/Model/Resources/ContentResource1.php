@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
-use iiif\presentation\common\model\resources\ContentResourceInterface;
-use iiif\services\AbstractImageService;
-use iiif\tools\Options;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface;
+use Ubl\Iiif\Services\AbstractImageService;
+use Ubl\Iiif\Tools\Options;
 
 class ContentResource1 extends AbstractIiifResource1 implements ContentResourceInterface {
     
@@ -75,7 +75,7 @@ class ContentResource1 extends AbstractIiifResource1 implements ContentResourceI
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $services = is_array($this->service) ? $this->service : [$this->service];
@@ -89,7 +89,7 @@ class ContentResource1 extends AbstractIiifResource1 implements ContentResourceI
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isImage()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isImage()
      */
     public function isImage() {
         return $this->type == "dctypes:Image";
@@ -97,7 +97,7 @@ class ContentResource1 extends AbstractIiifResource1 implements ContentResourceI
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isText()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isText()
      */
     public function isText() {
         return $this->type == "dctypes:Text" || $this->type == "cnt:ContentAsText";

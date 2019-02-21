@@ -1,11 +1,11 @@
 <?php
 
-use iiif\AbstractIiifTest;
-use iiif\presentation\v3\model\resources\Collection3;
-use iiif\tools\IiifHelper;
-use iiif\presentation\v3\model\resources\Manifest3;
-use iiif\presentation\v3\model\resources\Canvas3;
-use iiif\presentation\v3\model\resources\AnnotationPage3;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Collection3;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3;
 
 /**
  * Collection3 test case.

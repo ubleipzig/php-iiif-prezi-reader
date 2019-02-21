@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
-use iiif\presentation\common\model\resources\CanvasInterface;
+use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
 
 class Canvas1 extends AbstractDescribableResource1 implements CanvasInterface {
 
@@ -63,21 +63,21 @@ class Canvas1 extends AbstractDescribableResource1 implements CanvasInterface {
     }
 
     /**
-     * @return multitype:\iiif\presentation\v1\model\resources\Annotation1 
+     * @return multitype:\Ubl\Iiif\Presentation\V1\Model\Resources\Annotation1 
      */
     public function getImages() {
         return $this->images;
     }
 
     /**
-     * @return multitype:\iiif\presentation\v1\model\resources\Annotation1 
+     * @return multitype:\Ubl\Iiif\Presentation\V1\Model\Resources\Annotation1 
      */
     public function getOtherContent() {
         return $this->otherContent;
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CanvasInterface::getImageAnnotations()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getImageAnnotations()
      */
     public function getImageAnnotations() {
         return $this->images;
@@ -85,14 +85,14 @@ class Canvas1 extends AbstractDescribableResource1 implements CanvasInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CanvasInterface::getPossibleTextAnnotationContainers()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPossibleTextAnnotationContainers()
      */
     public function getPossibleTextAnnotationContainers() {
         return $this->otherContent;
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
 
     public function getThumbnailUrl() {

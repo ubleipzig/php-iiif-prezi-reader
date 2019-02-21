@@ -18,14 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\presentation\common\model\resources\IiifResourceInterface;
-use iiif\tools\IiifHelper;
-use iiif\AbstractIiifTest;
-use iiif\presentation\v2\model\resources\Manifest;
-use iiif\presentation\v2\model\resources\Canvas;
-use iiif\presentation\v2\model\resources\Annotation;
-use iiif\presentation\v2\model\resources\ContentResource;
-use iiif\services\ImageInformation2;
+use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
+use Ubl\Iiif\Services\ImageInformation2;
 
 /**
  * AbstractIiifEntity test case.
@@ -88,7 +88,7 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
     }
 
     /**
-     * Tests \iiif\presentation\common\model\AbstractIiifEntity->registerResource()
+     * Tests \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity->registerResource()
      */
     public function testRegisterResources() {
         

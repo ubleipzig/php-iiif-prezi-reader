@@ -18,8 +18,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\presentation\v2\model\resources\ContentResource;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
 
 /**
  * ContentResource test case.

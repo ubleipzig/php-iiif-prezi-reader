@@ -1,27 +1,27 @@
 <?php
-namespace iiif\presentation\v3\model\properties;
+namespace Ubl\Iiif\Presentation\V3\Model\Properties;
 
 trait PlaceholderAndAccompanyingCanvasTrait {
     
     /**
-     * @var \iiif\presentation\v3\model\resources\Canvas3
+     * @var \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3
      */
     protected $placeholderCanvas;
     
     /**
-     * @var \iiif\presentation\v3\model\resources\Canvas3
+     * @var \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3
      */
     protected $accompanyingCanvas;
 
     /**
-     * @return \iiif\presentation\v3\model\resources\Canvas3
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3
      */
     public function getPlaceholderCanvas() {
         return $this->placeholderCanvas;
     }
 
     /**
-     * @return \iiif\presentation\v3\model\resources\Canvas3
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3
      */
     public function getAccompanyingCanvas() {
         return $this->accompanyingCanvas;

@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\tools\IiifHelper;
-use iiif\presentation\v2\model\resources\Manifest;
-use iiif\tools\Options;
-use iiif\DummyUrlReader;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Tools\Options;
+use Ubl\Iiif\DummyUrlReader;
 
 /**
  * IiifHelper test case.

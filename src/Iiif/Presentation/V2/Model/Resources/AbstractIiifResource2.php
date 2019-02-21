@@ -18,20 +18,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\context\JsonLdContext;
-use iiif\context\JsonLdHelper;
-use iiif\context\Keywords;
-use iiif\presentation\common\TypeMap;
-use iiif\presentation\common\model\resources\AbstractIiifResource;
-use iiif\presentation\common\model\resources\IiifResourceInterface;
-use iiif\presentation\v2\model\vocabulary\Terms;
-use iiif\services\AbstractImageService;
-use iiif\services\Profile;
-use iiif\services\Service;
-use iiif\tools\IiifHelper;
-use iiif\tools\Options;
+use Ubl\Iiif\Context\JsonLdContext;
+use Ubl\Iiif\Context\JsonLdHelper;
+use Ubl\Iiif\Context\Keywords;
+use Ubl\Iiif\Presentation\Common\TypeMap;
+use Ubl\Iiif\Presentation\Common\Model\Resources\AbstractIiifResource;
+use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
+use Ubl\Iiif\Presentation\V2\Model\Vocabulary\Terms;
+use Ubl\Iiif\Services\AbstractImageService;
+use Ubl\Iiif\Services\Profile;
+use Ubl\Iiif\Services\Service;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Tools\Options;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -103,7 +103,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(), [
@@ -141,7 +141,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getValueForSpecialProperty()
+     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getValueForSpecialProperty()
      */
     protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {
         if ($property = "service") {
@@ -243,7 +243,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return \iiif\services\Service
+     * @return \Ubl\Iiif\Services\Service
      */
     public function getService() {
         return $this->service;
@@ -251,7 +251,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return \iiif\presentation\v2\model\resources\ContentResource
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource
      */
     public function getThumbnail() {
         return $this->thumbnail;
@@ -343,7 +343,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getMetadataForDisplay()
      */
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         if (!isset($this->metadata) || !JsonLdHelper::isSequentialArray($this->metadata)) {
@@ -369,7 +369,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataLabelForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getMetadataLabelForDisplay()
      */
     public function getMetadataLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true) {
         // TODO Auto-generated method stub
@@ -387,7 +387,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getMetadataValueByLabelForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getMetadataValueByLabelForDisplay()
      */
     public function getMetadataValueByLabelForDisplay($label, $language = null, $joinChars = "; ", $switchToExistingLanguage = true) {
         // TODO Auto-generated method stub
@@ -559,7 +559,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatement()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getRequiredStatement()
      */
     public function getRequiredStatement() {
         return $this->attribution;
@@ -567,7 +567,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRequiredStatementForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getRequiredStatementForDisplay()
      */
     public function getRequiredStatementForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         return $this->getValueForDisplay($this->attribution, $language, $joinChars, true, $options);
@@ -575,7 +575,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getRights()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getRights()
      */
     public function getRights() {
         return $this->license;
@@ -583,7 +583,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummary()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getSummary()
      */
     public function getSummary() {
         return $this->description;
@@ -591,7 +591,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getSummaryForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getSummaryForDisplay()
      */
     public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         return $this->getValueForDisplay($this->description, $language = null, $joinChars = "; ", true, $options);
@@ -599,7 +599,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         if ($this->thumbnail!=null) {
@@ -664,7 +664,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getWeblinksForDisplay()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getWeblinksForDisplay()
      */
     public function getWeblinksForDisplay($language = null, $joinChars = "; ") {
         return $this->getWeblinksForDisplayCommon($this->related, $language, $joinChars, "@id");

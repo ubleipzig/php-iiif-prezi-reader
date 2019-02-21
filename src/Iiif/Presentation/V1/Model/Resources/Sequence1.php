@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
 
 class Sequence1 extends AbstractDescribableResource1 {
@@ -41,7 +41,7 @@ class Sequence1 extends AbstractDescribableResource1 {
      */
     protected $viewingHint;
     /**
-     * @return multitype:\iiif\presentation\v1\model\resources\Canvas1 
+     * @return multitype:\Ubl\Iiif\Presentation\V1\Model\Resources\Canvas1 
      */
     public function getCanvases() {
         return $this->canvases;

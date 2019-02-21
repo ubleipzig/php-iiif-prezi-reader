@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\presentation\v2\model\properties\NavDateTrait;
-use iiif\presentation\common\model\resources\CollectionInterface;
-use iiif\presentation\common\model\resources\ManifestInterface;
+use Ubl\Iiif\Presentation\V2\Model\Properties\NavDateTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
 
 class Collection extends AbstractIiifResource2 implements CollectionInterface {
     use NavDateTrait;
@@ -45,7 +45,7 @@ class Collection extends AbstractIiifResource2 implements CollectionInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(),[
@@ -58,7 +58,7 @@ class Collection extends AbstractIiifResource2 implements CollectionInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollections()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface::getContainedCollections()
      */
     public function getContainedCollections() {
         $containedCollections = empty($this->collections) ? [] : $this->collections;
@@ -74,7 +74,7 @@ class Collection extends AbstractIiifResource2 implements CollectionInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollectionsAndManifests()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface::getContainedCollectionsAndManifests()
      */
     public function getContainedCollectionsAndManifests() {
         $result = [];
@@ -92,7 +92,7 @@ class Collection extends AbstractIiifResource2 implements CollectionInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedManifests()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface::getContainedManifests()
      */
     public function getContainedManifests() {
         $containedManifests = empty($this->manifests) ? [] : $this->manifests;

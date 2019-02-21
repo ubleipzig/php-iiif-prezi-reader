@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\properties;
+namespace Ubl\Iiif\Presentation\V2\Model\Properties;
 
 use Exception;
-use iiif\presentation\v2\model\constants\ViewingDirectionValues;
+use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingDirectionValues;
 
 trait ViewingDirectionTrait
 {

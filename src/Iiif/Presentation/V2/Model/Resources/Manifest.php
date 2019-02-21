@@ -18,12 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\presentation\common\model\resources\ManifestInterface;
-use iiif\presentation\v2\model\constants\ViewingHintValues;
-use iiif\presentation\v2\model\properties\NavDateTrait;
-use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
+use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingHintValues;
+use Ubl\Iiif\Presentation\V2\Model\Properties\NavDateTrait;
+use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
 
 class Manifest extends AbstractIiifResource2 implements ManifestInterface {
     use NavDateTrait;
@@ -55,7 +55,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(), [
@@ -76,7 +76,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      *
-     * @return multitype:\iiif\model\resources\Range
+     * @return multitype:\Ubl\Iiif\Model\Resources\Range
      */
     public function getStructures() {
         return $this->structures;
@@ -135,7 +135,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getDefaultCanvases()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getDefaultCanvases()
      */
     public function getDefaultCanvases() {
         if ($this->getDefaultSequence() != null) {
@@ -146,7 +146,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getStartCanvas()
      */
     public function getStartCanvas() {
         if ($this->getDefaultSequence() != null) {
@@ -157,7 +157,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvasOrFirstCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getStartCanvasOrFirstCanvas()
      */
     public function getStartCanvasOrFirstCanvas() {
         if ($this->getDefaultSequence() != null) {
@@ -168,7 +168,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result = parent::getThumbnailUrl();

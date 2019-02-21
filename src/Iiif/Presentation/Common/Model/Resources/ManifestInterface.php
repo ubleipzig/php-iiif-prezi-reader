@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\common\model\resources;
+namespace Ubl\Iiif\Presentation\Common\Model\Resources;
 
 interface ManifestInterface extends IiifResourceInterface {
     

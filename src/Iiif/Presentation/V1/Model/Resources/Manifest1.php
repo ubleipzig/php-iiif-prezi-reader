@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
-use iiif\presentation\common\model\resources\ManifestInterface;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
 
 class Manifest1 extends AbstractDescribableResource1 implements ManifestInterface {
     
@@ -45,7 +45,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
     }
 
     /**
-     * @return multitype:\iiif\presentation\v1\model\resources\Sequence1 
+     * @return multitype:\Ubl\Iiif\Presentation\V1\Model\Resources\Sequence1 
      */
     public function getSequences() {
         return $this->sequences;
@@ -53,7 +53,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStructures()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getStructures()
      */
     public function getStructures() {
         return $this->structures;
@@ -61,7 +61,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getContainedResourceById()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getContainedResourceById()
      */
     public function getContainedResourceById($id) {
         if ($this->containedResources != null && array_key_exists($id, $this->containedResources)) {
@@ -71,7 +71,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getDefaultCanvases()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getDefaultCanvases()
      */
     public function getDefaultCanvases() {
         if (!empty($this->sequences)) {
@@ -81,7 +81,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getRootRanges()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getRootRanges()
      */
     public function getRootRanges() {
         $result = [];
@@ -98,7 +98,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
     /**
      * Metadata API has no property like "start" (http://iiif.io/api/presentation/3#start) or "startCanvas" (http://iiif.io/api/presentation/2#hasStartCanvas)
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getStartCanvas()
      */
     public function getStartCanvas() {
         return null;
@@ -106,7 +106,7 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ManifestInterface::getStartCanvasOrFirstCanvas()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getStartCanvasOrFirstCanvas()
      */
     public function getStartCanvasOrFirstCanvas() {
         if (!empty($this->getDefaultCanvases())) {

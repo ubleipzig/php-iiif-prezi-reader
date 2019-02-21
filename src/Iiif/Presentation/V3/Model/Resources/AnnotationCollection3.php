@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
 class AnnotationCollection3 extends AbstractIiifResource3 {
 }

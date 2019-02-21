@@ -18,12 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\services\AbstractImageService;
-use iiif\presentation\v2\model\properties\WidthAndHeightTrait;
-use iiif\presentation\common\model\resources\ContentResourceInterface;
-use iiif\tools\Options;
+use Ubl\Iiif\Services\AbstractImageService;
+use Ubl\Iiif\Presentation\V2\Model\Properties\WidthAndHeightTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface;
+use Ubl\Iiif\Tools\Options;
 
 class ContentResource extends AbstractIiifResource2 implements ContentResourceInterface {
     use WidthAndHeightTrait;
@@ -40,7 +40,7 @@ class ContentResource extends AbstractIiifResource2 implements ContentResourceIn
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(), [
@@ -75,7 +75,7 @@ class ContentResource extends AbstractIiifResource2 implements ContentResourceIn
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result = parent::getThumbnailUrl();
@@ -94,7 +94,7 @@ class ContentResource extends AbstractIiifResource2 implements ContentResourceIn
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isImage()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isImage()
      */
     public function isImage() {
         return $this->type = "dctypes:Image";
@@ -102,7 +102,7 @@ class ContentResource extends AbstractIiifResource2 implements ContentResourceIn
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\ContentResourceInterface::isText()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isText()
      */
     public function isText() {
         return $this->type == "dctypes:Text" || $this->type == "cnt:ContentAsText";

@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\presentation\v2\model\resources\Manifest;
-use iiif\presentation\v2\model\resources\Sequence;
-use iiif\tools\IiifHelper;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence;
+use Ubl\Iiif\Tools\IiifHelper;
 
 class TestUblManifestsTest extends AbstractIiifTest
 {

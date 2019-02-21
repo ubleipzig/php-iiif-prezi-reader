@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif;
+namespace Ubl\Iiif;
 
-use iiif\tools\UrlReaderInterface;
+use Ubl\Iiif\Tools\UrlReaderInterface;
 
 class DummyUrlReader implements UrlReaderInterface {
 

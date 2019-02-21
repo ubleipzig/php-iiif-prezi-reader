@@ -18,13 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\presentation\v2\model\properties\XYWHFragment;
-use iiif\presentation\v2\model\resources\Annotation;
-use iiif\presentation\v2\model\resources\Canvas;
-use iiif\presentation\v2\model\resources\ContentResource;
-use iiif\tools\IiifHelper;
-use iiif\presentation\common\vocabulary\Motivation;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\V2\Model\Properties\XYWHFragment;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 
 /**
  * Annotation test case.

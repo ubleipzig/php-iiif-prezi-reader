@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\presentation\common\model\AbstractIiifEntity;
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
 
 class SpecificResource3 extends AbstractIiifEntity {
 
@@ -39,7 +39,7 @@ class SpecificResource3 extends AbstractIiifEntity {
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getStringResources()
+     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getStringResources()
      */
     protected function getStringResources() {
         return [
@@ -49,7 +49,7 @@ class SpecificResource3 extends AbstractIiifEntity {
 
     /**
      *
-     * @return \iiif\presentation\v3\model\resources\Canvas3
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3
      */
     public function getSource() {
         return $this->source;

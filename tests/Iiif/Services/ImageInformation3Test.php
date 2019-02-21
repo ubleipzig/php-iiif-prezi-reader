@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\context\JsonLdProcessor;
-use iiif\context\JsonLdContext;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Context\JsonLdProcessor;
+use Ubl\Iiif\Context\JsonLdContext;
 
 /**
  * ImageInformation3 test case.

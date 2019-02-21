@@ -18,19 +18,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\context\JsonLdHelper;
-use iiif\presentation\v2\model\constants\ViewingDirectionValues;
-use iiif\presentation\v3\model\constants\BehaviorValues;
-use iiif\presentation\v3\model\resources\AbstractIiifResource3;
-use iiif\presentation\v3\model\resources\Annotation3;
-use iiif\presentation\v3\model\resources\AnnotationPage3;
-use iiif\presentation\v3\model\resources\Canvas3;
-use iiif\presentation\v3\model\resources\Collection3;
-use iiif\presentation\v3\model\resources\ContentResource3;
-use iiif\presentation\v3\model\resources\Manifest3;
-use iiif\presentation\v3\model\resources\Range3;
-use iiif\AbstractIiifTest;
-use iiif\tools\IiifHelper;
+use Ubl\Iiif\Context\JsonLdHelper;
+use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingDirectionValues;
+use Ubl\Iiif\Presentation\V3\Model\Constants\BehaviorValues;
+use Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Annotation3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Collection3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Range3;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Tools\IiifHelper;
 
 /**
  *  test case.
@@ -213,7 +213,7 @@ class AbstractIiifResource3Test extends AbstractIiifTest
     
     public function testGetWeblinksForDisplay() {
         $manifest = IiifHelper::loadIiifResource(self::getFile("v3/manifest3-example.json"));
-        /* @var $manifest \iiif\presentation\v3\model\resources\Manifest3 */
+        /* @var $manifest \Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3 */
         self::assertNotNull($manifest);
         self::assertNotNull($manifest->getWeblinksForDisplay());
         self::assertTrue(JsonLdHelper::isSequentialArray($manifest->getWeblinksForDisplay()));

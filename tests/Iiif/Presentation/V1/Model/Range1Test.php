@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\presentation\v1\model\resources\Range1;
-use iiif\AbstractIiifTest;
-use iiif\tools\IiifHelper;
-use iiif\presentation\v1\model\resources\Manifest1;
-use iiif\presentation\v1\model\resources\Canvas1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Range1;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Manifest1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Canvas1;
 
 /**
  * Range1 test case.
@@ -120,7 +120,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->initTreeHierarchy()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->initTreeHierarchy()
      */
     public function testInitTreeHierarchy() {
         // TODO Auto-generated Range1Test->testInitTreeHierarchy()
@@ -130,7 +130,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getCanvases()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getCanvases()
      */
     public function testGetCanvases() {
         foreach ($this->structures as $range) {
@@ -143,7 +143,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getWithin()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getWithin()
      */
     public function testGetWithin() {
         $expectedWithin = [
@@ -165,7 +165,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getAllCanvases()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getAllCanvases()
      */
     public function testGetAllCanvases() {
         foreach ($this->structures as $range) {
@@ -178,7 +178,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getAllCanvasesRecursively()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getAllCanvasesRecursively()
      */
     public function testGetAllCanvasesRecursively() {
         foreach ($this->structures as $range) {
@@ -191,7 +191,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getAllItems()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getAllItems()
      */
     public function testGetAllItems() {
         foreach ($this->structures as $range) {
@@ -206,7 +206,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getAllRanges()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getAllRanges()
      */
     public function testGetAllRanges() {
         foreach ($this->structures as $range) {
@@ -221,7 +221,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getStartCanvas()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getStartCanvas()
      */
     public function testGetStartCanvas() {
         foreach ($this->structures as $range) {
@@ -230,7 +230,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->getStartCanvasOrFirstCanvas()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->getStartCanvasOrFirstCanvas()
      */
     public function testGetStartCanvasOrFirstCanvas() {
         foreach ($this->structures as $range) {
@@ -241,7 +241,7 @@ class Range1Test extends AbstractIiifTest {
     }
 
     /**
-     * Tests iiif\presentation\v1\model\resources\Range1->isTopRange()
+     * Tests Ubl\Iiif\Presentation\V1\Model\Resources\Range1->isTopRange()
      */
     public function testIsTopRange() {
         self::assertEquals(5, count($this->structures));

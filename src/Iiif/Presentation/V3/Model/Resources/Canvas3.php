@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\presentation\common\model\resources\CanvasInterface;
-use iiif\presentation\v3\model\properties\PlaceholderAndAccompanyingCanvasTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
+use Ubl\Iiif\Presentation\V3\Model\Properties\PlaceholderAndAccompanyingCanvasTrait;
 
 class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
 
@@ -65,7 +65,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
 
     /**
      *
-     * @return \iiif\presentation\v3\model\resources\Annotation3[]
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\Annotation3[]
      */
     public function getImageAnnotationsForDisplay() {
         $imageAnnotations = [];
@@ -82,7 +82,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3
      */
     public function getItems() {
         return $this->items;
@@ -90,7 +90,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3
      */
     public function getAnnotations() {
         return $this->annotations;
@@ -146,7 +146,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result= parent::getThumbnailUrl();
@@ -161,7 +161,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CanvasInterface::getPossibleTextAnnotationContainers()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPossibleTextAnnotationContainers()
      */
     public function getPossibleTextAnnotationContainers() {
         // TODO Auto-generated method stub

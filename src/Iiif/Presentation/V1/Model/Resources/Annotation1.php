@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
 
-use iiif\presentation\common\model\resources\AnnotationInterface;
+use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface;
 
 class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
 
@@ -50,7 +50,7 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
     }
 
     /**
-     * @return \iiif\presentation\v1\model\resources\ContentResource1
+     * @return \Ubl\Iiif\Presentation\V1\Model\Resources\ContentResource1
      */
     public function getResource() {
         return $this->resource;
@@ -64,7 +64,7 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         if ($this->motivation == "sc:painting" && $this->resource!=null && $this->resource instanceof ContentResource1) {
@@ -75,7 +75,7 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\AnnotationInterface::getBody()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface::getBody()
      */
     public function getBody() {
         return $this->resource;

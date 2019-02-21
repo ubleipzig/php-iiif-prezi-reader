@@ -18,14 +18,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\services;
+namespace Ubl\Iiif\Services;
 
 class ImageInformation1 extends AbstractImageService {
 
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\services\AbstractImageService::getDefaultFormat()
+     * @see \Ubl\Iiif\Services\AbstractImageService::getDefaultFormat()
      */
     protected function getDefaultFormat() {
         return "jpg";
@@ -34,7 +34,7 @@ class ImageInformation1 extends AbstractImageService {
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\services\AbstractImageService::getDefaultQuality()
+     * @see \Ubl\Iiif\Services\AbstractImageService::getDefaultQuality()
      */
     protected function getDefaultQuality() {
         return "native";
@@ -43,7 +43,7 @@ class ImageInformation1 extends AbstractImageService {
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\services\AbstractImageService::getFullRegion()
+     * @see \Ubl\Iiif\Services\AbstractImageService::getFullRegion()
      */
     protected function getFullRegion() {
         return "full";
@@ -52,7 +52,7 @@ class ImageInformation1 extends AbstractImageService {
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\services\AbstractImageService::getMaxSize()
+     * @see \Ubl\Iiif\Services\AbstractImageService::getMaxSize()
      */
     protected function getMaxSize() {
         return "full";
@@ -61,7 +61,7 @@ class ImageInformation1 extends AbstractImageService {
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\services\AbstractImageService::getNoRotation()
+     * @see \Ubl\Iiif\Services\AbstractImageService::getNoRotation()
      */
     protected function getNoRotation() {
         return "0";
@@ -69,7 +69,7 @@ class ImageInformation1 extends AbstractImageService {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\services\AbstractImageService::initializeProfile()
+     * @see \Ubl\Iiif\Services\AbstractImageService::initializeProfile()
      */
     protected function initializeProfile() {
         if (!$this->profileInitialized) {
@@ -89,7 +89,7 @@ class ImageInformation1 extends AbstractImageService {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\services\AbstractImageService::getSizes()
+     * @see \Ubl\Iiif\Services\AbstractImageService::getSizes()
      */
     public function getSizes() {
         return null;

@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\services\ImageInformation2;
-use iiif\services\Profile;
-use iiif\tools\IiifHelper;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Services\ImageInformation2;
+use Ubl\Iiif\Services\Profile;
+use Ubl\Iiif\Tools\IiifHelper;
 
 /**
  * ImageInformation2 test case.

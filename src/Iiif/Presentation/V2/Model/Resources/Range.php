@@ -18,12 +18,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\presentation\v2\model\properties\StartCanvasTrait;
-use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
-use iiif\presentation\common\model\resources\RangeInterface;
-use iiif\presentation\v2\model\constants\ViewingHintValues;
+use Ubl\Iiif\Presentation\V2\Model\Properties\StartCanvasTrait;
+use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface;
+use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingHintValues;
 
 class Range extends AbstractIiifResource2 implements RangeInterface {
     use ViewingDirectionTrait;
@@ -51,7 +51,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(),[
@@ -73,7 +73,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      *
-     * @return multitype:\iiif\model\resources\Range
+     * @return multitype:\Ubl\Iiif\Model\Resources\Range
      */
     public function getRanges() {
         return $this->ranges;
@@ -81,7 +81,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      *
-     * @return multitype:\iiif\model\resources\Canvas
+     * @return multitype:\Ubl\Iiif\Model\Resources\Canvas
      */
     public function getCanvases() {
         return $this->canvases;
@@ -175,7 +175,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\RangeInterface::getAllItems()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllItems()
      */
     public function getAllItems() {
         $items = [];
@@ -199,7 +199,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\IiifResourceInterface::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         if ($this->getThumbnail()!=null) {

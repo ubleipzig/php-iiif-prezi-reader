@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\presentation\common\model\resources\CollectionInterface;
-use iiif\presentation\common\model\resources\ManifestInterface;
-use iiif\presentation\v3\model\properties\PlaceholderAndAccompanyingCanvasTrait;
+use Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface;
+use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
+use Ubl\Iiif\Presentation\V3\Model\Properties\PlaceholderAndAccompanyingCanvasTrait;
 
 class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
     
@@ -54,7 +54,7 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
 
     /**
      *
-     * @return multitype:Ambigous <\iiif\presentation\v3\model\resources\Collection3, \iiif\presentation\v3\model\resources\Manifest3>
+     * @return multitype:Ambigous <\Ubl\Iiif\Presentation\V3\Model\Resources\Collection3, \Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3>
      */
     public function getItems() {
         return $this->items;
@@ -62,7 +62,7 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
 
     /**
      *
-     * @return multitype:\iiif\presentation\v3\model\resources\AnnotationPage3
+     * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3
      */
     public function getAnnotations() {
         return $this->annotations;
@@ -85,7 +85,7 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollections()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface::getContainedCollections()
      */
     public function getContainedCollections() {
         $result = [];
@@ -101,7 +101,7 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedCollectionsAndManifests()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface::getContainedCollectionsAndManifests()
      */
     public function getContainedCollectionsAndManifests() {
         return $this->items;
@@ -109,7 +109,7 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\CollectionInterface::getContainedManifests()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface::getContainedManifests()
      */
     public function getContainedManifests() {
         $result = [];

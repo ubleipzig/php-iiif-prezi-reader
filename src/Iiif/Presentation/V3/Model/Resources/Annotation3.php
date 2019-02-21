@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v3\model\resources;
+namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
-use iiif\presentation\common\model\resources\AnnotationInterface;
+use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface;
 
 class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
 
@@ -51,7 +51,7 @@ class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
     /**
      *
      * {@inheritdoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getStringResources()
+     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getStringResources()
      */
     protected function getStringResources() {
         return [
@@ -77,7 +77,7 @@ class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
 
     /**
      *
-     * @return (\iiif\presentation\v3\model\resources\Canvas3|\iiif\presentation\v3\model\resources\SpecificResource3)
+     * @return (\Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3|\Ubl\Iiif\Presentation\V3\Model\Resources\SpecificResource3)
      */
     public function getTarget() {
         return $this->target;
@@ -85,7 +85,7 @@ class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
 
     /**
      *
-     * @return \iiif\presentation\v3\model\resources\ContentResource3
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3
      */
     public function getBody() {
         return $this->body;
@@ -93,7 +93,7 @@ class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v3\model\resources\AbstractIiifResource3::getThumbnailUrl()
+     * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
         $result = parent::getThumbnailUrl();

@@ -18,37 +18,37 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\common;
+namespace Ubl\Iiif\Presentation\Common;
 
-use iiif\presentation\v2\model\resources\Manifest;
-use iiif\presentation\v2\model\resources\Sequence;
-use iiif\presentation\v2\model\resources\Canvas;
-use iiif\presentation\v2\model\resources\Collection;
-use iiif\presentation\v2\model\resources\AnnotationList;
-use iiif\presentation\v2\model\resources\Range;
-use iiif\presentation\v3\model\resources\Collection3;
-use iiif\presentation\v3\model\resources\Manifest3;
-use iiif\presentation\v3\model\resources\Canvas3;
-use iiif\presentation\v3\model\resources\Range3;
-use iiif\presentation\v3\model\resources\Annotation3;
-use iiif\presentation\v2\model\resources\Annotation;
-use iiif\presentation\v3\model\resources\AnnotationPage3;
-use iiif\presentation\v3\model\resources\AnnotationCollection3;
-use iiif\presentation\v3\model\resources\ContentResource3;
-use iiif\presentation\v2\model\resources\ContentResource;
-use iiif\services\ImageInformation1;
-use iiif\services\ImageInformation2;
-use iiif\services\ImageInformation3;
-use iiif\presentation\v3\model\resources\SpecificResource3;
-use iiif\presentation\v1\model\resources\Manifest1;
-use iiif\presentation\v1\model\resources\Sequence1;
-use iiif\presentation\v1\model\resources\Canvas1;
-use iiif\presentation\v1\model\resources\Annotation1;
-use iiif\presentation\v1\model\resources\ContentResource1;
-use iiif\presentation\v1\model\resources\AnnotationList1;
-use iiif\presentation\v1\model\resources\Range1;
-use iiif\presentation\v1\model\resources\Layer1;
-use iiif\services\PhysicalDimensions;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Collection;
+use Ubl\Iiif\Presentation\V2\Model\Resources\AnnotationList;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Range;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Collection3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Range3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\Annotation3;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation;
+use Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationCollection3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
+use Ubl\Iiif\Services\ImageInformation1;
+use Ubl\Iiif\Services\ImageInformation2;
+use Ubl\Iiif\Services\ImageInformation3;
+use Ubl\Iiif\Presentation\V3\Model\Resources\SpecificResource3;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Manifest1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Sequence1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Canvas1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Annotation1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\ContentResource1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\AnnotationList1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Range1;
+use Ubl\Iiif\Presentation\V1\Model\Resources\Layer1;
+use Ubl\Iiif\Services\PhysicalDimensions;
 
 /**
  * Map the @type of a JSON-LD resource to a PHP class. If a type IRI is used in more than one

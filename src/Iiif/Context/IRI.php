@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\context;
+namespace Ubl\Iiif\Context;
 
 /**
  * Represents an Internationalized Resource Identifier and offers several methods for information about a given IRI in the context of JSON-LD.

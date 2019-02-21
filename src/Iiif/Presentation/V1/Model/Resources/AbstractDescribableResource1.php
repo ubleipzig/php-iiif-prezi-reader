@@ -18,10 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v1\model\resources;
+namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
-use iiif\context\JsonLdHelper;
-use iiif\presentation\common\model\resources\IiifResourceInterface;
+use Ubl\Iiif\Context\JsonLdHelper;
+use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 
 abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
     /**
@@ -52,7 +52,7 @@ abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getMetadataForDisplay()
+     * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getMetadataForDisplay()
      */
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = 0) {
         if (!isset($this->metadata) || !JsonLdHelper::isSequentialArray($this->metadata)) {
@@ -78,7 +78,7 @@ abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getSummary()
+     * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getSummary()
      */
     public function getSummary() {
         return $this->description;
@@ -86,7 +86,7 @@ abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v1\model\resources\AbstractIiifResource1::getSummaryForDisplay()
+     * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getSummaryForDisplay()
      */
     public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         return $this->getValueForDisplay($this->description, $language, $joinChars);

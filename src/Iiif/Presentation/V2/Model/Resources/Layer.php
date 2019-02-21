@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\presentation\v2\model\properties\ViewingDirectionTrait;
+use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
 
 class Layer extends AbstractIiifResource2 {
     use ViewingDirectionTrait;

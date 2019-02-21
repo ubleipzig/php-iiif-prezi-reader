@@ -1,7 +1,6 @@
 {
 	"name" : "ubl/php-iiif-prezi-reader",
-	"description" : "Read IIIF Presentation API resources into PHP objects that offer some data extraction methods",
-	"version" : "0.1.0-dev",
+	"description" : "Read IIIF Presentation API resources into PHP objects that offer some convenient data extraction methods",
 	"type" : "library",
 	"keywords" : [
 		"iiif",
@@ -15,14 +14,12 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"iiif\\" : "src/iiif",
-			"" : "src"
+			"Ubl\\Iiif\\" : "src/Iiif/"
 		}
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"iiif\\" : "tests/iiif",
-			"" : "src"
+			"Ubl\\Iiif\\" : "tests/Iiif/"
 		}
 	},
 	"minimum-stability" : "stable",

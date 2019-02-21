@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\tools;
+namespace Ubl\Iiif\Tools;
 
 class Options {
     
@@ -38,7 +38,7 @@ class Options {
     protected static $maxThumbnailHeight = null;
 
     /**
-     * @return \iiif\tools\UrlReaderInterface
+     * @return \Ubl\Iiif\Tools\UrlReaderInterface
      */
     public static function getUrlReader() {
         return self::$urlReader;
@@ -59,7 +59,7 @@ class Options {
     }
 
     /**
-     * @param \iiif\tools\UrlReaderInterface $urlReader
+     * @param \Ubl\Iiif\Tools\UrlReaderInterface $urlReader
      */
     public static function setUrlReader($urlReader) {
         Options::$urlReader = $urlReader;

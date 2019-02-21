@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\context\JsonLdProcessor;
-use iiif\context\JsonLdContext;
-use iiif\context\JsonLdHelper;
+use Ubl\Iiif\Context\JsonLdProcessor;
+use Ubl\Iiif\Context\JsonLdContext;
+use Ubl\Iiif\Context\JsonLdHelper;
 use PHPUnit\Framework\TestCase;
 
 /**

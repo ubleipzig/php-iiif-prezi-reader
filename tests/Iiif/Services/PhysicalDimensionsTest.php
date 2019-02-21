@@ -18,9 +18,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use iiif\AbstractIiifTest;
-use iiif\tools\IiifHelper;
-use iiif\services\PhysicalDimensions;
+use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Services\PhysicalDimensions;
 
 /**
  * PhysicalDimensions test case.

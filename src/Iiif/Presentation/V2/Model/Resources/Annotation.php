@@ -18,11 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace iiif\presentation\v2\model\resources;
+namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use iiif\presentation\common\model\resources\AnnotationInterface;
-use iiif\presentation\v2\model\properties\XYWHFragment;
-use iiif\presentation\common\vocabulary\Motivation;
+use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface;
+use Ubl\Iiif\Presentation\V2\Model\Properties\XYWHFragment;
+use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 
 class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
@@ -41,7 +41,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
     
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
      */
     protected function getPropertyMap() {
         return array_merge(parent::getPropertyMap(), [
@@ -53,7 +53,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getSpecialTreatmentValue()
+     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getSpecialTreatmentValue()
      */
     protected function getSpecialTreatmentValue($property, $value, $context) {
         if ($property == "on") {
@@ -72,7 +72,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
     /**
      *
-     * @return \iiif\presentation\v2\model\resources\ContentResource
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource
      */
     public function getResource() {
         return $this->resource;
@@ -106,7 +106,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
     }
     /**
      * {@inheritDoc}
-     * @see \iiif\presentation\common\model\resources\AnnotationInterface::getBody()
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface::getBody()
      */
     public function getBody() {
         return $this->resource;
