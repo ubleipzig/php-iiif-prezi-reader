@@ -35,7 +35,17 @@ class Sequence extends AbstractIiifResource2 {
      */
     protected $canvases = array();
 
-    protected $viewingDirection;
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     */
+    protected function getPropertyMap() {
+        return array_merge(parent::getPropertyMap(), [
+            "http://iiif.io/api/presentation/2#hasCanvases" => "canvases",
+            "http://iiif.io/api/presentation/2#hasStartCanvas" => "startCanvas",
+            "http://iiif.io/api/presentation/2#viewingDirection" => "viewingDirection"
+        ]);
+    }
 
     /**
      *

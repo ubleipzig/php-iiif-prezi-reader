@@ -99,6 +99,30 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      */
     protected $reference;
 
+
+    
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getPropertyMap()
+     */
+    protected function getPropertyMap() {
+        return array_merge(parent::getPropertyMap(), [
+            "viewingHint => http://iiif.io/api/presentation/2#viewingHint" => "viewingHint",
+            "http://www.w3.org/2000/01/rdf-schema#label" => "label",
+            "http://iiif.io/api/presentation/2#metadataLabels" => "metadata",
+            "http://purl.org/dc/elements/1.1/description" => "description",
+            "http://xmlns.com/foaf/0.1/thumbnail" => "thumbnail",
+            "http://iiif.io/api/presentation/2#attributionLabel" => "attribution",
+            "http://purl.org/dc/terms/rights" => "license",
+            "http://xmlns.com/foaf/0.1/logo" => "logo",
+            "http://purl.org/dc/terms/relation" => "related",
+            "http://purl.org/dc/terms/hasFormat" => "rendering",
+            "http://rdfs.org/sioc/services#has_service" => "service",
+            "http://www.w3.org/2000/01/rdf-schema#seeAlso" => "seeAlso",
+            "http://purl.org/dc/terms/isPartOf" => "within"
+        ]);
+    }
+
     protected function getTypelessProperties() {
         return [
             "service"

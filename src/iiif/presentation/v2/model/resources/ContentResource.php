@@ -39,6 +39,19 @@ class ContentResource extends AbstractIiifResource2 implements ContentResourceIn
     protected $chars;
 
     /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\common\model\AbstractIiifEntity::getPropertyMap()
+     */
+    protected function getPropertyMap() {
+        return array_merge(parent::getPropertyMap(), [
+            "http://www.w3.org/2011/content#chars" => "chars",
+            "http://purl.org/dc/elements/1.1/format" => "format",
+            "http://www.w3.org/2003/12/exif/ns#width" => "width",
+            "http://www.w3.org/2003/12/exif/ns#height" => "height"
+        ]);
+    }
+
+    /**
      *
      * @return string
      */
@@ -94,17 +107,6 @@ class ContentResource extends AbstractIiifResource2 implements ContentResourceIn
     public function isText() {
         return $this->type == "dctypes:Text" || $this->type == "cnt:ContentAsText";
     }
-    /**
-     * {@inheritDoc}
-     * @see \iiif\presentation\common\model\AbstractIiifEntity::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(), [
-            "http://purl.org/dc/elements/1.1/format" => "format"
-        ]);
-    }
-
-
-    
+   
 }
 

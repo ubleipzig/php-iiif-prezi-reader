@@ -54,6 +54,19 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
     protected $rootRanges;
 
     /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     */
+    protected function getPropertyMap() {
+        return array_merge(parent::getPropertyMap(), [
+            "http://iiif.io/api/presentation/2#hasSequences" => "sequences",
+            "http://iiif.io/api/presentation/2#hasRanges" => "structures",
+            "http://iiif.io/api/presentation/2#presentationDate" => "navDate",
+            "http://iiif.io/api/presentation/2#viewingHint" => "viewingHint"
+        ]);
+    }
+
+    /**
      *
      * @return Sequence[]:
      */

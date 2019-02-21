@@ -29,8 +29,6 @@ class Collection extends AbstractIiifResource2 implements CollectionInterface {
 
     const TYPE = "sc:Collection";
 
-    protected $navDate;
-
     /**
      *
      * @var Collection[]
@@ -44,6 +42,19 @@ class Collection extends AbstractIiifResource2 implements CollectionInterface {
     protected $manifests = array();
 
     protected $members = array();
+
+    /**
+     * {@inheritDoc}
+     * @see \iiif\presentation\v2\model\resources\AbstractIiifResource2::getPropertyMap()
+     */
+    protected function getPropertyMap() {
+        return array_merge(parent::getPropertyMap(),[
+            "http://iiif.io/api/presentation/2#presentationDate" => "navDate",
+            "http://iiif.io/api/presentation/2#hasCollections" => "collections",
+            "http://iiif.io/api/presentation/2#hasManifests" => "manifests",
+            "http://iiif.io/api/presentation/2#hasParts" => "members"
+        ]);
+    }
 
     /**
      * {@inheritDoc}
