@@ -23,5 +23,11 @@
 		}
 	},
 	"minimum-stability" : "stable",
-	"license" : "GPL-3.0-or-later"
+	"license" : "GPL-3.0-or-later",
+	"authors" : [{
+			"name" : "Lutz Helm",
+			"email" : "helm@ub.uni-leipzig.de",
+			"role" : "Developer"
+		}
+	]
 }

@@ -2,7 +2,9 @@
 
 Read IIIF Presentation API resources into PHP objects that offer some convenient data extraction methods.
 
-Requires at least PHP 5.6 at the moment.
+Requires at least PHP 5.6.
+
+IIIF Presentation API support is primarily implemented for version 2.1, with some rudimentary support for Presentation API 3.0 and Metadata API 1.0.
 
 ## Where to start
 
