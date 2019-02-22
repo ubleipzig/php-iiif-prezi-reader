@@ -422,20 +422,20 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
         $requestedValue = null;
         $targetLanguage = $language == null ? null : $language;
         foreach ($this->metadata as $metadatum) {
-            if (is_string($metadatum[Terms::LABEL])) {
-                if ($label == $metadatum[Terms::LABEL]) {
-                    $requestedValue = $metadatum[Terms::VALUE];
+            if (is_string($metadatum["label"])) {
+                if ($label == $metadatum["label"]) {
+                    $requestedValue = $metadatum["value"];
                     break;
                 }
-            } elseif (is_array($metadatum[Terms::LABEL])) {
-                foreach ($metadatum[Terms::LABEL] as $translatedLabel) {
-                    if ($label == $translatedLabel[Terms::AT_VALUE]) {
-                        $requestedValue = $requestedValue == null ? $metadatum[Terms::VALUE] : $requestedValue;
+            } elseif (is_array($metadatum["label"])) {
+                foreach ($metadatum["label"] as $translatedLabel) {
+                    if ($label == $translatedLabel[Keywords::VALUE]) {
+                        $requestedValue = $requestedValue == null ? $metadatum["value"] : $requestedValue;
                         if ($targetLanguage == null) {
-                            $targetLanguage = $translatedLabel[Terms::AT_LANGUAGE];
+                            $targetLanguage = $translatedLabel[Keywords::LANGUAGE];
                         }
-                        if ($language != null && $translatedLabel[Terms::AT_LANGUAGE] == $language) {
-                            $requestedValue = $metadatum[Terms::VALUE];
+                        if ($language != null && $translatedLabel[Keywords::LANGUAGE] == $language) {
+                            $requestedValue = $metadatum["value"];
                             break 2;
                         }
                     }
@@ -452,11 +452,11 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
             if (is_array($requestedValue[0])) {
                 $firstValue = null;
                 foreach ($requestedValue as $translatedValue) {
-                    if ($translatedValue[Terms::AT_LANGUAGE] == $targetLanguage) {
-                        return $translatedValue[Terms::AT_VALUE];
+                    if ($translatedValue[Keywords::LANGUAGE] == $targetLanguage) {
+                        return $translatedValue[Keywords::VALUE];
                     }
                     if ($firstValue == null) {
-                        $firstValue = $translatedValue[Terms::AT_VALUE];
+                        $firstValue = $translatedValue[Keywords::VALUE];
                     }
                 }
                 return $firstValue;

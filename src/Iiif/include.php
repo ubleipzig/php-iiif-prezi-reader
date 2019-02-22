@@ -69,7 +69,6 @@ require_once (__DIR__ . "/Presentation/V2/Model/Resources/Layer.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Resources/Manifest.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Resources/Range.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Resources/Sequence.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Vocabulary/Terms.php");
 
 require_once (__DIR__ . "/Presentation/V3/Model/Constants/BehaviorValues.php");
 
