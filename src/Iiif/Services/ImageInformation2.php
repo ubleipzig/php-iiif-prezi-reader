@@ -106,7 +106,7 @@ class ImageInformation2 extends AbstractImageService {
     protected function initializeProfile() {
         if (!$this->profileInitialized) {
             if (isset($this->profile)) {
-                $this->profile = JsonLdHelper::isSequentialArray($this->profile) ? $this->profile : [$this->profile];
+                $this->profile = JsonLdHelper::isSimpleArray($this->profile) ? $this->profile : [$this->profile];
                 foreach ($this->profile as $profileEntry) {
                     if (is_string($profileEntry)) {
                         $complianceProfile = Profile::getComplianceLevelProfile($profileEntry);

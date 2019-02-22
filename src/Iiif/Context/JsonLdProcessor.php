@@ -107,7 +107,7 @@ class JsonLdProcessor {
         // 1)
         $result = clone $activeContext;
         // 2)
-        if (!JsonLdHelper::isSequentialArray($localContext)) {
+        if (!JsonLdHelper::isSimpleArray($localContext)) {
             $localContext = [
                 $localContext
             ];

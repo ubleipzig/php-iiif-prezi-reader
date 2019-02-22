@@ -228,7 +228,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
             return null;
         }
         $result = [];
-        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSimpleArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("format", $candidate)) {
                 if ($format == $candidate["format"]) {
@@ -247,7 +247,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
         if (!is_array($this->seeAlso)) {
             return null;
         }
-        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSimpleArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         $result = [];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("profile", $candidate)) {
@@ -255,7 +255,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
                     if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
                         $result[] = $candidate["@id"];
                     }
-                } elseif (JsonLdHelper::isSequentialArray($candidate["profile"])) {
+                } elseif (JsonLdHelper::isSimpleArray($candidate["profile"])) {
                     foreach ($candidate["profile"] as $profileItem) {
                         if (is_string($profileItem) && ($profileItem == $profile || ($startsWith && strpos($profileItem, $profile)===0))) {
                             $result[] = $candidate["@id"];
@@ -284,7 +284,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
         if (empty($this->service)) {
             return null;
         }
-        if (JsonLdHelper::isSequentialArray($this->service)) {
+        if (JsonLdHelper::isSimpleArray($this->service)) {
             return $this->service[0];
         }
         return $this->service; 
@@ -327,7 +327,7 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
             return $value;
         }
         if (is_array($value)) {
-            if (!JsonLdHelper::isSequentialArray($value)) {
+            if (!JsonLdHelper::isSimpleArray($value)) {
                 $value = [$value];
             }
             $defaultLanguage = null;

@@ -350,7 +350,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
     
     public function getRenderingUrlsForFormat($format, $useChildResources = true) {
         $renderingUrls = [];
-        if (empty($format) || !JsonLdHelper::isSequentialArray($this->rendering)) {
+        if (empty($format) || !JsonLdHelper::isSimpleArray($this->rendering)) {
             return $renderingUrls;
         }
         foreach ($this->rendering as $rendering) {
@@ -385,7 +385,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
             return null;
         }
         $result = [];
-        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSimpleArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("format", $candidate)) {
                 if ($format == $candidate["format"]) {
@@ -400,7 +400,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
         if (!is_array($this->seeAlso)) {
             return null;
         }
-        $seeAlso = JsonLdHelper::isSequentialArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
+        $seeAlso = JsonLdHelper::isSimpleArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         $result = [];
         foreach ($seeAlso as $candidate) {
             if (array_key_exists("profile", $candidate)) {
@@ -408,7 +408,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
                     if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
                         $result[] = $candidate["@id"];
                     }
-                } elseif (JsonLdHelper::isSequentialArray($candidate["profile"])) {
+                } elseif (JsonLdHelper::isSimpleArray($candidate["profile"])) {
                     foreach ($candidate["profile"] as $profileItem) {
                         if (is_string($profileItem) && ($profileItem == $profile || ($startsWith && strpos($profileItem, $profile)===0))) {
                             $result[] = $candidate["@id"];

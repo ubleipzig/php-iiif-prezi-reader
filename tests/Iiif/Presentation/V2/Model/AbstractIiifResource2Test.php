@@ -433,7 +433,7 @@ class AbstractIiifResource2Test extends AbstractIiifTest
         self::assertInstanceOf(Manifest::class, $manifest);
         self::assertNotNull($manifest->getWeblinksForDisplay());
         self::assertTrue(is_array($manifest->getWeblinksForDisplay()));
-        self::assertTrue(JsonLdHelper::isSequentialArray($manifest->getWeblinksForDisplay()));
+        self::assertTrue(JsonLdHelper::isSimpleArray($manifest->getWeblinksForDisplay()));
         self::assertEquals(1, count($manifest->getWeblinksForDisplay()));
         self::assertTrue(JsonLdHelper::isDictionary($manifest->getWeblinksForDisplay()[0]));
         self::assertEquals("http://www.example.org/related-to-manifest", $manifest->getWeblinksForDisplay()[0]["@id"]);

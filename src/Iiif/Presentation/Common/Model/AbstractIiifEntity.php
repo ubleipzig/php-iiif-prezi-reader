@@ -294,7 +294,7 @@ abstract class AbstractIiifEntity {
         }
         $definition = $context->getTermDefinition($term);
         $result = null;
-        if (JsonLdHelper::isSequentialArray($value)) {
+        if (JsonLdHelper::isSimpleArray($value)) {
             if (! $definition->hasListContainer() && ! $definition->hasSetContainer()) {
                 // FIXME
                 // throw new \Exception("array given for non collection property");
@@ -370,7 +370,7 @@ abstract class AbstractIiifEntity {
                     "property" => $property
                 ];
             }
-        } elseif (JsonLdHelper::isSequentialArray($resource) && $resource[0] instanceof AbstractIiifEntity) {
+        } elseif (JsonLdHelper::isSimpleArray($resource) && $resource[0] instanceof AbstractIiifEntity) {
             foreach ($resource as $singleResource) {
                 if (! array_key_exists($singleResource->id, $allResources) || ! $allResources[$singleResource->id]["resource"]->initialized) {
                     if (array_key_exists($singleResource->id, $allResources) && array_key_exists("references", $allResources[$singleResource->id])) {

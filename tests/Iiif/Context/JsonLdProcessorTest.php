@@ -45,9 +45,9 @@ class JsonLdProcessorTest extends TestCase
     }
 
     /**
-     * Tests JsonLdHelper::isSequentialArray()
+     * Tests JsonLdHelper::isSimpleArray()
      */
-    public function testIsSequentialArray()
+    public function testIsSimpleArray()
     {
         $sequential1 = ['1', 'a', 'x'];
         $sequential2 = [0 => '1', 1 => 'a', 2 => 'x'];
@@ -55,11 +55,11 @@ class JsonLdProcessorTest extends TestCase
         $nonSequential2 = ['I' => '1', 0 => 'a', 1 => 'x'];
         $nonSequential3 = [1 => '1', 0 => 'a', 2 => 'x'];
         
-        self::assertTrue(JsonLdHelper::isSequentialArray($sequential1));
-        self::assertTrue(JsonLdHelper::isSequentialArray($sequential2));
-        self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential1));
-        self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential2));
-        self::assertFalse(JsonLdHelper::isSequentialArray($nonSequential3));
+        self::assertTrue(JsonLdHelper::isSimpleArray($sequential1));
+        self::assertTrue(JsonLdHelper::isSimpleArray($sequential2));
+        self::assertFalse(JsonLdHelper::isSimpleArray($nonSequential1));
+        self::assertFalse(JsonLdHelper::isSimpleArray($nonSequential2));
+        self::assertFalse(JsonLdHelper::isSimpleArray($nonSequential3));
     }
 }
 

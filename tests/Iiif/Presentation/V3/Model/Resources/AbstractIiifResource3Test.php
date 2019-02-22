@@ -74,7 +74,7 @@ class AbstractIiifResource3Test extends AbstractIiifTest
         self::assertNull($iiifResource->getLabelTranslated("de"));
         
         self::assertNotNull($iiifResource->getMetadata());
-        self::assertTrue(JsonLdHelper::isSequentialArray($iiifResource->getMetadata()));
+        self::assertTrue(JsonLdHelper::isSimpleArray($iiifResource->getMetadata()));
         self::assertEquals(4, sizeof($iiifResource->getMetadata()));
         foreach ($iiifResource->getMetadata() as $metadatum) {
             self::assertTrue(array_key_exists("label", $metadatum));
@@ -191,7 +191,7 @@ class AbstractIiifResource3Test extends AbstractIiifTest
         
         $structures = $iiifResource->getStructures();
         self::assertNotNull($structures);
-        self::assertTrue(JsonLdHelper::isSequentialArray($structures));
+        self::assertTrue(JsonLdHelper::isSimpleArray($structures));
         self::assertEquals(1, sizeof($structures));
         
         $toc = $structures[0];
@@ -216,7 +216,7 @@ class AbstractIiifResource3Test extends AbstractIiifTest
         /* @var $manifest \Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3 */
         self::assertNotNull($manifest);
         self::assertNotNull($manifest->getWeblinksForDisplay());
-        self::assertTrue(JsonLdHelper::isSequentialArray($manifest->getWeblinksForDisplay()));
+        self::assertTrue(JsonLdHelper::isSimpleArray($manifest->getWeblinksForDisplay()));
         self::assertEquals(1, count($manifest->getWeblinksForDisplay()));
         $homepage = $manifest->getWeblinksForDisplay()[0];
         self::assertTrue(JsonLdHelper::isDictionary($homepage));

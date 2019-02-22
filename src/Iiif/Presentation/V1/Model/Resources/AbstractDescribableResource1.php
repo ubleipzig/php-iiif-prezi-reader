@@ -55,7 +55,7 @@ abstract class AbstractDescribableResource1 extends AbstractIiifResource1 {
      * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getMetadataForDisplay()
      */
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = 0) {
-        if (!isset($this->metadata) || !JsonLdHelper::isSequentialArray($this->metadata)) {
+        if (!isset($this->metadata) || !JsonLdHelper::isSimpleArray($this->metadata)) {
             return null;
         }
         $result = null;

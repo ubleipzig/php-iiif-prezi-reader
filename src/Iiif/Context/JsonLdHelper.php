@@ -28,7 +28,7 @@ class JsonLdHelper {
      * @param mixed $array
      * @return boolean
      */
-    public static function isSequentialArray($array) {
+    public static function isSimpleArray($array) {
         if (! is_array($array)) {
             return false;
         }
