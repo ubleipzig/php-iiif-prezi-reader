@@ -303,7 +303,7 @@ class JsonLdProcessor {
             $simpleTerm = false;
         }
         // 10
-        $definition = new TermDefinition();
+        $definition = new TermDefinition($term);
         // 11
         if (array_key_exists(Keywords::TYPE, $value)) {
             // 11.1

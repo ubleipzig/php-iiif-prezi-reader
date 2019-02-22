@@ -226,6 +226,10 @@ class TermDefinition {
     public function hasListContainer() {
         return $this->hasContainer(Keywords::LIST_);
     }
+    
+    public function __construct($term = null) {
+        $this->$term = $term;
+    }
 
     private function hasContainer($keyword) {
         return $this->containerMapping != null && ((is_string($this->containerMapping) && $keyword == $this->containerMapping) || (is_array($this->containerMapping) && array_search($keyword, $this->containerMapping) !== false));
