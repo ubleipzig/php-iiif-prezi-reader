@@ -28,7 +28,7 @@ class IiifHelper {
      * 
      * @param string|array $resource IIIF resource. Can be an IRI, the JSON document as string
      * or a dictionary in form of a PHP associative array 
-     * @return NULL|\Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity An instance of the IIIF 
+     * @return NULL|\Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity An instance of the IIIF resource 
      */
     public static function loadIiifResource($resource) {
         return AbstractIiifEntity::loadIiifResource($resource);

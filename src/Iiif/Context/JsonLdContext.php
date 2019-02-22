@@ -30,6 +30,7 @@ namespace Ubl\Iiif\Context;
 
 class JsonLdContext {
 
+    // FIXME Context may have more than one IRI or none. 
     protected $contextIri = "";
 
     protected $baseIri = "";

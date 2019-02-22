@@ -96,9 +96,21 @@ interface IiifResourceInterface {
     public function getRequiredStatementForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML);
     
     public function getSeeAlso();
-    
+    /**
+     * Looks a matching format in all entries of seeAlso and returns their URLs
+     * @param string $format requested format
+     * @return string[] Array of URLs / @id s of all matching entries 
+     */
     public function getSeeAlsoUrlsForFormat($format);
-    
+
+    /**
+     * 
+     * @param string $profile Requested profile
+     * @param boolean $startsWith If true, a seeAlso entry matches if it's profile
+     * starts with $profile. For example, "http://example.org/service/version1" will
+     * then match "http://example.org/service/".
+     * @return Array of URLs / @id s of all matching entries
+     */
     public function getSeeAlsoUrlsForProfile($profile, $startsWith = false);
         
     /**

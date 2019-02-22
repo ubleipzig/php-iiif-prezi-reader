@@ -86,6 +86,9 @@ class IRI {
      */
     protected $fragment;
 
+    /**
+     * @param string|IRI $iri A string representation to read into an IRI object or an IRI object to copy  
+     */
     public function __construct($iri = null) {
         if (is_string($iri) && self::isIri($iri)) {
             $this->iri = $iri;
@@ -139,7 +142,7 @@ class IRI {
     }
 
     /**
-     * Checks if a string has the form of a IRI by matching the regex in https://tools.ietf.org/html/rfc3986#appendix-B
+     * Checks if a string has the form of an IRI by matching the regex in https://tools.ietf.org/html/rfc3986#appendix-B
      * @param string $iri
      * @return boolean
      * @link https://tools.ietf.org/html/rfc3986#appendix-B

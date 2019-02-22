@@ -61,6 +61,11 @@ abstract class AbstractIiifEntity {
      */
     protected $otherData;
 
+    /**
+     * 
+     * @param string|array $resource IRI, text content or array representation of IIIF document
+     * @return \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity|NULL
+     */
     public static function loadIiifResource($resource) {
         if (is_string($resource) && IRI::isAbsoluteIri($resource)) {
             $resource = IiifHelper::getRemoteContent($resource);
@@ -90,6 +95,10 @@ abstract class AbstractIiifEntity {
         return $this->originalJsonArray;
     }
 
+
+    /**
+     * @return string[] A map to get the right property name for a given IRI or JSON-LD keyword.
+     */
     protected function getPropertyMap() {
         return [
             "@id" => "id",
@@ -107,7 +116,7 @@ abstract class AbstractIiifEntity {
     }
 
     /**
-     * Names of properties that resolve to AbstractIiifEntity but have not @type given.
+     * Names of properties that can be instantiated as AbstractIiifEntity but have not @type given.
      * Applies to "service" property.
      * Method has to be overridden by affected classes.
      *
@@ -239,6 +248,7 @@ abstract class AbstractIiifEntity {
             $property = substr($property, 1);
         }
         if (!property_exists($this, $property)) {
+            // Check if the property can be resolved to an IRI or a JSON-LD keyword
             $iriOrKeyword = null;
             if ($context->getTermDefinition($property) != null) {
                 $iriOrKeyword = $context->getTermDefinition($property)->getIriMapping();
@@ -247,6 +257,7 @@ abstract class AbstractIiifEntity {
             } elseif (Keywords::isKeyword($property) || IRI::isAbsoluteIri($property)) {
                 $iriOrKeyword = $property;
             }
+            // Check if there is a property for the IRI / keyword in the resource class
             $propertyMap = $this->getPropertyMap();
             if (array_key_exists($iriOrKeyword, $propertyMap)) {
                 $property = $propertyMap[$iriOrKeyword];

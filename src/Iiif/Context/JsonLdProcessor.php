@@ -24,11 +24,9 @@ use Ubl\Iiif\Tools\IiifHelper;
 
 /**
  * Implementation of the context processing algorithm of the JSON-LD API version 1.1.
- * Expansion, Compaction and Flattening algorithms are not implemented.
- *
- *
- * @author lutzhelm
- *        
+ * Expansion, Compaction and Flattening algorithms are not (yet) implemented.
+ * 
+ * @author Lutz Helm <helm@ub.uni-leipzig.de>
  */
 class JsonLdProcessor {
 
@@ -102,6 +100,15 @@ class JsonLdProcessor {
         return IiifHelper::getRemoteContent($context);
     }
 
+    /**
+     * 
+     * @param string|array $localContext
+     * @param JsonLdContext $activeContext
+     * @param array $remoteContexts
+     * @throws \Exception
+     * @return \Ubl\Iiif\Context\JsonLdContext
+     * @link https://w3c.github.io/json-ld-api/#context-processing-algorithm
+     */
     public function processContext($localContext, JsonLdContext $activeContext, $remoteContexts = array()) {
         // Numbering as in draft https://w3c.github.io/json-ld-api/#algorithm on 2019-01-10
         // 1)
@@ -243,6 +250,15 @@ class JsonLdProcessor {
         return $result;
     }
 
+    /**
+     * 
+     * @param JsonLdContext $activeContext
+     * @param array $localContext
+     * @param string $term
+     * @param array $defined
+     * @throws \Exception
+     * @link https://w3c.github.io/json-ld-api/#create-term-definition
+     */
     protected function createTermDefinition(JsonLdContext $activeContext, $localContext, $term, &$defined) {
         // Numbering as in draft https://w3c.github.io/json-ld-api/#algorithm-0 on 2019-01-10 
         // 1)
@@ -526,6 +542,7 @@ class JsonLdProcessor {
      * @param array $localContext
      * @param array $defined
      * @return mixed
+     * @link https://w3c.github.io/json-ld-api/#iri-expansion
      */
     public function expandIRI(JsonLdContext $activeContext, $value, $documentRelative = false, $vocab = false, $localContext = null, $defined = null) {
         // Numbering as in draft https://w3c.github.io/json-ld-api/#algorithm-1 on 2019-01-10

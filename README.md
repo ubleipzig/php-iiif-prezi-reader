@@ -1,10 +1,10 @@
 # IIIF Manifest Reader for PHP
 
-Read IIIF Presentation API resources into PHP objects that offer some convenient data extraction methods.
+Read [IIIF](https://iiif.io/) Presentation API resources into PHP objects that offer some convenient data extraction methods.
 
 Requires at least PHP 5.6.
 
-IIIF Presentation API support is primarily implemented for version 2.1, with some rudimentary support for Presentation API 3.0 and Metadata API 1.0.
+IIIF Presentation API support is primarily implemented for version [2.1](https://iiif.io/api/presentation/2.1/), with some rudimentary support for [Presentation API 3.0](https://iiif.io/api/presentation/3.0/) and [Metadata API 1.0](https://iiif.io/api/metadata/1.0/).
 
 ## Where to start
 
