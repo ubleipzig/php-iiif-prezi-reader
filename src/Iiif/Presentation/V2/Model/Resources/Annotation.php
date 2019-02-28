@@ -112,6 +112,21 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
         return $this->resource;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface::getTargetResourceId()
+     */
+    public function getTargetResourceId() {
+        if ($this->on == null) {
+            // this should not happen with valid annotations
+            return null;
+        }
+        if ($this->on instanceof XYWHFragment && $this->on->getTargetObject() != null) {
+            return $this->on->getTargetObject()->getId();
+        } elseif ($this->on instanceof AbstractIiifResource2) {
+            return $this->on->getId();
+        }
+    }
 
 }
 

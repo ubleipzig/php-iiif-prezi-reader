@@ -105,6 +105,22 @@ class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
         }
         return null;
     }
+
+    /**
+     * {@inheritDoc}
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface::getTargetResourceId()
+     */
+    public function getTargetResourceId() {
+        if ($this->target == null) {
+            return null;
+        }
+        if ($this->target instanceof SpecificResource3 && $this->target->getSource() != null) {
+            return $this->target->getSource()->getId();
+        }
+        if ($this->target instanceof AbstractIiifResource3) {
+            return $this->target->getId();
+        }
+    }
     
 }
 

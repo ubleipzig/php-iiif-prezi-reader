@@ -80,6 +80,20 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
     public function getBody() {
         return $this->resource;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface::getTargetResourceId()
+     */
+    public function getTargetResourceId() {
+        if ($this->on == null) {
+            return null;
+        }
+        // TODO fragment identifiers
+        if ($this->on instanceof AbstractIiifResource1) {
+            return $this->on->getId();
+        }
+    }
+
 }
 
