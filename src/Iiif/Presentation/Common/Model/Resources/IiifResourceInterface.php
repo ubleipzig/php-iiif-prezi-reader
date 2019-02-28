@@ -135,5 +135,15 @@ interface IiifResourceInterface {
      * @return string A thumbnail URL for the resource.
      */
     public function getThumbnailUrl();
+
+    /**
+     * Extract data from json node by JsonPath expression
+     * 
+     * @param string $expression
+     * 
+     * @link https://goessner.net/articles/JsonPath/
+     */
+    public function jsonPath($expression);
+
 }
 
