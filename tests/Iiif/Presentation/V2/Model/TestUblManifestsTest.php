@@ -19,8 +19,8 @@
  */
 
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence2;
 use Ubl\Iiif\Tools\IiifHelper;
 
 class TestUblManifestsTest extends AbstractIiifTest
@@ -32,7 +32,7 @@ class TestUblManifestsTest extends AbstractIiifTest
         foreach (self::MANIFEST_EXAMPLES as $manifestFile)
         {
             $manifestAsJson=self::getFile($manifestFile);
-            Manifest::loadIiifResource($manifestAsJson, $manifestFile." did not load");
+            Manifest2::loadIiifResource($manifestAsJson, $manifestFile." did not load");
         }
     }
     
@@ -42,11 +42,11 @@ class TestUblManifestsTest extends AbstractIiifTest
         {
             $documentAsJson=self::getFile($manifestFile);
             $resource=IiifHelper::loadIiifResource($documentAsJson);
-            self::assertInstanceOf(Manifest::class, $resource, 'Not a manifest: '.$manifestFile);
+            self::assertInstanceOf(Manifest2::class, $resource, 'Not a manifest: '.$manifestFile);
             self::assertNotNull($resource->getSequences(), 'No sequences found: '.$manifestFile);
             self::assertNotEmpty($resource->getSequences(), 'Sequences empty: '.$manifestFile);
             self::assertNotNull($resource->getSequences()[0], 'First sequence not found: '.$manifestFile);
-            self::assertInstanceOf(Sequence::class, $resource->getSequences()[0], 'First sequence is not a sequence: '.$manifestFile);
+            self::assertInstanceOf(Sequence2::class, $resource->getSequences()[0], 'First sequence is not a sequence: '.$manifestFile);
         }
     }
 }

@@ -20,17 +20,16 @@
 
 namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationContainerInterface;
-use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
+use Ubl\Iiif\Tools\IiifHelper;
 
-class AnnotationList extends AbstractIiifResource2 implements AnnotationContainerInterface {
+class AnnotationList2 extends AbstractIiifResource2 implements AnnotationContainerInterface {
 
     const TYPE = "sc:AnnotationList";
 
     /**
      *
-     * @var Annotation[]
+     * @var Annotation2[]
      */
     protected $resources = array();
 
@@ -49,7 +48,7 @@ class AnnotationList extends AbstractIiifResource2 implements AnnotationContaine
 
     /**
      *
-     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\Annotation[]
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2[]
      */
     public function getResources() {
         if ($resources == null && ! $this->resourcesLoaded) {
@@ -77,7 +76,7 @@ class AnnotationList extends AbstractIiifResource2 implements AnnotationContaine
         $textAnnotations = [];
         foreach ($resources as $annotation) {
             if (($motivation == null || array_search($annotation->getMotivation(), $motivation) !== false) && $annotation->getResource()!=null 
-                && $annotation->getResource() instanceof ContentResource && $annotation->getResource()->getType()=="cnt:ContentAsText") {
+                && $annotation->getResource() instanceof ContentResource2 && $annotation->getResource()->getType()=="cnt:ContentAsText") {
                 $textAnnotations[] = $annotation;
             }
         }

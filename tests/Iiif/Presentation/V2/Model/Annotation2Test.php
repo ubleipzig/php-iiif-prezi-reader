@@ -20,24 +20,24 @@
 
 use Ubl\Iiif\AbstractIiifTest;
 use Ubl\Iiif\Presentation\V2\Model\Properties\XYWHFragment;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
-use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 
 /**
  * Annotation test case.
  */
-class AnnotationTest extends AbstractIiifTest {
+class Annotation2Test extends AbstractIiifTest {
 
     /**
-     * @var Annotation
+     * @var Annotation2
      */
     private $imageAnnotation;
     
     /**
-     * @var Annotation
+     * @var Annotation2
      */
     private $textAnnotation;
 
@@ -48,8 +48,8 @@ class AnnotationTest extends AbstractIiifTest {
         parent::setUp();
         $this->imageAnnotation = IiifHelper::loadIiifResource(parent::getFile("v2/annotation-image-example.json"));
         $this->textAnnotation = IiifHelper::loadIiifResource(parent::getFile("v2/annotation-text-example.json"));
-        self::assertInstanceOf(Annotation::class, $this->imageAnnotation);
-        self::assertInstanceOf(Annotation::class, $this->textAnnotation);
+        self::assertInstanceOf(Annotation2::class, $this->imageAnnotation);
+        self::assertInstanceOf(Annotation2::class, $this->textAnnotation);
     }
 
     /**
@@ -62,25 +62,25 @@ class AnnotationTest extends AbstractIiifTest {
     }
 
     /**
-     * Tests Annotation->getResource()
+     * Tests Annotation2->getResource()
      */
     public function testGetResource() {
         self::assertNotNull($this->imageAnnotation->getResource());
-        self::assertInstanceOf(ContentResource::class, $this->imageAnnotation->getResource());
+        self::assertInstanceOf(ContentResource2::class, $this->imageAnnotation->getResource());
         self::assertEquals("http://example.org/iiif/book1/res/page1.jpg", $this->imageAnnotation->getResource()->getId());
 
         self::assertNotNull($this->textAnnotation->getResource());
-        self::assertInstanceOf(ContentResource::class, $this->textAnnotation->getResource());
+        self::assertInstanceOf(ContentResource2::class, $this->textAnnotation->getResource());
         self::assertNull($this->textAnnotation->getResource()->getId());
     }
 
     /**
-     * Tests Annotation->getOn()
+     * Tests Annotation2->getOn()
      */
     public function testGetOn() {
         $imageOn = $this->imageAnnotation->getOn();
         self::assertNotNull($imageOn);
-        self::assertInstanceOf(Canvas::class, $imageOn);
+        self::assertInstanceOf(Canvas2::class, $imageOn);
         self::assertEquals("http://example.org/iiif/book1/canvas/p1", $imageOn->getId());
 
         $textOn = $this->textAnnotation->getOn();
@@ -91,7 +91,7 @@ class AnnotationTest extends AbstractIiifTest {
         self::assertEquals(500, $textOn->getWidth());
         self::assertEquals(25, $textOn->getHeight());
         self::assertNotNull($textOn->getTargetObject());
-        self::assertInstanceOf(Canvas::class, $textOn->getTargetObject());
+        self::assertInstanceOf(Canvas2::class, $textOn->getTargetObject());
         self::assertEquals("http://example.org/iiif/book1/canvas/p1", $textOn->getTargetObject()->getId());
         self::assertEquals("xywh=100,150,500,25", $textOn->getFragment());
         
@@ -99,7 +99,7 @@ class AnnotationTest extends AbstractIiifTest {
     }
 
     /**
-     * Tests Annotation->getMotivation()
+     * Tests Annotation2->getMotivation()
      */
     public function testGetMotivation() {
         self::assertNotNull($this->imageAnnotation);

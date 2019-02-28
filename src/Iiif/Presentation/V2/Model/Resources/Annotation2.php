@@ -24,7 +24,7 @@ use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface;
 use Ubl\Iiif\Presentation\V2\Model\Properties\XYWHFragment;
 use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 
-class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
+class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
 
     const TYPE = "oa:Annotation";
 
@@ -32,7 +32,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
     /**
      *
-     * @var ContentResource
+     * @var ContentResource2
      */
     protected $resource;
 
@@ -58,7 +58,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
     protected function getSpecialTreatmentValue($property, $value, $context) {
         if ($property == "on") {
             $dummyArray = [];
-            $possibleXYWHFragment = XYWHFragment::getFromURI($value, $dummyArray, Canvas::class);
+            $possibleXYWHFragment = XYWHFragment::getFromURI($value, $dummyArray, Canvas2::class);
             if ($possibleXYWHFragment != null) {
                 if (strpos($possibleXYWHFragment->getFragment(), "xywh")===0) {
                     return $possibleXYWHFragment;
@@ -72,7 +72,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
     /**
      *
-     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2
      */
     public function getResource() {
         return $this->resource;
@@ -80,7 +80,7 @@ class Annotation extends AbstractIiifResource2 implements AnnotationInterface {
 
     /**
      *
-     * @return XYWHFragment|Canvas
+     * @return XYWHFragment|Canvas2
      */
     public function getOn() {
         return $this->on;

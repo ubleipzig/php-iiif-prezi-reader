@@ -21,10 +21,10 @@
 use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation;
-use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2;
 use Ubl\Iiif\Services\ImageInformation2;
 
 /**
@@ -42,9 +42,9 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
         $doc = parent::getFile("v2/manifest-html-metadata.json");
         $manifest = IiifHelper::loadIiifResource($doc);
         
-        /* @var $manifest Manifest */
+        /* @var $manifest Manifest2 */
         
-        self::assertInstanceOf(Manifest::class, $manifest);
+        self::assertInstanceOf(Manifest2::class, $manifest);
         self::assertNotEmpty($manifest->getMetadataForDisplay());
         
         self::assertEquals("No HTML", $manifest->getMetadataForDisplay(null, "; ", 0)[0]["label"]);
@@ -94,7 +94,7 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
         
         $manifest = IiifHelper::loadIiifResource(self::getFile("v2/definition-order.json"));
         
-        self::assertInstanceOf(Manifest::class, $manifest);
+        self::assertInstanceOf(Manifest2::class, $manifest);
         self::assertEquals(6, count($manifest->getDefaultCanvases()));
         self::assertEquals(5, count($manifest->getStructures()));
         self::assertEquals(1, count($manifest->getRootRanges()));
@@ -106,23 +106,23 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
     public function testKeywordAliases() {
         $manifest = IiifHelper::loadIiifResource(self::getFile("common/manifest-with-keywordalias.json"));
         self::assertNotNull($manifest);
-        self::assertInstanceOf(Manifest::class, $manifest);
+        self::assertInstanceOf(Manifest2::class, $manifest);
 
         $canvases = $manifest->getDefaultCanvases();
         self::assertNotEmpty($canvases);
         foreach ($canvases as $canvas) {
             self::assertNotNull($canvas);
-            self::assertInstanceOf(Canvas::class, $canvas);
+            self::assertInstanceOf(Canvas2::class, $canvas);
             self::assertEquals(1, sizeof($canvas->getImageAnnotations()));
             
             $imageAnnotation = $canvas->getImageAnnotations()[0];
 
             self::assertNotNull($imageAnnotation);
-            self::assertInstanceOf(Annotation::class, $imageAnnotation);
+            self::assertInstanceOf(Annotation2::class, $imageAnnotation);
             self::assertNotEmpty($imageAnnotation->getId());
 
             self::assertNotNull($imageAnnotation->getBody());
-            self::assertInstanceOf(ContentResource::class, $imageAnnotation->getBody());
+            self::assertInstanceOf(ContentResource2::class, $imageAnnotation->getBody());
             self::assertNotEmpty($imageAnnotation->getBody()->getId());
             self::assertEquals("image/jpeg", $imageAnnotation->getBody()->getFormat());
 

@@ -20,22 +20,22 @@
 
 namespace Ubl\Iiif\Presentation\Common;
 
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Collection;
-use Ubl\Iiif\Presentation\V2\Model\Resources\AnnotationList;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Range;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Collection2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\AnnotationList2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Range2;
 use Ubl\Iiif\Presentation\V3\Model\Resources\Collection3;
 use Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3;
 use Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3;
 use Ubl\Iiif\Presentation\V3\Model\Resources\Range3;
 use Ubl\Iiif\Presentation\V3\Model\Resources\Annotation3;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2;
 use Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationPage3;
 use Ubl\Iiif\Presentation\V3\Model\Resources\AnnotationCollection3;
 use Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3;
-use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2;
 use Ubl\Iiif\Services\ImageInformation1;
 use Ubl\Iiif\Services\ImageInformation2;
 use Ubl\Iiif\Services\ImageInformation3;
@@ -68,12 +68,12 @@ class TypeMap {
         "http://www.shared-canvas.org/ns/AnnotationList" => AnnotationList1::class,
         "http://www.shared-canvas.org/ns/Range" => Range1::class,
         "http://www.shared-canvas.org/ns/Layer" => Layer1::class,
-        "http://iiif.io/api/presentation/2#Collection" => Collection::class,
-        "http://iiif.io/api/presentation/2#Manifest" => Manifest::class,
-        "http://iiif.io/api/presentation/2#Sequence" => Sequence::class,
-        "http://iiif.io/api/presentation/2#Canvas" => Canvas::class,
-        "http://iiif.io/api/presentation/2#AnnotationList" => AnnotationList::class,
-        "http://iiif.io/api/presentation/2#Range" => Range::class,
+        "http://iiif.io/api/presentation/2#Collection" => Collection2::class,
+        "http://iiif.io/api/presentation/2#Manifest" => Manifest2::class,
+        "http://iiif.io/api/presentation/2#Sequence" => Sequence2::class,
+        "http://iiif.io/api/presentation/2#Canvas" => Canvas2::class,
+        "http://iiif.io/api/presentation/2#AnnotationList" => AnnotationList2::class,
+        "http://iiif.io/api/presentation/2#Range" => Range2::class,
         "http://iiif.io/api/presentation/2#Layer" => null,
         "http://iiif.io/api/presentation/3#Collection" => Collection3::class,
         "http://iiif.io/api/presentation/3#Manifest" => Manifest3::class,
@@ -82,7 +82,7 @@ class TypeMap {
         "http://www.w3.org/ns/oa#Annotation" => [
             "http://www.shared-canvas.org/ns/context.json" => Annotation1::class,
             "http://iiif.io/api/presentation/1/context.json" => Annotation1::class,
-            "http://iiif.io/api/presentation/2/context.json" => Annotation::class,
+            "http://iiif.io/api/presentation/2/context.json" => Annotation2::class,
             "http://iiif.io/api/presentation/3/combined-context.json" => Annotation3::class,
             "http://iiif.io/api/presentation/3/context.json" => Annotation3::class,
             "http://www.w3.org/ns/anno.jsonld" => Annotation3::class
@@ -94,12 +94,12 @@ class TypeMap {
         "http://purl.org/dc/dcmitype/Image" => [
             "http://www.shared-canvas.org/ns/context.json" => ContentResource1::class,
             "http://iiif.io/api/presentation/1/context.json" => ContentResource1::class,
-            "http://iiif.io/api/presentation/2/context.json" => ContentResource::class,
+            "http://iiif.io/api/presentation/2/context.json" => ContentResource2::class,
         ],
         "http://www.w3.org/2011/content#ContentAsText" => [
             "http://www.shared-canvas.org/ns/context.json" => ContentResource1::class,
             "http://iiif.io/api/presentation/1/context.json" => ContentResource1::class,
-            "http://iiif.io/api/presentation/2/context.json" => ContentResource::class,
+            "http://iiif.io/api/presentation/2/context.json" => ContentResource2::class,
         ],
         "http://iiif.io/api/image/1/ImageService" => ImageInformation1::class,
         "http://iiif.io/api/image/2/ImageService" => ImageInformation2::class,

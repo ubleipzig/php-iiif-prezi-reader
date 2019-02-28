@@ -24,20 +24,20 @@ use Ubl\Iiif\Presentation\V2\Model\Properties\NavDateTrait;
 use Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface;
 use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
 
-class Collection extends AbstractIiifResource2 implements CollectionInterface {
+class Collection2 extends AbstractIiifResource2 implements CollectionInterface {
     use NavDateTrait;
 
     const TYPE = "sc:Collection";
 
     /**
      *
-     * @var Collection[]
+     * @var Collection2[]
      */
     protected $collections = array();
 
     /**
      *
-     * @var Manifest[]
+     * @var Manifest2[]
      */
     protected $manifests = array();
 

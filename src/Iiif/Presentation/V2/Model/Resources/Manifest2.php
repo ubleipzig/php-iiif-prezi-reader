@@ -25,7 +25,7 @@ use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingHintValues;
 use Ubl\Iiif\Presentation\V2\Model\Properties\NavDateTrait;
 use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
 
-class Manifest extends AbstractIiifResource2 implements ManifestInterface {
+class Manifest2 extends AbstractIiifResource2 implements ManifestInterface {
     use NavDateTrait;
     use ViewingDirectionTrait;
 
@@ -35,13 +35,13 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      *
-     * @var Sequence[]
+     * @var Sequence2[]
      */
     protected $sequences = array();
 
     /**
      *
-     * @var Range[]
+     * @var Range2[]
      */
     protected $structures = array();
 
@@ -49,7 +49,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
      * The top structures in the hierarchy.
      * Either a single range with the viewingHint property set to "top" or every range that is not contained in another range
      *
-     * @var Range[]
+     * @var Range2[]
      */
     protected $rootRanges;
 
@@ -68,7 +68,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      *
-     * @return Sequence[]:
+     * @return Sequence2[]:
      */
     public function getSequences() {
         return $this->sequences;
@@ -76,7 +76,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
 
     /**
      *
-     * @return multitype:\Ubl\Iiif\Model\Resources\Range
+     * @return Range2[]
      */
     public function getStructures() {
         return $this->structures;
@@ -85,7 +85,7 @@ class Manifest extends AbstractIiifResource2 implements ManifestInterface {
     /**
      * Top structure in hierarchy; either the Range marked with viewingHint=top or the one that is not part of another range
      *
-     * @return Range[]
+     * @return Range2[]
      */
     public function getRootRanges() {
         // TODO untested

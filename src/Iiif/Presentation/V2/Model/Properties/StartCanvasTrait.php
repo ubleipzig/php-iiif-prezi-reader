@@ -25,7 +25,7 @@ trait StartCanvasTrait {
 
     /**
      *
-     * @var \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas
+     * @var \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2
      */
     protected $startCanvas;
 

@@ -25,7 +25,7 @@ use Ubl\Iiif\Presentation\V2\Model\Properties\WidthAndHeightTrait;
 use Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface;
 use Ubl\Iiif\Tools\Options;
 
-class ContentResource extends AbstractIiifResource2 implements ContentResourceInterface {
+class ContentResource2 extends AbstractIiifResource2 implements ContentResourceInterface {
     use WidthAndHeightTrait;
 
     /**

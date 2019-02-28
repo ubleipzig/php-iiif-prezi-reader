@@ -60,15 +60,15 @@ require_once (__DIR__ . "/Presentation/V2/Model/Properties/ViewingDirectionTrait
 require_once (__DIR__ . "/Presentation/V2/Model/Properties/WidthAndHeightTrait.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Properties/XYWHFragment.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Resources/AbstractIiifResource2.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/Annotation.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/AnnotationList.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/Canvas.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/Collection.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/ContentResource.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/Layer.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/Manifest.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/Range.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Resources/Sequence.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/Annotation2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/AnnotationList2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/Canvas2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/Collection2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/ContentResource2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/Layer2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/Manifest2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/Range2.php");
+require_once (__DIR__ . "/Presentation/V2/Model/Resources/Sequence2.php");
 
 require_once (__DIR__ . "/Presentation/V3/Model/Constants/BehaviorValues.php");
 

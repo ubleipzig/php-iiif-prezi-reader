@@ -19,19 +19,19 @@
  */
 
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\AnnotationList;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
+use Ubl\Iiif\Presentation\V2\Model\Resources\AnnotationList2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
 use Ubl\Iiif\Tools\IiifHelper;
 
 /**
- * Canvas test case.
+ * Canvas2 test case.
  */
-class CanvasTest extends AbstractIiifTest
+class Canvas2Test extends AbstractIiifTest
 {
 
     /**
      *
-     * @var Canvas
+     * @var Canvas2
      */
     private $canvas;
     private $json;
@@ -40,23 +40,23 @@ class CanvasTest extends AbstractIiifTest
     {
         $this->json = parent::getFile('v2/canvas-example.json');
         $array = json_decode($this->json, true);
-        $this->canvas = Canvas::loadIiifResource($array);
+        $this->canvas = Canvas2::loadIiifResource($array);
     }
     
     
     /**
-     * Tests Canvas::fromArray()
+     * Tests Canvas2::fromArray()
      */
     public function testFromArray()
     {
         self::assertNotNull($this->canvas);
-        self::assertInstanceOf(Canvas::class, $this->canvas);
+        self::assertInstanceOf(Canvas2::class, $this->canvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p1", $this->canvas->getId());
         self::assertEquals("The label of the canvas", $this->canvas->getLabelForDisplay());
     }
 
     /**
-     * Tests Canvas->getImages()
+     * Tests Canvas2->getImages()
      */
     public function testGetImages()
     {
@@ -65,13 +65,13 @@ class CanvasTest extends AbstractIiifTest
     }
 
     /**
-     * Tests Canvas->getOtherContent()
+     * Tests Canvas2->getOtherContent()
      */
     public function testGetOtherContent()
     {
         self::assertNotNull($this->canvas->getOtherContent(), 'otherContent is null.');
         self::assertNotEmpty($this->canvas->getOtherContent(), 'otherContent is empty.');
-        self::assertInstanceOf(AnnotationList::class, $this->canvas->getOtherContent()[0], 'otherContent is not an AnnotationList array.');
+        self::assertInstanceOf(AnnotationList2::class, $this->canvas->getOtherContent()[0], 'otherContent is not an AnnotationList array.');
     }
     
     public function testGetHeight()

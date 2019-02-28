@@ -22,7 +22,7 @@ namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
 use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
 
-class Layer extends AbstractIiifResource2 {
+class Layer2 extends AbstractIiifResource2 {
     use ViewingDirectionTrait;
 
 }

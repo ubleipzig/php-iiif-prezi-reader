@@ -19,7 +19,7 @@
  */
 
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
 use Ubl\Iiif\Presentation\V2\Model\Resources\MockIiifResource;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Context\JsonLdHelper;
@@ -304,9 +304,9 @@ class AbstractIiifResource2Test extends AbstractIiifTest
     
     public function testJsonPath()
     {
-        $manifest = Manifest::loadIiifResource(parent::getFile('v2/manifest-0000006761.json'));
+        $manifest = Manifest2::loadIiifResource(parent::getFile('v2/manifest-0000006761.json'));
         
-        /* @var $manifest Manifest */
+        /* @var $manifest Manifest2 */
         
         self::assertNotNull($manifest);
         
@@ -429,8 +429,8 @@ class AbstractIiifResource2Test extends AbstractIiifTest
     public function testGetWeblinksForDisplay() {
         $manifest = IiifHelper::loadIiifResource(self::getFile("v2/manifest-data.json"));
         self::assertNotNull($manifest);
-        /* @var $manifest Manifest */
-        self::assertInstanceOf(Manifest::class, $manifest);
+        /* @var $manifest Manifest2 */
+        self::assertInstanceOf(Manifest2::class, $manifest);
         self::assertNotNull($manifest->getWeblinksForDisplay());
         self::assertTrue(is_array($manifest->getWeblinksForDisplay()));
         self::assertTrue(JsonLdHelper::isSimpleArray($manifest->getWeblinksForDisplay()));

@@ -1,24 +1,24 @@
 <?php
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Collection;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Collection2;
 use Ubl\Iiif\Tools\IiifHelper;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
 
 /**
- * Collection test case.
+ * Collection2 test case.
  */
-class CollectionTest extends AbstractIiifTest {
+class Collection2Test extends AbstractIiifTest {
 
     /**
-     * @var Collection
+     * @var Collection2
      */
     private $collection1;
     /**
-     * @var Collection
+     * @var Collection2
      */
     private $collection2;
     /**
-     * @var Collection
+     * @var Collection2
      */
     private $collection3;
     
@@ -32,21 +32,21 @@ class CollectionTest extends AbstractIiifTest {
     }
 
     /**
-     * Tests Collection->getContainedCollections()
+     * Tests Collection2->getContainedCollections()
      */
     public function testGetContainedCollections() {
         self::assertNotNull($this->collection1);
-        self::assertInstanceOf(Collection::class, $this->collection1);
+        self::assertInstanceOf(Collection2::class, $this->collection1);
         self::assertEquals("http://example.org/collection/collection1", $this->collection1->getId());
         self::assertEmpty($this->collection1->getContainedCollections());
         
         self::assertNotNull($this->collection2);
-        self::assertInstanceOf(Collection::class, $this->collection2);
+        self::assertInstanceOf(Collection2::class, $this->collection2);
         self::assertEquals("http://example.org/collection/collection2", $this->collection2->getId());
         self::assertEmpty($this->collection2->getContainedCollections());
         
         self::assertNotNull($this->collection3);
-        self::assertInstanceOf(Collection::class, $this->collection3);
+        self::assertInstanceOf(Collection2::class, $this->collection3);
         self::assertEquals("http://example.org/collection/collection3", $this->collection3->getId());
         self::assertNotEmpty($this->collection3->getContainedCollections());
         self::assertEquals(3, sizeof($this->collection3->getContainedCollections()));
@@ -71,21 +71,21 @@ class CollectionTest extends AbstractIiifTest {
     }
 
     /**
-     * Tests Collection->getContainedCollectionsAndManifests()
+     * Tests Collection2->getContainedCollectionsAndManifests()
      */
     public function testGetContainedCollectionsAndManifests() {
         self::assertNotNull($this->collection1);
-        self::assertInstanceOf(Collection::class, $this->collection1);
+        self::assertInstanceOf(Collection2::class, $this->collection1);
         self::assertEquals("http://example.org/collection/collection1", $this->collection1->getId());
         self::assertEmpty($this->collection1->getContainedCollectionsAndManifests());
         
         self::assertNotNull($this->collection2);
-        self::assertInstanceOf(Collection::class, $this->collection2);
+        self::assertInstanceOf(Collection2::class, $this->collection2);
         self::assertEquals("http://example.org/collection/collection2", $this->collection2->getId());
         self::assertEmpty($this->collection2->getContainedCollectionsAndManifests());
         
         self::assertNotNull($this->collection3);
-        self::assertInstanceOf(Collection::class, $this->collection3);
+        self::assertInstanceOf(Collection2::class, $this->collection3);
         self::assertEquals("http://example.org/collection/collection3", $this->collection3->getId());
         self::assertNotEmpty($this->collection3->getContainedCollectionsAndManifests());
         self::assertEquals(5, sizeof($this->collection3->getContainedCollectionsAndManifests()));
@@ -93,7 +93,7 @@ class CollectionTest extends AbstractIiifTest {
         foreach ($this->collection3->getContainedCollectionsAndManifests() as $member) {
             switch ($member->getId()) {
                 case "http://example.org/collection/subcollection1":
-                    self::assertInstanceOf(Collection::class, $member);
+                    self::assertInstanceOf(Collection2::class, $member);
                     self::assertNotEmpty($member->getContainedCollectionsAndManifests());
                     self::assertEquals(2, sizeof($member->getContainedCollectionsAndManifests()));
                     break;
@@ -107,7 +107,7 @@ class CollectionTest extends AbstractIiifTest {
                     break;
                 case "http://example.org/manifest/manifest5":
                 case "http://example.org/manifest/manifest6":
-                    self::assertInstanceOf(Manifest::class, $member);
+                    self::assertInstanceOf(Manifest2::class, $member);
                     break;
                 default:
                     self::fail("unexpected collection id ".$member->getId());
@@ -116,21 +116,21 @@ class CollectionTest extends AbstractIiifTest {
     }
 
     /**
-     * Tests Collection->getContainedManifests()
+     * Tests Collection2->getContainedManifests()
      */
     public function testGetContainedManifests() {
         self::assertNotNull($this->collection1);
-        self::assertInstanceOf(Collection::class, $this->collection1);
+        self::assertInstanceOf(Collection2::class, $this->collection1);
         self::assertEquals("http://example.org/collection/collection1", $this->collection1->getId());
         self::assertEmpty($this->collection1->getContainedManifests());
         
         self::assertNotNull($this->collection2);
-        self::assertInstanceOf(Collection::class, $this->collection2);
+        self::assertInstanceOf(Collection2::class, $this->collection2);
         self::assertEquals("http://example.org/collection/collection2", $this->collection2->getId());
         self::assertEmpty($this->collection2->getContainedManifests());
         
         self::assertNotNull($this->collection3);
-        self::assertInstanceOf(Collection::class, $this->collection3);
+        self::assertInstanceOf(Collection2::class, $this->collection3);
         self::assertEquals("http://example.org/collection/collection3", $this->collection3->getId());
         self::assertNotEmpty($this->collection3->getContainedManifests());
         self::assertEquals(2, sizeof($this->collection3->getContainedManifests()));

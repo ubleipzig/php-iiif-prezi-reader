@@ -25,7 +25,7 @@ use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
 use Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface;
 use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingHintValues;
 
-class Range extends AbstractIiifResource2 implements RangeInterface {
+class Range2 extends AbstractIiifResource2 implements RangeInterface {
     use ViewingDirectionTrait;
     use StartCanvasTrait;
 
@@ -33,19 +33,19 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      *
-     * @var Range[]
+     * @var Range2[]
      */
     protected $ranges = array();
 
     /**
      *
-     * @var Canvas[]
+     * @var Canvas2[]
      */
     protected $canvases = array();
 
     /**
      * 
-     * @var (Canvas|Range)[]
+     * @var (Canvas2|Range2)[]
      */
     protected $members = array();
 
@@ -65,15 +65,15 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     protected function getStringResources() {
         return [
-            "ranges" => Range::class,
-            "canvases" => Canvas::class,
-            "startCanvas" => Canvas::class
+            "ranges" => Range2::class,
+            "canvases" => Canvas2::class,
+            "startCanvas" => Canvas2::class
         ];
     }
 
     /**
      *
-     * @return multitype:\Ubl\Iiif\Model\Resources\Range
+     * @return Range2[]
      */
     public function getRanges() {
         return $this->ranges;
@@ -81,14 +81,14 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      *
-     * @return multitype:\Ubl\Iiif\Model\Resources\Canvas
+     * @return Canvas2[]
      */
     public function getCanvases() {
         return $this->canvases;
     }
 
     /**
-     * @return (Canvas|Range)[]
+     * @return (Canvas2|Range2)[]
      */
     public function getMembers() {
         return $this->members;
@@ -103,9 +103,9 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
             return $this->ranges[0]->getStartCanvasOrFirstCanvas();
         } elseif (isset($this->members) && sizeof($this->members) > 0) {
             foreach ($this->members as $member) {
-                if ($member instanceof Canvas) {
+                if ($member instanceof Canvas2) {
                     return $member;
-                } elseif ($member instanceof Range) {
+                } elseif ($member instanceof Range2) {
                     return $member->getStartCanvasOrFirstCanvas();
                 }
             }
@@ -115,7 +115,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
 
     /**
      * 
-     * @return Canvas[]
+     * @return Canvas2[]
      */
     public function getAllCanvasesRecursively() {
         $allCanvases = [];
@@ -128,10 +128,10 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
         }
         if (isset($this->members) && sizeof($this->members) > 0) {
             foreach ($this->members as $member) {
-                if ($member instanceof Canvas) {
+                if ($member instanceof Canvas2) {
                     $allCanvases[] = $member;
                 }
-                if ($member instanceof Range) {
+                if ($member instanceof Range2) {
                     $allCanvases = array_merge($allCanvases, $member->getAllCanvases());
                 }
             }
@@ -146,7 +146,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
         }
         if (!empty($this->members)) {
             foreach ($this->members as $member) {
-                if ($member instanceof Range) {
+                if ($member instanceof Range2) {
                     $result[] = $member;
                 }
             }
@@ -165,7 +165,7 @@ class Range extends AbstractIiifResource2 implements RangeInterface {
         }
         if (!empty($this->members)) {
             foreach ($this->members as $member) {
-                if ($member instanceof Canvas) {
+                if ($member instanceof Canvas2) {
                     $result[] = $canvas;
                 }
             }

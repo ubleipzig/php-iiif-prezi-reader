@@ -19,19 +19,19 @@
  */
 
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence2;
 
 /**
- * Sequence test case.
+ * Sequence2 test case.
  */
-class SequenceTest extends AbstractIiifTest
+class Sequence2Test extends AbstractIiifTest
 {
 
     /**
      *
-     * @var Sequence
+     * @var Sequence2
      */
     private $sequence;
 
@@ -43,7 +43,7 @@ class SequenceTest extends AbstractIiifTest
         parent::setUp();
         
         $this->json = parent::getFile('v2/manifest-example.json');
-        $this->sequence = Manifest::loadIiifResource($this->json)->getSequences()[0];
+        $this->sequence = Manifest2::loadIiifResource($this->json)->getSequences()[0];
     }
 
     /**
@@ -57,20 +57,20 @@ class SequenceTest extends AbstractIiifTest
     }
 
     /**
-     * Tests Sequence::fromArray()
+     * Tests Sequence2::fromArray()
      */
     public function testFromArray()
     {
         $json = parent::getFile('v2/sequence-example.json');
         $jsonAsArray = json_decode($json, true);
-        $sequence = Sequence::loadIiifResource($jsonAsArray);
+        $sequence = Sequence2::loadIiifResource($jsonAsArray);
         self::assertNotNull($sequence);
-        self::assertInstanceOf(Sequence::class, $sequence);
+        self::assertInstanceOf(Sequence2::class, $sequence);
         self::assertequals("http://example.org/iiif/book1/sequence/normal", $sequence->getId());
     }
 
     /**
-     * Tests Sequence->getCanvases()
+     * Tests Sequence2->getCanvases()
      */
     public function testGetCanvases()
     {
@@ -79,7 +79,7 @@ class SequenceTest extends AbstractIiifTest
         self::assertEquals(3, sizeof($canvases));
         foreach ($canvases as $canvas) {
             self::assertNotNull($canvas);
-            self::assertInstanceOf(Canvas::class, $canvas);
+            self::assertInstanceOf(Canvas2::class, $canvas);
         }
     }
     
@@ -91,14 +91,14 @@ class SequenceTest extends AbstractIiifTest
         $startCanvas = $this->sequence->getStartCanvas();
         self::assertNull($startCanvas);
 
-        $sequence = Sequence::loadIiifResource(parent::getFile('v2/sequence-example.json'));
+        $sequence = Sequence2::loadIiifResource(parent::getFile('v2/sequence-example.json'));
         $startCanvas = $sequence->getStartCanvas();
         self::assertNotNull($startCanvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p2", $startCanvas->getId());
     }
     
     /**
-     * Tests Sequence->getStartCanvasOrFirstCanvas()
+     * Tests Sequence2->getStartCanvasOrFirstCanvas()
      */
     public function testGetStartCanvasOrFirstCanvas()
     {
@@ -106,7 +106,7 @@ class SequenceTest extends AbstractIiifTest
         self::assertNotNull($startCanvasOrFirstCanvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p1", $startCanvasOrFirstCanvas->getId());
         
-        $sequence = Sequence::loadIiifResource(parent::getFile('v2/sequence-example.json'));
+        $sequence = Sequence2::loadIiifResource(parent::getFile('v2/sequence-example.json'));
         $startCanvasOrFirstCanvas = $sequence->getStartCanvasOrFirstCanvas();
         self::assertNotNull($startCanvasOrFirstCanvas);
         self::assertEquals("http://example.org/iiif/book1/canvas/p2", $startCanvasOrFirstCanvas->getId());

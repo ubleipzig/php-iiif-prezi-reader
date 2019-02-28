@@ -19,16 +19,16 @@
  */
 
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource;
+use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2;
 
 /**
  * ContentResource test case.
  */
-class ContentResourceTest extends AbstractIiifTest {
+class ContentResource2Test extends AbstractIiifTest {
 
     /**
      *
-     * @var ContentResource
+     * @var ContentResource2
      */
     private $contentResource;
 
@@ -38,46 +38,46 @@ class ContentResourceTest extends AbstractIiifTest {
     protected function setUp() {
         parent::setUp();
         
-        // TODO Auto-generated ContentResourceTest::setUp()
+        // TODO Auto-generated ContentResource2Test::setUp()
         
-        $this->contentResource = new ContentResource(/* parameters */);
+        $this->contentResource = new ContentResource2(/* parameters */);
     }
 
     /**
      * Cleans up the environment after running a test.
      */
     protected function tearDown() {
-        // TODO Auto-generated ContentResourceTest::tearDown()
+        // TODO Auto-generated ContentResource2Test::tearDown()
         $this->contentResource = null;
         
         parent::tearDown();
     }
 
     /**
-     * Tests ContentResource->getFormat()
+     * Tests ContentResource2->getFormat()
      */
     public function testGetFormat() {
-        // TODO Auto-generated ContentResourceTest->testGetFormat()
+        // TODO Auto-generated ContentResource2Test->testGetFormat()
         $this->markTestIncomplete("getFormat test not implemented");
         
         $this->contentResource->getFormat(/* parameters */);
     }
 
     /**
-     * Tests ContentResource->getChars()
+     * Tests ContentResource2->getChars()
      */
     public function testGetChars() {
-        // TODO Auto-generated ContentResourceTest->testGetChars()
+        // TODO Auto-generated ContentResource2Test->testGetChars()
         $this->markTestIncomplete("getChars test not implemented");
         
         $this->contentResource->getChars(/* parameters */);
     }
 
     /**
-     * Tests ContentResource->getImageUrl()
+     * Tests ContentResource2->getImageUrl()
      */
     public function testGetImageUrl() {
-        // TODO Auto-generated ContentResourceTest->testGetImageUrl()
+        // TODO Auto-generated ContentResource2Test->testGetImageUrl()
         $this->markTestIncomplete("getImageUrl test not implemented");
         
         $this->contentResource->getImageUrl(/* parameters */);

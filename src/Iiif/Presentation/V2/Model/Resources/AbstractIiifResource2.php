@@ -26,7 +26,6 @@ use Ubl\Iiif\Context\Keywords;
 use Ubl\Iiif\Presentation\Common\TypeMap;
 use Ubl\Iiif\Presentation\Common\Model\Resources\AbstractIiifResource;
 use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
-use Ubl\Iiif\Presentation\V2\Model\Vocabulary\Terms;
 use Ubl\Iiif\Services\AbstractImageService;
 use Ubl\Iiif\Services\Profile;
 use Ubl\Iiif\Services\Service;
@@ -60,7 +59,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @var ContentResource
+     * @var ContentResource2
      */
     protected $thumbnail;
 
@@ -147,7 +146,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
         if ($property = "service") {
             $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
             $clazz = null;
-            if ($this instanceof ContentResource && $context->expandIRI($this->getType()) == "http://purl.org/dc/dcmitype/Image") {
+            if ($this instanceof ContentResource2 && $context->expandIRI($this->getType()) == "http://purl.org/dc/dcmitype/Image") {
                 $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
                 if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeMap::SERVICE_TYPES_BY_CONTEXT)) {
                     $clazz = TypeMap::getClassForType(TypeMap::SERVICE_TYPES_BY_CONTEXT[$dictionary[$contextOrAlias]], $context);
@@ -251,7 +250,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
 
     /**
      *
-     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource
+     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2
      */
     public function getThumbnail() {
         return $this->thumbnail;
@@ -545,13 +544,13 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
             }
         }
         if (empty($renderingUrls) && $useChildResources) {
-            if ($this instanceof Manifest && !empty($this->getSequences())) {
+            if ($this instanceof Manifest2 && !empty($this->getSequences())) {
                 $renderingUrls = $this->getSequences()[0]->getRenderingUrlsForFormat($format);
             }
-            elseif ($this instanceof Canvas && !empty($this->getImages())) {
+            elseif ($this instanceof Canvas2 && !empty($this->getImages())) {
                 $renderingUrls = $this->getImages()[0]->getRenderingUrlsForFormat($format);
             }
-            elseif ($this instanceof Annotation && $this->getResource()!=null && $this->getResource() instanceof ContentResource) {
+            elseif ($this instanceof Annotation2 && $this->getResource()!=null && $this->getResource() instanceof ContentResource2) {
                 $renderingUrls = $this->getResource()->getRenderingUrlsForFormat($format);
             }
         }
@@ -611,7 +610,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
             $width = null;
             $height = null;
             $simpleUrl = null;
-            if ($thumbnail instanceof ContentResource) {
+            if ($thumbnail instanceof ContentResource2) {
                 $imageService = $thumbnail->getService();
                 $width = $thumbnail->getWidth();
                 $height = $thumbnail->getHeight();

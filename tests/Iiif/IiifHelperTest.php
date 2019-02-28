@@ -20,7 +20,7 @@
 
 use Ubl\Iiif\AbstractIiifTest;
 use Ubl\Iiif\Tools\IiifHelper;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
 use Ubl\Iiif\Tools\Options;
 use Ubl\Iiif\DummyUrlReader;
 
@@ -46,7 +46,7 @@ class IiifHelperTest extends AbstractIiifTest {
     public function testLoadIiifResource() {
         $notNullResult = IiifHelper::loadIiifResource(self::getFile("v2/empty-manifest.json"));
         self::assertNotNull($notNullResult);
-        self::assertInstanceOf(Manifest::class, $notNullResult);
+        self::assertInstanceOf(Manifest2::class, $notNullResult);
         
         $nullResult = IiifHelper::loadIiifResource(null);
         self::assertNull($nullResult);
@@ -81,7 +81,7 @@ class IiifHelperTest extends AbstractIiifTest {
         
         $iiif = IiifHelper::loadIiifResource($this->example);
         self::assertNotNull($iiif);
-        self::assertInstanceOf(Manifest::class, $iiif);
+        self::assertInstanceOf(Manifest2::class, $iiif);
         self::assertEquals($this->example, $iiif->getId());
         
         IiifHelper::setUrlReader(null);

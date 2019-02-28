@@ -23,20 +23,20 @@ namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 use Ubl\Iiif\Presentation\V2\Model\Properties\WidthAndHeightTrait;
 use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
 
-class Canvas extends AbstractIiifResource2 implements CanvasInterface {
+class Canvas2 extends AbstractIiifResource2 implements CanvasInterface {
     use WidthAndHeightTrait;
 
     const TYPE = "sc:Canvas";
 
     /**
      *
-     * @var Annotation[]
+     * @var Annotation2[]
      */
     protected $images = array();
 
     /**
      *
-     * @var AnnotationList[]
+     * @var AnnotationList2[]
      */
     protected $otherContent = array();
 
@@ -56,7 +56,7 @@ class Canvas extends AbstractIiifResource2 implements CanvasInterface {
 
     /**
      *
-     * @return Annotation[]:
+     * @return Annotation2[]:
      */
     public function getImages() {
         return $this->images;
@@ -64,7 +64,7 @@ class Canvas extends AbstractIiifResource2 implements CanvasInterface {
 
     /**
      *
-     * @return AnnotationList[]:
+     * @return AnnotationList2[]:
      */
     public function getOtherContent() {
         return $this->otherContent;

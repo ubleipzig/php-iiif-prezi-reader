@@ -23,7 +23,7 @@ namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 use Ubl\Iiif\Presentation\V2\Model\Properties\ViewingDirectionTrait;
 use Ubl\Iiif\Presentation\V2\Model\Properties\StartCanvasTrait;
 
-class Sequence extends AbstractIiifResource2 {
+class Sequence2 extends AbstractIiifResource2 {
     use ViewingDirectionTrait;
     use StartCanvasTrait;
 
@@ -31,7 +31,7 @@ class Sequence extends AbstractIiifResource2 {
 
     /**
      *
-     * @var Canvas[]
+     * @var Canvas2[]
      */
     protected $canvases = array();
 
@@ -54,13 +54,13 @@ class Sequence extends AbstractIiifResource2 {
      */
     protected function getStringResources() {
         return [
-            "startCanvas" => Canvas::class
+            "startCanvas" => Canvas2::class
         ];
     }
 
     /**
      *
-     * @return Canvas[]
+     * @return Canvas2[]
      */
     public function getCanvases() {
         return $this->canvases;

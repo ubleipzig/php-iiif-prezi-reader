@@ -20,20 +20,20 @@
 
 use Ubl\Iiif\AbstractIiifTest;
 use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingDirectionValues;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Range;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Range2;
+use Ubl\Iiif\Presentation\V2\Model\Resources\Sequence2;
 use Ubl\Iiif\Tools\IiifHelper;
 
 /**
- * Manifest test case.
+ * Manifest2 test case.
  */
-class ManifestTest extends AbstractIiifTest
+class Manifest2Test extends AbstractIiifTest
 {
 
     /**
      *
-     * @var Manifest
+     * @var Manifest2
      */
     private $manifest;
     private $json;
@@ -44,7 +44,7 @@ class ManifestTest extends AbstractIiifTest
     protected function setUp()
     {
         $this->json = parent::getFile('v2/manifest-example.json');
-        $this->manifest = Manifest::loadIiifResource($this->json);
+        $this->manifest = Manifest2::loadIiifResource($this->json);
     }
 
     /**
@@ -58,18 +58,18 @@ class ManifestTest extends AbstractIiifTest
     }
 
     /**
-     * Tests Manifest::fromArray()
+     * Tests Manifest2::fromArray()
      */
     public function testFromArray()
     {
         $jsonAsArray = json_decode($this->json, true);
-        $manifest = Manifest::loadIiifResource($jsonAsArray);
+        $manifest = Manifest2::loadIiifResource($jsonAsArray);
         self::assertNotNull($manifest);
         self::assertEquals("http://example.org/iiif/book1/manifest", $manifest->getId());
     }
 
     /**
-     * Tests Manifest->getSequences()
+     * Tests Manifest2->getSequences()
      */
     public function testGetSequences()
     {
@@ -78,12 +78,12 @@ class ManifestTest extends AbstractIiifTest
         self::assertTrue(is_array($sequences));
         self::assertEquals(1, sizeOf($sequences));
         self::assertNotNull($sequences[0]);
-        self::assertInstanceOf(Sequence::class, $sequences[0]);
+        self::assertInstanceOf(Sequence2::class, $sequences[0]);
         self::assertEquals("http://example.org/iiif/book1/sequence/normal", $sequences[0]->getId());
     }
 
     /**
-     * Tests Manifest->getStructures()
+     * Tests Manifest2->getStructures()
      */
     public function testGetStructures()
     {
@@ -92,7 +92,7 @@ class ManifestTest extends AbstractIiifTest
         self::assertTrue(is_array($structures));
         self::assertEquals(1, sizeOf($structures));
         self::assertNotNull($structures[0]);
-        self::assertInstanceOf(Range::class, $structures[0]);
+        self::assertInstanceOf(Range2::class, $structures[0]);
     }
     
     public function testGetSeeAlso() {
@@ -104,7 +104,7 @@ class ManifestTest extends AbstractIiifTest
     }
 
     /**
-     * Tests Manifest->getContainedResourceById()
+     * Tests Manifest2->getContainedResourceById()
      */
     public function testGetContainedResourceById()
     {
@@ -113,7 +113,7 @@ class ManifestTest extends AbstractIiifTest
         
         $defaultSequence = $this->manifest->getSequences()[0];
         self::assertNotNull($defaultSequence);
-        /* @var $defaultSequence Sequence */
+        /* @var $defaultSequence Sequence2 */
         
         self::assertEquals($defaultSequence->getId(), $containedSequence->getId());
         self::assertEquals(ViewingDirectionValues::LEFT_TO_RIGHT, $defaultSequence->getViewingDirection());
@@ -161,7 +161,7 @@ class ManifestTest extends AbstractIiifTest
     public function testEmptyManifest()
     {
         $json = parent::getFile('v2/empty-manifest.json');
-        $manifest = Manifest::loadIiifResource($json);
+        $manifest = Manifest2::loadIiifResource($json);
         
     }
     public function testDynamicProperties() {
