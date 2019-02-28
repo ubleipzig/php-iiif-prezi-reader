@@ -24,10 +24,13 @@ namespace Ubl\Iiif\Presentation\Common\Model\Resources;
 interface AnnotationContainerInterface extends IiifResourceInterface {
     
     /**
-     * @param $motivation string The name of an instance of https://www.w3.org/ns/oa#Motivation,
-     * usually "painting", respectively "sc:painting", or "oa:commenting".
+     * @param $motivation array The names or IRIs of an instance of https://www.w3.org/ns/oa#Motivation,
+     * e.g. ["painting", "sc:painting"] or ["oa:commenting"]. Use class constants of Ubl\Iiif\Presentation\Common\Vocabulary\Motivation
+     * like Motivation::PAINTING to get Annotations of the same motivation across different versions.
+     *  
      * @return AnnotationInterface[] All text annotations with the given $motivation,
      * or all text annotations if $motivation is null.
+     * 
      * @link https://www.w3.org/TR/annotation-vocab/#motivation
      * 
      */

@@ -22,6 +22,7 @@ namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationContainerInterface;
+use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 
 class AnnotationList extends AbstractIiifResource2 implements AnnotationContainerInterface {
 
@@ -75,7 +76,7 @@ class AnnotationList extends AbstractIiifResource2 implements AnnotationContaine
         $resources = $this->getResources();
         $textAnnotations = [];
         foreach ($resources as $annotation) {
-            if ($annotation->getMotivation() == "sc:painting" && $annotation->getResource()!=null 
+            if (($motivation == null || array_search($annotation->getMotivation(), $motivation) !== false) && $annotation->getResource()!=null 
                 && $annotation->getResource() instanceof ContentResource && $annotation->getResource()->getType()=="cnt:ContentAsText") {
                 $textAnnotations[] = $annotation;
             }
