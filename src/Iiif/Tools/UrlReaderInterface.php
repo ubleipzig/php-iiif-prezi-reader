@@ -21,6 +21,12 @@
 namespace Ubl\Iiif\Tools;
 
 interface UrlReaderInterface {
+
+    /**
+     * @param string  $url Requested URL
+     * @return string The content of the file at $url or null.
+     */
     public function getContent($url);
+
 }
 
