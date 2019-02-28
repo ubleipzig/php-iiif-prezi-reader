@@ -20,8 +20,6 @@
 
 namespace Ubl\Iiif\Presentation\V2\Model\Properties;
 
-use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
-
 class XYWHFragment {
 
     /**
@@ -58,7 +56,7 @@ class XYWHFragment {
     protected $targetUri;
 
     /**
-     * @var Canvas2
+     * @var \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2
      */
     protected $targetObject;
 

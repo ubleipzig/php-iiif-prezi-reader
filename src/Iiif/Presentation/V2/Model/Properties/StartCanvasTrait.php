@@ -20,7 +20,6 @@
 
 namespace Ubl\Iiif\Presentation\V2\Model\Properties;
 
-
 trait StartCanvasTrait {
 
     /**
