@@ -26,8 +26,6 @@ use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
 class Canvas2 extends AbstractIiifResource2 implements CanvasInterface {
     use WidthAndHeightTrait;
 
-    const TYPE = "sc:Canvas";
-
     /**
      *
      * @var Annotation2[]

@@ -25,8 +25,6 @@ use Ubl\Iiif\Tools\IiifHelper;
 
 class AnnotationList2 extends AbstractIiifResource2 implements AnnotationContainerInterface {
 
-    const TYPE = "sc:AnnotationList";
-
     /**
      *
      * @var Annotation2[]

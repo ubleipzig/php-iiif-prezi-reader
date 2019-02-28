@@ -27,8 +27,6 @@ class Sequence2 extends AbstractIiifResource2 {
     use ViewingDirectionTrait;
     use StartCanvasTrait;
 
-    const TYPE = "sc:Sequence";
-
     /**
      *
      * @var Canvas2[]

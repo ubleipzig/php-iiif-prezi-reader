@@ -31,8 +31,6 @@ class Manifest2 extends AbstractIiifResource2 implements ManifestInterface {
 
     const CONTEXT = "http://iiif.io/api/presentation/2/context.json";
 
-    const TYPE = "sc:Manifest";
-
     /**
      *
      * @var Sequence2[]

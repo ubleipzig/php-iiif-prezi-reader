@@ -27,8 +27,6 @@ use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
 class Collection2 extends AbstractIiifResource2 implements CollectionInterface {
     use NavDateTrait;
 
-    const TYPE = "sc:Collection";
-
     /**
      *
      * @var Collection2[]

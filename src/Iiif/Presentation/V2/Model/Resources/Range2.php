@@ -29,8 +29,6 @@ class Range2 extends AbstractIiifResource2 implements RangeInterface {
     use ViewingDirectionTrait;
     use StartCanvasTrait;
 
-    const TYPE = "sc:Range";
-
     /**
      *
      * @var Range2[]

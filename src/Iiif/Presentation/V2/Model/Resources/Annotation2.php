@@ -26,8 +26,6 @@ use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 
 class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
 
-    const TYPE = "oa:Annotation";
-
     protected $motivation;
 
     /**
