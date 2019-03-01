@@ -139,8 +139,8 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getLabelForDisplay()
      */
-    public function getLabelForDisplay($language = null, $joinChar = "; ") {
-        return $this->getValueForDisplay($this->label, $language, $joinChar);
+    public function getLabelForDisplay($language = null, $joinChars = "; ") {
+        return $this->getValueForDisplay($this->label, $language, $joinChars);
     }
 
     /**

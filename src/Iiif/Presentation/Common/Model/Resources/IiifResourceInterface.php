@@ -48,10 +48,10 @@ interface IiifResourceInterface {
     /**
      * 
      * @param string $language Language code. If none is given, "@none" will be used. 
-     * @param string $joinChar Used to join multi value labels. If set to null, array will be returned.
+     * @param string $joinChars Used to join multi value labels. If set to null, array will be returned.
      * @return string|string[]
      */
-    public function getLabelForDisplay($language = null, $joinChar = "; ");
+    public function getLabelForDisplay($language = null, $joinChars = "; ");
     
     /**
      * @return string|array
