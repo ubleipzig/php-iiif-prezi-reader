@@ -87,7 +87,7 @@ class Canvas1 extends AbstractDescribableResource1 implements CanvasInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPossibleTextAnnotationContainers()
      */
-    public function getPossibleTextAnnotationContainers() {
+    public function getPossibleTextAnnotationContainers($motivation = null) {
         return $this->otherContent;
     }
     /**

@@ -30,7 +30,7 @@ interface CanvasInterface extends IiifResourceInterface {
     /**
      * @return AnnotationContainerInterface[]
      */
-    public function getPossibleTextAnnotationContainers();
+    public function getPossibleTextAnnotationContainers($motivation = null);
     
     /**
      * @return int

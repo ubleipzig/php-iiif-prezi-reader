@@ -22,6 +22,7 @@ namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
 use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
 use Ubl\Iiif\Presentation\V3\Model\Properties\PlaceholderAndAccompanyingCanvasTrait;
+use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 
 class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
 
@@ -163,9 +164,20 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPossibleTextAnnotationContainers()
      */
-    public function getPossibleTextAnnotationContainers() {
-        // TODO Auto-generated method stub
-        
+    public function getPossibleTextAnnotationContainers($motivation = null) {
+        if ($motivation == null) {
+            $result = [];
+            if (!empty($this->items)) {
+                $result = array_merge($result, $this->items);
+            }
+            if (!empty($this->annotations)) {
+                $result = array_merge($result, $this->annotations);
+            }
+            return $result;
+        } else if ($motivation == Motivation::PAINTING) {
+            return $this->items;
+        }
+        return $this->annotations;
     }
 
 }
