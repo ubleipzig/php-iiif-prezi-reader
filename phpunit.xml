@@ -6,6 +6,7 @@
             <directory>./tests/Iiif/Context</directory>
             <directory>./tests/Iiif/Presentation/Common/Model</directory>
             <directory>./tests/Iiif/Presentation/V1/Model</directory>
+            <directory>./tests/Iiif/Presentation/V2</directory>
             <directory>./tests/Iiif/Presentation/V2/Model</directory>
             <directory>./tests/Iiif/Presentation/V3/Model/Resources</directory>
             <directory>./tests/Iiif/Services</directory>
