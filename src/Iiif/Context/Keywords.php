@@ -50,6 +50,8 @@ class Keywords {
     const NONE = "@none";
 
     const PREFIX = "@prefix";
+    
+    const PROTECTED_ = "@protected";
 
     const REVERSE = "@reverse";
 
@@ -75,6 +77,7 @@ class Keywords {
         self::NEST,
         self::NONE,
         self::PREFIX,
+        self::PROTECTED_,
         self::REVERSE,
         self::SET,
         self::TYPE,

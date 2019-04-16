@@ -40,7 +40,17 @@ class TermDefinition {
      * @var boolean
      */
     protected $prefix;
+    
+    /**
+     * @var boolean
+     */
+    protected $protected_;
 
+    /**
+     * @var string
+     */
+    protected $indexMapping;
+    
     /**
      * @var string
      */
@@ -93,6 +103,20 @@ class TermDefinition {
      */
     public function getLocalContext() {
         return $this->localContext;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIndexMapping() {
+        return $this->indexMapping;
+    }
+
+    /**
+     * @param string $indexMapping
+     */
+    public function setIndexMapping($indexMapping) {
+        $this->indexMapping = $indexMapping;
     }
 
     /**
@@ -213,6 +237,20 @@ class TermDefinition {
      */
     public function setPrefix($prefix) {
         $this->prefix = $prefix;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getProtected_() {
+        return $this->protected_;
+    }
+
+    /**
+     * @param boolean $protected_
+     */
+    public function setProtected_($protected_) {
+        $this->protected_ = $protected_;
     }
 
     public function hasSetContainer() {
