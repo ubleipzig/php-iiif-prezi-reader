@@ -58,7 +58,7 @@ class AnnotationList2 extends AbstractIiifResource2 implements AnnotationContain
             
             $this->resources = $remoteAnnotationList->getResources();
             
-            // TODO register resources in manifest (i.e. replace $dummy with actual resources array somehow)
+            // TODO register resources in manifest
             
             $this->resourcesLoaded = true;
         }

@@ -193,7 +193,7 @@ abstract class AbstractIiifEntity {
             }
             /* @var $resource \AbstractIiifEntity; */
             if (! $resource->initialized || sizeof(array_diff(array_keys($dictionary), [
-                // FIXME The existance of a keyword alias does not rule out the use of a keyword.
+                // FIXME The existence of a keyword alias does not rule out the use of a keyword.
                 $typeOrAlias,
                 $idOrAlias
             ])) > 0) {
