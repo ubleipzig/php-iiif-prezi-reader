@@ -23,7 +23,7 @@ namespace Ubl\Iiif\Presentation\Common\Model\Resources;
 interface ManifestInterface extends IiifResourceInterface {
     
     /**
-     * version 2: canvases of default sequence
+     * versions 1, 2: canvases of default sequence
      * version 3: items of the first range with "sequence" behaviour; otherwise items of manifest 
      * @return CanvasInterface[]
      */
