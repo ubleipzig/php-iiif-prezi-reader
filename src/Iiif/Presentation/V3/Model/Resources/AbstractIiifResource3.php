@@ -27,6 +27,7 @@ use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Services\AbstractImageService;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Tools\Options;
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 
 abstract class AbstractIiifResource3 extends AbstractIiifResource implements IiifResourceInterface {
 
@@ -280,6 +281,10 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
         return $this->service;
     }
 
+    public function getServiceIterator() {
+        return new LazyLoadingIterator($this, "service");
+    }
+    
     /**
      *
      * @return multitype:\Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3
@@ -468,4 +473,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
         
     }
 
+    protected function getEmbeddedProperties() {
+        return ['id', '@context', 'profile', 'type', 'label'];;
+    }
 }

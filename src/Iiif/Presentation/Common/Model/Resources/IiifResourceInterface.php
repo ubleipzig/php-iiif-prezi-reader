@@ -119,9 +119,19 @@ interface IiifResourceInterface {
     public function getService();
     
     /**
-     * @return Service The first service.
+     * @return \Iterator
+     */
+    public function getServiceIterator();
+    
+    /**
+     * @return Service The first service, either linked or embedded.
      */
     public function getSingleService();
+    
+    /**
+     * @return Service The first service, either lazy loeded if linked, or embedded.
+     */
+    public function getLazyLoadedSingleService();
     
     /**
      * @return string|array Any number of URLs representing a rendered version of the current resource, e.g. a PDF, HTML doc etc,
@@ -144,6 +154,11 @@ interface IiifResourceInterface {
      * @link https://goessner.net/articles/JsonPath/
      */
     public function jsonPath($expression);
+    
+    /**
+     * @return boolean The IIIF resource is only linked
+     */
+    public function isLinkedResource();
 
 }
 

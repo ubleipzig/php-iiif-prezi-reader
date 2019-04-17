@@ -68,6 +68,19 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
             return $result;
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getLazyLoadedSingleService()
+     */
+    public function getLazyLoadedSingleService() {
+        $serviceIterator = $this->getServiceIterator();
+        $serviceIterator->rewind();
+        return $serviceIterator->valid() ? $serviceIterator->current() : null;
+    }
 
+    protected function getEmbeddedProperties() {
+        return ['@id', '@context', 'profile', '@type', 'label'];
+    }
 }
 

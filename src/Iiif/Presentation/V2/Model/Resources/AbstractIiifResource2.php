@@ -31,6 +31,7 @@ use Ubl\Iiif\Services\Profile;
 use Ubl\Iiif\Services\Service;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Tools\Options;
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -246,6 +247,10 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      */
     public function getService() {
         return $this->service;
+    }
+
+    public function getServiceIterator() {
+        return new LazyLoadingIterator($this, "service");
     }
 
     /**

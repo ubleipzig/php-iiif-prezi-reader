@@ -26,6 +26,7 @@ use Ubl\Iiif\Presentation\Common\Model\Resources\AbstractIiifResource;
 use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Presentation\Common\TypeMap;
 use Ubl\Iiif\Services\Service;
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 
 abstract class AbstractIiifResource1 extends AbstractIiifResource implements IiifResourceInterface {
 
@@ -276,6 +277,10 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
         return $this->service;
     }
 
+    public function getServiceIterator() {
+        return new LazyLoadingIterator($this, "service");
+    }
+    
     /**
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getSingleService()

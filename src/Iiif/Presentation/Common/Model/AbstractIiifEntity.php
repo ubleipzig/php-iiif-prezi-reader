@@ -509,6 +509,22 @@ abstract class AbstractIiifEntity {
     protected function executeAfterLoading() {
         // Do nothing
     }
+
+    protected function loadLazy() {
+        if ($this->isLinkedResource()) {
+            // TODO load lazy
+        }
+    }
     
+    public function isLinkedResource() {
+        $embeddedProperties = $this->getEmbeddedProperties();
+        foreach ($this->originalJsonArray as $key => $value) {
+            if (array_search($key, $embeddedProperties) != false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 
