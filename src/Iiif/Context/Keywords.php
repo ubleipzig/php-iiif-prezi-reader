@@ -39,7 +39,11 @@ class Keywords {
 
     const ID = "@id";
 
+    const IMPORT = "@import";
+
     const INDEX = "@index";
+
+    const JSON = "@json";
 
     const LANGUAGE = "@language";
 
@@ -52,6 +56,8 @@ class Keywords {
     const PREFIX = "@prefix";
     
     const PROTECTED_ = "@protected";
+    
+    const PROPAGATE = "@propagate";
 
     const REVERSE = "@reverse";
 
@@ -71,6 +77,7 @@ class Keywords {
         self::CONTEXT,
         self::GRAPH,
         self::ID,
+        self::IMPORT,
         self::INDEX,
         self::LANGUAGE,
         self::LIST_,
@@ -78,6 +85,7 @@ class Keywords {
         self::NONE,
         self::PREFIX,
         self::PROTECTED_,
+        self::PROPAGATE,
         self::REVERSE,
         self::SET,
         self::TYPE,

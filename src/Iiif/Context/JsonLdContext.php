@@ -35,18 +35,24 @@ class JsonLdContext {
 
     protected $baseIri = "";
 
+    /**
+     * 
+     * @var TermDefinition[]
+     */
     protected $termDefinitions = array();
 
     protected $vocabularyMapping;
 
     protected $defaultLanguage;
-
+    
     /**
      * Containes any terms that expand to json-ld keywords
      *
      * @var array
      */
     protected $keywordAliases = array();
+
+    protected $previous;
 
     /**
      * 
@@ -159,7 +165,30 @@ class JsonLdContext {
     public function setContextIri($contextIri) {
         $this->contextIri = $contextIri;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPrevious() {
+        return $this->previous;
+    }
+
+    /**
+     * @param mixed $previous
+     */
+    public function setPrevious($previous) {
+        $this->previous = $previous;
+    }
     
+    public function containsProtectedTermDefinitions() {
+        foreach ($this->termDefinitions as $termDefinition) {
+            if ($termDefinition->getProtected_()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function __construct(JsonLdProcessor $processor) {
         $this->processor = $processor;
     }

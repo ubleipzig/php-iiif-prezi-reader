@@ -68,7 +68,7 @@ class JsonLdProcessor {
 
     protected $knownContexts;
     
-    protected $recursionLimit;
+    protected $contextLimit;
 
     /**
      * 
@@ -77,10 +77,10 @@ class JsonLdProcessor {
      * @param number $recursionLimit Maximum number of recursive context inclusions before 'context overflow' error is thrown.
      * See https://w3c.github.io/json-ld-api/#dom-jsonlderrorcode-context-overflow
      */
-    public function __construct($requestknownContexts = false, $recursionLimit = 10) {
+    public function __construct($requestknownContexts = false, $recursionLimit = 100) {
         $this->dereferencedContexts = array();
         $this->knownContexts = array();
-        $this->recursionLimit = $recursionLimit;
+        $this->contextLimit = $recursionLimit;
         if (! $requestknownContexts) {
             $this->knownContexts["http://www.w3.org/ns/anno.jsonld"] = __DIR__ . "/../../../resources/contexts/annotation/annotation-context.json";
             $this->knownContexts["http://www.shared-canvas.org/ns/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-1.json";
@@ -115,47 +115,67 @@ class JsonLdProcessor {
      * @param string|array $localContext
      * @param JsonLdContext $activeContext
      * @param array $remoteContexts
+     * @param boolean $overrideProtected
+     * @param boolean $propagate
      * @throws \Exception
      * @return \Ubl\Iiif\Context\JsonLdContext
      * @link https://w3c.github.io/json-ld-api/#context-processing-algorithm
      */
-    public function processContext($localContext, JsonLdContext $activeContext, $remoteContexts = array()) {
-        // Numbering as in draft https://w3c.github.io/json-ld-api/#algorithm on 2019-04-16
+    public function processContext($localContext, JsonLdContext $activeContext, $remoteContexts = array(), $overrideProtected = false, $propagate = true) {
+        // Numbering as in draft https://w3c.github.io/json-ld-api/#algorithm on 2019-07-17
         // 1)
         $result = clone $activeContext;
         // 2)
+        if (JsonLdHelper::isDictionary($localContext) && array_key_exists(Keywords::PROPAGATE, $localContext) !== false) {
+            $propagate = $localContext[Keywords::PROPAGATE];
+        }
+        // 3)
+        if ($propagate === false && $result->getPrevious() == null) {
+            $result->setPrevious($activeContext);
+        }
+        // 4)
         if (!JsonLdHelper::isSimpleArray($localContext)) {
             $localContext = [
                 $localContext
             ];
         }
-        // 3)
+        // 5)
         foreach ($localContext as $context) {
-            // 3.1)
+            // 5.1)
             if ($context == null) {
+                // 5.1.1)
+                if (!$overrideProtected && $activeContext->containsProtectedTermDefinitions()) {
+                    throw new \Exception('Invalid context nullification');
+                }
+                // 5.1.2)
+                $previousResult = $result;
                 $result = new JsonLdContext($this);
+                if (!$propagate) {
+                    $result->setPrevious($previousResult);
+                }
                 // TODO handle base iri
                 continue;
             }
-            // 3.2)
+            // 5.2)
             if (is_string($context)) {
                 // TODO establish baseIRI
-                // 3.2.1)
+                // 5.2.1)
                 $context = IRI::resolveAbsoluteIri($activeContext->getBaseIri(), $context);
-                // 3.2.2)
-                if (is_array($remoteContexts) && sizeof($remoteContexts) > $this->recursionLimit) {
-                    throw new \Exception('Context overflow befor adding ' + $context);
+                // 5.2.2)
+                if (is_array($remoteContexts) && sizeof($remoteContexts) > $this->contextLimit) {
+                    throw new \Exception('Context overflow before adding ' + $context);
                 } else {
                     // setting context IRI is not part of the JSON-LD process context algorithm
                     $result->setContextIri($context);
                     $remoteContexts[] = $context;
                 }
-                // 3.2.3)
+                // 5.2.3)
                 if (array_key_exists($context, $this->dereferencedContexts)) {
                     $context = $this->dereferencedContexts[$context];
                 } else {
-                    // 3.2.4)
+                    // 5.2.4)
                     $remoteDocument = $this->loadUnknownContext($context);
+                    // 5.2.5
                     if ($remoteDocument === false) {
                         throw new \Exception('Loading remote context failed');
                     }
@@ -169,86 +189,134 @@ class JsonLdProcessor {
                     }
                     $context = $context[Keywords::CONTEXT];
                 }
-                // 3.2.5)
+                // 5.2.6)
                 $result = $this->processContext($context, $result, $remoteContexts);
-                // 3.2.6)
+                // 5.2.7)
                 continue;
             }
-            // 3.3)
+            // 5.3)
             if (!JsonLdHelper::isDictionary($context)) {
                 throw new \Exception('Invalid local context: Resulting context is not a dictionary');
             }
-            // 3.4)
-            if (array_key_exists(Keywords::BASE, $context) && count($remoteContexts) === 0) {
-                // 3.4.1)
-                $value = $context[Keywords::BASE];
-                // 3.4.2)
-                if ($value == null) {
-                    $result->setBaseIri(null);
-                } elseif (IRI::isAbsoluteIri($value)) {
-                    // 3.4.3)
-                    $result->setBaseIri($value);
-                } elseif (IRI::isRelativeIri($uri) && $result->getBaseIri() != null) {
-                    // 3.4.4)
-                    $result->setBaseIri(IRI::resolveAbsoluteIri($result->getBaseIri(), $value));
-                } else {
-                    // 3.4.5)
-                    throw new \Exception("invalid base IRI");
-                }
-            }
-            // 3.5)
+            // 5.4)
+            // 5.5)
             if (array_key_exists(Keywords::VERSION, $context)) {
-                // 3.5.1)
+                // 5.5.1)
                 if (!$context[Keywords::VERSION] == self::VERSION_1_1) {
                     throw new \Exception("invalid @version value");
                 }
-                // 3.5.2)
+                // 5.5.2)
                 if ($this->processingMode == self::PROCESSING_MODE_JSON_LD_1_0) {
                     throw new \Exception("processing mode conflict");
                 }
-                // 3.5.3)
-                $this->processingMode == self::PROCESSING_MODE_JSON_LD_1_1;
+                // 5.5.3)
+                $this->processingMode = self::PROCESSING_MODE_JSON_LD_1_1;
             }
-            // 3.6)
+            // 5.6)
+            if (array_key_exists(Keywords::IMPORT, $context)) {
+                // 5.6.1)
+                if ($this->processingMode == self::PROCESSING_MODE_JSON_LD_1_0) {
+                    throw new \Exception('Invalid context entry');
+                }
+                // 5.6.2)
+                if (!is_string($context[Keywords::IMPORT])) {
+                    throw new \Exception('Imvalid @import value');
+                }
+                // 5.6.3)
+                $import = IRI::resolveAbsoluteIri($activeContext->getBaseIri(), $context[Keywords::IMPORT]);
+                // 5.6.4)
+                $importContext = IiifHelper::getRemoteContent($import);
+                // 5.6.5)
+                if (!is_string($importContext)) {
+                    throw new \Exception('Loading remote context failed');
+                }
+                $importContext = json_decode($importContext, true);
+                if ($importContext == null) {
+                    throw new \Exception('Loading remote context failed');
+                }
+                // 5.6.6)
+                if (!JsonLdHelper::isDictionary($importContext) || !array_key_exists(Keywords::CONTEXT, $importContext) || !JsonLdHelper::isDictionary($importContext[Keywords::CONTEXT])) {
+                    throw new \ErrorException('Invalid remote context');
+                }
+                // 5.6.7)
+                if (array_key_exists(Keywords::IMPORT, $importContext)) {
+                    throw new \Exception('Invalid context entry');
+                }
+                // 5.6.8)
+                $context = array_merge($importContext, $context);
+            }
+            // 5.7)
+            if (array_key_exists(Keywords::BASE, $context) && count($remoteContexts) === 0) {
+                // 5.7.1)
+                $value = $context[Keywords::BASE];
+                // 5.7.2)
+                if ($value == null) {
+                    $result->setBaseIri(null);
+                } elseif (IRI::isAbsoluteIri($value)) {
+                    // 5.7.3)
+                    $result->setBaseIri($value);
+                } elseif (IRI::isRelativeIri($uri) && $result->getBaseIri() != null) {
+                    // 5.7.4)
+                    $result->setBaseIri(IRI::resolveAbsoluteIri($result->getBaseIri(), $value));
+                } else {
+                    // 5.7.5)
+                    throw new \Exception("invalid base IRI");
+                }
+            }
+            // 5.8)
             if (array_key_exists(Keywords::VOCAB, $context)) {
-                // 3.6.1)
+                // 5.8.1)
                 $value = $context[Keywords::VOCAB];
-                // 3.6.2)
+                // 5.8.2)
                 if ($value == null) {
                     $result->setVocabularyMapping(null);
                 }
                 elseif (IRI::isAbsoluteIri($value) || self::isBlankNodeIdentifier($value)) {
-                    // 3.6.3)
+                    // 5.8.3)
                     $result->setVocabularyMapping($this->expandIRI($result, $value, true, true));
                 } else {
                     throw new \Exception("invalid vocab mapping");
                 }
             }
-            // 3.7)
+            // 5.9)
             if (array_key_exists(Keywords::LANGUAGE, $context)) {
-                // 3.7.1)
+                // 5.9.1)
                 $value = $context->get(Keywords::LANGUAGE);
-                // 3.7.2)
+                // 5.9.2)
                 if ($value == null) {
                     $result->setDefaultLanguage(null);
                 } elseif (is_string($value)) {
-                    // 3.7.3)
+                    // 5.9.3)
                     $result->setDefaultLanguage(strtolower($value));
                 } else {
                     throw new \Exception("invalid default language");
                 }
             }
-            // 3.8)
+            // 5.10)
+            if (array_key_exists(Keywords::PROPAGATE, $context)) {
+                // 5.10.1)
+                if ($this->processingMode == self::PROCESSING_MODE_JSON_LD_1_0) {
+                    throw new \Exception('invalid context entry');
+                }
+                // 5.10.2)
+                if (($propaValue = $context[Keywords::PROPAGATE]) !== false && $propaValue !== true) {
+                    throw new \Exception('invalid @propagate value');
+                }
+                // 5.10.3 - nothing to do
+            }
+            // 5.11)
             $defined = array();
             // 3.9)
             $protected_ = array_key_exists(Keywords::PROTECTED_, $context) ? $context[Keywords::PROTECTED_] : false;
             foreach ($context as $key => $v) {
                 if (array_search($key, [
                     Keywords::BASE,
-                    Keywords::VOCAB,
+                    Keywords::IMPORT,
                     Keywords::LANGUAGE,
+                    Keywords::PROPAGATE,
                     Keywords::PROTECTED_,
-                    Keywords::VERSION
+                    Keywords::VERSION,
+                    Keywords::VOCAB
                 ]) === false) {
                     $this->createTermDefinition($result, $context, $key, $defined, $protected_);
                 }
@@ -267,7 +335,7 @@ class JsonLdProcessor {
      * @throws \Exception
      * @link https://w3c.github.io/json-ld-api/#create-term-definition
      */
-    protected function createTermDefinition(JsonLdContext $activeContext, $localContext, $term, &$defined, $protected_ = false) {
+    protected function createTermDefinition(JsonLdContext $activeContext, $localContext, $term, &$defined, $protected_ = false, $overrideProtected = false, $propagate = true) {
         // Numbering as in draft https://w3c.github.io/json-ld-api/#algorithm-0 on 2019-04-16 
         // 1)
         if (array_key_exists($term, $defined)) {
@@ -291,19 +359,21 @@ class JsonLdProcessor {
             throw new \Exception("keyword redefinition");
         }
         // 6
-        if ($activeContext->getTermDefinition($term) != null && $activeContext->getTermDefinition($term)->getProtected_()) {
-            return;
+        $previousDefinition = $activeContext->getTermDefinition($term);
+//         if ($activeContext->getTermDefinition($term) != null && $activeContext->getTermDefinition($term)->getProtected_()) {
+//             return;
+//         }
+        // 7 TODO check spec
+        if (!isset($previousDefinition)) {
+            $activeContext->removeTermDefinition($term);
         }
-        // 7
-        $activeContext->removeTermDefinition($term);
         // 8
-        if ($value == null || (JsonLdHelper::isDictionary($value) && array_key_exists(Keywords::ID, $value) && $value[Keywords::ID] == null)) {
-            $activeContext->addTermDefinition($term, null);
-            $defined[$term] = true;
-            return;
-        }
-        // 9
-        if (is_string($value)) {
+        if ($value == null) {
+            $value = [
+                "@id" => null
+            ];
+        } elseif (is_string($value)) {
+            // 9
             $value = [
                 "@id" => $value
             ];
@@ -317,6 +387,7 @@ class JsonLdProcessor {
         }
         // 11
         $definition = new TermDefinition($term);
+        // 12
         if (array_key_exists(Keywords::PROTECTED_, $value) && $value[Keywords::PROTECTED_] ||
             !array_key_exists(Keywords::PROTECTED_, $value) && $protected_) {
             $definition->setProtected_(true);
@@ -331,7 +402,7 @@ class JsonLdProcessor {
             // 13.2
             $type = $this->expandIRI($activeContext, $type, false, true, $localContext, $defined);
             if ($type != Keywords::ID && $type != Keywords::VOCAB &&
-                (!$this->processingMode == self::PROCESSING_MODE_JSON_LD_1_1 || $type != Keywords::JSON && $type != Keywords::NONE) &&
+                (!($this->processingMode == self::PROCESSING_MODE_JSON_LD_1_1) || $type != Keywords::JSON && $type != Keywords::NONE) &&
                 !IRI::isAbsoluteIri($type)) {
                 throw new \Exception("invalid type mapping");
             }
@@ -373,26 +444,34 @@ class JsonLdProcessor {
         $definition->setReverse(false);
         // 16
         if (array_key_exists(Keywords::ID, $value) && $value[Keywords::ID] != $term) {
-            // 16.1
-            if (!is_string($value[Keywords::ID])) {
+            // 16.1 TODO
+            if ($value[Keywords::ID] == null) {
+              // do not expand  
+            } else if (!is_string($value[Keywords::ID])) {
+                // 16.2
                 throw new \Exception("invalid IRI mapping");
-            }
-            // 16.2
-            $expanededIri = $this->expandIRI($activeContext, $value[Keywords::ID], false, true, $localContext, $defined);
-            if (Keywords::isKeyword($expanededIri)) {
-                // Keeping track of keyword aliases - not part of the JSON-LD context processing algorithm
-                $activeContext->addKeywordAlias($expanededIri, $term);
-            }
-            if (!Keywords::isKeyword($expanededIri) && !IRI::isAbsoluteIri($expanededIri) && !self::isBlankNodeIdentifier($expanededIri)) {
-                throw new \Exception("invalid IRI mapping");
-            }
-            if ($expanededIri == Keywords::CONTEXT) {
-                throw new \Exception("invalid keyword alias");
-            }
-            $definition->setIriMapping($expanededIri);
-            // 16.3
-            if (strpos($term, ":") === false && $simpleTerm && array_search(mb_substr($definition->getIriMapping(), strlen($definition->getIriMapping()) - 1, 1, 'utf-8'), self::GEN_DELIM) !== false) {
-                $definition->setPrefix(true);
+            } else {
+                // 16.3
+                $expanededIri = $this->expandIRI($activeContext, $value[Keywords::ID], false, true, $localContext, $defined);
+                if (Keywords::isKeyword($expanededIri)) {
+                    // Keeping track of keyword aliases - not part of the JSON-LD context processing algorithm
+                    $activeContext->addKeywordAlias($expanededIri, $term);
+                }
+                if (!Keywords::isKeyword($expanededIri) && !IRI::isAbsoluteIri($expanededIri) && !self::isBlankNodeIdentifier($expanededIri)) {
+                    throw new \Exception("invalid IRI mapping");
+                }
+                if ($expanededIri == Keywords::CONTEXT) {
+                    throw new \Exception("invalid keyword alias");
+                }
+                $definition->setIriMapping($expanededIri);
+                // 16.4)
+                if (strpos($term, ":") !== false && strpos($term, ":") !== strlen($term) - 1 && $this->expandIRI($activeContext, $term) !== $definition->getIriMapping()) {
+                    throw new \Exception("invalid IRI mapping");
+                }
+                // 16.5)
+                if (strpos($term, ":") === false && $simpleTerm && array_search(mb_substr($definition->getIriMapping(), strlen($definition->getIriMapping()) - 1, 1, 'utf-8'), self::GEN_DELIM) !== false) {
+                    $definition->setPrefix(true);
+                }
             }
         } elseif (strpos($term, ":") !== false) {
             // 17
@@ -478,13 +557,13 @@ class JsonLdProcessor {
         if (array_key_exists(Keywords::INDEX, $value)) {
             // 21.1
             if ($this->processingMode == self::PROCESSING_MODE_JSON_LD_1_0 ||
-                (is_string($definition->getContainerMapping()) && $definition->getContainerMapping() == Keywords::INDEX) ||
-                (is_string($definition->getContainerMapping()) && array_search(Keywords::INDEX, $definition->getContainerMapping()) === false)) {
+                ((is_string($definition->getContainerMapping()) && $definition->getContainerMapping() != Keywords::INDEX) ||
+                (is_array($definition->getContainerMapping()) && array_search(Keywords::INDEX, $definition->getContainerMapping()) === false))) {
                 throw new \Exception("invalid termdefinition");
             }
             // 21.2
             $index = $value[Keywords::INDEX];
-            if (!IRI::isAbsoluteIri($this->expandIRI($activeContext, $index))) {
+            if (!is_string($index) || !IRI::isAbsoluteIri($this->expandIRI($activeContext, $index))) {
                 throw new \Exception("invalid term definition");
             }
             // 21.3
@@ -500,7 +579,7 @@ class JsonLdProcessor {
             $context = $value[Keywords::CONTEXT];
             // 22.3
             try {
-                $this->processContext($context, $activeContext);
+                $this->processContext($context, $activeContext, [], true);
             } catch (\Exception $e) {
                 throw new \Exception("invalid scoped context", null, $e);
             }
@@ -552,17 +631,24 @@ class JsonLdProcessor {
             Keywords::REVERSE,
             Keywords::CONTAINER,
             Keywords::CONTEXT,
+            Keywords::LANGUAGE,
             Keywords::NEST,
             Keywords::PREFIX,
-            Keywords::TYPE,
-            Keywords::LANGUAGE
+            Keywords::TYPE
         ];
         foreach ($value as $key => $v) {
             if (array_search($key, $allowedKeysInValue) === false) {
                 throw new \Exception("invalid term definition");
             }
         }
-        // 27
+        // 29
+        if ($overrideProtected === false && $previousDefinition != null && $previousDefinition->getProtected_() === true) {
+            if ($definition != $previousDefinition) {
+                throw new \Exception("protected term redefinition");
+            }
+            $definition = $previousDefinition;
+        }
+        // 28
         $activeContext->addTermDefinition($term, $definition);
         $defined[$term] = true;
     }
@@ -613,7 +699,7 @@ class JsonLdProcessor {
                 $this->createTermDefinition($activeContext, $localContext, $prefix, $defined);
             }
             // 5.4
-            if (($termDefinition = $activeContext->getTermDefinition($prefix)) != null) {
+            if (($termDefinition = $activeContext->getTermDefinition($prefix)) != null && $termDefinition->getPrefix() && $termDefinition->getIriMapping() !== null) {
                 return $termDefinition->getIriMapping() . $suffix;
             }
             // 5.5
