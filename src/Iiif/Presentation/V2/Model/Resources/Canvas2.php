@@ -22,6 +22,7 @@ namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
 use Ubl\Iiif\Presentation\V2\Model\Properties\WidthAndHeightTrait;
 use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 
 class Canvas2 extends AbstractIiifResource2 implements CanvasInterface {
     use WidthAndHeightTrait;
@@ -97,6 +98,13 @@ class Canvas2 extends AbstractIiifResource2 implements CanvasInterface {
      */
     public function getPossibleTextAnnotationContainers($motivation = null) {
         return $this->otherContent;
+    }
+    /**
+     * {@inheritDoc}
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPotentialTextAnnotationContainerIterator()
+     */
+    public function getPotentialTextAnnotationContainerIterator($painting = null) {
+        return new LazyLoadingIterator($this, "otherContent", $this->otherContent);
     }
 
 }

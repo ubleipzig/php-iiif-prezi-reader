@@ -90,11 +90,20 @@ class Canvas1 extends AbstractDescribableResource1 implements CanvasInterface {
     public function getPossibleTextAnnotationContainers($motivation = null) {
         return $this->otherContent;
     }
+
+    /**
+     * {@inheritDoc}
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPotentialTextAnnotationContainerIterator()
+     */
+    public function getPotentialTextAnnotationContainerIterator($painting = null) {
+        // TODO Auto-generated method stub
+        
+    }
+
     /**
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
-
     public function getThumbnailUrl() {
         if (!empty($this->images)) {
             return $this->images[0]->getThumbnailUrl();

@@ -1,6 +1,8 @@
 <?php
 namespace Ubl\Iiif\Presentation\Common\Model;
 
+use Ubl\Iiif\IiifException;
+
 class LazyLoadingIterator implements \Iterator {
     
     /**
@@ -28,9 +30,10 @@ class LazyLoadingIterator implements \Iterator {
      * @param AbstractIiifEntity $entity
      * @param string $field
      */
-    public function __construct(&$entity, $field) {
+    public function __construct(&$entity, $field, &$items) {
         $htis->entity = &$entity;
         $this->field = $field;
+        $this->items = &$items;
     }
 
     public function next() {
@@ -38,15 +41,23 @@ class LazyLoadingIterator implements \Iterator {
     }
 
     public function valid() {
-        return $this->$items != null && $this->$position < sizeof($this->$items); 
+        return $this->items != null && $this->position < sizeof($this->items); 
     }
 
+    /**
+     * @return AbstractIiifEntity
+     */
     public function current() {
         if (!$this->valid()) {
             return null;
         }
         if ($this->items[$this->position]->isLinkedResource()) {
-            // TODO lazy load resource
+            try {
+                $this->items[$this->position]->loadLazy();
+            } catch (IiifException $ex) {
+                $this->items[$this->position] = AbstractIiifEntity::loadIiifResource($this->items[$this->position]->getId());
+                // TODO register resource
+            }
         }
         return $this->items[$this->position];
     }
@@ -56,7 +67,7 @@ class LazyLoadingIterator implements \Iterator {
     }
 
     public function key() {
-        return $this->valid() ? $this->current()->getId() : null;
+        return $this->valid() ? $this->position : null;
     }
 
 }

@@ -49,7 +49,7 @@ class AnnotationList2 extends AbstractIiifResource2 implements AnnotationContain
      * @return \Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2[]
      */
     public function getResources() {
-        if ($resources == null && ! $this->resourcesLoaded) {
+        if ($this->resources == null && ! $this->resourcesLoaded) {
             
             $content = IiifHelper::getRemoteContent($this->id);
             $jsonAsArray = json_decode($content, true);

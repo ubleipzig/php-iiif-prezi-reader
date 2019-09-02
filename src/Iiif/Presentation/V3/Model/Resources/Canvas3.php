@@ -179,6 +179,15 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
         }
         return $this->annotations;
     }
-
+    /**
+     * {@inheritDoc}
+     * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPotentialTextAnnotationContainerIterator()
+     */
+    public function getPotentialTextAnnotationContainerIterator($painting = null) {
+        // TODO Auto-generated method stub
+        
+        return null;
+    }
+    
 }
 

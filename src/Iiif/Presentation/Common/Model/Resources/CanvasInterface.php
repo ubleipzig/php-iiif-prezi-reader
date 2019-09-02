@@ -20,6 +20,8 @@
 
 namespace Ubl\Iiif\Presentation\Common\Model\Resources;
 
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
+
 interface CanvasInterface extends IiifResourceInterface {
     
     /**
@@ -31,6 +33,13 @@ interface CanvasInterface extends IiifResourceInterface {
      * @return AnnotationContainerInterface[]
      */
     public function getPossibleTextAnnotationContainers($motivation = null);
+    
+    /**
+     * 
+     * @param boolean $painting 
+     * @return LazyLoadingIterator
+     */
+    public function getPotentialTextAnnotationContainerIterator($painting = null);
     
     /**
      * @return int

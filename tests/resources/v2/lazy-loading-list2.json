@@ -1,0 +1,47 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/list/list2",
+  "@type": "sc:AnnotationList",
+  "motivation": "oa:commenting",
+  "resources": [
+    {
+	  "@context": "http://iiif.io/api/presentation/2/context.json",
+	  "@id": "http://example.org/iiif/book1/annotation/list2annotation1",
+	  "@type": "oa:Annotation",
+	  "motivation": "oa:commenting",
+	  "resource":{
+	    "@type": "cnt:ContentAsText",
+	    "chars": "Annotation 1",
+	    "format": "text/plain",
+	    "language": "en"
+	  },
+	  "on": "http://example.org/iiif/book1/canvas/p1#xywh=100,200,400,300"
+	},
+    {
+	  "@context": "http://iiif.io/api/presentation/2/context.json",
+	  "@id": "http://example.org/iiif/book1/annotation/list2annotation2",
+	  "@type": "oa:Annotation",
+	  "motivation": "oa:commenting",
+	  "resource":{
+	    "@type": "cnt:ContentAsText",
+	    "chars": "Annotation 2",
+	    "format": "text/plain",
+	    "language": "en"
+	  },
+	  "on": "http://example.org/iiif/book1/canvas/p1#xywh=100,300,400,400"
+	},
+    {
+	  "@context": "http://iiif.io/api/presentation/2/context.json",
+	  "@id": "http://example.org/iiif/book1/annotation/list2annotation3",
+	  "@type": "oa:Annotation",
+	  "motivation": "oa:commenting",
+	  "resource":{
+	    "@type": "cnt:ContentAsText",
+	    "chars": "Annotation 3",
+	    "format": "text/plain",
+	    "language": "en"
+	  },
+	  "on": "http://example.org/iiif/book1/canvas/p1#xywh=100,300,400,400"
+	}
+  ]
+}

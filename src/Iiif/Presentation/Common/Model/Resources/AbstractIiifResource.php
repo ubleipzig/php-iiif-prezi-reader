@@ -79,8 +79,5 @@ abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifRe
         return $serviceIterator->valid() ? $serviceIterator->current() : null;
     }
 
-    protected function getEmbeddedProperties() {
-        return ['@id', '@context', 'profile', '@type', 'label'];
-    }
 }
 

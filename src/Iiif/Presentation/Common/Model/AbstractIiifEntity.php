@@ -32,6 +32,7 @@ use Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1;
 use Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2;
 use Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3;
 use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\IiifException;
 
 abstract class AbstractIiifEntity {
 
@@ -510,21 +511,35 @@ abstract class AbstractIiifEntity {
         // Do nothing
     }
 
-    protected function loadLazy() {
+    public function loadLazy() {
         if ($this->isLinkedResource()) {
-            // TODO load lazy
+            $remoteResource = self::loadIiifResource($this->id);
+            if (get_class($this) != get_class($remoteResource)) {
+                throw new IiifException("Lazy loaded resource has different type or context than linked resource.");
+            }
+            foreach (get_object_vars($remoteResource) as $property => &$value) {
+                if (is_scalar($value)) {
+                    $this->$property = $value;
+                } else {
+                    $this->$property = &$value;
+                }
+            }
+            $this->initialized = true;
         }
     }
     
     public function isLinkedResource() {
         $embeddedProperties = $this->getEmbeddedProperties();
         foreach ($this->originalJsonArray as $key => $value) {
-            if (array_search($key, $embeddedProperties) != false) {
+            if (array_search($key, $embeddedProperties) === false) {
                 return false;
             }
         }
         return true;
     }
 
+    protected function getEmbeddedProperties() {
+        return ["@id", "id", "@type", "type", "label", "@context", "profile", "format"];
+    }
+    
 }
-

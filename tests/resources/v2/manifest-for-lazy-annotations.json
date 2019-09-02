@@ -1,0 +1,33 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/book1/manifest",
+  "label": "Manifest label",
+  "sequences": [{
+    "@id": "http://example.org/iiif/book1/sequence/normal",
+    "@type": "sc:Sequence",
+    "label": "Current Page Order",
+    "canvases": [
+      {
+        "@id": "http://example.org/iiif/book1/canvas/p1",
+        "@type": "sc:Canvas",
+        "label": "p. 1",
+        "otherContent": [
+          {
+            "@id": "http://example.org/iiif/book1/list/list1",
+            "@type": "sc:AnnotationList"
+          },
+          {
+            "@id": "http://example.org/iiif/book1/list/list2",
+            "@type": "sc:AnnotationList"
+          }
+        ]
+      },
+      {
+        "@id": "http://example.org/iiif/book1/canvas/p2",
+        "@type": "sc:Canvas",
+        "label": "p. 2"
+      }
+    ]
+  }]
+}
