@@ -70,6 +70,8 @@ class JsonLdProcessor {
     
     protected $contextLimit;
 
+    protected $circularInclusionStack = [];
+    
     /**
      * 
      * @param boolean $requestknownContexts IIIF Presentation and Image API contexts and annotation contexts will only be
@@ -189,8 +191,14 @@ class JsonLdProcessor {
                     }
                     $context = $context[Keywords::CONTEXT];
                 }
+                // FIXME remove if
+                if ($this->getCircularInclusionDepth($result->getContextIri()) > 2) {
+                    continue;
+                }
+                array_push($this->circularInclusionStack, $result->getContextIri()); // FIXME remove
                 // 5.2.6)
                 $result = $this->processContext($context, $result, $remoteContexts);
+                array_pop($this->circularInclusionStack); // FIXME remove
                 // 5.2.7)
                 continue;
             }
@@ -720,5 +728,16 @@ class JsonLdProcessor {
 
     public static function isBlankNodeIdentifier($term) {
         return strpos($term, "_:") === 0;
+    }
+
+    private function getCircularInclusionDepth($contextUrl) {
+        // FIXME this is only needed for a workaround. Figure out how to handle circular inclusion once json-ld 1.1 is implementation ready.
+        $count = 0;
+        foreach ($this->circularInclusionStack as $item) {
+            if ($item == $contextUrl) {
+                $count++;
+            }
+        }
+        return $count;
     }
 }
