@@ -34,7 +34,6 @@ class ContextResourceTest extends TestCase {
         "http://iiif.io/api/image/1/context.json" => "iiif/image-context-1.json",
         "http://iiif.io/api/image/2/context.json" => "iiif/image-context-2.json",
         "http://iiif.io/api/image/3/context.json" => "iiif/image-context-3.json",
-        "http://iiif.io/api/presentation/3/combined-context.json" => "iiif/presentation-combined-context-3.json",
         "http://iiif.io/api/presentation/1/context.json" => "iiif/presentation-context-1.json",
         "http://iiif.io/api/presentation/2/context.json" => "iiif/presentation-context-2.json",
         "http://iiif.io/api/presentation/3/context.json" => "iiif/presentation-context-3.json",
