@@ -33,6 +33,7 @@ use Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2;
 use Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\IiifException;
+use Ubl\Iiif\Presentation\Common\TypeHelper;
 
 abstract class AbstractIiifEntity {
 
@@ -140,64 +141,29 @@ abstract class AbstractIiifEntity {
         return [];
     }
 
-    protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {}
+    protected function getValueForTypelessProperty($property, $dictionary, $context) {}
 
-    /**
-     *
-     * @param array $dictionary
-     * @param JsonLdContext $context
-     * @return AbstractIiifEntity
-     */
-    protected static function parseDictionary(array $dictionary, JsonLdContext $context = null, &$allResources = array(), $processor = null) {
-        $noParent = $context === null;
-        if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
-            $processor = new JsonLdProcessor();
-            $context = $processor->processContext($dictionary[Keywords::CONTEXT], new JsonLdContext($processor));
+    protected static function parseDictionary(array $dictionary, $context = null, &$allResources = array()) {
+        $noParent = $context == null;
+        $localContext = TypeHelper::getIiifContextIri($dictionary);
+        if ($localContext != null) {
+            $context = $localContext;
         }
-        $typeOrAlias = $context->getKeywordOrAlias(Keywords::TYPE);
-        $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
-        if (array_key_exists(Keywords::TYPE, $dictionary) || array_key_exists($typeOrAlias, $dictionary) || array_key_exists(Keywords::CONTEXT, $dictionary)) {
-            $type = null;
-            if (array_key_exists($typeOrAlias, $dictionary)) {
-                $type = $dictionary[$typeOrAlias]; 
-            } elseif (array_key_exists(Keywords::TYPE, $dictionary)) {
-                // Even if "@type" has an alias like "type", "@type" might still be used.
-                $type = $dictionary[Keywords::TYPE];
-            }
-            $localContext = null;
-            if (array_key_exists(Keywords::CONTEXT, $dictionary)) {
-                $localContext = $dictionary[Keywords::CONTEXT];
-            }
+        $typeClass = TypeHelper::getClass($dictionary, $context);
+        if (isset($typeClass)) {
+            $idOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::ID);
+            $typeOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::TYPE);
             $id = null;
-            if (array_key_exists(Keywords::ID, $dictionary)) {
-                $id = $dictionary[Keywords::ID];
-            } elseif (array_key_exists($idOrAlias, $dictionary)) {
+            if (array_key_exists($idOrAlias, $dictionary)) {
                 $id = $dictionary[$idOrAlias];
             }
             if ($id != null && array_key_exists($id, $allResources)) {
                 $resource = $allResources[$id]["resource"];
             } else {
-                $typeIri = $type;
-                if (IRI::isCompactIri($type, $context)) {
-                    $typeIri = $processor->expandIRI($context, $type);
-                } elseif (!IRI::isAbsoluteIri($type) && $context->getTermDefinition($type) != null) {
-                    $typeIri = $context->getTermDefinition($type)->getIriMapping();
-                }
-                $typeClass = TypeMap::getClassForType($typeIri, $context);
-                if ($typeClass == null) {
-                    $typeClass = TypeMap::getClassForContext($localContext, $context);
-                }
-                if ($typeClass == null) {
-                    return $dictionary;
-                }
-                $resource = new $typeClass();
+                $resource = new $typeClass;
             }
             /* @var $resource \AbstractIiifEntity; */
-            if (! $resource->initialized || sizeof(array_diff(array_keys($dictionary), [
-                // FIXME The existence of a keyword alias does not rule out the use of a keyword.
-                $typeOrAlias,
-                $idOrAlias
-            ])) > 0) {
+            if (!$resource->initialized || sizeof(array_diff(array_keys($dictionary), [$typeOrAlias,$idOrAlias])) > 0) {
                 $dictionaryOfDictionaries = [];
                 foreach ($dictionary as $key => $value) {
                     if ($key == Keywords::TYPE || $key == $typeOrAlias) {
@@ -207,21 +173,18 @@ abstract class AbstractIiifEntity {
                     if ($key == Keywords::CONTEXT) {
                         continue;
                     }
-//                     if (! Keywords::isKeyword($key) && $context->getTermDefinition($key) == null) {
-//                         continue;
-//                     }
                     if (JsonLdHelper::isDictionary($value)) {
                         // set basic values first
                         $dictionaryOfDictionaries[$key] = $value;
                         continue;
                     }
-                    $resource->loadProperty($key, $value, $context, $allResources, $processor);
+                    $resource->loadProperty($key, $value, $context, $allResources);
                     if ($key != Keywords::ID && $key != $idOrAlias) {
                         $resource->initialized = true;
                     }
                 }
                 foreach ($dictionaryOfDictionaries as $key => $value) {
-                    $resource->loadProperty($key, $value, $context, $allResources, $processor);
+                    $resource->loadProperty($key, $value, $context, $allResources);
                     if ($key != $idOrAlias && $key != Keywords::ID) {
                         $resource->initialized = true;
                     }
@@ -243,32 +206,14 @@ abstract class AbstractIiifEntity {
         }
     }
 
-    protected function loadProperty($term, $value, JsonLdContext $context, &$allResources = array(), $processor) {
+    protected function loadProperty($term, $value, $context, &$allResources = array()) {
         $property = $term;
         if (strpos($property, "@") === 0) {
             $property = substr($property, 1);
         }
         if (!property_exists($this, $property)) {
-            // Check if the property can be resolved to an IRI or a JSON-LD keyword
-            $iriOrKeyword = null;
-            if ($context->getTermDefinition($property) != null) {
-                $iriOrKeyword = $context->getTermDefinition($property)->getIriMapping();
-            } elseif (IRI::isCompactIri($property, $context)) {
-                $iriOrKeyword = $context->expandIRI($property);
-            } elseif (Keywords::isKeyword($property) || IRI::isAbsoluteIri($property)) {
-                $iriOrKeyword = $property;
-            }
-            // Check if there is a property for the IRI / keyword in the resource class
-            $propertyMap = $this->getPropertyMap();
-            if (array_key_exists($iriOrKeyword, $propertyMap)) {
-                $property = $propertyMap[$iriOrKeyword];
-            } else {
-                $this->otherData[$term] = $value;
-                return;
-            }
-        }
-        if (strpos($property, "@") === 0) {
-            $property = substr($property, 1);
+            $this->otherData[$term] = $value;
+            return;
         }
         if (array_key_exists($property, $this->getStringResources())) {
             if (is_string($value)) {
@@ -304,14 +249,9 @@ abstract class AbstractIiifEntity {
             }
             return;
         }
-        $definition = $context->getTermDefinition($term);
         $result = null;
         if (JsonLdHelper::isSimpleArray($value)) {
-            if (! $definition->hasListContainer() && ! $definition->hasSetContainer()) {
-                // FIXME
-                // throw new \Exception("array given for non collection property");
-            }
-            if ($definition->hasSetContainer() || $definition->hasListContainer() || array_search($term, $this->getCollectionProperties())!==false) {
+            //if ($definition->hasSetContainer() || $definition->hasListContainer() || array_search($term, $this->getCollectionProperties())!==false) {
                 $result = array();
                 foreach ($value as $member) {
                     if ($member == null || is_string($member)) {
@@ -320,7 +260,7 @@ abstract class AbstractIiifEntity {
                         if (array_search($term, $this->getTypelessProperties()) !== false) {
                             $resource = $this->getValueForTypelessProperty($term, $member, $context);
                         } else {
-                            $resource = self::parseDictionary($member, $context, $allResources, $processor);
+                            $resource = self::parseDictionary($member, $context, $allResources);
                         }
                         if (is_object($resource) && property_exists(get_class($resource), "id")) {
                             self::registerResource($resource, $this->id, $term, $allResources);
@@ -330,28 +270,28 @@ abstract class AbstractIiifEntity {
                 }
                 $this->$property = $result;
                 return;
-//             } elseif ($definition->hasListContainer()) {
-//                 $result = array();
-            }
+                //             } elseif ($definition->hasListContainer()) {
+                //                 $result = array();
+            //}
         } elseif (JsonLdHelper::isDictionary($value)) {
             if (array_search($term, $this->getTypelessProperties()) !== false) {
                 $termValue = $this->getValueForTypelessProperty($term, $value, $context);
             } else {
-                $termValue = $this->parseDictionary($value, $context, $allResources, $processor);
+                $termValue = $this->parseDictionary($value, $context, $allResources);
             }
             if (is_object($termValue)) {
                 self::registerResource($termValue, $this->id, $term, $allResources);
             }
             $this->$property = $termValue;
         } elseif (is_scalar($value)) {
-//             $this->$property = $value;
+            //             $this->$property = $value;
             $v = $this->getSpecialTreatmentValue($property, $value, $context);
             $this->$property = $v;
             self::registerResource($v, $this->id, $term, $allResources);
             return;
         }
     }
-
+    
     private static function registerResource(&$resource, $parentId, $property, &$allResources = array()) {
         if ($resource instanceof AbstractIiifEntity) {
             if (! array_key_exists($resource->id, $allResources) || ! $allResources[$resource->id]["resource"]->initialized) {

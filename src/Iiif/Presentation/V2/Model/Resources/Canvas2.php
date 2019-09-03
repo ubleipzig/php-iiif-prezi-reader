@@ -39,20 +39,6 @@ class Canvas2 extends AbstractIiifResource2 implements CanvasInterface {
      */
     protected $otherContent = array();
 
-
-    /**
-     * {@inheritDoc}
-     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(), [
-            "http://iiif.io/api/presentation/2#hasImageAnnotations" => "images",
-            "http://iiif.io/api/presentation/2#hasLists" => "otherContent",
-            "http://www.w3.org/2003/12/exif/ns#width" => "width",
-            "http://www.w3.org/2003/12/exif/ns#height" => "height"
-        ]);
-    }
-
     /**
      *
      * @return Annotation2[]:

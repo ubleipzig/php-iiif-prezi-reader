@@ -32,6 +32,7 @@ use Ubl\Iiif\Services\Service;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Tools\Options;
 use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
+use Ubl\Iiif\Presentation\Common\TypeHelper;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have
@@ -99,30 +100,6 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      */
     protected $reference;
 
-
-    
-    /**
-     * {@inheritDoc}
-     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(), [
-            "viewingHint => http://iiif.io/api/presentation/2#viewingHint" => "viewingHint",
-            "http://www.w3.org/2000/01/rdf-schema#label" => "label",
-            "http://iiif.io/api/presentation/2#metadataLabels" => "metadata",
-            "http://purl.org/dc/elements/1.1/description" => "description",
-            "http://xmlns.com/foaf/0.1/thumbnail" => "thumbnail",
-            "http://iiif.io/api/presentation/2#attributionLabel" => "attribution",
-            "http://purl.org/dc/terms/rights" => "license",
-            "http://xmlns.com/foaf/0.1/logo" => "logo",
-            "http://purl.org/dc/terms/relation" => "related",
-            "http://purl.org/dc/terms/hasFormat" => "rendering",
-            "http://rdfs.org/sioc/services#has_service" => "service",
-            "http://www.w3.org/2000/01/rdf-schema#seeAlso" => "seeAlso",
-            "http://purl.org/dc/terms/isPartOf" => "within"
-        ]);
-    }
-
     protected function getTypelessProperties() {
         return [
             "service"
@@ -143,14 +120,14 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      * {@inheritdoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getValueForSpecialProperty()
      */
-    protected function getValueForTypelessProperty($property, $dictionary, JsonLdContext $context) {
+    protected function getValueForTypelessProperty($property, $dictionary, $context) {
         if ($property = "service") {
-            $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
+            $idOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::ID);
             $clazz = null;
-            if ($this instanceof ContentResource2 && $context->expandIRI($this->getType()) == "http://purl.org/dc/dcmitype/Image") {
-                $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
+            if ($this instanceof ContentResource2 && $this->getType() == "sc:Image") {
+                $contextOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::CONTEXT);
                 if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeMap::SERVICE_TYPES_BY_CONTEXT)) {
-                    $clazz = TypeMap::getClassForType(TypeMap::SERVICE_TYPES_BY_CONTEXT[$dictionary[$contextOrAlias]], $context);
+                    $clazz = TypeHelper::getClass($dictionary, $context);
                 }
             }
             $id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;

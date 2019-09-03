@@ -39,19 +39,6 @@ class ContentResource2 extends AbstractIiifResource2 implements ContentResourceI
     protected $chars;
 
     /**
-     * {@inheritDoc}
-     * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(), [
-            "http://www.w3.org/2011/content#chars" => "chars",
-            "http://purl.org/dc/elements/1.1/format" => "format",
-            "http://www.w3.org/2003/12/exif/ns#width" => "width",
-            "http://www.w3.org/2003/12/exif/ns#height" => "height"
-        ]);
-    }
-
-    /**
      *
      * @return string
      */

@@ -103,34 +103,5 @@ class AbstractIiifEntityTest extends AbstractIiifTest {
         self::markTestIncomplete("implement");
     }
 
-    public function testKeywordAliases() {
-        $manifest = IiifHelper::loadIiifResource(self::getFile("common/manifest-with-keywordalias.json"));
-        self::assertNotNull($manifest);
-        self::assertInstanceOf(Manifest2::class, $manifest);
-
-        $canvases = $manifest->getDefaultCanvases();
-        self::assertNotEmpty($canvases);
-        foreach ($canvases as $canvas) {
-            self::assertNotNull($canvas);
-            self::assertInstanceOf(Canvas2::class, $canvas);
-            self::assertEquals(1, sizeof($canvas->getImageAnnotations()));
-            
-            $imageAnnotation = $canvas->getImageAnnotations()[0];
-
-            self::assertNotNull($imageAnnotation);
-            self::assertInstanceOf(Annotation2::class, $imageAnnotation);
-            self::assertNotEmpty($imageAnnotation->getId());
-
-            self::assertNotNull($imageAnnotation->getBody());
-            self::assertInstanceOf(ContentResource2::class, $imageAnnotation->getBody());
-            self::assertNotEmpty($imageAnnotation->getBody()->getId());
-            self::assertEquals("image/jpeg", $imageAnnotation->getBody()->getFormat());
-
-            self::assertNotNull($imageAnnotation->getBody()->getSingleService());
-            self::assertInstanceOf(ImageInformation2::class, $imageAnnotation->getBody()->getSingleService());
-            self::assertNotEmpty($imageAnnotation->getBody()->getSingleService()->getId());
-        }
-    }
-    
 }
 

@@ -33,17 +33,6 @@ class AnnotationList2 extends AbstractIiifResource2 implements AnnotationContain
 
     private $resourcesLoaded = false;
 
-
-    /**
-     * {@inheritDoc}
-     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(), [
-            "http://iiif.io/api/presentation/2#hasAnnotations" => "resources"
-        ]);
-    }
-
     /**
      *
      * @return \Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2[]

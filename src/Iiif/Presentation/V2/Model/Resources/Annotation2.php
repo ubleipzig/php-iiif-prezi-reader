@@ -36,19 +36,6 @@ class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
 
     protected $on;
 
-    
-    /**
-     * {@inheritDoc}
-     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(), [
-            "http://www.w3.org/ns/oa#motivatedBy" => "motivation",
-            "http://www.w3.org/ns/oa#hasBody" => "resource",
-            "http://www.w3.org/ns/oa#hasTarget" => "on"
-        ]);
-    }
-
     /**
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getSpecialTreatmentValue()

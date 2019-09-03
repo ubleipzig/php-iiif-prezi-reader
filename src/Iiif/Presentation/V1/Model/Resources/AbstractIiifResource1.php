@@ -27,6 +27,7 @@ use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Presentation\Common\TypeMap;
 use Ubl\Iiif\Services\Service;
 use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
+use Ubl\Iiif\Presentation\Common\TypeHelper;
 
 abstract class AbstractIiifResource1 extends AbstractIiifResource implements IiifResourceInterface {
 
@@ -89,17 +90,18 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity::getValueForTypelessProperty()
      */
-    protected function getValueForTypelessProperty($property, $dictionary, \Ubl\Iiif\Context\JsonLdContext $context) {
+    protected function getValueForTypelessProperty($property, $dictionary, $context) {
         if ($property = "service") {
-            $idOrAlias = $context->getKeywordOrAlias(Keywords::ID);
+            $idOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::ID);
             $clazz = null;
-            if ($this instanceof ContentResource1 && $context->expandIRI($this->getType()) == "http://purl.org/dc/dcmitype/Image") {
-                $contextOrAlias = $context->getKeywordOrAlias(Keywords::CONTEXT);
+            if ($this instanceof ContentResource1 && $this->getType() === "dctypes:Image") {
+                $contextOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::CONTEXT);
                 if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeMap::SERVICE_TYPES_BY_CONTEXT)) {
-                    $clazz = TypeMap::getClassForType(TypeMap::SERVICE_TYPES_BY_CONTEXT[$dictionary[$contextOrAlias]], $context);
-                } elseif (array_key_exists("profile", $dictionary) && array_key_exists($dictionary["profile"], TypeMap::SERVICE_TYPES_BY_PROFILE)) {
-                    $clazz = TypeMap::getClassForType(TypeMap::SERVICE_TYPES_BY_PROFILE[$dictionary["profile"]], $context);
+                    $clazz = TypeHelper::getClass($dictionary, $context);
                 }
+//                 elseif (array_key_exists("profile", $dictionary) && array_key_exists($dictionary["profile"], TypeMap::SERVICE_TYPES_BY_PROFILE)) {
+//                     $clazz = TypeHelper::getClassForType(TypeMap::SERVICE_TYPES_BY_PROFILE[$dictionary["profile"]], $context);
+//                 }
             }
             $id = array_key_exists($idOrAlias, $dictionary) ? $dictionary[$idOrAlias] : null;
             $profile = array_key_exists("profile", $dictionary) ? $dictionary["profile"] : null;

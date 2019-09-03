@@ -43,19 +43,6 @@ class Collection2 extends AbstractIiifResource2 implements CollectionInterface {
 
     /**
      * {@inheritDoc}
-     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(),[
-            "http://iiif.io/api/presentation/2#presentationDate" => "navDate",
-            "http://iiif.io/api/presentation/2#hasCollections" => "collections",
-            "http://iiif.io/api/presentation/2#hasManifests" => "manifests",
-            "http://iiif.io/api/presentation/2#hasParts" => "members"
-        ]);
-    }
-
-    /**
-     * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CollectionInterface::getContainedCollections()
      */
     public function getContainedCollections() {

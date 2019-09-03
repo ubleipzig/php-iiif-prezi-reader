@@ -47,20 +47,6 @@ class Range2 extends AbstractIiifResource2 implements RangeInterface {
      */
     protected $members = array();
 
-    /**
-     * {@inheritDoc}
-     * @see \Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2::getPropertyMap()
-     */
-    protected function getPropertyMap() {
-        return array_merge(parent::getPropertyMap(),[
-            "http://iiif.io/api/presentation/2#hasCanvases" => "canvases",
-            "http://iiif.io/api/presentation/2#hasParts" => "members",
-            "http://iiif.io/api/presentation/2#hasRanges" => "ranges",
-            "http://iiif.io/api/presentation/2#hasStartCanvas" => "startCanvas",
-            "http://iiif.io/api/presentation/2#viewingDirection" => "viewingDirection"
-        ]);
-    }
-
     protected function getStringResources() {
         return [
             "ranges" => Range2::class,
