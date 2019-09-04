@@ -21,19 +21,16 @@
 namespace Ubl\Iiif\Presentation\Common\Model;
 
 use Flow\JSONPath\JSONPath;
+use Ubl\Iiif\IiifException;
 use Ubl\Iiif\Context\IRI;
-use Ubl\Iiif\Context\JsonLdContext;
 use Ubl\Iiif\Context\JsonLdHelper;
-use Ubl\Iiif\Context\JsonLdProcessor;
 use Ubl\Iiif\Context\Keywords;
-use Ubl\Iiif\Presentation\Common\TypeMap;
+use Ubl\Iiif\Presentation\Common\TypeHelper;
 use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1;
 use Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2;
 use Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3;
 use Ubl\Iiif\Tools\IiifHelper;
-use Ubl\Iiif\IiifException;
-use Ubl\Iiif\Presentation\Common\TypeHelper;
 
 abstract class AbstractIiifEntity {
 

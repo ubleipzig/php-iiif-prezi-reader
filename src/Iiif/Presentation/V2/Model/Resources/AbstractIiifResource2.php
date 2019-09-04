@@ -20,10 +20,11 @@
 
 namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
-use Ubl\Iiif\Context\JsonLdContext;
 use Ubl\Iiif\Context\JsonLdHelper;
 use Ubl\Iiif\Context\Keywords;
+use Ubl\Iiif\Presentation\Common\TypeHelper;
 use Ubl\Iiif\Presentation\Common\TypeMap;
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 use Ubl\Iiif\Presentation\Common\Model\Resources\AbstractIiifResource;
 use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Services\AbstractImageService;
@@ -31,8 +32,6 @@ use Ubl\Iiif\Services\Profile;
 use Ubl\Iiif\Services\Service;
 use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\Tools\Options;
-use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
-use Ubl\Iiif\Presentation\Common\TypeHelper;
 
 /**
  * Bundles all resource properties that every single iiif resource type may have

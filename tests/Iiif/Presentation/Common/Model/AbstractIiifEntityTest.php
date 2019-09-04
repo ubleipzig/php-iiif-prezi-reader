@@ -18,14 +18,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
-use Ubl\Iiif\Tools\IiifHelper;
 use Ubl\Iiif\AbstractIiifTest;
+use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Presentation\V2\Model\Resources\Manifest2;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
-use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2;
-use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2;
-use Ubl\Iiif\Services\ImageInformation2;
+use Ubl\Iiif\Tools\IiifHelper;
 
 /**
  * AbstractIiifEntity test case.

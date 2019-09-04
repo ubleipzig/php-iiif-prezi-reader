@@ -19,8 +19,6 @@
  */
 
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Context\JsonLdProcessor;
-use Ubl\Iiif\Context\JsonLdContext;
 
 /**
  * ImageInformation3 test case.
