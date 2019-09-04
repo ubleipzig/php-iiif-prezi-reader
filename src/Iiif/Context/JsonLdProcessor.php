@@ -89,7 +89,6 @@ class JsonLdProcessor {
             $this->knownContexts["http://iiif.io/api/presentation/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-1.json";
             $this->knownContexts["http://iiif.io/api/presentation/2/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-2.json";
             $this->knownContexts["http://iiif.io/api/presentation/3/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-context-3.json";
-            $this->knownContexts["http://iiif.io/api/presentation/3/combined-context.json"] = __DIR__ . "/../../../resources/contexts/iiif/presentation-combined-context-3.json";
             $this->knownContexts["http://iiif.io/api/image/1/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-1.json";
             $this->knownContexts["http://iiif.io/api/image/2/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-2.json";
             $this->knownContexts["http://iiif.io/api/image/3/context.json"] = __DIR__ . "/../../../resources/contexts/iiif/image-context-3.json";
