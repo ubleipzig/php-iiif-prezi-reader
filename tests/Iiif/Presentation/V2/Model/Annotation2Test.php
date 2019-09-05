@@ -19,12 +19,12 @@
  */
 
 use Ubl\Iiif\AbstractIiifTest;
-use Ubl\Iiif\Presentation\V2\Model\Properties\XYWHFragment;
+use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
 use Ubl\Iiif\Presentation\V2\Model\Resources\Annotation2;
 use Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2;
 use Ubl\Iiif\Presentation\V2\Model\Resources\ContentResource2;
 use Ubl\Iiif\Tools\IiifHelper;
-use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
+use Ubl\Iiif\Presentation\Common\Model\XYWHFragment;
 
 /**
  * Annotation test case.
@@ -108,5 +108,35 @@ class Annotation2Test extends AbstractIiifTest {
         self::assertNotNull($this->textAnnotation);
         self::assertEquals(Motivation::OA_COMMENTING, $this->textAnnotation->getMotivation());
     }
+    
+    public function testGetOnSelector() {
+        /**
+         * @var \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2 $canvas
+         */
+        $canvas = IiifHelper::loadIiifResource(parent::getFile("v2/canvas-with-annotations.json"));
+        self::assertInstanceOf(Canvas2::class, $canvas);
+        $images = $canvas->getImageAnnotations();
+        self::assertEquals(3, sizeof($images));
+        $annotation1 = $images[0];
+        self::assertInstanceOf(Annotation2::class, $annotation1);
+        self::assertNull($annotation1->getOnSelector());
+        $annotation2 = $images[2];
+        self::assertInstanceOf(Annotation2::class, $annotation1);
+        self::assertNotNull($annotation2->getOnSelector());
+        self::assertInstanceOf(XYWHFragment::class, $annotation2->getOnSelector());
+    }
+
+    public function testGetTargetResourceId() {
+        /**
+         * @var \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2 $canvas
+         */
+        $canvas = IiifHelper::loadIiifResource(parent::getFile("v2/canvas-with-annotations.json"));
+        $images = $canvas->getImageAnnotations();
+        $annotation1 = $images[0];
+        self::assertEquals("http://example.org/iiif/book1/canvas/p1", $annotation1->getTargetResourceId());
+        $annotation2 = $images[2];
+        self::assertEquals("http://example.org/iiif/book1/canvas/p1", $annotation2->getTargetResourceId());
+    }
+    
 }
 

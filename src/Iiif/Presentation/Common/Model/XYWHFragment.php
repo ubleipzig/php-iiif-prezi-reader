@@ -18,7 +18,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace Ubl\Iiif\Presentation\V2\Model\Properties;
+namespace Ubl\Iiif\Presentation\Common\Model;
 
 class XYWHFragment {
 
@@ -56,7 +56,7 @@ class XYWHFragment {
     protected $targetUri;
 
     /**
-     * @var \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2
+     * @var \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface
      */
     protected $targetObject;
 
@@ -138,7 +138,7 @@ class XYWHFragment {
     }
 
     /**
-     * @return \Ubl\Iiif\Presentation\V2\Model\Resources\Canvas2
+     * @return \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface
      */
     public function getTargetObject() {
         return $this->targetObject;

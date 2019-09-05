@@ -1,0 +1,66 @@
+{
+  "@context": "http://iiif.io/api/presentation/1/context.json",
+  "@id": "http://example.org/iiif/book1/canvas/p1",
+  "@type": "sc:Canvas",
+  "height": 1000,
+  "width": 750,
+  "images": [
+    {
+      "@id": "http://example.org/iiif/book1/annotation/image1",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "label": "'on' has no fragment identifier, image has same dimensions",
+      "resource": {
+        "@id": "http://example.org/iiif/book1/res/image1.jpg",
+        "@type": "dctypes:Image",
+        "format": "image/jpeg",
+        "service": {
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "http://example.org/images/book1-page1",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        },
+        "height":1000,
+        "width":750
+      },
+      "on": "http://example.org/iiif/book1/canvas/p1"
+    },
+    {
+      "@id": "http://example.org/iiif/book1/annotation/image2",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "label": "'on' has no fragment identifier, image has different dimensions than canvas",
+      "resource": {
+        "@id": "http://example.org/iiif/book1/res/image2.jpg",
+        "@type": "dctypes:Image",
+        "format": "image/jpeg",
+        "service": {
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "http://example.org/images/book1-page1",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        },
+        "height":2000,
+        "width":1500
+      },
+      "on": "http://example.org/iiif/book1/canvas/p1"
+    },
+    {
+      "@id": "http://example.org/iiif/book1/annotation/image3",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "label": "'on' has no fragment identifier",
+      "resource": {
+        "@id": "http://example.org/iiif/book1/res/image3.jpg",
+        "@type": "dctypes:Image",
+        "format": "image/jpeg",
+        "service": {
+          "@context": "http://iiif.io/api/image/2/context.json",
+          "@id": "http://example.org/images/book1-page1",
+          "profile": "http://iiif.io/api/image/2/level2.json"
+        },
+        "height":800,
+        "width":200
+      },
+      "on": "http://example.org/iiif/book1/canvas/p1#xywh=150,100,200,200"
+    }
+  ]
+}

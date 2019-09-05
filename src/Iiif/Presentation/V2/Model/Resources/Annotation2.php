@@ -21,8 +21,8 @@
 namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
 use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface;
-use Ubl\Iiif\Presentation\V2\Model\Properties\XYWHFragment;
 use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
+use Ubl\Iiif\Presentation\Common\Model\XYWHFragment;
 
 class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
 
@@ -69,6 +69,13 @@ class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
      */
     public function getOn() {
         return $this->on;
+    }
+    
+    public function getOnSelector() {
+        if ($this->on instanceof XYWHFragment) {
+            return $this->on;
+        }
+        return null;
     }
     
     /**

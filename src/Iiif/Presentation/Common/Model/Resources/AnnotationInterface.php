@@ -39,5 +39,8 @@ interface AnnotationInterface extends IiifResourceInterface {
      *                the annotation, without any fragments and not enclosed in specific resources
      */
     public function getTargetResourceId();
+
+
+    public function getOnSelector();
 }
 

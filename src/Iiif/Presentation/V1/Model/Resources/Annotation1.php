@@ -22,6 +22,7 @@ namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
 
 use Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface;
+use Ubl\Iiif\Presentation\Common\Model\XYWHFragment;
 
 class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
 
@@ -42,6 +43,22 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
      * @var mixed
      */
     protected $on;
+
+    protected function getSpecialTreatmentValue($property, $value, $context) {
+        if ($property == "on") {
+            $dummyArray = [];
+            $possibleXYWHFragment = XYWHFragment::getFromURI($value, $dummyArray, Canvas1::class);
+            if ($possibleXYWHFragment != null) {
+                if (strpos($possibleXYWHFragment->getFragment(), "xywh")===0) {
+                    return $possibleXYWHFragment;
+                } else {
+                    return $possibleXYWHFragment->getTargetObject();
+                }
+            }
+        }
+        return parent::getSpecialTreatmentValue($property, $value, $context);
+    }
+    
     /**
      * @return string
      */
@@ -62,14 +79,20 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
     public function getOn() {
         return $this->on;
     }
+
+    public function getOnSelector() {
+        if ($this->on instanceof XYWHFragment) {
+            return $this->on;
+        }
+        return null;
+    }
+    
     /**
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
     public function getThumbnailUrl() {
-        if ($this->motivation == "sc:painting" && $this->resource!=null && $this->resource instanceof ContentResource1) {
-            return $this->resource->getThumbnailUrl();
-        }
+        // TODO
         return null;
     }
 
@@ -89,8 +112,9 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
         if ($this->on == null) {
             return null;
         }
-        // TODO fragment identifiers
-        if ($this->on instanceof AbstractIiifResource1) {
+        if ($this->on instanceof XYWHFragment && $this->on->getTargetObject() != null) {
+            return $this->on->getTargetObject()->getId();
+        } elseif ($this->on instanceof AbstractIiifResource1) {
             return $this->on->getId();
         }
     }

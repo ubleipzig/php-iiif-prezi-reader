@@ -83,6 +83,10 @@ class Annotation3 extends AbstractIiifResource3 implements AnnotationInterface {
         return $this->target;
     }
 
+    public function getOnSelector() {
+        return null;
+    }
+    
     /**
      *
      * @return \Ubl\Iiif\Presentation\V3\Model\Resources\ContentResource3

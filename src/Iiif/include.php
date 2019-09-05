@@ -29,6 +29,7 @@ require_once (__DIR__ . "/Context/TermDefinition.php");
 
 require_once (__DIR__ . "/Presentation/Common/TypeMap.php");
 require_once (__DIR__ . "/Presentation/Common/Model/AbstractIiifEntity.php");
+require_once (__DIR__ . "/Presentation/Common/Model/XYWHFragment.php");
 require_once (__DIR__ . "/Presentation/Common/Model/Resources/IiifResourceInterface.php");
 require_once (__DIR__ . "/Presentation/Common/Model/Resources/AbstractIiifResource.php");
 require_once (__DIR__ . "/Presentation/Common/Model/Resources/AnnotationContainerInterface.php");
@@ -58,7 +59,6 @@ require_once (__DIR__ . "/Presentation/V2/Model/Properties/NavDateTrait.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Properties/StartCanvasTrait.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Properties/ViewingDirectionTrait.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Properties/WidthAndHeightTrait.php");
-require_once (__DIR__ . "/Presentation/V2/Model/Properties/XYWHFragment.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Resources/AbstractIiifResource2.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Resources/Annotation2.php");
 require_once (__DIR__ . "/Presentation/V2/Model/Resources/AnnotationList2.php");
