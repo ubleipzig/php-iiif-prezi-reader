@@ -125,7 +125,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
             $clazz = null;
             if ($this instanceof ContentResource2 && $this->getType() == "sc:Image") {
                 $contextOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::CONTEXT);
-                if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeMap::SERVICE_TYPES_BY_CONTEXT)) {
+                if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeHelper::CONTEXT_TYPES)) {
                     $clazz = TypeHelper::getClass($dictionary, $context);
                 }
             }
