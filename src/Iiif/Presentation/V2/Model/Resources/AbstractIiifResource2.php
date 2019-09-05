@@ -23,7 +23,6 @@ namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 use Ubl\Iiif\Context\JsonLdHelper;
 use Ubl\Iiif\Context\Keywords;
 use Ubl\Iiif\Presentation\Common\TypeHelper;
-use Ubl\Iiif\Presentation\Common\TypeMap;
 use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 use Ubl\Iiif\Presentation\Common\Model\Resources\AbstractIiifResource;
 use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
