@@ -98,11 +98,11 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      */
     protected $reference;
 
-    protected function getTypelessProperties() {
-        return [
-            "service"
-        ];
-    }
+//     protected function getTypelessProperties() {
+//         return [
+//             "service"
+//         ];
+//     }
     
     protected function getCollectionProperties() {
         return [
@@ -122,7 +122,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
         if ($property = "service") {
             $idOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::ID);
             $clazz = null;
-            if ($this instanceof ContentResource2 && $this->getType() == "sc:Image") {
+            if ($this instanceof ContentResource2 && $this->getType() == "dctypes:Image") {
                 $contextOrAlias = TypeHelper::getKeywordOrAlias($context, Keywords::CONTEXT);
                 if (array_key_exists($contextOrAlias, $dictionary) && array_key_exists($dictionary[$contextOrAlias], TypeHelper::CONTEXT_TYPES)) {
                     $clazz = TypeHelper::getClass($dictionary, $context);

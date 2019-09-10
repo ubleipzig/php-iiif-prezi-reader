@@ -107,6 +107,15 @@ class TypeHelper {
         "http://iiif.io/api/image/3/context.json" => ImageInformation3::class,
         "http://iiif.io/api/annex/services/physdim/1/context.json" => PhysicalDimensions::class,
     ];
+
+    const PROFILE_TYPES = [
+        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0" => ImageInformation1::class,
+        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1" => ImageInformation1::class,
+        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2" => ImageInformation1::class,
+        "http://iiif.io/api/image/2/level0.json" => ImageInformation2::class,
+        "http://iiif.io/api/image/2/level1.json" => ImageInformation2::class,
+        "http://iiif.io/api/image/2/level2.json" => ImageInformation2::class,
+    ];
     
     const CONTEXT_IRIS = [
         "http://library.stanford.edu/iiif/image-api/1.1/context.json",
@@ -137,6 +146,17 @@ class TypeHelper {
         $typeClass = null;
         if (isset($type) && array_key_exists($context, self::TYPES) && array_key_exists($type, self::TYPES[$context])) {
             $typeClass = self::TYPES[$context][$type];
+        } elseif (!isset($typeClass) && array_key_exists("profile", $dictionary)) {
+            if (is_array($profileArray = $dictionary["profile"])) {
+                foreach ($profileArray as $p) {
+                    if (is_string($p) && array_key_exists($p, self::PROFILE_TYPES)) {
+                        $typeClass = self::PROFILE_TYPES[$p];
+                        break;
+                    }
+                }
+            } elseif (array_key_exists($dictionary["profile"], self::PROFILE_TYPES)) {
+                $typeClass = self::PROFILE_TYPES[$dictionary["profile"]];
+            }
         } elseif (!isset($typeClass) && ($localContext = self::getIiifContextIri($dictionary)) != null && array_key_exists($localContext, self::CONTEXT_TYPES)) {
             $typeClass = self::CONTEXT_TYPES[$localContext];
         }
