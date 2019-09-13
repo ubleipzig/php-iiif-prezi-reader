@@ -74,10 +74,10 @@ class XYWHFragment {
             if (sizeof($xywhStrings) >= 2) {
                 $xywh = explode(',', $xywhStrings[1]);
                 if (sizeof($xywh) == 4) {
-                    $xywhFragment->x = $xywh[0];
-                    $xywhFragment->y = $xywh[1];
-                    $xywhFragment->width = $xywh[2];
-                    $xywhFragment->height = $xywh[3];
+                    $xywhFragment->x = $xywh[0] * 1;
+                    $xywhFragment->y = $xywh[1] * 1;
+                    $xywhFragment->width = $xywh[2] * 1;
+                    $xywhFragment->height = $xywh[3] *  1;
                     $xywhFragment->fragment = $fragment;
                 }
             }
