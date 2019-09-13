@@ -109,6 +109,9 @@ class TypeHelper {
     ];
 
     const PROFILE_TYPES = [
+        "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0" => ImageInformation1::class,
+        "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1" => ImageInformation1::class,
+        "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2" => ImageInformation1::class,
         "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0" => ImageInformation1::class,
         "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1" => ImageInformation1::class,
         "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2" => ImageInformation1::class,
@@ -140,25 +143,36 @@ class TypeHelper {
         }
         return $keyword;
     }
+
+    protected static function getTypeValueFromDictionary($key, $dictionary, $types) {
+        if (is_array($valueArray = $dictionary[$key])) {
+            foreach ($valueArray as $value) {
+                if ($key != Keywords::CONTEXT) {
+                    if (TypeHelper::isIiifContext($value)) {
+                        return $value;
+                    }
+                }
+                elseif (is_string($value) && array_key_exists($value, $types)) {
+                    return $types[$value];
+                }
+            }
+        } elseif (array_key_exists($dictionary[$key], $types)) {
+            return $types[$dictionary[$key]];
+        }
+    }
+
     
     public static function getClass($dictionary, $context) {
         $type = self::getType($dictionary, $context);
         $typeClass = null;
         if (isset($type) && array_key_exists($context, self::TYPES) && array_key_exists($type, self::TYPES[$context])) {
             $typeClass = self::TYPES[$context][$type];
-        } elseif (!isset($typeClass) && array_key_exists("profile", $dictionary)) {
-            if (is_array($profileArray = $dictionary["profile"])) {
-                foreach ($profileArray as $p) {
-                    if (is_string($p) && array_key_exists($p, self::PROFILE_TYPES)) {
-                        $typeClass = self::PROFILE_TYPES[$p];
-                        break;
-                    }
-                }
-            } elseif (array_key_exists($dictionary["profile"], self::PROFILE_TYPES)) {
-                $typeClass = self::PROFILE_TYPES[$dictionary["profile"]];
-            }
-        } elseif (!isset($typeClass) && ($localContext = self::getIiifContextIri($dictionary)) != null && array_key_exists($localContext, self::CONTEXT_TYPES)) {
-            $typeClass = self::CONTEXT_TYPES[$localContext];
+        }
+        if (!isset($typeClass) && array_key_exists("profile", $dictionary)) {
+            $typeClass = self::getTypeValueFromDictionary("profile", $dictionary, self::PROFILE_TYPES);
+        }
+        if (!isset($typeClass) && array_key_exists(Keywords::CONTEXT, $dictionary)) {
+            $typeClass = self::getTypeValueFromDictionary(Keywords::CONTEXT, $dictionary, self::CONTEXT_TYPES);
         }
         return $typeClass;
     }
