@@ -469,6 +469,10 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
         $seeAlso = JsonLdHelper::isSimpleArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         $result = [];
         foreach ($seeAlso as $candidate) {
+            // TODO 1. check if it is an object 2. check if there is a resource objet for a given URI 
+            if (!is_array($candidate)){
+                continue;
+            }
             if (array_key_exists("profile", $candidate)) {
                 if (is_string($candidate["profile"])) {
                     if ($candidate["profile"] == $profile || ($startsWith && strpos($candidate["profile"], $profile)===0)) {
