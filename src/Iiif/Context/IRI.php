@@ -34,6 +34,11 @@ class IRI {
      */
     const IRI_REGEX = '_^((?P<scheme>[^:/?#]+):)?((?P<doubleSlash>//)(?P<authority>([^/?#]*)))?(?P<path>[^?#]*)(\?(?P<query>[^#]*))?(#(?P<fragment>.*))?_';
 
+    /**
+     * Compact IRI in the context of JSON-LD in the form of "prefix:suffix" where the prefix maps
+     * to a vocabulary base IRI. See https://w3c.github.io/json-ld-syntax/#dfn-compact-iri
+     * @var string
+     */
     const COMPACT_IRI_REGEX = "_^(?P<prefix>[^:/?#]+):(?P<term>[^:/?#]+)_";
     
     /**

@@ -20,12 +20,18 @@
 
 namespace Ubl\Iiif\Presentation\Common\Model\Resources;
 
-use Ubl\Iiif\Services\Service;
-
 interface IiifResourceInterface {
 
+    /**
+     * Flag constant for metadata value sanitization: remove all (HTML) tags
+     * @var integer
+     */
     const SANITIZE_NO_TAGS = 1;
     
+    /**
+     * Flag constant for metadata value sanitization: encode the whole 
+     * @var integer
+     */
     const SANITIZE_XML_ENCODE_ALL = 2;
     
     const SANITIZE_XML_ENCODE_NONHTML = 4;
@@ -47,7 +53,10 @@ interface IiifResourceInterface {
     
     /**
      * 
-     * @param string $language Language code. If none is given, "@none" will be used. 
+     * @param string $language RFC 5646 language code, see https://tools.ietf.org/html/rfc5646 . If none
+     * is given, "@none" / no code will be used. See language of properties:
+     * version 2: https://iiif.io/api/presentation/2.1/#language-of-property-values
+     * version 3: https://iiif.io/api/presentation/3.0/#44-language-of-property-values
      * @param string $joinChars Used to join multi value labels. If set to null, array will be returned.
      * @return string|string[]
      */
@@ -58,10 +67,21 @@ interface IiifResourceInterface {
      */
     public function getMetadata();
     
+    /**
+     * 
+     * @param string $language RFC 5646 language code, see https://tools.ietf.org/html/rfc5646 . If none
+     * is given, "@none" / no code will be used. See language of properties:
+     * version 2: https://iiif.io/api/presentation/2.1/#language-of-property-values
+     * version 3: https://iiif.io/api/presentation/3.0/#44-language-of-property-values
+     * @param string $joinChars Used to join multiple values. If set to null, an array will be returned
+     * as value for each metadata label.
+     * @param int $options sanitazition options for HTML content. One of SANITIZE_NO_TAGS,
+     * SANITIZE_XML_ENCODE_ALL and SANITIZE_XML_ENCODE_NONHTML.
+     */
     public function getMetadataForDisplay($language = null, $joinChars = "; ", $options = 0);
     
     /**
-     * Get a normalized and translated form of the related (v1, v2) or homepage (v3) field.
+     * Get a normalized and translated form of the "related" (v1, v2) or "homepage" (v3) field.
      * @param string $language
      * @param string $joinChars If multiple labels of the same language are 
      * present for any related resource, join them with $joinChars; set label
@@ -71,12 +91,20 @@ interface IiifResourceInterface {
     public function getWeblinksForDisplay($language = null, $joinChars = "; ");
     
     /**
-     * version 2: description
-     * version 3: summary
-     * @return string|array  
+     * version 1: not applicable
+     * version 2: "description", see https://iiif.io/api/presentation/2.1/#description
+     * version 3: "summary", see https://iiif.io/api/presentation/3.0/#summary
+     * @return string|array  Description / summary as it is contained in the manifest. This might be an array or just a string.
      */
     public function getSummary();
 
+    /**
+     * 
+     * @param string $language
+     * @param string $joinChars
+     * @param int $options
+     * @return string|array
+     */
     public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML);
     
     /**
@@ -97,39 +125,39 @@ interface IiifResourceInterface {
     
     public function getSeeAlso();
     /**
-     * Looks a matching format in all entries of seeAlso and returns their URLs
+     * Looks a matching "format" value in all entries of seeAlso and returns their URLs
      * @param string $format requested format
      * @return string[] Array of URLs / @id s of all matching entries 
      */
     public function getSeeAlsoUrlsForFormat($format);
 
     /**
-     * 
+     * Looks for matching "profile" value in all entries of "seeAlso" and return their URLs
      * @param string $profile Requested profile
      * @param boolean $startsWith If true, a seeAlso entry matches if it's profile
      * starts with $profile. For example, "http://example.org/service/version1" will
-     * then match "http://example.org/service/".
+     * match "http://example.org/service/" if $startsWith is true, but will not match if it's false.
      * @return Array of URLs / @id s of all matching entries
      */
     public function getSeeAlsoUrlsForProfile($profile, $startsWith = false);
         
     /**
-     * @return Service|Service[]
+     * @return \Ubl\Iiif\Services\Service|\Ubl\Iiif\Services\Service[]
      */
     public function getService();
     
     /**
-     * @return \Iterator
+     * @return \Iterator Return content of "service" as Iterator of Service objects
      */
     public function getServiceIterator();
     
     /**
-     * @return Service The first service, either linked or embedded.
+     * @return \Ubl\Iiif\Services\Service The first service, either linked or embedded.
      */
     public function getSingleService();
     
     /**
-     * @return Service The first service, either lazy loeded if linked, or embedded.
+     * @return \Ubl\Iiif\Services\Service The first service, either lazy loaded if linked, or embedded.
      */
     public function getLazyLoadedSingleService();
     
@@ -142,7 +170,8 @@ interface IiifResourceInterface {
     public function getRenderingUrlsForFormat($format, $useChildResources = true);
     
     /**
-     * @return string A thumbnail URL for the resource.
+     * @return string A thumbnail URL for the resource, either provided by a "thumbnail" property or
+     * generated with default dimensions in @link \Ubl\Iiif\Tools\Options.
      */
     public function getThumbnailUrl();
 
@@ -156,7 +185,7 @@ interface IiifResourceInterface {
     public function jsonPath($expression);
     
     /**
-     * @return boolean The IIIF resource is only linked
+     * @return boolean This IIIF resource is only linked, not embedded, and can be loaded lazily
      */
     public function isLinkedResource();
 
