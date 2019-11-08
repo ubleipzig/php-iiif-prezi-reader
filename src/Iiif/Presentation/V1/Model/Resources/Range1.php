@@ -107,7 +107,7 @@ class Range1 extends AbstractDescribableResource1 implements RangeInterface {
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\RangeInterface::getAllItems()
      */
     public function getAllItems() {
-        return $items = array_merge($this->getCanvases() == null ? [] : $this->getCanvases(), $this->childRanges == null ? [] : $this->childRanges);
+        return array_merge($this->getCanvases() == null ? [] : $this->getCanvases(), $this->childRanges == null ? [] : $this->childRanges);
     }
 
     /**
