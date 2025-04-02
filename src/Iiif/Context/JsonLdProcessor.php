@@ -427,8 +427,8 @@ class JsonLdProcessor {
                 throw new \Exception("invalid IRI mapping");
             }
             // 14.3
-            $expanededIri = $this->expandIRI($activeContext, $value[Keywords::REVERSE], false, true, $localContext, $defined);
-            if (strpos($expanededIri, ":") === false) {
+            $expandedIri = $this->expandIRI($activeContext, $value[Keywords::REVERSE], false, true, $localContext, $defined);
+            if (strpos($expandedIri, ":") === false) {
                 throw new \Exception("invalid IRI mapping");
             }
             $definition->setIriMapping($expandedIri);
@@ -459,18 +459,18 @@ class JsonLdProcessor {
                 throw new \Exception("invalid IRI mapping");
             } else {
                 // 16.3
-                $expanededIri = $this->expandIRI($activeContext, $value[Keywords::ID], false, true, $localContext, $defined);
-                if (Keywords::isKeyword($expanededIri)) {
+                $expandedIri = $this->expandIRI($activeContext, $value[Keywords::ID], false, true, $localContext, $defined);
+                if (Keywords::isKeyword($expandedIri)) {
                     // Keeping track of keyword aliases - not part of the JSON-LD context processing algorithm
-                    $activeContext->addKeywordAlias($expanededIri, $term);
+                    $activeContext->addKeywordAlias($expandedIri, $term);
                 }
-                if (!Keywords::isKeyword($expanededIri) && !IRI::isAbsoluteIri($expanededIri) && !self::isBlankNodeIdentifier($expanededIri)) {
+                if (!Keywords::isKeyword($expandedIri) && !IRI::isAbsoluteIri($expandedIri) && !self::isBlankNodeIdentifier($expandedIri)) {
                     throw new \Exception("invalid IRI mapping");
                 }
-                if ($expanededIri == Keywords::CONTEXT) {
+                if ($expandedIri == Keywords::CONTEXT) {
                     throw new \Exception("invalid keyword alias");
                 }
-                $definition->setIriMapping($expanededIri);
+                $definition->setIriMapping($expandedIri);
                 // 16.4)
                 if (strpos($term, ":") !== false && strpos($term, ":") !== strlen($term) - 1 && $this->expandIRI($activeContext, $term) !== $definition->getIriMapping()) {
                     throw new \Exception("invalid IRI mapping");

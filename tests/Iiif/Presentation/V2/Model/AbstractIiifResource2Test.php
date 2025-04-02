@@ -175,12 +175,12 @@ class AbstractIiifResource2Test extends AbstractIiifTest
     {
         // Test null value
         $this->abstractIiifResource->setMetadata(null);
-        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopfully no error if metadata is set to null");
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopefully no error if metadata is set to null");
         self::assertNull($metadataValue);
         
         // Test empty metadata
         $this->prepareMetadata('[]');
-        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopfully no error for empty metadata");
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopefully no error for empty metadata");
         self::assertNull($metadataValue);
         
         // Test untranslated metadata

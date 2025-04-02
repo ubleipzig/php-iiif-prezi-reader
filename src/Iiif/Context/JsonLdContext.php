@@ -46,7 +46,7 @@ class JsonLdContext {
     protected $defaultLanguage;
     
     /**
-     * Containes any terms that expand to json-ld keywords
+     * Contains any terms that expand to json-ld keywords
      *
      * @var array
      */

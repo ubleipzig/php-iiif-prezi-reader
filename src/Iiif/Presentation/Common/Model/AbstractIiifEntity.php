@@ -41,7 +41,7 @@ abstract class AbstractIiifEntity {
     protected $originalJsonArray;
 
     /**
-     * Only used during intialization / loading of a IIIF document
+     * Only used during initialization / loading of a IIIF document
      *  
      * @var boolean true if the object has been created or updated after evaluating the resource's definition;
      * false if the object for the resource has just been created to represent a reference from another object 
@@ -130,7 +130,7 @@ abstract class AbstractIiifEntity {
     }
     
     /**
-     * Names of properites that may contain values as a sequential array but whose term definition does not 
+     * Names of properties that may contain values as a sequential array but whose term definition does not
      * have the suiting @container property. Mostly used for missing @set in Presentation API 2.
      * @return array
      */

@@ -43,7 +43,7 @@ class ContextResourceTest extends TestCase {
     /**
      * Ensure that the JSON-LD contexts that are provided with this library are the same as the online resources.
      */
-    public function testLocalResoucesEqualRemoteResources() {
+    public function testLocalResourcesEqualRemoteResources() {
         foreach (self::CONTEXTS as $url => $localFilename) {
             $remoteContent = file_get_contents($url);
             $localContent = file_get_contents(__DIR__."/../../../resources/contexts/".$localFilename);

@@ -65,7 +65,7 @@ class Range3 extends AbstractIiifResource3 implements RangeInterface {
 
     /**
      *
-     * @return multitype:Ambigous <\Ubl\Iiif\Presentation\V3\Model\Resources\Range3, \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3, \Ubl\Iiif\Presentation\V3\Model\Resources\SpecificResource3>
+     * @return multitype:Ambiguous <\Ubl\Iiif\Presentation\V3\Model\Resources\Range3, \Ubl\Iiif\Presentation\V3\Model\Resources\Canvas3, \Ubl\Iiif\Presentation\V3\Model\Resources\SpecificResource3>
      */
     public function getItems() {
         return $this->items;
