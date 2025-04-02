@@ -604,7 +604,7 @@ class JsonLdProcessor {
             if (is_string($language)) {
                 $language = strtolower($language);
             }
-            $definition->setLanguageMapping($lanuage);
+            $definition->setLanguageMapping($language);
         }
         // 24
         if (array_key_exists(Keywords::NEST, $value)) {

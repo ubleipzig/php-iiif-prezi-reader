@@ -55,7 +55,7 @@ class IiifHelper {
      * remote IIIF documents
      * @param UrlReaderInterface $urlReader
      */
-    public static function setUrlReader(UrlReaderInterface $urlReader = null) {
+    public static function setUrlReader(?UrlReaderInterface $urlReader = null) {
         Options::setUrlReader($urlReader);
     }
     

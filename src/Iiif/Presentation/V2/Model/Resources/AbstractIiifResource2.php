@@ -612,7 +612,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
                 if ($imageService->isFeatureSupported(Profile::SIZE_BY_H) && $imageService->isFeatureSupported(Profile::SIZE_BY_W)) {
                     // Level 1 or Level 2 or at least sufficient additional features in profile
                     $width = $width == null ? Options::getMaxThumbnailWidth() : $width;
-                    $height = $heigth == null ? Options::getMaxThumbnailHeight() : $heigth;
+                    $height = $height == null ? Options::getMaxThumbnailHeight() : $height;
                     $size = $width <= $height ? (",".$height) : ($width.",");
                     return $imageService->getImageUrl(null, $size, null, null, null);
                 }
