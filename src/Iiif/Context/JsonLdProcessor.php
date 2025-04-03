@@ -375,6 +375,7 @@ class JsonLdProcessor {
             $activeContext->removeTermDefinition($term);
         }
         // 8
+        $simpleTerm = false;
         if ($value == null) {
             $value = [
                 "@id" => null
@@ -390,7 +391,6 @@ class JsonLdProcessor {
             if (! JsonLdHelper::isDictionary($value)) {
                 throw new \Exception("invalid term definition");
             }
-            $simpleTerm = false;
         }
         // 11
         $definition = new TermDefinition($term);

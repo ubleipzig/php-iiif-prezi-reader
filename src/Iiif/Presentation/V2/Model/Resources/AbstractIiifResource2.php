@@ -225,7 +225,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     }
 
     public function getServiceIterator() {
-        return new LazyLoadingIterator($this, "service");
+        return new LazyLoadingIterator($this, "service", null);
     }
 
     /**
