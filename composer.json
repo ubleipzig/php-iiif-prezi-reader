@@ -8,7 +8,7 @@
 	],
 	"require" : {
 		"php" : ">=5.6",
-		"flow/jsonpath" : ">=0.4.0"
+		"softcreatr/jsonpath" : "^0.10.0"
 	},
 	"require-dev" : {
 		"phpunit/phpunit" : "~7.5"
