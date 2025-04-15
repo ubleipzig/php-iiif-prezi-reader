@@ -54,7 +54,7 @@ class Collection3 extends AbstractIiifResource3 implements CollectionInterface {
 
     /**
      *
-     * @return multitype:Ambiguous <\Ubl\Iiif\Presentation\V3\Model\Resources\Collection3, \Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3>
+     * @return \Ubl\Iiif\Presentation\V3\Model\Resources\Collection3 | \Ubl\Iiif\Presentation\V3\Model\Resources\Manifest3
      */
     public function getItems() {
         return $this->items;
