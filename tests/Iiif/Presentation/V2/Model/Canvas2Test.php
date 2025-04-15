@@ -36,7 +36,7 @@ class Canvas2Test extends AbstractIiifTest
     private $canvas;
     private $json;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->json = parent::getFile('v2/canvas-example.json');
         $array = json_decode($this->json, true);

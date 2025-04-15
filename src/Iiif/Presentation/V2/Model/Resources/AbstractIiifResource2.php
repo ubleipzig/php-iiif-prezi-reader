@@ -493,8 +493,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
     
     public function getSingleService() {
         return $this->service == null ? null :
-            JsonLdHelper::isSimpleArray($this->service) ? $this->service[0]:
-            $this->service;
+            (JsonLdHelper::isSimpleArray($this->service) ? $this->service[0] : $this->service);
     }
     
     /**

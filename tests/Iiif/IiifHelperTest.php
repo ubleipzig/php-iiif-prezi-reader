@@ -36,7 +36,8 @@ class IiifHelperTest extends AbstractIiifTest {
      * {@inheritDoc}
      * @see \PHPUnit\Framework\TestCase::tearDown()
      */
-    protected function tearDown() {
+    protected function tearDown(): void
+    {
         IiifHelper::setUrlReader(null);
     }
 
