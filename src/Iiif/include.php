@@ -96,17 +96,3 @@ require_once (__DIR__ . "/Services/Profile.php");
 require_once (__DIR__ . "/Tools/IiifHelper.php");
 require_once (__DIR__ . "/Tools/Options.php");
 require_once (__DIR__ . "/Tools/UrlReaderInterface.php");
-
-// TODO remove
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/AccessHelper.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPath.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPathException.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPathLexer.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/JSONPathToken.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/AbstractFilter.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/IndexesFilter.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/IndexFilter.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/QueryMatchFilter.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/QueryResultFilter.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/RecursiveFilter.php");
-require_once(__DIR__ . "/../../vendor/flow/jsonpath/src/Flow/JSONPath/Filters/SliceFilter.php");

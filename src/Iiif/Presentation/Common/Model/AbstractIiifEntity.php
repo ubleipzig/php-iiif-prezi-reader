@@ -346,8 +346,8 @@ abstract class AbstractIiifEntity {
     public function jsonPath($expression) {
         $jsonPath = new JSONPath($this->originalJsonArray);
         $results = $jsonPath->find($expression);
-        if (is_array($results->data()) && count($results->data()) <= 1) {
-            return empty(count($results->data())) ? null : $results[0];
+        if (is_array($results->getData()) && count($results->getData()) <= 1) {
+            return empty(count($results->getData())) ? null : $results[0];
         }
         return $results;
     }
