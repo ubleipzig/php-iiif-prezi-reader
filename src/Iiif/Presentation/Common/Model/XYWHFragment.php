@@ -60,7 +60,7 @@ class XYWHFragment {
      */
     protected $targetObject;
 
-    protected function __contruct() {}
+    protected function __construct() {}
 
     public static function getFromURI($uri, &$allResources = array(), $targetClass = null) {
         // TODO check if commas or equals sign are contained but url encoded

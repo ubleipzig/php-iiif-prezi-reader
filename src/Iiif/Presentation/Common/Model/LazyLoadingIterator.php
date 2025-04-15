@@ -31,7 +31,7 @@ class LazyLoadingIterator implements \Iterator {
      * @param string $field
      */
     public function __construct(&$entity, $field, &$items) {
-        $htis->entity = &$entity;
+        $this->entity = &$entity;
         $this->field = $field;
         $this->items = &$items;
     }

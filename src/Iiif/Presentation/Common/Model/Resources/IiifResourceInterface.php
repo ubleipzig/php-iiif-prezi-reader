@@ -66,7 +66,7 @@ interface IiifResourceInterface {
      * @param string $joinChars If multiple labels of the same language are 
      * present for any related resource, join them with $joinChars; set label
      * to array if $joinchars is null.
-     * @return array A list of assiociative arrays containg the URL as "@id" and optionally a translated "label" as well as a "format".
+     * @return array A list of associative arrays containing the URL as "@id" and optionally a translated "label" as well as a "format".
      */
     public function getWeblinksForDisplay($language = null, $joinChars = "; ");
     
@@ -135,7 +135,7 @@ interface IiifResourceInterface {
     
     /**
      * @return string|array Any number of URLs representing a rendered version of the current resource, e.g. a PDF, HTML doc etc,
-     * as string, array of strings, assotiated array of @id an label where the @id contains the URL, or an array with a list of the latter.  
+     * as string, array of strings, associated array of @id an label where the @id contains the URL, or an array with a list of the latter.  
      */
     public function getRendering();
     

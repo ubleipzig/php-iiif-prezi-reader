@@ -384,12 +384,12 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      * @param string $label
      * @param string $language
      * @return string value for given metadata label; preferably in the same language as the label if
-     *         no language is given; first language language is provided by neither the $language paramater
+     *         no language is given; first language language is provided by neither the $language parameter
      *         nor the label.
      */
     public function getMetadataForLabel($label, $language = null) {
         /*
-         * ALL teh possibilities!
+         * ALL the possibilities!
          * [{"label": {"@value": "Example label", "@language": "en"}, "value": {"@value": "Example value", "@language": "en"}}]
          * [{"label": "Example label", "value": "Example value"}]
          * ... and combinations with language/translation info either in the label or in the value.
@@ -469,7 +469,7 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
         $seeAlso = JsonLdHelper::isSimpleArray($this->seeAlso) ? $this->seeAlso : [$this->seeAlso];
         $result = [];
         foreach ($seeAlso as $candidate) {
-            // TODO 1. check if it is an object 2. check if there is a resource objet for a given URI 
+            // TODO 1. check if it is an object 2. check if there is a resource object for a given URI
             if (!is_array($candidate)){
                 continue;
             }
