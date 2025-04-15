@@ -77,7 +77,8 @@ class ContentResource1 extends AbstractIiifResource1 implements ContentResourceI
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $services = is_array($this->service) ? $this->service : [$this->service];
         foreach ($services as $service) {
             if ($service instanceof AbstractImageService) {

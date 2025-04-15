@@ -34,7 +34,7 @@ interface AnnotationContainerInterface extends IiifResourceInterface {
      * @link https://www.w3.org/TR/annotation-vocab/#motivation
      * 
      */
-    public function getTextAnnotations($motivation = null);
+    public function getTextAnnotations($motivation = null): ?array;
     
 }
 

@@ -20,14 +20,16 @@
 
 namespace Ubl\Iiif\Presentation\Common\Model\Resources;
 
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
+
 interface ManifestInterface extends IiifResourceInterface {
     
     /**
      * versions 1, 2: canvases of default sequence
      * version 3: items of the first range with "sequence" behaviour; otherwise items of manifest 
-     * @return CanvasInterface[]
+     * @return ?CanvasInterface[]
      */
-    public function getDefaultCanvases();
+    public function getDefaultCanvases(): ?array;
 
     /**
      * version 2: first range marked as top or any ranges that are no children of other ranges
@@ -58,7 +60,7 @@ interface ManifestInterface extends IiifResourceInterface {
      * @return IiifResourceInterface The PHP object representation of the IIIF resource the ID $id.
      * If the manifest does not contain such a resource, return null.  
      */
-    public function getContainedResourceById($id);
+    public function getContainedResourceById($id): ?AbstractIiifEntity;
     
 }
 

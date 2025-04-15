@@ -63,7 +63,8 @@ class Sequence2 extends AbstractIiifResource2 {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $result = parent::getThumbnailUrl();
         if ($result != null) {
             return $result;

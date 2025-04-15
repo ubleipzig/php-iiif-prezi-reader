@@ -34,6 +34,8 @@ use Ubl\Iiif\Tools\IiifHelper;
 
 abstract class AbstractIiifEntity {
 
+    protected ?string $id = null;
+
     /**
      *
      * @var array

@@ -35,10 +35,10 @@ interface AnnotationInterface extends IiifResourceInterface {
     public function getMotivation();
     
     /**
-     * @return string The id of the resource (usually a Canvas) that is referenced by
+     * @return ?string The id of the resource (usually a Canvas) that is referenced by
      *                the annotation, without any fragments and not enclosed in specific resources
      */
-    public function getTargetResourceId();
+    public function getTargetResourceId(): ?string;
 
 
     public function getOnSelector();

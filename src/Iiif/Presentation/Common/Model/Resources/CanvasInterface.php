@@ -39,7 +39,7 @@ interface CanvasInterface extends IiifResourceInterface {
      * @param boolean $painting 
      * @return LazyLoadingIterator
      */
-    public function getPotentialTextAnnotationContainerIterator($painting = null);
+    public function getPotentialTextAnnotationContainerIterator($painting = null): ?LazyLoadingIterator;
     
     /**
      * @return int

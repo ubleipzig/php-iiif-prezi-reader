@@ -26,12 +26,6 @@ class Service extends AbstractIiifEntity {
 
     /**
      *
-     * @var string
-     */
-    protected $id;
-
-    /**
-     *
      * @var string|array
      */
     protected $profile;
@@ -52,7 +46,7 @@ class Service extends AbstractIiifEntity {
         return $this->profile;
     }
     
-    public function __construct($id = null, $profile = null) {
+    public function __construct(?string $id = null, $profile = null) {
         $this->id = $id;
         $this->profile = $profile;
     }

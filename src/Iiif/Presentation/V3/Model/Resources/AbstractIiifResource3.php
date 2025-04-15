@@ -22,6 +22,7 @@ namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
 use Ubl\Iiif\Context\JsonLdHelper;
 use Ubl\Iiif\Context\Keywords;
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
 use Ubl\Iiif\Presentation\Common\Model\Resources\AbstractIiifResource;
 use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Services\AbstractImageService;
@@ -30,12 +31,6 @@ use Ubl\Iiif\Tools\Options;
 use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 
 abstract class AbstractIiifResource3 extends AbstractIiifResource implements IiifResourceInterface {
-
-    /**
-     *
-     * @var string
-     */
-    protected $id;
 
     /**
      *
@@ -164,7 +159,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
         return null;
     }
 
-    public function getContainedResourceById($resourceId) {
+    public function getContainedResourceById($resourceId): ?AbstractIiifEntity {
         if ($this->containedResources != null && array_key_exists($resourceId, $this->containedResources)) {
             return $this->containedResources[$resourceId];
         }
@@ -317,7 +312,8 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
         return $this->partOf;
     }
     
-    protected function getValueForDisplay($value, $language = null, $joinChars = "; ") {
+    protected function getValueForDisplay($value, $language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML): string|array|null
+    {
         if (empty($value)){
             return null;
         }
@@ -378,7 +374,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
             elseif ($this instanceof Canvas3 && !empty($this->getImageAnnotations())) {
                 $renderingUrls = $this->getImageAnnotations()[0]->getRenderingUrlsForFormat($format);
             }
-            elseif ($this instanceof Annotation3 && $this->getResource()!=null) {
+            elseif ($this instanceof Annotation3 && $this->getBody()!=null) {
                 $renderingUrls = $this->getBody()->getRenderingUrlsForFormat($format);
             }
         }
@@ -430,7 +426,8 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
         return empty($this->service) ? null : $this->service[0];
     }
     
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         if ($this->thumbnail!=null) {
             $imageService = null;
             $width = null;
@@ -454,6 +451,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
                 return $imageService->getImageUrl(null, $size, null, null, null);
             }
         }
+        return null;
     }
     /**
      * {@inheritDoc}
@@ -470,7 +468,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
      */
     public function getSummaryForDisplay($language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
         // TODO Auto-generated method stub
-        
+        return null;
     }
 
     protected function getEmbeddedProperties() {

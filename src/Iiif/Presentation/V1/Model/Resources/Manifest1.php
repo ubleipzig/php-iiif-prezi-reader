@@ -20,6 +20,7 @@
 
 namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
 use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
 
 class Manifest1 extends AbstractDescribableResource1 implements ManifestInterface {
@@ -63,20 +64,24 @@ class Manifest1 extends AbstractDescribableResource1 implements ManifestInterfac
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getContainedResourceById()
      */
-    public function getContainedResourceById($id) {
+    public function getContainedResourceById($id): ?AbstractIiifEntity
+    {
         if ($this->containedResources != null && array_key_exists($id, $this->containedResources)) {
             return $this->containedResources[$id];
         }
+        return null;
     }
 
     /**
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getDefaultCanvases()
      */
-    public function getDefaultCanvases() {
+    public function getDefaultCanvases(): ?array
+    {
         if (!empty($this->sequences)) {
             return $this->sequences[0]->getCanvases();
         }
+        return null;
     }
 
     /**

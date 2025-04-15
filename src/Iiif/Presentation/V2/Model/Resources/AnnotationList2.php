@@ -59,7 +59,8 @@ class AnnotationList2 extends AbstractIiifResource2 implements AnnotationContain
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationContainerInterface::getTextAnnotations()
      */
-    public function getTextAnnotations($motivation = null) {
+    public function getTextAnnotations($motivation = null): ?array
+    {
         $resources = $this->getResources();
         $textAnnotations = [];
         foreach ($resources as $annotation) {

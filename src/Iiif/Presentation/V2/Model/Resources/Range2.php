@@ -185,7 +185,8 @@ class Range2 extends AbstractIiifResource2 implements RangeInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         if ($this->getThumbnail()!=null) {
             parent::getThumbnailUrl();
             if ($this->getThumbnail() )

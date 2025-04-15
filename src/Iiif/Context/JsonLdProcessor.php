@@ -262,7 +262,7 @@ class JsonLdProcessor {
                 } elseif (IRI::isAbsoluteIri($value)) {
                     // 5.7.3)
                     $result->setBaseIri($value);
-                } elseif (IRI::isRelativeIri($uri) && $result->getBaseIri() != null) {
+                } elseif (IRI::isRelativeIri($value) && $result->getBaseIri() != null) {
                     // 5.7.4)
                     $result->setBaseIri(IRI::resolveAbsoluteIri($result->getBaseIri(), $value));
                 } else {

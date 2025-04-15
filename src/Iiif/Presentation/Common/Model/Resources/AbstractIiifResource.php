@@ -24,7 +24,9 @@ use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
 use Ubl\Iiif\Context\JsonLdHelper;
 
 abstract class AbstractIiifResource extends AbstractIiifEntity implements IiifResourceInterface {
-    
+
+    protected abstract function getValueForDisplay($value, $language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML): string|array|null;
+
     protected function getWeblinksForDisplayCommon($value, $language, $joinChars, $idOrAlias) {
         if (empty($value)) {
             return null;

@@ -20,6 +20,7 @@
 
 namespace Ubl\Iiif\Presentation\V1\Model\Resources;
 
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
 
 class Canvas1 extends AbstractDescribableResource1 implements CanvasInterface {
@@ -95,16 +96,17 @@ class Canvas1 extends AbstractDescribableResource1 implements CanvasInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPotentialTextAnnotationContainerIterator()
      */
-    public function getPotentialTextAnnotationContainerIterator($painting = null) {
+    public function getPotentialTextAnnotationContainerIterator($painting = null): ?LazyLoadingIterator {
         // TODO Auto-generated method stub
-        
+        return null;
     }
 
     /**
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         if (!empty($this->images)) {
             return $this->images[0]->getThumbnailUrl();
         }

@@ -42,11 +42,6 @@ use Ubl\Iiif\Tools\Options;
 abstract class AbstractIiifResource2 extends AbstractIiifResource implements IiifResourceInterface {
 
     // http://iiif.io/api/presentation/2.1/#technical-properties
-    /**
-     *
-     * @var string
-     */
-    protected $id;
 
     protected $viewingHint;
 
@@ -139,7 +134,8 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
         }
     }
 
-    protected function getValueForDisplay($value, $language = null, $joinChars = "; ", $html = false, $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
+    protected function getValueForDisplay($value, $language = null, $joinChars = "; ", $html = false, $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML): string|array|null
+    {
         if (is_null($value)){
             return null;
         }
@@ -583,7 +579,8 @@ abstract class AbstractIiifResource2 extends AbstractIiifResource implements Iii
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         if ($this->thumbnail!=null) {
             $thumbnail = JsonLdHelper::isSimpleArray($this->thumbnail) ? empty ($this->thumbnail) ? null : $this->thumbnail[0] : $this->thumbnail;
             if (is_string($thumbnail)) {

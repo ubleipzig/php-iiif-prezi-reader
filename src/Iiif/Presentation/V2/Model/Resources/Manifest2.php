@@ -20,6 +20,7 @@
 
 namespace Ubl\Iiif\Presentation\V2\Model\Resources;
 
+use Ubl\Iiif\Presentation\Common\Model\AbstractIiifEntity;
 use Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface;
 use Ubl\Iiif\Presentation\V2\Model\Constants\ViewingHintValues;
 use Ubl\Iiif\Presentation\V2\Model\Properties\NavDateTrait;
@@ -102,12 +103,14 @@ class Manifest2 extends AbstractIiifResource2 implements ManifestInterface {
         return $this->rootRanges;
     }
 
-    public function getContainedResourceById($id) {
+    public function getContainedResourceById($id): ?AbstractIiifEntity {
         if (!is_string($id)) {
             return null;
         }
-        if (array_key_exists($id, $this->containedResources))
+        if (array_key_exists($id, $this->containedResources)) {
             return $this->containedResources[$id];
+        }
+        return null;
     }
 
     private function getDefaultSequence()
@@ -122,7 +125,8 @@ class Manifest2 extends AbstractIiifResource2 implements ManifestInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ManifestInterface::getDefaultCanvases()
      */
-    public function getDefaultCanvases() {
+    public function getDefaultCanvases(): ?array
+    {
         if ($this->getDefaultSequence() != null) {
             return $this->getDefaultSequence()->getCanvases();
         }
@@ -155,7 +159,8 @@ class Manifest2 extends AbstractIiifResource2 implements ManifestInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $result = parent::getThumbnailUrl();
         if ($result != null) {
             return $result;

@@ -31,7 +31,7 @@ class MockIiifResource extends AbstractIiifResource2
      */
     public static function fromArray($jsonAsArray, &$allResources = array())
     {
-        $instance = self::createInstanceFromArray($jsonAsArray, $allResources);
+        $instance = new MockIiifResource();
         $instance->loadPropertiesFromArray($jsonAsArray, $allResources);
         return $instance;
     }

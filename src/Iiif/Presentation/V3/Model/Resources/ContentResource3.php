@@ -159,7 +159,8 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $result = parent::getThumbnailUrl();
         if ($result != null) {
             return $result;

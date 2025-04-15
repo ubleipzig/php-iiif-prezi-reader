@@ -41,9 +41,9 @@ class Sequence2Test extends AbstractIiifTest
     protected function setUp(): void
     {
         parent::setUp();
-        
-        $this->json = parent::getFile('v2/manifest-example.json');
-        $this->sequence = Manifest2::loadIiifResource($this->json)->getSequences()[0];
+
+        $json = parent::getFile('v2/manifest-example.json');
+        $this->sequence = Manifest2::loadIiifResource($json)->getSequences()[0];
     }
 
     /**

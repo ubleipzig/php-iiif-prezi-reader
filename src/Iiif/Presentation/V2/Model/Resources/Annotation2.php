@@ -86,7 +86,8 @@ class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
         return $this->motivation;
     }
     
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $result = parent::getThumbnailUrl();
         if ($result != null) {
             return $result;
@@ -108,7 +109,8 @@ class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface::getTargetResourceId()
      */
-    public function getTargetResourceId() {
+    public function getTargetResourceId(): ?string
+    {
         if ($this->on == null) {
             // this should not happen with valid annotations
             return null;
@@ -118,6 +120,7 @@ class Annotation2 extends AbstractIiifResource2 implements AnnotationInterface {
         } elseif ($this->on instanceof AbstractIiifResource2) {
             return $this->on->getId();
         }
+        return null;
     }
 
 }

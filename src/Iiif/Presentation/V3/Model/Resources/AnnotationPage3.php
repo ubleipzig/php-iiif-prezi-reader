@@ -41,9 +41,10 @@ class AnnotationPage3 extends AbstractIiifResource3 implements AnnotationContain
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationContainerInterface::getTextAnnotations()
      */
-    public function getTextAnnotations($motivation = null) {
+    public function getTextAnnotations($motivation = null): ?array
+    {
         // TODO Auto-generated method stub
-        
+        return null;
     }
 
 

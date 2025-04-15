@@ -32,11 +32,6 @@ use Ubl\Iiif\Presentation\Common\TypeHelper;
 abstract class AbstractIiifResource1 extends AbstractIiifResource implements IiifResourceInterface {
 
     /**
-     * 
-     * @var string
-     */
-    protected $id;
-    /**
      *
      * @var string
      */
@@ -319,11 +314,13 @@ abstract class AbstractIiifResource1 extends AbstractIiifResource implements Iii
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         return null;
     }
 
-    protected function getValueForDisplay($value, $language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML) {
+    protected function getValueForDisplay($value, $language = null, $joinChars = "; ", $options = IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML): string|array|null
+    {
         if (is_null($value)){
             return null;
         }

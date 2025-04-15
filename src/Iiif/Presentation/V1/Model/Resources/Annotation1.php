@@ -91,7 +91,8 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         // TODO
         return null;
     }
@@ -108,7 +109,8 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\AnnotationInterface::getTargetResourceId()
      */
-    public function getTargetResourceId() {
+    public function getTargetResourceId(): ?string
+    {
         if ($this->on == null) {
             return null;
         }
@@ -117,6 +119,7 @@ class Annotation1 extends AbstractIiifResource1 implements AnnotationInterface {
         } elseif ($this->on instanceof AbstractIiifResource1) {
             return $this->on->getId();
         }
+        return null;
     }
 
 }

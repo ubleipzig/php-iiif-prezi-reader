@@ -149,7 +149,7 @@ abstract class AbstractImageService extends Service {
 
     public abstract function getSizes();
     
-    public function __construct($id = null, $profile = null, $width = null, $height = null, $sizes = null, $tiles = null) {
+    public function __construct(?string $id = null, $profile = null, $width = null, $height = null, $sizes = null, $tiles = null) {
         $this->id = $id;
         $this->profile = $profile;
         $this->width = $width;

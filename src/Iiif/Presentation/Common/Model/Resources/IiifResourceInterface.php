@@ -173,7 +173,7 @@ interface IiifResourceInterface {
      * @return string A thumbnail URL for the resource, either provided by a "thumbnail" property or
      * generated with default dimensions in @link \Ubl\Iiif\Tools\Options.
      */
-    public function getThumbnailUrl();
+    public function getThumbnailUrl(): ?string;
 
     /**
      * Extract data from json node by JsonPath expression

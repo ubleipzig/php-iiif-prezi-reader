@@ -111,7 +111,8 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
         return $this->start;
     }
 
-    public function getDefaultCanvases() {
+    public function getDefaultCanvases(): ?array
+    {
         return $this->items;
         // TODO Use items of first Range with behaviour="sequence" if present
     }
@@ -147,7 +148,8 @@ class Manifest3 extends AbstractIiifResource3 implements ManifestInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $result =  parent::getThumbnailUrl();
         if ($result != null) {
             return $result;

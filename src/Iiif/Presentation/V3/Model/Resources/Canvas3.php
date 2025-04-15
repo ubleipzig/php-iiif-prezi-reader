@@ -20,6 +20,7 @@
 
 namespace Ubl\Iiif\Presentation\V3\Model\Resources;
 
+use Ubl\Iiif\Presentation\Common\Model\LazyLoadingIterator;
 use Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface;
 use Ubl\Iiif\Presentation\V3\Model\Properties\PlaceholderAndAccompanyingCanvasTrait;
 use Ubl\Iiif\Presentation\Common\Vocabulary\Motivation;
@@ -149,7 +150,8 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $result= parent::getThumbnailUrl();
         if ($result != null) {
             return $result;
@@ -183,7 +185,8 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPotentialTextAnnotationContainerIterator()
      */
-    public function getPotentialTextAnnotationContainerIterator($painting = null) {
+    public function getPotentialTextAnnotationContainerIterator($painting = null): ?LazyLoadingIterator
+    {
         // TODO Auto-generated method stub
         
         return null;

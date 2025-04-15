@@ -67,7 +67,8 @@ class Canvas2 extends AbstractIiifResource2 implements CanvasInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface::getThumbnailUrl()
      */
-    public function getThumbnailUrl() {
+    public function getThumbnailUrl(): ?string
+    {
         $result = parent::getThumbnailUrl();
         if ($result != null) {
             return $result;
@@ -89,7 +90,8 @@ class Canvas2 extends AbstractIiifResource2 implements CanvasInterface {
      * {@inheritDoc}
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface::getPotentialTextAnnotationContainerIterator()
      */
-    public function getPotentialTextAnnotationContainerIterator($painting = null) {
+    public function getPotentialTextAnnotationContainerIterator($painting = null): ?LazyLoadingIterator
+    {
         return new LazyLoadingIterator($this, "otherContent", $this->otherContent);
     }
 

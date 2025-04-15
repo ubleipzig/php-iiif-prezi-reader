@@ -36,18 +36,21 @@ class LazyLoadingIterator implements \Iterator {
         $this->items = &$items;
     }
 
-    public function next() {
+    public function next(): void
+    {
         $this->position++;
     }
 
-    public function valid() {
+    public function valid(): bool
+    {
         return $this->items != null && $this->position < sizeof($this->items); 
     }
 
     /**
-     * @return AbstractIiifEntity
+     * @return ?AbstractIiifEntity
      */
-    public function current() {
+    public function current(): ?AbstractIiifEntity
+    {
         if (!$this->valid()) {
             return null;
         }
@@ -62,11 +65,12 @@ class LazyLoadingIterator implements \Iterator {
         return $this->items[$this->position];
     }
 
-    public function rewind() {
+    public function rewind(): void
+    {
         $this->position = 0;
     }
 
-    public function key() {
+    public function key(): ?int {
         return $this->valid() ? $this->position : null;
     }
 
