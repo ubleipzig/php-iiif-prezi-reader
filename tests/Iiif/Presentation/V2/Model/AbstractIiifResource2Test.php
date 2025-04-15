@@ -39,7 +39,7 @@ class AbstractIiifResource2Test extends AbstractIiifTest
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         
@@ -51,7 +51,7 @@ class AbstractIiifResource2Test extends AbstractIiifTest
     /**
      * Cleans up the environment after running a test.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // TODO Auto-generated AbstractIiifResource2Test::tearDown()
         $this->abstractIiifResource = null;
@@ -175,12 +175,12 @@ class AbstractIiifResource2Test extends AbstractIiifTest
     {
         // Test null value
         $this->abstractIiifResource->setMetadata(null);
-        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopfully no error if metadata is set to null");
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopefully no error if metadata is set to null");
         self::assertNull($metadataValue);
         
         // Test empty metadata
         $this->prepareMetadata('[]');
-        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopfully no error for empty metadata");
+        $metadataValue = $this->abstractIiifResource->getMetadataForLabel("Hopefully no error for empty metadata");
         self::assertNull($metadataValue);
         
         // Test untranslated metadata

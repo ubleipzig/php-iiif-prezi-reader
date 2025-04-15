@@ -41,7 +41,7 @@ class Manifest2Test extends AbstractIiifTest
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->json = parent::getFile('v2/manifest-example.json');
         $this->manifest = Manifest2::loadIiifResource($this->json);
@@ -50,7 +50,7 @@ class Manifest2Test extends AbstractIiifTest
     /**
      * Cleans up the environment after running a test.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->manifest = null;
         

@@ -133,7 +133,7 @@ class Canvas3 extends AbstractIiifResource3 implements CanvasInterface {
         $result = [];
         if (isset($this->items)) {
             foreach ($this->items as $annotationPage) {
-                // TODO ensure to only use embeded annotations
+                // TODO ensure to only use embedded annotations
                 if (!empty($annotationPage->getItems())) {
                     foreach ($annotationPage->getItems() as $annotation) {
                         if ($annotation->getMotivation() == "painting" && $annotation->getBody()!=null && $annotation->getBody()->getType() == "Image") {

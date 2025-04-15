@@ -35,7 +35,7 @@ class TermDefinition {
     protected $term;
 
     /**
-     * Indicate wether the term is only used as a prefix of a compact IRI
+     * Indicate whether the term is only used as a prefix of a compact IRI
      * 
      * @var boolean
      */

@@ -1,0 +1,11 @@
+include:
+- template: Jobs/Secret-Detection.gitlab-ci.yml
+- template: Jobs/SAST.gitlab-ci.yml
+- template: Jobs/Dependency-Scanning.gitlab-ci.yml
+
+stages:
+- test
+
+default:
+  tags:
+  - docker

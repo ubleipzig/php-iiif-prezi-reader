@@ -36,7 +36,8 @@ class PhysicalDimensionsTest extends AbstractIiifTest {
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp() {
+    protected function setUp(): void
+    {
         $this->physicalDimensions = IiifHelper::loadIiifResource('{'.
            '"@context": "http://iiif.io/api/annex/services/physdim/1/context.json",'.
            '"profile": "http://iiif.io/api/annex/services/physdim",'.
@@ -48,7 +49,8 @@ class PhysicalDimensionsTest extends AbstractIiifTest {
     /**
      * Cleans up the environment after running a test.
      */
-    protected function tearDown() {
+    protected function tearDown(): void
+    {
     }
 
     /**

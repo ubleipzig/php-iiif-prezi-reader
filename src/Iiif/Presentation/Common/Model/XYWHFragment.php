@@ -20,9 +20,20 @@
 
 namespace Ubl\Iiif\Presentation\Common\Model;
 
+/**
+ * XYWHFragment represents a spatial media fragment identifier (e.g. xywh=1000,500,200,100 in
+ * http://example.org/manifest1/canvas/canvas1#xywh=1000,500,200,100). It holds the dimensions
+ * as well as the target resource, the latter both as id and as PHP object. It supports only
+ * absolute values without units, so fragments like xywh=pixel:160,120,320,240 or
+ * xywh=percent:25,25,50,50 are not (yet) supported.
+ * 
+ * @author Lutz Helm <helm@ub.uni-leipzig.de>
+ *
+ */
 class XYWHFragment {
 
     /**
+     * The fragment in it's original form, e.g. "xywh=1000,500,200,100"
      * @var string
      */
     protected $fragment;
@@ -48,20 +59,27 @@ class XYWHFragment {
     protected $height;
 
     /**
-     * URI / id of the target resource, e.g.
-     * Canvas, without the XYWH fragment
+     * URI / id of the target resource, e.g. Canvas, without the XYWH fragment
      *
      * @var string
      */
     protected $targetUri;
 
     /**
+     * PHP object representation of the resource that is targeted
      * @var \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface
      */
     protected $targetObject;
 
-    protected function __contruct() {}
+    protected function __construct() {}
 
+    /**
+     * 
+     * @param string $uri
+     * @param array $allResources
+     * @param string $targetClass
+     * @return NULL|\Ubl\Iiif\Presentation\Common\Model\XYWHFragment
+     */
     public static function getFromURI($uri, &$allResources = array(), $targetClass = null) {
         // TODO check if commas or equals sign are contained but url encoded
         if ($uri == null)
@@ -96,14 +114,13 @@ class XYWHFragment {
     }
 
     /**
-     *
-     * @return string
+     * @return string URI of the targeted resource without the fragment identifier
      */
     public function getTargetUri() {
         return $this->targetUri;
     }
     /**
-     * @return string
+     * @return string The original fragment identifier as it appears in the URI
      */
     public function getFragment() {
         return $this->fragment;
@@ -138,7 +155,8 @@ class XYWHFragment {
     }
 
     /**
-     * @return \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface
+     * @return \Ubl\Iiif\Presentation\Common\Model\Resources\CanvasInterface Object
+     * representation of the targeted resource
      */
     public function getTargetObject() {
         return $this->targetObject;

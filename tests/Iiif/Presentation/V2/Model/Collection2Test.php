@@ -25,7 +25,8 @@ class Collection2Test extends AbstractIiifTest {
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp() {
+    protected function setUp(): void
+    {
         $this->collection1 = IiifHelper::loadIiifResource(self::getFile("v2/collection1.json"));
         $this->collection2 = IiifHelper::loadIiifResource(self::getFile("v2/collection2.json"));
         $this->collection3 = IiifHelper::loadIiifResource(self::getFile("v2/collection3.json"));

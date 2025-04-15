@@ -32,7 +32,7 @@ class Range2Test extends AbstractIiifTest
      */
     private $manifest;
     
-    protected function setup()
+    protected function setup(): void
     {
         $jsonAsString = parent::getFile('v2/structures-example.json');
         $this->manifest = Manifest2::loadIiifResource($jsonAsString);

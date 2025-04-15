@@ -150,7 +150,7 @@ class Range2 extends AbstractIiifResource2 implements RangeInterface {
         if (!empty($this->members)) {
             foreach ($this->members as $member) {
                 if ($member instanceof Canvas2) {
-                    $result[] = $canvas;
+                    $result[] = $member;
                 }
             }
         }

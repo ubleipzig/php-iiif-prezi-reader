@@ -49,7 +49,8 @@ class Range1Test extends AbstractIiifTest {
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp() {
+    protected function setUp(): void
+    {
         $this->manifest = IiifHelper::loadIiifResource(self::getFile("v1/range-example.json"));
         $this->structures = $this->manifest->getStructures();
         $this->expectedCanvasesPerRange = [
@@ -115,7 +116,8 @@ class Range1Test extends AbstractIiifTest {
     /**
      * Cleans up the environment after running a test.
      */
-    protected function tearDown() {
+    protected function tearDown(): void
+    {
         $this->manifest = null;
     }
 

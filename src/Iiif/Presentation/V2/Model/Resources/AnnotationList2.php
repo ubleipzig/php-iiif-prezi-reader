@@ -41,7 +41,7 @@ class AnnotationList2 extends AbstractIiifResource2 implements AnnotationContain
         if ($this->resources == null && ! $this->resourcesLoaded) {
             
             $content = IiifHelper::getRemoteContent($this->id);
-            $jsonAsArray = json_decode($content, true);
+            //$jsonAsArray = json_decode($content, true);
             
             $remoteAnnotationList = IiifHelper::loadIiifResource($content);
             $remoteAnnotationList->resourcesLoaded = true;

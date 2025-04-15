@@ -18,7 +18,8 @@ class LazyLoadingIteratorTest extends AbstractIiifTest {
 
     private $urlReader;
 
-    public function setup() {
+    public function setup(): void
+    {
         $this->urlReader = new UrlReaderForTests();
         IiifHelper::setUrlReader($this->urlReader);
         $content = self::getFile('v2/manifest-for-lazy-annotations.json');
