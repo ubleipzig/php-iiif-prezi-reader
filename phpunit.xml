@@ -12,9 +12,16 @@
             <directory>./tests/Iiif/Services</directory>
         </testsuite>
     </testsuites>
-	<filter>
-	  <whitelist processUncoveredFilesFromWhitelist="true">
-	    <directory suffix=".php">src</directory>
-	  </whitelist>
-	</filter>    
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
+    <coverage>
+        <report>
+            <clover outputFile="coverage-clover.xml"/>
+            <cobertura outputFile="cobertura.xml"/>
+            <html outputDirectory="coverage"/>
+        </report>
+    </coverage>
 </phpunit>

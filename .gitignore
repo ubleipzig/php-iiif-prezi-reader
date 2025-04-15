@@ -1,5 +1,9 @@
 .buildpath
+cobertura.xml
+coverage-clover.xml
+coverage/
 .idea
+.phpunit.result.cache
 .project
 .settings/
 /vendor/
