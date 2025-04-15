@@ -282,7 +282,7 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
     }
 
     public function getServiceIterator() {
-        return new LazyLoadingIterator($this, "service");
+        return new LazyLoadingIterator($this, "service", null);
     }
     
     /**
@@ -435,21 +435,21 @@ abstract class AbstractIiifResource3 extends AbstractIiifResource implements Iii
             $imageService = null;
             $width = null;
             $height = null;
-            if ($thumbnail instanceof ContentResource3) {
-                $imageService = $thumbnail->getService();
-                $width = $thumbnail->getWidth();
-                $height = $thumbnail->getHeight();
-            } elseif (JsonLdHelper::isDictionary($thumbnail)) {
-                if (array_key_exists("service", $thumbnail)) {
-                    if (JsonLdHelper::isDictionary($thumbnail["service"])) {
-                        $imageService = IiifHelper::loadIiifResource($thumbnail["service"]);
+            if ($this->thumbnail instanceof ContentResource3) {
+                $imageService = $this->thumbnail->getService();
+                $width = $this->thumbnail->getWidth();
+                $height = $this->thumbnail->getHeight();
+            } elseif (JsonLdHelper::isDictionary($this->thumbnail)) {
+                if (array_key_exists("service", $this->thumbnail)) {
+                    if (JsonLdHelper::isDictionary($this->thumbnail["service"])) {
+                        $imageService = IiifHelper::loadIiifResource($this->thumbnail["service"]);
                     }
                 }
             }
             if ($imageService!=null && $imageService instanceof AbstractImageService) {
                 // TODO Add level 0 support. The following uses level 1 features sizeByW or sizeByH
                 $width = $width == null ? Options::getMaxThumbnailWidth() : $width;
-                $height = $heigth == null ? Options::getMaxThumbnailHeight() : $heigth;
+                $height = $height == null ? Options::getMaxThumbnailHeight() : $height;
                 $size = $width <= $height ? (",".$height) : ($width.",");
                 return $imageService->getImageUrl(null, $size, null, null, null);
             }

@@ -375,6 +375,7 @@ class JsonLdProcessor {
             $activeContext->removeTermDefinition($term);
         }
         // 8
+        $simpleTerm = false;
         if ($value == null) {
             $value = [
                 "@id" => null
@@ -390,7 +391,6 @@ class JsonLdProcessor {
             if (! JsonLdHelper::isDictionary($value)) {
                 throw new \Exception("invalid term definition");
             }
-            $simpleTerm = false;
         }
         // 11
         $definition = new TermDefinition($term);
@@ -604,7 +604,7 @@ class JsonLdProcessor {
             if (is_string($language)) {
                 $language = strtolower($language);
             }
-            $definition->setLanguageMapping($lanuage);
+            $definition->setLanguageMapping($language);
         }
         // 24
         if (array_key_exists(Keywords::NEST, $value)) {

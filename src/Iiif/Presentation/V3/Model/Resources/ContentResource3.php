@@ -144,7 +144,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
             }
             if ($service instanceof AbstractImageService) {
                 $size = "full";
-                if ($width != null && $heigth != null) {
+                if ($width != null && $height != null) {
                     $size = $width . "," . $height;
                 } elseif ($width != null) {
                     $size = $width . ",";
@@ -179,7 +179,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::getChars()
      */
     public function getChars() {
-        return $value;
+        return $this->value;
     }
 
     /**
@@ -187,7 +187,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isImage()
      */
     public function isImage() {
-        return $type == "Image";
+        return $this->type == "Image";
     }
 
     /**
@@ -195,7 +195,7 @@ class ContentResource3 extends AbstractIiifResource3 implements ContentResourceI
      * @see \Ubl\Iiif\Presentation\Common\Model\Resources\ContentResourceInterface::isText()
      */
     public function isText() {
-        return $type == "Text";
+        return $this->type == "Text";
     }
     
 }
