@@ -26,11 +26,11 @@ use Ubl\Iiif\Context\IRI;
 use Ubl\Iiif\Context\JsonLdHelper;
 use Ubl\Iiif\Context\Keywords;
 use Ubl\Iiif\Presentation\Common\TypeHelper;
-use Ubl\Iiif\Presentation\Common\Model\Resources\IiifResourceInterface;
 use Ubl\Iiif\Presentation\V1\Model\Resources\AbstractIiifResource1;
 use Ubl\Iiif\Presentation\V2\Model\Resources\AbstractIiifResource2;
 use Ubl\Iiif\Presentation\V3\Model\Resources\AbstractIiifResource3;
 use Ubl\Iiif\Tools\IiifHelper;
+use Ubl\Iiif\Tools\IiifHtmlSanitizer;
 
 abstract class AbstractIiifEntity {
 
@@ -373,74 +373,7 @@ abstract class AbstractIiifEntity {
     }
     
     protected function sanitizeHtml($input, $options) {
-        if (strpos($input, "<")===0 && strrpos($input, ">") === strlen($input)-1 && !($options&IiifResourceInterface::SANITIZE_NO_TAGS)) {
-            $xsl = new \DOMDocument();
-            if ($options&IiifResourceInterface::SANITIZE_NO_TAGS) {
-                $xsl->load(__DIR__."/../../../../../resources/xslt/sanitize-notags.xsl");
-            } else {
-                $xsl->load(__DIR__."/../../../../../resources/xslt/sanitize.xsl");
-            }
-            
-            $disableEntityLoaderBak = libxml_disable_entity_loader(true);
-            $doc = new \DOMDocument();
-            
-            // We will only accept wellformed XML and therefore need an exception instead of a warning message  
-            set_error_handler(function ($severity, $message, $filename, $lineno) {
-                if (!($severity&(E_USER_NOTICE|E_NOTICE|E_DEPRECATED|E_USER_DEPRECATED))) {
-                    throw new \ErrorException($message, null, $severity, $filename, $lineno);
-                }
-            });
-            try {
-                $doc->loadHTML($input , LIBXML_NOCDATA | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NONET);
-            } catch (\ErrorException $ex) {
-                $stripped = strip_tags($input);
-                return ($options&(IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML|IiifResourceInterface::SANITIZE_XML_ENCODE_ALL)) ? htmlspecialchars($stripped,  ENT_QUOTES) : $stripped;
-            } finally {
-                restore_error_handler();
-                libxml_disable_entity_loader($disableEntityLoaderBak);
-            }
-            
-            $xslProcessor = new \XSLTProcessor();
-            $xslProcessor->setSecurityPrefs(XSL_SECPREF_READ_FILE | XSL_SECPREF_WRITE_FILE | XSL_SECPREF_CREATE_DIRECTORY | XSL_SECPREF_READ_NETWORK | XSL_SECPREF_WRITE_NETWORK);
-            $xslProcessor->importStyleSheet($xsl);
-            $stripped = trim($xslProcessor->transformToXML($doc));
-            $stripped = ($options&IiifResourceInterface::SANITIZE_XML_ENCODE_ALL) ? htmlspecialchars($stripped,  ENT_QUOTES) : $stripped;
-            return $stripped;
-        } else {
-            $stripped = strip_tags($input);
-            $stripped = ($options&(IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML|IiifResourceInterface::SANITIZE_XML_ENCODE_ALL)) ? htmlspecialchars($stripped,  ENT_QUOTES) : $stripped;
-            return $stripped;
-        }
-        return null;
-        
-//         if (strpos($input, "<")===0 && strrpos($input, ">") === strlen($input)-1) {
-//             $allowedTags = ($options&IiifResourceInterface::SANITIZE_NO_TAGS) ? [] : $this->getAllowedTags();
-//             $tags = empty($allowedTags) ? null : ("<".implode("><", array_keys($allowedTags)).">");
-//             $inputWithAllowedTags = strip_tags($input, $tags);
-//             if ($options&IiifResourceInterface::SANITIZE_NO_TAGS) {
-//                 return $inputWithAllowedTags;
-//             }
-//             $dom = new \DOMDocument();
-//             $dom->loadHTML($inputWithAllowedTags, LIBXML_NOCDATA | LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-//             $xpath = new \DOMXPath($dom);
-//             $attributes = $xpath->query("//@*");
-//             foreach ($attributes as $attribute) {
-//                 $allowedAttributes = $allowedTags[$attribute->parentNode->nodeName];
-//                 if (array_search($attribute->nodeName, $allowedAttributes) === false) {
-//                     $attribute->parentNode->removeAttribute($attribute->nodeName);
-//                 } elseif ($attribute->nodeName == "href" && strpos($attribute->textContent, "http:")!==0 && strpos($attribute->textContent, "https:")!==0 && strpos($attribute->textContent, "mailto:")!==0) {
-//                     $attribute->parentNode->removeAttribute($attribute->nodeName);
-//                 }
-//             }
-//             $stripped = trim($dom->saveHTML());
-//             $stripped = ($options&IiifResourceInterface::SANITIZE_XML_ENCODE_ALL) ? htmlspecialchars($stripped,  ENT_QUOTES) : $stripped;
-//             return $stripped;
-//         } else {
-//             $stripped = strip_tags($input);
-//             $stripped = ($options&(IiifResourceInterface::SANITIZE_XML_ENCODE_NONHTML|IiifResourceInterface::SANITIZE_XML_ENCODE_ALL)) ? htmlspecialchars($stripped,  ENT_QUOTES) : $stripped;
-//             return $stripped;
-//         }
-//         return null;
+        return IiifHtmlSanitizer::sanitizeHtml($input);
     }
     
     /**

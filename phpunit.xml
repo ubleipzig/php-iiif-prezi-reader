@@ -10,6 +10,7 @@
             <directory>./tests/Iiif/Presentation/V2/Model</directory>
             <directory>./tests/Iiif/Presentation/V3/Model/Resources</directory>
             <directory>./tests/Iiif/Services</directory>
+            <directory>./tests/Iiif/Tools</directory>
         </testsuite>
     </testsuites>
     <source>
